@@ -86,36 +86,39 @@
     </div>
     <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-      <table class="w-full whitespace-nowrap">
-        <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6">صفة الحالة</th>
-          <th class="pb-4 pt-6 px-6">نوع الإعاقة</th>
-          <th class="pb-4 pt-6 px-6">رقم بطاقة الإعاقة</th>
-        </tr>
-        <tr class="hover:bg-gray-100 focus-within:bg-gray-100">
-          <td class="border-t">
-            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/members/${member.id}/edit`">
-              {{ member.healthStatus.good }}
-              <icon v-if="member.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
-            </Link>
-          </td>
+  <table class="w-full">
+    <thead>
+      <tr class="text-right font-bold">
+        <th class="pb-4 pt-6 px-6">صفة الحالة</th>
+        <th class="pb-4 pt-6 px-6">مرض مزمن</th>
+        <th class="pb-4 pt-6 px-6">نوع الإعاقة</th>
+        <th class="pb-4 pt-6 px-6">رقم بطاقة الإعاقة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="status in member.healthStatus" :key="status.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+        <td class="border-t">
+          <ToggleCheckbox :isChecked="isChecked" @toggle="toggleHandle" />
 
-          <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/members/${member.id}/edit`" tabindex="-1">
-              {{ member.healthStatus.disability }}
-            </Link>
-          </td>
-          <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/members/${member.id}/edit`" tabindex="-1">
-              {{ member.healthStatus.disability_card_number }}
-            </Link>
-          </td>
-        </tr>
-        <tr v-if="member.healthStatus.length === 0">
-          <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
-        </tr>
-      </table>
-    </div>
+        </td>
+        <td class="border-t">
+          <text-input v-model="status.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" />
+        </td>
+        <td class="border-t">
+          <text-input v-model="status.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2"  />
+        </td>
+        <td class="border-t">
+          <text-input v-model="status.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2"  />
+        </td>
+      </tr>
+      <tr v-if="member.healthStatus.length === 0">
+        <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
   </div>
 </template>
 
@@ -127,6 +130,7 @@ import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
+import ToggleCheckbox from '../../../Shared/ToggleCheckbox.vue'
 
 export default {
   components: {
@@ -137,15 +141,36 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    ToggleCheckbox
   },
   layout: Layout,
   props: {
     member: Object,
   },
   remember: 'form',
+  created() {
+  // Populate healthStatusFields array with member.healthStatus fields
+  this.member.healthStatus.forEach(status => {
+    this.healthStatusFields.push({
+      disability: status.disability,
+      disability_card_number: status.disability_card_number,
+      disease: status.disease,
+      good: status.good,
+    });
+  });
+},
   data() {
     return {
+      isChecked: false,
       active_step: 1,
+      healthStatusFields: [],
+      health_status_form: this.$inertia.form({
+        good:null,
+        disease:null,
+        disability:null,
+        disability_card_number:null,
+        member_id:this.member.id,
+      }),
       form: this.$inertia.form({
         name: this.member.name,
         address: this.member.address,
@@ -167,6 +192,9 @@ export default {
     }
   },
   methods: {
+    toggleHandle() {
+      this.isChecked = !this.isChecked;
+    },
     update() {
       this.form.put(`/members/${this.member.id}`)
     },
