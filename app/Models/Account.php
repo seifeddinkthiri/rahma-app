@@ -20,4 +20,12 @@ class Account extends Model
     {
         return $this->hasMany(Contact::class);
     }
+    public function families()
+    {
+        return $this->hasMany(Family::class);
+    }
+    public function members()
+    {
+        return $this->hasMany(Member::class);
+    }
 }

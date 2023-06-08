@@ -5,6 +5,8 @@ use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
+use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +100,71 @@ Route::delete('organizations/{organization}', [OrganizationsController::class, '
 Route::put('organizations/{organization}/restore', [OrganizationsController::class, 'restore'])
     ->name('organizations.restore')
     ->middleware('auth');
+
+
+
+// families
+
+Route::get('families', [FamilyController::class, 'index'])
+    ->name('families')
+    ->middleware('auth');
+
+Route::get('families/create', [FamilyController::class, 'create'])
+    ->name('families.create')
+    ->middleware('auth');
+
+Route::post('families', [FamilyController::class, 'store'])
+    ->name('families.store')
+    ->middleware('auth');
+
+Route::get('families/{family}/edit', [FamilyController::class, 'edit'])
+    ->name('families.edit')
+    ->middleware('auth');
+
+Route::put('families/{family}', [FamilyController::class, 'update'])
+    ->name('families.update')
+    ->middleware('auth');
+
+Route::delete('families/{family}', [FamilyController::class, 'destroy'])
+    ->name('families.destroy')
+    ->middleware('auth');
+
+Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
+    ->name('families.restore')
+    ->middleware('auth');
+
+
+    //members
+
+Route::get('members/{family}', [MemberController::class, 'index'])
+->name('members')
+->middleware('auth');
+
+Route::get('members/{family}/create', [MemberController::class, 'create'])
+->name('members.create')
+->middleware('auth');
+
+Route::post('members', [MemberController::class, 'store'])
+->name('members.store')
+->middleware('auth');
+
+Route::get('members/{member}/edit', [MemberController::class, 'edit'])
+->name('members.edit')
+->middleware('auth');
+
+Route::put('members/{member}', [MemberController::class, 'update'])
+->name('members.update')
+->middleware('auth');
+
+Route::delete('members/{member}', [MemberController::class, 'destroy'])
+->name('members.destroy')
+->middleware('auth');
+
+Route::put('members/{member}/restore', [MemberController::class, 'restore'])
+->name('members.restore')
+->middleware('auth');
+
+
 
 // Contacts
 

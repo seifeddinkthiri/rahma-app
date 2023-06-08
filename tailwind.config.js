@@ -2,6 +2,10 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+      ],
   purge: [
     // prettier-ignore
     './resources/**/*.blade.php',
