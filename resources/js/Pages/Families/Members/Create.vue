@@ -21,7 +21,9 @@
             </select-input>
           </div>
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <button @click="active_step = 2" class="btn-indigo" type="button">التالي</button>
+            <button @click="active_step = 2" class="btn-indigo" type="button">  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg></button>
           </div>
         </div>
         <div ref="part2" v-if="active_step == 2">
@@ -37,9 +39,15 @@
 
           </div>
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <button @click="active_step = 1" class="btn-indigo" type="button">العودة</button>
+            <button @click="active_step = 1" class="btn-indigo" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
             &nbsp;&nbsp;
-            <button @click="active_step = 3" class="btn-indigo" type="button">التالي</button>
+            <button @click="active_step = 3" class="btn-indigo" type="button">  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg></button>
           </div>
         </div>
         <div ref="part3" v-if="active_step == 3">
@@ -58,7 +66,9 @@
 
           </div>
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <button @click="active_step = 2" class="btn-indigo" type="button">العودة</button>
+            <button @click="active_step = 2" class="btn-indigo" type="button">    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg></button>
             <loading-button :loading="form.processing" class="btn-indigo" type="submit">إنشاء الفرد</loading-button>
           </div>
         </div>

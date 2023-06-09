@@ -11,7 +11,7 @@ class Note extends Model
 
 
     protected $fillable = [
-        'Value',
+       'title', 'Value',
     ];
     public function family()
     {

@@ -20,6 +20,9 @@ class CreateNotesTable extends Migration
                 ->references('id')
                 ->on('families')
                 ->onDelete('cascade');
+                $table->string('title');
+                $table->string('value');
+
             $table->timestamps();
         });
     }

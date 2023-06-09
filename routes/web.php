@@ -133,42 +133,48 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('families.restore')
     ->middleware('auth');
 
-
     //members
 
-Route::get('members/{family}', [MemberController::class, 'index'])
-->name('members')
-->middleware('auth');
+    Route::get('members/{family}', [MemberController::class, 'index'])
+    ->name('members')
+    ->middleware('auth');
 
-Route::get('members/{family}/create', [MemberController::class, 'create'])
-->name('members.create')
-->middleware('auth');
+    Route::get('members/{family}/create', [MemberController::class, 'create'])
+    ->name('members.create')
+    ->middleware('auth');
 
-Route::post('members', [MemberController::class, 'store'])
-->name('members.store')
-->middleware('auth');
+    Route::post('members', [MemberController::class, 'store'])
+    ->name('members.store')
+    ->middleware('auth');
 
-Route::get('members/{member}/edit', [MemberController::class, 'edit'])
-->name('members.edit')
-->middleware('auth');
+    Route::get('members/{member}/edit', [MemberController::class, 'edit'])
+    ->name('members.edit')
+    ->middleware('auth');
 
-Route::put('members/{member}', [MemberController::class, 'update'])
-->name('members.update')
-->middleware('auth');
+    Route::put('members/{member}', [MemberController::class, 'update'])
+    ->name('members.update')
+    ->middleware('auth');
 
-Route::delete('members/{member}', [MemberController::class, 'destroy'])
-->name('members.destroy')
-->middleware('auth');
+    Route::delete('members/{member}', [MemberController::class, 'destroy'])
+    ->name('members.destroy')
+    ->middleware('auth');
 
-Route::put('members/{member}/restore', [MemberController::class, 'restore'])
-->name('members.restore')
-->middleware('auth');
+    Route::put('members/{member}/restore', [MemberController::class, 'restore'])
+    ->name('members.restore')
+    ->middleware('auth');
 
-//healthStatus
+    //healthStatus
 
-Route::put('healthStatus/{member}', [MemberController::class, 'update_health_status'])
-->name('health.update')
-->middleware('auth');
+    Route::put('healthStatus/{member}', [MemberController::class, 'update_health_status'])
+    ->name('health.update')
+    ->middleware('auth');
+
+
+    //notes
+    Route::post('notes/{family}', [MemberController::class, 'store_note'])
+    ->name('notes.store')
+    ->middleware('auth');
+
 
 // Contacts
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
+use App\Models\Note;
 
 class MemberController extends Controller
 {
@@ -167,5 +168,40 @@ $healthStatus = new HealthStatus([
         $Member->restore();
 
         return Redirect::back()->with('success', 'Member restored.');
+    }
+
+    public function store_note(Family $family)
+    {
+        Request::validate([
+            'title' => ['required', 'string', 'max:100'],
+            'value' => ['required', 'string', 'max:100'],
+        ]);
+
+        $family->notes()->create([
+            'title' => Request::input('title'),
+            'value' => Request::input('value'),
+        ]);
+
+        return redirect()->back()->with('success', 'Note created.');
+    }
+
+
+   public function update_note(Note $Note)
+    {
+         Request::validate([
+            'value' => ['required', 'string', 'max:100'],
+        ]);
+
+        $Note->healthStatus()->update([
+            'value' => Request::input('value'),
+        ]);
+
+        return redirect()->route('notes.edit', ['note' => $Note])->with('success', 'Note updated');
+    }
+  public function destroy_note(Note $Note)
+    {
+        $Note->delete();
+
+        return Redirect::back()->with('success', 'Note deleted');
     }
 }
