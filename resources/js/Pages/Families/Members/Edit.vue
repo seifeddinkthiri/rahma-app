@@ -83,18 +83,21 @@
     </div>
     <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-      <form @submit.prevent="store">
+      <form @submit.prevent="update_health_status">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8" v-for="status in member.healthStatus" :key="status.id">
-            <text-input :label="'مرض مزمن'" v-model="status.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" />
-            <text-input :label="'إعاقة'" v-model="status.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2" />
-            <text-input :label="'رقم بطاقة الإعاقة'" v-model="status.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2" />
+            <text-input :label="'مرض مزمن'" v-model="health_status_form.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" />
+            <text-input :label="'إعاقة'" v-model="health_status_form.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2" />
+            <text-input :label="'رقم بطاقة الإعاقة'" v-model="health_status_form.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2" />
             <ToggleCheckbox  :id="'good'" :active_value="'جيدة'" :inactive_value="'عليلة'" :label="'صفة الحالة'" :isChecked="health_status_form.good" @toggle="toggleGood" />
           </div>
           <div v-if="member.healthStatus.length === 0">
             <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
           </div>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">تسجيل التعديلات</loading-button>
+
         </div>
+
       </form>
     </div>
   </div>
@@ -127,22 +130,20 @@ export default {
   },
   remember: 'form',
   created() {
-    // Populate healthStatusFields array with member.healthStatus fields
-    this.member.healthStatus.forEach((status) => {
-      this.healthStatusFields.push({
-        disability: status.disability,
-        disability_card_number: status.disability_card_number,
-        disease: status.disease,
-        good: status.good,
-      })
-    })
+    this.member.healthStatus.forEach(element => {
+      this.health_status_form.good = element.good;
+      this.health_status_form.disease = element.disease;
+      this.health_status_form.disability = element.disability;
+      this.health_status_form.disability_card_number = element.disability_card_number;
+
+ });
   },
   data() {
     return {
       active_step: 1,
       healthStatusFields: [],
       health_status_form: this.$inertia.form({
-        good: false,
+        good: this.member.healthStatus.good,
         disease: null,
         disability: null,
         disability_card_number: null,
@@ -168,6 +169,11 @@ export default {
     }
   },
   methods: {
+    update_health_status(){
+      this.health_status_form.put(`/healthStatus/${this.member.id}`)
+
+    },
+
     toggle_health_insurance(){
       this.form.health_insurance = ! this.form.health_insurance;
     },

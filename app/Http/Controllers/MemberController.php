@@ -68,7 +68,7 @@ class MemberController extends Controller
 
         $member->healthStatus()->save($healthStatus);
 
-        return redirect()->route('families.edit', ['family' => $member->family])->with('success', 'Member created.');
+        return redirect()->route('families.edit', ['family' => $member->family])->with('success', 'Member created');
     }
 
 
@@ -97,6 +97,29 @@ class MemberController extends Controller
             ],
         ]);
     }
+
+    public function update_health_status(Member $Member)
+    {
+        Request::validate([
+            'good' => 'required',
+            'disease' => 'required',
+            'disability' => 'required',
+            'disability_card_number' => 'required',
+        ]);
+
+        $Member->healthStatus()->update([
+            'good' => Request::input('good'),
+            'disease' => Request::input('disease'),
+            'disability' => Request::input('disability'),
+            'disability_card_number' => Request::input('disability_card_number'),
+        ]);
+
+        return redirect()->route('members.edit', ['member' => $Member])->with('success', 'Member updated');
+    }
+
+
+
+
 
     public function update(Member $Member)
     {
@@ -128,7 +151,7 @@ class MemberController extends Controller
     {
         $Member->delete();
 
-        return Redirect::back()->with('success', 'Member deleted.');
+        return Redirect::back()->with('success', 'Member deleted');
     }
 
     public function restore(Member $Member)

@@ -164,7 +164,11 @@ Route::put('members/{member}/restore', [MemberController::class, 'restore'])
 ->name('members.restore')
 ->middleware('auth');
 
+//healthStatus
 
+Route::put('healthStatus/{member}', [MemberController::class, 'update_health_status'])
+->name('health.update')
+->middleware('auth');
 
 // Contacts
 
