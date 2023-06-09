@@ -89,40 +89,35 @@
     </button>
   </div>
   <br>
- <!--
 
- <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-      <table class="w-full whitespace-nowrap">
-        <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6">العنوان</th>
-          <th class="pb-4 pt-6 px-6">التفاصيل</th>
-        </tr>
-        <tr v-for="member in family.members.data" :key="member.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
-          <td class="border-t">
-            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/members/${member.id}/edit`">
-              {{ member.name }}
-              <icon v-if="member.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
-            </Link>
-          </td>
 
-          <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/members/${member.id}/edit`" tabindex="-1">
-              {{ member.address }}
-            </Link>
-          </td>
-          <td class="w-px border-t">
-            <Link class="flex items-center px-4" :href="`/members/${member.id}/edit`" tabindex="-1">
-              <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-            </Link>
-          </td>
-        </tr>
-        <tr v-if="family.members.length === 0">
-          <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على الأفراد</td>
-        </tr>
-      </table>
+  <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+    <table class="w-full whitespace-nowrap">
+  <tr class="text-left font-bold">
+    <th class="pb-4 pt-6 px-6" v-for="header in tableHeaders" :key="header">{{ header }}</th>
+  </tr>
+  <tr v-for="note in family.notes.data" :key="note.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+
+
+    <td class="border-t">
+      <Link class="flex items-center px-6 py-4" tabindex="-1">
+        {{ note.value }}
+      </Link>
+    </td>
+    <td class="w-px border-t">
+      <button class="flex items-center px-4" tabindex="-1">
+        <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+      </button>
+    </td>
+  </tr>
+  <tr v-if="family.notes.length === 0">
+    <td class="px-6 py-4 border-t" colspan="4">لا يوجد ملاحظات</td>
+  </tr>
+</table>
+
     </div>
 
-  -->
+
   <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="note_modal" v-if="show_note_modal">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
     <div class="fixed inset-0 flex items-center justify-center">

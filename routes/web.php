@@ -9,6 +9,9 @@ use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
+
+use App\Http\Controllers\NoteController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -171,7 +174,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
 
 
     //notes
-    Route::post('notes/{family}', [MemberController::class, 'store_note'])
+    Route::post('notes/{family}', [NoteController::class, 'store'])
     ->name('notes.store')
     ->middleware('auth');
 

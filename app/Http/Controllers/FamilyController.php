@@ -59,7 +59,18 @@ class FamilyController extends Controller
                     'deleted_at' => $member->deleted_at,
                 ];
             });
-
+            $notes = $family->notes()
+            ->orderBy('title')
+            ->paginate(10)
+            ->withQueryString()
+            ->through(function ($note) {
+                return [
+                    'id' => $note->id,
+                    'title' => $note->name,
+                    'value' => $note->value,
+                    'deleted_at' => $note->deleted_at,
+                ];
+            });
         return Inertia::render('Families/Edit', [
             'family' => [
                 'id' => $family->id,
@@ -67,6 +78,8 @@ class FamilyController extends Controller
                 'photo' => $family->photo,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
+                'notes' => $notes,
+
             ],
         ]);
     }
