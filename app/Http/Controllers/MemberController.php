@@ -47,7 +47,7 @@ class MemberController extends Controller
                 'birth_city' => ['required', 'max:100'],
                 'social_status' => ['required', 'max:100'],
                 'monthly_income' => ['required', 'integer'],
-                'health_insurance' => ['required', 'max:100'],
+                'health_insurance' => ['required', 'boolean'],
                 'kinship' => ['required', 'max:100'],
                 'caregiver' => ['required', 'boolean'],
                 'education_level' => ['required', 'max:100'],

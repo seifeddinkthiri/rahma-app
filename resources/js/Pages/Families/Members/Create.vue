@@ -28,12 +28,9 @@
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input v-model="form.social_status" :error="form.errors.social_status" class="pb-8 pr-6 w-full lg:w-1/2" label="الحالة المدنية " />
             <text-input v-model="form.monthly_income" :error="form.errors.monthly_income" class="pb-8 pr-6 w-full lg:w-1/2" label="الدخل الشهري" />
+            <ToggleCheckbox :label="'التغطية الصحية '" id="health_insurance" :isChecked="form.health_insurance" @toggle="toggleHandle" />
             <text-input v-model="form.education_level" :error="form.errors.education_level" class="pb-8 pr-6 w-full lg:w-1/2" label="المستوى الدراسي" />
-            <select-input v-model="form.health_insurance" :error="form.errors.health_insurance" class="pb-8 pr-6 w-full lg:w-1/2" label="التغطية الصحية">
-              <option :value="null" />
-              <option :value="true">نعم</option>
-              <option :value="false">لا</option>
-            </select-input>
+
             <select-input v-model="form.caregiver" :error="form.errors.caregiver" class="pb-8 pr-6 w-full lg:w-1/2" label="رب الأسرة">
               <option :value="null" />
               <option :value="true">نعم</option>
@@ -45,8 +42,9 @@
               <option value="أخت">أخت</option>
             </select-input>
           </div>
-          <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3">
+          <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
             <button @click="active_step = 1" class="btn-indigo" type="button">العودة</button>
+            &nbsp;&nbsp;
             <button @click="active_step = 3" class="btn-indigo" type="button">التالي</button>
           </div>
         </div>
@@ -71,6 +69,7 @@ import Layout from '@/Shared/Layout'
 import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
+import ToggleCheckbox from '../../../Shared/ToggleCheckbox.vue'
 
 export default {
   components: {
@@ -79,6 +78,7 @@ export default {
     LoadingButton,
     SelectInput,
     TextInput,
+    ToggleCheckbox
   },
   layout: Layout,
   remember: 'form',
@@ -98,9 +98,9 @@ Family:Object
         birth_city: null,
         social_status: null,
         monthly_income: null,
-        health_insurance: null,
+        health_insurance: false,
         kinship: null,
-        caregiver: null,
+        caregiver: false,
         education_level: null,
         job: null,
         job_place: null,
@@ -108,6 +108,9 @@ Family:Object
     }
   },
   methods: {
+    toggleHandle() {
+      this.form.health_insurance = !this.form.health_insurance;
+    },
     store() {
       this.form.post('/members')
     },

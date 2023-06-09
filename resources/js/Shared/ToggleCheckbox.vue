@@ -1,30 +1,23 @@
 <template>
-  <div>
-    <input
-      id="toggle"
-      type="checkbox"
-      class="hidden"
-      :checked="isChecked"
-      @change="toggleHandle"
-    />
-    <div>
+  <div class="pb-8 pr-6 w-full lg:w-1/2">
+    <label for="toggle" class="form-label">{{ label }}</label>
+    <div class="form-input flex items-center">
+      <input id="toggle" type="checkbox" class="hidden" :checked="isChecked" @change="toggleHandle" />
+
       <label for="toggle" class="flex items-center cursor-pointer">
-        <span class="relative">
-          <span
-            class="block w-10 h-6 rounded-full"
-            :class="{'bg-gray-400': !isChecked, 'bg-green-500': isChecked}"
-          ></span>
-          <span
-            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform"
-            :class="{ 'translate-x-4': isChecked }"
-          ></span>
-        </span>
+        <div class="relative">
+          <div id="second_div" class="block w-10 h-6 rounded-full" :class="{ 'bg-gray-400': !isChecked, 'bg-green-500': isChecked }"></div>
+
+
+          <div  class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transform transition" :class="{ 'translate-x-4': isChecked }"></div>
+
+        </div>
+        &nbsp; &nbsp;
+        <div class="ml-3 text-gray-700" id="first_div">
+            <span v-if="isChecked">جيدة</span>
+            <span v-else>عليلة</span>
+          </div>
       </label>
-    </div>
-    &nbsp;&nbsp;
-    <div>
-      <span class="ml-3 text-gray-700" v-if="isChecked">جيدة</span>
-      <span class="ml-3 text-gray-700" v-else>عليلة</span>
     </div>
   </div>
 </template>
@@ -33,11 +26,12 @@
 export default {
   props: {
     isChecked: Boolean,
+    label:String,
   },
   methods: {
     toggleHandle() {
-      this.$emit('toggle');
+      this.$emit('toggle')
     },
   },
-};
+}
 </script>
