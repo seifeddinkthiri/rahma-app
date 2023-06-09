@@ -20,24 +20,26 @@
         </div>
       </form>
     </div>
-    <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3">
-      <h2 class="ml-auto mt-12 text-2xl font-bold">الأفراد</h2>
-      <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
-        <label class="block text-gray-700">تم الحذف</label>
-        <select v-model="form.trashed" class="form-select mt-1 w-full">
-          <option :value="null" />
-          <option value="with">مع المحذوف</option>
-          <option value="only">فقط المحذوف</option>
-        </select>
-      </search-filter>
-      <Link :href="`/members/${family.id}/create`" class="btn-indigo ml-auto">
-        <span>إنشاء</span>
-        <span class="hidden md:inline">&nbsp;الفرد</span>
-      </Link>
-      <pagination class="mt-6" :links="family.members.links" />
-    </div>
+    <h2 class="mt-12 text-2xl font-bold">الأفراد</h2>
+<br>
+    <div ref="members" class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <br>
+  <div class="flex items-center">
+    <search-filter :onlySearch="true" v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
+      <label class="block text-gray-700">تم الحذف</label>
+      <select v-model="form.trashed" class="form-select mt-1 w-full">
+        <option :value="null" />
+        <option value="with">مع المحذوف</option>
+        <option value="only">فقط المحذوف</option>
+      </select>
+    </search-filter>
+    <Link :href="`/members/${family.id}/create`" class="btn-indigo">
+      <span>إنشاء</span>
+      <span class="hidden md:inline">&nbsp;الفرد</span>
+    </Link>
+  </div>
 
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+  <div class="mt-6 bg-white rounded shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
           <th class="pb-4 pt-6 px-6">الاسم</th>
@@ -67,6 +69,8 @@
         </tr>
       </table>
     </div>
+</div>
+
   </div>
 </template>
 

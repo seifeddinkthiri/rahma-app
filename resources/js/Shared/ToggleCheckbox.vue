@@ -14,8 +14,8 @@
         </div>
         &nbsp; &nbsp;
         <div class="ml-3 text-gray-700" id="first_div">
-            <span v-if="isChecked">جيدة</span>
-            <span v-else>عليلة</span>
+            <span v-if="isChecked">{{ active_value }}</span>
+            <span v-else>{{ inactive_value }}</span>
           </div>
       </label>
     </div>
@@ -28,6 +28,9 @@ export default {
   props: {
     isChecked: Boolean,
     label:String,
+    active_value:String,
+    inactive_value:String,
+
   },
   methods: {
     toggleHandle() {

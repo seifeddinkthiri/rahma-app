@@ -3,7 +3,7 @@
     <Head title="members" />
     <h1 class="mb-8 text-3xl font-bold">العائلات</h1>
     <div class="flex items-center justify-between mb-6">
-      <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
+      <search-filter :onlySearch="false" v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />

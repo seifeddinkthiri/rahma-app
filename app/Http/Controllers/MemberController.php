@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\Family;
-
+use App\Models\HealthStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -35,32 +35,42 @@ class MemberController extends Controller
         return Inertia::render('Families/Members/Create',compact('Family'));
     }
 
+
     public function store()
     {
-        Auth::user()->account->members()->create(
-            Request::validate([
-                'name' => ['required', 'max:100'],
-                'address' => ['required', 'max:100'],
-                'cin' => ['required', 'integer', 'digits:8'],
-                'phone' => ['required', 'integer', 'digits:8'],
-                'birth_date' => ['required', 'date'],
-                'birth_city' => ['required', 'max:100'],
-                'social_status' => ['required', 'max:100'],
-                'monthly_income' => ['required', 'integer'],
-                'health_insurance' => ['required', 'boolean'],
-                'kinship' => ['required', 'max:100'],
-                'caregiver' => ['required', 'boolean'],
-                'education_level' => ['required', 'max:100'],
-                'job' => ['required', 'max:100'],
-                'job_place' => ['required', 'max:100'],
-                'family_id' => ['required', 'integer']
-            ])
+        $validatedData = Request::validate([
+            'name' => ['required', 'max:100'],
+            'address' => ['required', 'max:100'],
+            'cin' => ['required', 'integer', 'digits:8'],
+            'phone' => ['required', 'integer', 'digits:8'],
+            'birth_date' => ['required', 'date'],
+            'birth_city' => ['required', 'max:100'],
+            'social_status' => ['required', 'max:100'],
+            'monthly_income' => ['required', 'integer'],
+            'health_insurance' => ['required', 'boolean'],
+            'kinship' => ['required', 'max:100'],
+            'caregiver' => ['required', 'boolean'],
+            'education_level' => ['required', 'max:100'],
+            'job' => ['required', 'max:100'],
+            'job_place' => ['required', 'max:100'],
+            'family_id' => ['required', 'integer']
+        ]);
 
-        );
+        $member = Auth::user()->account->members()->create($validatedData);
 
-        return Redirect::back()->with('success', 'Member created.');
+        // Create the health status
+        $healthStatus = new HealthStatus([
+            'good' => Request::input('good'),
+            'disease' => Request::input('disease'),
+            'disability' => Request::input('disability'),
+            'disability_card_number' => Request::input('disability_card_number'),
+        ]);
 
+        $member->healthStatus()->save($healthStatus);
+
+        return redirect()->route('families.edit', ['family' => $member->family])->with('success', 'Member created.');
     }
+
 
     public function edit(Member $Member)
     {

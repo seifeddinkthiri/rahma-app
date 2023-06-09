@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center">
     <div class="flex w-full bg-white rounded shadow">
-      <dropdown :auto-close="false" class="focus:z-10 px-4 hover:bg-gray-100 border-r focus:border-white rounded-l focus:ring md:px-6" placement="bottom-start">
+      <dropdown v-if="!onlySearch" :auto-close="false" class="focus:z-10 px-4 hover:bg-gray-100 border-r focus:border-white rounded-l focus:ring md:px-6" placement="bottom-start">
         <template #default>
           <div class="flex items-baseline">
             <span class="hidden text-gray-700 md:inline">فلترة  </span>
@@ -16,9 +16,9 @@
           </div>
         </template>
       </dropdown>
-      <input class="relative px-6 py-3 w-full rounded-r focus:shadow-outline" autocomplete="off" type="text" name="search" placeholder="بحث ... " :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
+      <input class="relative px-6 py-3 w-full rounded focus:shadow-outline" autocomplete="off" type="text" name="search" placeholder="بحث ... " :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
     </div>
-    <button class="ml-3 text-gray-500 hover:text-gray-700 focus:text-indigo-500 text-sm" type="button" @click="$emit('reset')">إعادة ضبط</button>
+    <button v-if="!onlySearch" class="ml-3 text-gray-500 hover:text-gray-700 focus:text-indigo-500 text-sm" type="button" @click="$emit('reset')">إعادة ضبط</button>
   </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
     Dropdown,
   },
   props: {
+    onlySearch:Boolean,
     modelValue: String,
     maxWidth: {
       type: Number,

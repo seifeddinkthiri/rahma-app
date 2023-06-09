@@ -23,7 +23,7 @@
             </select-input>
           </div>
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <button v-if="!member.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">حذف </button>
+            <button v-if="!member.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">حذف</button>
 
             <button @click="active_step = 2" class="btn-indigo" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-4">
@@ -38,11 +38,8 @@
             <text-input v-model="form.social_status" :error="form.errors.social_status" class="pb-8 pr-6 w-full lg:w-1/2" label="الحالة المدنية " />
             <text-input v-model="form.monthly_income" :error="form.errors.monthly_income" class="pb-8 pr-6 w-full lg:w-1/2" label="الدخل الشهري" />
             <text-input v-model="form.education_level" :error="form.errors.education_level" class="pb-8 pr-6 w-full lg:w-1/2" label="المستوى الدراسي" />
-            <select-input v-model="form.health_insurance" :error="form.errors.health_insurance" class="pb-8 pr-6 w-full lg:w-1/2" label="التغطية الصحية">
-              <option :value="null" />
-              <option :value="true">نعم</option>
-              <option :value="false">لا</option>
-            </select-input>
+            <ToggleCheckbox  :id="'health_insurance'" :active_value="'نعم'" :inactive_value="'لا'" :label="'التغطية الصحية'" :isChecked="form.health_insurance" @toggle="toggle_health_insurance" />
+
             <select-input v-model="form.caregiver" :error="form.errors.caregiver" class="pb-8 pr-6 w-full lg:w-1/2" label="رب الأسرة">
               <option :value="null" />
               <option :value="true">نعم</option>
@@ -89,19 +86,17 @@
       <form @submit.prevent="store">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8" v-for="status in member.healthStatus" :key="status.id">
-            <text-input :label="'مرض مزمن'"  v-model="status.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" />
-            <text-input :label="'إعاقة'" v-model="status.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2"  />
-            <text-input :label="'رقم بطاقة الإعاقة'" v-model="status.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2"  />
-            <ToggleCheckbox :label="'صفة الحالة'" :isChecked="health_status_form.good" @toggle="toggleHandle" />
+            <text-input :label="'مرض مزمن'" v-model="status.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" />
+            <text-input :label="'إعاقة'" v-model="status.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2" />
+            <text-input :label="'رقم بطاقة الإعاقة'" v-model="status.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2" />
+            <ToggleCheckbox  :id="'good'" :active_value="'جيدة'" :inactive_value="'عليلة'" :label="'صفة الحالة'" :isChecked="health_status_form.good" @toggle="toggleGood" />
           </div>
-
+          <div v-if="member.healthStatus.length === 0">
+            <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
+          </div>
         </div>
-
-
       </form>
-</div>
-
-
+    </div>
   </div>
 </template>
 
@@ -124,7 +119,7 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
-    ToggleCheckbox
+    ToggleCheckbox,
   },
   layout: Layout,
   props: {
@@ -132,26 +127,26 @@ export default {
   },
   remember: 'form',
   created() {
-  // Populate healthStatusFields array with member.healthStatus fields
-  this.member.healthStatus.forEach(status => {
-    this.healthStatusFields.push({
-      disability: status.disability,
-      disability_card_number: status.disability_card_number,
-      disease: status.disease,
-      good: status.good,
-    });
-  });
-},
+    // Populate healthStatusFields array with member.healthStatus fields
+    this.member.healthStatus.forEach((status) => {
+      this.healthStatusFields.push({
+        disability: status.disability,
+        disability_card_number: status.disability_card_number,
+        disease: status.disease,
+        good: status.good,
+      })
+    })
+  },
   data() {
     return {
       active_step: 1,
       healthStatusFields: [],
       health_status_form: this.$inertia.form({
-        good:false,
-        disease:null,
-        disability:null,
-        disability_card_number:null,
-        member_id:this.member.id,
+        good: false,
+        disease: null,
+        disability: null,
+        disability_card_number: null,
+        member_id: this.member.id,
       }),
       form: this.$inertia.form({
         name: this.member.name,
@@ -169,13 +164,15 @@ export default {
         job: this.member.job,
         job_place: this.member.job_place,
         family_id: this.member.family_id,
-
       }),
     }
   },
   methods: {
-    toggleHandle() {
-      this.health_status_form.good = !this.health_status_form.good;
+    toggle_health_insurance(){
+      this.form.health_insurance = ! this.form.health_insurance;
+    },
+    toggleGood() {
+      this.health_status_form.good = !this.health_status_form.good
     },
     update() {
       this.form.put(`/members/${this.member.id}`)

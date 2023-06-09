@@ -28,19 +28,13 @@
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input v-model="form.social_status" :error="form.errors.social_status" class="pb-8 pr-6 w-full lg:w-1/2" label="الحالة المدنية " />
             <text-input v-model="form.monthly_income" :error="form.errors.monthly_income" class="pb-8 pr-6 w-full lg:w-1/2" label="الدخل الشهري" />
-            <ToggleCheckbox :label="'التغطية الصحية '" id="health_insurance" :isChecked="form.health_insurance" @toggle="toggleHandle" />
+            <text-input v-model="form.job_place" :error="form.errors.job_place" class="pb-8 pr-6 w-full lg:w-1/2" label="مكان العمل " />
+            <text-input v-model="form.job" :error="form.errors.job" class="pb-8 pr-6 w-full lg:w-1/2" label="العمل" />
+
+            <ToggleCheckbox :id="'caregiver'" :isChecked="form.caregiver" :label="'رب الأسرة'" :active_value="'نعم'" :inactive_value="'لا'" @toggle="toggle_caregiver" />
+
             <text-input v-model="form.education_level" :error="form.errors.education_level" class="pb-8 pr-6 w-full lg:w-1/2" label="المستوى الدراسي" />
 
-            <select-input v-model="form.caregiver" :error="form.errors.caregiver" class="pb-8 pr-6 w-full lg:w-1/2" label="رب الأسرة">
-              <option :value="null" />
-              <option :value="true">نعم</option>
-              <option :value="false">لا</option>
-            </select-input>
-            <select-input v-model="form.kinship" :error="form.errors.kinship" class="pb-8 pr-6 w-full lg:w-1/2" label="القرابة العائلية">
-              <option :value="null" />
-              <option value="أخ">أخ</option>
-              <option value="أخت">أخت</option>
-            </select-input>
           </div>
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
             <button @click="active_step = 1" class="btn-indigo" type="button">العودة</button>
@@ -50,12 +44,22 @@
         </div>
         <div ref="part3" v-if="active_step == 3">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <text-input v-model="form.job" :error="form.errors.job" class="pb-8 pr-6 w-full lg:w-1/2" label="العمل" />
-            <text-input v-model="form.job_place" :error="form.errors.job_place" class="pb-8 pr-6 w-full lg:w-1/2" label="مكان العمل " />
+            <ToggleCheckbox :id="'good'" :isChecked="form.good" :label="'الحالة الصحية'" :active_value="'جيدة'" :inactive_value="'عليلة'" @toggle="toggle_health_Status" />
+            <ToggleCheckbox :id="'health_insurance'" :isChecked="form.health_insurance" :label="'التغطية الصحية'" :active_value="'نعم'" :inactive_value="'لا'" @toggle="toggle_health_insurance" />
+
+            <select-input v-model="form.kinship" :error="form.errors.kinship" class="pb-8 pr-6 w-full lg:w-1/2" label="القرابة العائلية">
+              <option :value="null" />
+              <option value="أخ">أخ</option>
+              <option value="أخت">أخت</option>
+            </select-input>
+            <text-input v-model="form.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" label="مرض مزمن" />
+            <text-input v-model="form.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2" label="إعاقة" />
+            <text-input v-model="form.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2" label="رقم بطاقة الإعاقة" />
+
           </div>
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
             <button @click="active_step = 2" class="btn-indigo" type="button">العودة</button>
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit">إنشاء عائلة</loading-button>
+            <loading-button :loading="form.processing" class="btn-indigo" type="submit">إنشاء الفرد</loading-button>
           </div>
         </div>
       </form>
@@ -78,19 +82,20 @@ export default {
     LoadingButton,
     SelectInput,
     TextInput,
-    ToggleCheckbox
+    ToggleCheckbox,
   },
   layout: Layout,
   remember: 'form',
-  props:{
-Family:Object
+  props: {
+    Family: Object,
   },
   data() {
     return {
       active_step: 1,
+
       form: this.$inertia.form({
         name: null,
-        family_id:this.Family.id,
+        family_id: this.Family.id,
         address: null,
         cin: null,
         phone: null,
@@ -104,15 +109,29 @@ Family:Object
         education_level: null,
         job: null,
         job_place: null,
+        good: false,
+        disease: null,
+        disability: null,
+        disability_card_number: null,
       }),
     }
   },
   methods: {
-    toggleHandle() {
-      this.form.health_insurance = !this.form.health_insurance;
+    toggle_health_insurance() {
+      this.form.health_insurance = !this.form.health_insurance
+    },
+    toggle_caregiver() {
+      this.form.caregiver = !this.form.caregiver
+    },
+
+    toggle_health_Status() {
+      this.form.good = !this.form.good
     },
     store() {
-      this.form.post('/members')
+      this.form.post('/members').catch((error) => {
+        // Handle error
+        console.error(error)
+      })
     },
   },
 }
