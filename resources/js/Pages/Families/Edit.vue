@@ -11,7 +11,7 @@
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" />
-          <text-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" label="البريد الإلكتروني" />
+          <text-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" label="الصورة" />
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3">
           <button v-if="!family.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">حذف العائلة</button>
@@ -25,14 +25,7 @@
     <div ref="members" class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
     <br>
   <div class="flex items-center">
-    <search-filter :onlySearch="true" v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
-      <label class="block text-gray-700">تم الحذف</label>
-      <select v-model="form.trashed" class="form-select mt-1 w-full">
-        <option :value="null" />
-        <option value="with">مع المحذوف</option>
-        <option value="only">فقط المحذوف</option>
-      </select>
-    </search-filter>
+
     <Link :href="`/members/${family.id}/create`" class="btn-indigo">
       <span>إنشاء</span>
       <span class="hidden md:inline">&nbsp;الفرد</span>
@@ -82,11 +75,7 @@ import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
-import pickBy from 'lodash/pickBy'
-import throttle from 'lodash/throttle'
-import mapValues from 'lodash/mapValues'
-import Pagination from '@/Shared/Pagination'
-import SearchFilter from '@/Shared/SearchFilter'
+
 
 export default {
   components: {
@@ -97,8 +86,6 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
-    Pagination,
-    SearchFilter,
   },
   layout: Layout,
   props: {
@@ -111,24 +98,15 @@ export default {
       form: this.$inertia.form({
         name: this.family.name,
         photo: this.family.photo,
-        search: this.filters.search,
-        trashed: this.filters.trashed,
+
       }),
     }
   },
-  watch: {
-    form: {
-      deep: true,
-      handler: throttle(function () {
-        this.$inertia.get(`/families/${this.family.id}/edit`, pickBy(this.form), { preserveState: true })
-      }, 150),
-    },
-  },
+
 
   methods: {
-    reset() {
-      this.form = mapValues(this.form, () => null)
-    },
+
+
     update() {
       this.form.put(`/families/${this.family.id}`)
     },

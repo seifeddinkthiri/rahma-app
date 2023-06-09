@@ -53,18 +53,26 @@ class MemberController extends Controller
             'education_level' => ['required', 'max:100'],
             'job' => ['required', 'max:100'],
             'job_place' => ['required', 'max:100'],
-            'family_id' => ['required', 'integer']
+            'family_id' => ['required', 'integer'],
+
         ]);
 
         $member = Auth::user()->account->members()->create($validatedData);
 
-        // Create the health status
-        $healthStatus = new HealthStatus([
-            'good' => Request::input('good'),
-            'disease' => Request::input('disease'),
-            'disability' => Request::input('disability'),
-            'disability_card_number' => Request::input('disability_card_number'),
-        ]);
+       // Create the health status
+$validatedData = Request::validate([
+    'good' => ['required', 'boolean'],
+    'disease' => ['required', 'string', 'max:100'],
+    'disability' => ['required', 'string', 'max:100'],
+    'disability_card_number' => ['required', 'integer','digits:8'],
+]);
+
+$healthStatus = new HealthStatus([
+    'good' => $validatedData['good'],
+    'disease' => $validatedData['disease'],
+    'disability' => $validatedData['disability'],
+    'disability_card_number' => $validatedData['disability_card_number'],
+]);
 
         $member->healthStatus()->save($healthStatus);
 
@@ -100,11 +108,11 @@ class MemberController extends Controller
 
     public function update_health_status(Member $Member)
     {
-        Request::validate([
-            'good' => 'required',
-            'disease' => 'required',
-            'disability' => 'required',
-            'disability_card_number' => 'required',
+         Request::validate([
+            'good' => ['required', 'boolean'],
+            'disease' => ['required', 'string', 'max:100'],
+            'disability' => ['required', 'string', 'max:100'],
+            'disability_card_number' => ['required', 'integer','digits:8'],
         ]);
 
         $Member->healthStatus()->update([

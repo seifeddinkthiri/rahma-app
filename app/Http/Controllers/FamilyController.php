@@ -46,31 +46,31 @@ class FamilyController extends Controller
     }
 
     public function edit(Family $family)
-{
-    $filteredMembers = $family->members()
-        ->filter(Request::only('search', 'trashed'))
-        ->orderBy('name')
-        ->paginate(10)
-        ->withQueryString()
-        ->through(function ($member) {
-            return [
-                'id' => $member->id,
-                'name' => $member->name,
-                'address' => $member->address,
-                'deleted_at' => $member->deleted_at,
-            ];
-        });
-    return Inertia::render('Families/Edit', [
-        'filters' => Request::all('search', 'trashed'),
-        'family' => [
-            'id' => $family->id,
-            'name' => $family->name,
-            'photo' => $family->photo,
-            'deleted_at' => $family->deleted_at,
-            'members' => $filteredMembers,
-        ],
-    ]);
-}
+    {
+        $members = $family->members()
+            ->orderBy('name')
+            ->paginate(10)
+            ->withQueryString()
+            ->through(function ($member) {
+                return [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'address' => $member->address,
+                    'deleted_at' => $member->deleted_at,
+                ];
+            });
+
+        return Inertia::render('Families/Edit', [
+            'family' => [
+                'id' => $family->id,
+                'name' => $family->name,
+                'photo' => $family->photo,
+                'deleted_at' => $family->deleted_at,
+                'members' => $members,
+            ],
+        ]);
+    }
+
 
 
     public function update(Family $Family)

@@ -11,7 +11,7 @@
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الإسم" />
             <text-input v-model="form.address" :error="form.errors.address" class="pb-8 pr-6 w-full lg:w-1/2" label="العنوان" />
-            <text-input v-model="form.cin" :error="form.errors.cin" class="pb-8 pr-6 w-full lg:w-1/2" label="تقتعريف" />
+            <text-input v-model="form.cin" :error="form.errors.cin" class="pb-8 pr-6 w-full lg:w-1/2" label="بطاقة التعريف الوطنية" />
             <text-input v-model="form.phone" :error="form.errors.phone" class="pb-8 pr-6 w-full lg:w-1/2" label="الهاتف" />
             <text-input class="pb-8 pr-6 w-full lg:w-1/2" type="date" id="birth_date" v-model="form.birth_date" label="تاريخ الولادة" />
             <select-input v-model="form.birth_city" :error="form.errors.birth_city" class="pb-8 pr-6 w-full lg:w-1/2" label="مدينة الولادة">
