@@ -173,10 +173,25 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->middleware('auth');
 
 
+
     //notes
     Route::post('notes/{family}', [NoteController::class, 'store'])
     ->name('notes.store')
     ->middleware('auth');
+
+    Route::put('notes/{note}', [noteController::class, 'update'])
+    ->name('notes.update')
+    ->middleware('auth');
+
+    Route::delete('notes/{note}', [noteController::class, 'destroy'])
+    ->name('notes.destroy')
+    ->middleware('auth');
+
+    Route::put('restore_notes/{note}/restore', [noteController::class, 'restore'])
+    ->name('notes.restore')
+    ->middleware('auth');
+
+
 
 
 // Contacts

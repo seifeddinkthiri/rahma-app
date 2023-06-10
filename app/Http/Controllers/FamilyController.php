@@ -66,7 +66,7 @@ class FamilyController extends Controller
             ->through(function ($note) {
                 return [
                     'id' => $note->id,
-                    'title' => $note->name,
+                    'title' => $note->title,
                     'value' => $note->value,
                     'deleted_at' => $note->deleted_at,
                 ];

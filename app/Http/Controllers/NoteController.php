@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
 use App\Models\Family;
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
@@ -18,12 +17,11 @@ class NoteController extends Controller
 
 
 
-
     public function store(Family $family)
     {
         Request::validate([
             'title' => ['required', 'string', 'max:100'],
-            'value' => ['required', 'string', 'max:100'],
+            'value' => ['required', 'string', 'max:1000'],
         ]);
 
         $family->notes()->create([
@@ -38,14 +36,17 @@ class NoteController extends Controller
     public function update(Note $Note)
     {
         Request::validate([
-            'value' => ['required', 'string', 'max:100'],
+            'title' => ['required', 'string', 'max:100'],
+            'value' => ['required', 'string', 'max:1000'],
+
         ]);
 
-        $Note->healthStatus()->update([
+        $Note->update([
+            'title' => Request::input('title'),
             'value' => Request::input('value'),
         ]);
 
-        return redirect()->route('notes.edit', ['note' => $Note])->with('success', 'Note updated');
+        return redirect()->back()->with('success', 'Note updated');
     }
 
 
