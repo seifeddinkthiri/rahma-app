@@ -62,48 +62,48 @@
         </table>
       </div>
     </div>
-
     <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="note_modal" v-if="show_note_modal">
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-      <div class="fixed inset-0 flex items-center justify-center">
-        <form @submit.prevent="save_note">
-          <div class="w-full max-w-lg bg-white rounded shadow-xl">
-            <div class="p-6">
-              <label for="title" class="block mb-2 text-gray-700 text-sm font-bold"> العنوان </label>
-              <input id="title" v-model="notes_form.title" :error="notes_form.errors.title" placeholder="اكتب عنوان الملاحظة ..." />
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <form @submit.prevent="save_note">
+      <div class="w-96 h-auto bg-white rounded shadow-xl">
+        <div class="p-6">
+          <label for="title" class="block mb-2 text-gray-700 text-sm font-bold"> العنوان </label>
+          <input id="title" v-model="notes_form.title" :error="notes_form.errors.title" placeholder="اكتب عنوان الملاحظة ..." class="w-full" />
 
-              <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> التفاصيل </label>
-              <textarea v-model="notes_form.value" id="message" name="message" rows="5" placeholder="اكتب تفاصيل الملاحظة ..."></textarea>
-            </div>
-            <div class="flex justify-end px-4 py-3 bg-gray-50">
-              <button @click="show_note_modal = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded-md focus:outline-none">Cancel</button>
-              <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded-md focus:outline-none">Save</button>
-            </div>
-          </div>
-        </form>
+          <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> التفاصيل </label>
+          <textarea v-model="notes_form.value" id="message" name="message" rows="5" placeholder="اكتب تفاصيل الملاحظة ..." class="w-full"></textarea>
+        </div>
+        <div class="flex justify-end px-4 py-3 bg-gray-50">
+          <button @click="show_note_modal = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded-md focus:outline-none">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded-md focus:outline-none">Save</button>
+        </div>
       </div>
-    </div>
+    </form>
+  </div>
+</div>
 
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="note_modal_update" v-if="show_note_modal_update">
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-      <div class="fixed inset-0 flex items-center justify-center">
-        <form @submit.prevent="update_note">
-          <div class="w-full max-w-lg bg-white rounded shadow-xl">
-            <div class="p-6">
-              <label for="title_update" class="block mb-2 text-gray-700 text-sm font-bold"> العنوان </label>
-              <input id="title_update" v-model="notes_form_update.title" :error="notes_form_update.errors.title" placeholder="اكتب عنوان الملاحظة ..." />
+<div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="note_modal_update" v-if="show_note_modal_update">
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <form @submit.prevent="update_note">
+      <div class="w-96 h-auto bg-white rounded shadow-xl">
+        <div class="p-6">
+          <label for="title" class="block mb-2 text-gray-700 text-sm font-bold"> العنوان </label>
+          <input id="title" v-model="notes_form_update.title" :error="notes_form_update.errors.title" placeholder="اكتب عنوان الملاحظة ..." class="w-full" />
 
-              <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> التفاصيل </label>
-              <textarea v-model="notes_form_update.value" :error="notes_form_update.errors.value" id="message" name="message" rows="5" placeholder="اكتب تفاصيل الملاحظة ..."></textarea>
-            </div>
-            <div class="flex justify-end px-4 py-3 bg-gray-50">
-              <button @click="show_note_modal_update = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded-md focus:outline-none">Cancel</button>
-              <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded-md focus:outline-none">Save updates</button>
-            </div>
-          </div>
-        </form>
+          <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> التفاصيل </label>
+          <textarea v-model="notes_form_update.value" id="message" name="message" rows="5" placeholder="اكتب تفاصيل الملاحظة ..." class="w-full"></textarea>
+        </div>
+        <div class="flex justify-end px-4 py-3 bg-gray-50">
+          <button @click="show_note_modal_update = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded-md focus:outline-none">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded-md focus:outline-none">Save changes</button>
+        </div>
       </div>
-    </div>
+    </form>
+  </div>
+</div>
+
 
     <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
     <br />
