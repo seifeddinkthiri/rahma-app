@@ -1,5 +1,7 @@
 <template>
   <div>
+
+
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-indigo-400 hover:text-indigo-600" href="/members">الأفراد</Link>
@@ -89,7 +91,7 @@
             <text-input :label="'مرض مزمن'" v-model="health_status_form.disease" :error="form.errors.disease" class="pb-8 pr-6 w-full lg:w-1/2" />
             <text-input :label="'إعاقة'" v-model="health_status_form.disability" :error="form.errors.disability" class="pb-8 pr-6 w-full lg:w-1/2" />
             <text-input :label="'رقم بطاقة الإعاقة'" v-model="health_status_form.disability_card_number" :error="form.errors.disability_card_number" class="pb-8 pr-6 w-full lg:w-1/2" />
-            <ToggleCheckbox  :id="'good'" :active_value="'جيدة'" :inactive_value="'عليلة'" :label="'صفة الحالة'" :isChecked="health_status_form.good" @toggle="toggleGood" />
+            <ToggleCheckbox  :id="'good'" :active_value="'جيدة'" :inactive_value="'عليلة'" :label="'صفة الحالة'" :isChecked="health_status_form.good" @toggle="toggle_health" />
           </div>
           <div v-if="member.healthStatus.length === 0">
             <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
@@ -130,6 +132,15 @@ export default {
   },
   remember: 'form',
   created() {
+
+if (this.member.health_insurance == 0) {
+  this.form.health_insurance = false;
+}
+
+if (this.member.health_insurance == 1) {
+  this.form.health_insurance = true;
+}
+
     this.member.healthStatus.forEach(element => {
       this.health_status_form.good = element.good;
       this.health_status_form.disease = element.disease;
@@ -138,6 +149,7 @@ export default {
 
  });
   },
+
   data() {
     return {
       active_step: 1,
@@ -158,7 +170,7 @@ export default {
         birth_city: this.member.birth_city,
         social_status: this.member.social_status,
         monthly_income: this.member.monthly_income,
-        health_insurance: this.member.health_insurance,
+        health_insurance: false,
         kinship: this.member.kinship,
         caregiver: this.member.caregiver,
         education_level: this.member.education_level,
@@ -177,7 +189,7 @@ export default {
     toggle_health_insurance(){
       this.form.health_insurance = ! this.form.health_insurance;
     },
-    toggleGood() {
+    toggle_health() {
       this.health_status_form.good = !this.health_status_form.good
     },
     update() {

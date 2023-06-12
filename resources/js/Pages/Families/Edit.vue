@@ -1,5 +1,6 @@
 <template>
-  <div>--  {{ show_home_modal_update }} --
+  <div>
+
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-indigo-400 hover:text-indigo-600" href="/families">العائلات</Link>
@@ -52,9 +53,7 @@
                 </Link>
               </td>
               <td class="border-t">
-                <Link v-if="member.caregiver" class="flex items-center px-6 py-4" :href="`/members/${member.id}/edit`" tabindex="-1">
-                  معيل الأسرة
-                </Link>
+                <Link v-if="member.caregiver" class="flex items-center px-6 py-4" :href="`/members/${member.id}/edit`" tabindex="-1"> معيل الأسرة </Link>
               </td>
               <td class="w-px border-t">
                 <Link class="flex items-center px-4" :href="`/members/${member.id}/edit`" tabindex="-1">
@@ -109,6 +108,49 @@
       </div>
     </div>
 
+
+
+    <h2 class="mt-12 text-2xl font-bold">المرافق الأساسية</h2>
+    <br />
+    <div ref="facilities" class="max-w-3xl bg-white rounded shadow overflow-hidden">
+      <br />
+      <div class="flex items-center">
+        <button class="btn-indigo" @click="edit_facilities">
+          <span>تعديل</span>
+          <span class="hidden md:inline">&nbsp;المرافق</span>
+        </button>
+      </div>
+      <br />
+      <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="facility_modal_update" v-if="show_facility_modal_update">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <div class="fixed inset-0 flex items-center justify-center">
+        <form @submit.prevent="update_facility">
+          <div class="w-96 h-auto bg-white rounded shadow-xl">
+
+            <div class="p-6">
+              <ToggleCheckbox  :id="'sanitaion'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الصرف الصحي'" :isChecked="facilities_form_update.Sanitation" @toggle="toggle_sanitation" />
+              <ToggleCheckbox  :id="'electricity'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الكهرباء'" :isChecked="facilities_form_update.electricity" @toggle="toggle_electricity" />
+              <ToggleCheckbox  :id="'water'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الماء'" :isChecked="facilities_form_update.water" @toggle="toggle_water" />
+              <ToggleCheckbox  :id="'ventilation'" :active_value="'نعم'" :inactive_value="'لا'" :label="'التهوئة'" :isChecked="facilities_form_update.ventilation" @toggle="toggle_ventilation" />
+
+            </div>
+            <div class="flex justify-end px-4 py-3 bg-gray-50">
+              <button @click="show_facility_modal_update = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">Cancel</button>
+              <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">Save changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
     <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
     <br />
     <div ref="members" class="max-w-3xl bg-white rounded shadow overflow-hidden">
@@ -147,17 +189,6 @@
       </table>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
     <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
     <br />
     <div ref="members" class="max-w-3xl bg-white rounded shadow overflow-hidden">
@@ -173,8 +204,7 @@
         <thead>
           <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">الوضعية القانونية</th>
-            <th class="pb-4 pt-6 px-6">سعر الكراء </th>
-
+            <th class="pb-4 pt-6 px-6">سعر الكراء</th>
           </tr>
         </thead>
         <tbody>
@@ -207,10 +237,9 @@
               <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold"> الوضعية القانونية </label>
               <input id="homeStatus" v-model="home_form.status" :error="home_form.errors.status" placeholder="اكتب وضعية المسكن القانونية ..." class="w-full" />
               <label for="allocation_price" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> سعر الكراء </label>
-              <input v-model="home_form.allocation_price" id="allocation_price" name="allocation_price" rows="5" placeholder="اكتب سعر الكراء  ..." class="w-full"/>
-              <label for="homeDescription" class="block mb-2 mt-6 text-gray-700 text-sm font-bold">  وصف المسكن </label>
+              <input v-model="home_form.allocation_price" id="allocation_price" name="allocation_price" rows="5" placeholder="اكتب سعر الكراء  ..." class="w-full" />
+              <label for="homeDescription" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> وصف المسكن </label>
               <textarea v-model="home_form.desciption" id="homeDescription" name="homeDescription" rows="5" placeholder="اكتب وصف المسكن ..." class="w-full"></textarea>
-
             </div>
             <div class="flex justify-end px-4 py-3 bg-gray-50">
               <button @click="show_home_modal = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">Cancel</button>
@@ -221,8 +250,7 @@
       </div>
     </div>
 
-
-   <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="home_modal_update" v-if="show_home_modal_update">
+    <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="home_modal_update" v-if="show_home_modal_update">
       <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="update_home">
@@ -231,10 +259,9 @@
               <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold"> الوضعية القانونية </label>
               <input id="homeStatus" v-model="home_form_update.status" :error="home_form_update.errors.status" placeholder="اكتب وضعية المسكن القانونية ..." class="w-full" />
               <label for="allocation_price" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> سعر الكراء </label>
-              <input v-model="home_form_update.allocation_price" id="allocation_price" name="allocation_price" rows="5" placeholder="اكتب سعر الكراء  ..." class="w-full"/>
-              <label for="homeDescription" class="block mb-2 mt-6 text-gray-700 text-sm font-bold">  وصف المسكن </label>
+              <input v-model="home_form_update.allocation_price" id="allocation_price" name="allocation_price" rows="5" placeholder="اكتب سعر الكراء  ..." class="w-full" />
+              <label for="homeDescription" class="block mb-2 mt-6 text-gray-700 text-sm font-bold"> وصف المسكن </label>
               <textarea v-model="home_form_update.desciption" id="homeDescription" name="homeDescription" rows="5" placeholder="اكتب وصف المسكن ..." class="w-full"></textarea>
-
             </div>
             <div class="flex justify-end px-4 py-3 bg-gray-50">
               <button @click="show_home_modal_update = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">Cancel</button>
@@ -244,12 +271,8 @@
         </form>
       </div>
     </div>
-
-
-
   </div>
 </template>
-
 
 <script>
 import { Head, Link } from '@inertiajs/inertia-vue3'
@@ -259,6 +282,7 @@ import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
+import ToggleCheckbox from '../../Shared/ToggleCheckbox.vue'
 
 export default {
   components: {
@@ -269,21 +293,27 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    ToggleCheckbox
   },
   layout: Layout,
   props: {
     family: Object,
   },
   remember: 'form',
+
   data() {
     return {
       show_note_modal: false,
       show_home_modal: false,
 
-      show_note_modal_update :false,
-      show_home_modal_update :false,
+      show_note_modal_update: false,
+      show_facility_modal_update: false,
+      show_home_modal_update: false,
 
       note_id: null,
+
+
+
       form: this.$inertia.form({
         name: this.family.name,
         photo: this.family.photo,
@@ -296,35 +326,97 @@ export default {
         title: null,
         value: null,
       }),
+
+
+
+      facilities_form_update: this.$inertia.form({
+        Sanitation: false,
+        electricity: false,
+        water: false,
+        ventilation: false,
+      }),
+
+
+
       home_form: this.$inertia.form({
         status: null,
         allocation_price: null,
-        desciption:null,
+        desciption: null,
       }),
       home_form_update: this.$inertia.form({
         status: null,
         allocation_price: null,
-        desciption:null,
+        desciption: null,
       }),
     }
   },
 
   methods: {
+
+
+    toggle_sanitation(){
+      this.facilities_form_update.Sanitation = !this.facilities_form_update.Sanitation;
+    },
+    toggle_water(){
+      this.facilities_form_update.water = !this.facilities_form_update.water;
+    },
+    toggle_electricity(){
+      this.facilities_form_update.electricity = !this.facilities_form_update.electricity;
+    },
+    toggle_ventilation(){
+      this.facilities_form_update.ventilation = !this.facilities_form_update.ventilation;
+    },
+
+
+    edit_facilities() {
+      this.show_facility_modal_update = true
+      this.family.facilities.forEach(element => {
+      this.facilities_form_update.Sanitation = element.Sanitation;
+      this.facilities_form_update.ventilation = element.ventilation;
+      this.facilities_form_update.water = element.water;
+      this.facilities_form_update.electricity = element.electricity;
+ });
+
+    },
+
+    update_facility() {
+      this.show_facility_modal_update = false
+
+      this.facilities_form_update.put(`/facilities/${this.family.id}`)
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     edit_note(id) {
-     const note_title = this.family.notes.data.filter((note) => note.id === id).map((note) => note.title);
-      const note_value = this.family.notes.data.filter((note) => note.id === id).map((note) => note.value);
+      const note_title = this.family.notes.data.filter((note) => note.id === id).map((note) => note.title)
+      const note_value = this.family.notes.data.filter((note) => note.id === id).map((note) => note.value)
 
       this.show_note_modal_update = true
-      this.notes_form_update.title = note_title.toString() ;
-      this.notes_form_update.value = note_value.toString() ;
-      this.note_id = id;
+      this.notes_form_update.title = note_title.toString()
+      this.notes_form_update.value = note_value.toString()
+      this.note_id = id
     },
     save_note() {
       this.show_note_modal = false
 
       this.notes_form.post(`/notes/${this.family.id}`)
-      this.notes_form.title=null;
-      this.notes_form.value=null;
+      this.notes_form.title = null
+      this.notes_form.value = null
     },
     update_note() {
       this.show_note_modal_update = false
@@ -335,34 +427,24 @@ export default {
       this.show_note_modal = true
     },
 
-
-
-
-
-
-
-
-
-
     edit_home() {
-      this.show_home_modal_update = true;
+      this.show_home_modal_update = true
 
-     const home_status = this.family.home.map((home) => home.status);
-     const home_allocation_price = this.family.home.map((home) => home.allocation_price);
-     const home_desciption = this.family.home.map((home) => home.desciption);
+      const home_status = this.family.home.map((home) => home.status)
+      const home_allocation_price = this.family.home.map((home) => home.allocation_price)
+      const home_desciption = this.family.home.map((home) => home.desciption)
 
-      this.home_form_update.status= home_status.toString() ;
-      this.home_form_update.allocation_price= home_allocation_price.toString() ;
-      this.home_form_update.desciption= home_desciption.toString() ;
-
+      this.home_form_update.status = home_status.toString()
+      this.home_form_update.allocation_price = home_allocation_price.toString()
+      this.home_form_update.desciption = home_desciption.toString()
     },
     save_home() {
       this.show_home_modal = false
 
       this.home_form.post(`/home/${this.family.id}`)
-      this.home_form.status=null;
-      this.home_form.allocation_price=null;
-      this.home_form.desciption=null;
+      this.home_form.status = null
+      this.home_form.allocation_price = null
+      this.home_form.desciption = null
     },
     update_home() {
       this.show_home_modal_update = false
@@ -372,25 +454,6 @@ export default {
     openHomeModal() {
       this.show_home_modal = true
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     update() {
       this.form.put(`/families/${this.family.id}`)

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\FamilyController;
@@ -178,15 +179,15 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('notes.store')
     ->middleware('auth');
 
-    Route::put('notes/{note}', [noteController::class, 'update'])
+    Route::put('notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update')
     ->middleware('auth');
 
-    Route::delete('notes/{note}', [noteController::class, 'destroy'])
+    Route::delete('notes/{note}', [NoteController::class, 'destroy'])
     ->name('notes.destroy')
     ->middleware('auth');
 
-    Route::put('restore_notes/{note}/restore', [noteController::class, 'restore'])
+    Route::put('restore_notes/{note}/restore', [NoteController::class, 'restore'])
     ->name('notes.restore')
     ->middleware('auth');
 
@@ -208,6 +209,19 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
  ->middleware('auth');
 
 
+
+
+    Route::put('facilities/{family}', [FacilityController::class, 'update'])
+    ->name('facilities.update')
+    ->middleware('auth');
+
+    Route::delete('facilities/{family}', [FacilityController::class, 'destroy'])
+    ->name('facilities.destroy')
+    ->middleware('auth');
+
+    Route::put('restore_facilities/{family}/restore', [FacilityController::class, 'restore'])
+    ->name('facilities.restore')
+    ->middleware('auth');
 // Contacts
 
 Route::get('contacts', [ContactsController::class, 'index'])

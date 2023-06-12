@@ -30,6 +30,11 @@ class Family extends Model
             }
         });
     }
+
+
+
+
+
     public function home()
     {
         return $this->hasOne(Home::class);
@@ -45,7 +50,25 @@ class Family extends Model
     }
     public function facilities()
     {
-        return $this->hasMany(Facility::class);
+        return $this->hasOne(Facility::class);
+    }
+
+
+
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($family) {
+            $family->facilities()->create([
+                'Sanitation'=>false,
+                'electricity'=>false,
+                'ventilation'=>false,
+                 'water'=>false,
+
+            ]);
+        });
     }
 
 }

@@ -48,7 +48,7 @@ class FamilyController extends Controller
     public function edit(Family $family)
     {
         $members = $family->members()
-            ->orderBy('name')
+            ->orderBy('id')
             ->paginate(10)
             ->withQueryString()
             ->through(function ($member) {
@@ -61,7 +61,7 @@ class FamilyController extends Controller
                 ];
             });
             $notes = $family->notes()
-            ->orderBy('title')
+            ->orderBy('id')
             ->paginate(10)
             ->withQueryString()
             ->through(function ($note) {
@@ -75,6 +75,8 @@ class FamilyController extends Controller
 
 
 
+
+
         return Inertia::render('Families/Edit', [
             'family' => [
                 'id' => $family->id,
@@ -83,9 +85,8 @@ class FamilyController extends Controller
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,
+                'facilities' =>  $family->facilities()->get(),
                 'home' =>$family->home()->get(),
-
-
             ],
         ]);
     }
