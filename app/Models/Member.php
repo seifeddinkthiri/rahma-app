@@ -65,10 +65,6 @@ class Member extends Model
         return $this->hasOne(HealthStatus::class);
     }
 
-    public function home()
-    {
-        return $this->hasOne(Home::class);
-    }
 
 
     public function family()

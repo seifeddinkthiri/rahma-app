@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
@@ -138,9 +139,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
 
     //members
 
-    Route::get('members/{family}', [MemberController::class, 'index'])
-    ->name('members')
-    ->middleware('auth');
+
 
     Route::get('members/{family}/create', [MemberController::class, 'create'])
     ->name('members.create')
@@ -191,7 +190,22 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('notes.restore')
     ->middleware('auth');
 
+ //Home
+ Route::post('home/{family}', [HomeController::class, 'store'])
+ ->name('home.store')
+ ->middleware('auth');
 
+ Route::put('home/{family}', [HomeController::class, 'update'])
+ ->name('home.update')
+ ->middleware('auth');
+
+ Route::delete('home/{family}', [HomeController::class, 'destroy'])
+ ->name('home.destroy')
+ ->middleware('auth');
+
+ Route::put('restore_home/{family}/restore', [HomeController::class, 'restore'])
+ ->name('homes.restore')
+ ->middleware('auth');
 
 
 // Contacts

@@ -12,23 +12,6 @@ use Inertia\Inertia;
 
 class MemberController extends Controller
 {
-    public function index(Family $Family)
-    {
-        return Inertia::render('Families/Members/Index', [
-            'filters' => Request::all('search', 'trashed'),
-            'members' => $Family->members()
-                ->orderBy('name')
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($Member) => [
-                    'id' => $Member->id,
-                    'name' => $Member->name,
-                    'address' => $Member->address,
-                    'deleted_at' => $Member->deleted_at,
-                ]),
-        ]);
-    }
 
     public function create(Family $Family)
     {

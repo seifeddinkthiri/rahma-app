@@ -30,6 +30,10 @@ class Family extends Model
             }
         });
     }
+    public function home()
+    {
+        return $this->hasOne(Home::class);
+    }
 
     public function members()
     {

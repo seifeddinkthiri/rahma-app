@@ -55,7 +55,8 @@ class FamilyController extends Controller
                 return [
                     'id' => $member->id,
                     'name' => $member->name,
-                    'address' => $member->address,
+                    'kinship' => $member->kinship,
+                    'caregiver' => $member->caregiver,
                     'deleted_at' => $member->deleted_at,
                 ];
             });
@@ -71,6 +72,9 @@ class FamilyController extends Controller
                     'deleted_at' => $note->deleted_at,
                 ];
             });
+
+
+
         return Inertia::render('Families/Edit', [
             'family' => [
                 'id' => $family->id,
@@ -79,6 +83,8 @@ class FamilyController extends Controller
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,
+                'home' =>$family->home()->get(),
+
 
             ],
         ]);
