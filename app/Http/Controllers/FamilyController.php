@@ -57,7 +57,10 @@ class FamilyController extends Controller
 
             ]
         );
-        Request::file('photo') ->move(public_path('uploads'), $family->photo);
+        if (Request::file('photo')) {
+            Request::file('photo') ->move(public_path('uploads'), $family->photo);
+
+        }
 
         return Redirect::route('families')->with('success', 'Family created.');
     }
@@ -119,7 +122,11 @@ class FamilyController extends Controller
 
             ]
         );
-        Request::file('photo') ->move(public_path('uploads'), $Family->photo);
+
+        if (  Request::file('photo')) {
+            Request::file('photo') ->move(public_path('uploads'), $Family->photo);
+
+        }
 
         return Redirect::back()->with('success', 'Family updated.');
     }

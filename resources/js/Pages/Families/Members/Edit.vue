@@ -201,12 +201,12 @@ if (this.member.caregiver == 1) {
       this.form.put(`/members/${this.member.id}`)
     },
     destroy() {
-      if (confirm('Are you sure you want to delete this member?')) {
+      if (confirm('هل أنت متأكد أنك تريد حذف هذا الفرد ؟')) {
         this.$inertia.delete(`/members/${this.member.id}`)
       }
     },
     restore() {
-      if (confirm('Are you sure you want to restore this member?')) {
+      if (confirm('هل أنت متأكد أنك تريد استعادة هذا الفرد ؟')) {
         this.$inertia.put(`/members/${this.member.id}/restore`)
       }
     },
