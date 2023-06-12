@@ -126,7 +126,7 @@ Route::get('families/{family}/edit', [FamilyController::class, 'edit'])
     ->name('families.edit')
     ->middleware('auth');
 
-Route::put('families/{family}', [FamilyController::class, 'update'])
+Route::post('families_update/{family}', [FamilyController::class, 'update'])
     ->name('families.update')
     ->middleware('auth');
 

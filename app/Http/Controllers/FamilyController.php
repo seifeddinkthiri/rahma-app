@@ -113,12 +113,13 @@ class FamilyController extends Controller
     public function update(Family $Family)
     {
         $Family->update(
-            Request::validate([
-                'name' => ['required', 'max:100'],
-                'photo' => ['required', 'max:100'],
+            [
+                'name' => Request::get('name'),
+                'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
 
-            ])
+            ]
         );
+        Request::file('photo') ->move(public_path('uploads'), $Family->photo);
 
         return Redirect::back()->with('success', 'Family updated.');
     }

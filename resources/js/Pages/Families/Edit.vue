@@ -10,9 +10,10 @@
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <text-input v-model="family.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" />
-          <file-input v-model="family.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="الصورة" />
-          <img v-show="family.photo" class="h-110 block -my-2 mr-2 w-10 rounded" :src="`/uploads/${family.photo}`" />
+          <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" />
+
+          <file-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="الصورة" />
+
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3">
           <button v-if="!family.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">حذف العائلة</button>
@@ -305,7 +306,7 @@ export default {
 
       form: this.$inertia.form({
         name: this.family.name,
-        photo: this.family.photo,
+        photo:null,
       }),
       notes_form: this.$inertia.form({
         title: null,
@@ -420,7 +421,7 @@ export default {
     },
 
     update() {
-      this.form.put(`/families/${this.family.id}`)
+      this.form.post(`/families_update/${this.family.id}`)
     },
     destroy() {
       if (confirm('Are you sure you want to delete this family?')) {
