@@ -21,7 +21,7 @@
     <thead>
       <tr class="text-right font-bold">
         <th class="pb-4 pt-6 px-6">الاسم</th>
-        <th class="pb-4 pt-6 px-6" colspan="2">الهاتف</th>
+        <th class="pb-4 pt-6 px-6" colspan="2">الصورة</th>
       </tr>
     </thead>
     <tbody class="text-right">
@@ -34,7 +34,9 @@
             </td>
             <td class="border-t">
               <Link class="flex items-center px-6 py-4" :href="`/families/${family.id}/edit`" tabindex="-1">
-                {{ family.photo }}
+                <img v-if="family.photo" class="block -my-2 mr-2 w-10 h-110 rounded" :src="'uploads/'+family.photo" />
+
+              <icon v-if="family.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
               </Link>
             </td>
 

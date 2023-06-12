@@ -17,7 +17,7 @@ class CreateFamiliesTable extends Migration
             $table->id();
             $table->integer('account_id')->index();
             $table->string('name');
-            $table->string('photo');
+            $table->string('photo', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();
 

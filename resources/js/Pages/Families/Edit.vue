@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-indigo-400 hover:text-indigo-600" href="/families">العائلات</Link>
@@ -11,8 +10,9 @@
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" />
-          <text-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" label="الصورة" />
+          <text-input v-model="family.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" />
+          <file-input v-model="family.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="الصورة" />
+          <img v-show="family.photo" class="h-110 block -my-2 mr-2 w-10 rounded" :src="`/uploads/${family.photo}`" />
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3">
           <button v-if="!family.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">حذف العائلة</button>
@@ -108,8 +108,6 @@
       </div>
     </div>
 
-
-
     <h2 class="mt-12 text-2xl font-bold">المرافق الأساسية</h2>
     <br />
     <div ref="facilities" class="max-w-3xl bg-white rounded shadow overflow-hidden">
@@ -122,34 +120,25 @@
       </div>
       <br />
       <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="facility_modal_update" v-if="show_facility_modal_update">
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-      <div class="fixed inset-0 flex items-center justify-center">
-        <form @submit.prevent="update_facility">
-          <div class="w-96 h-auto bg-white rounded shadow-xl">
-
-            <div class="p-6">
-              <ToggleCheckbox  :id="'sanitaion'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الصرف الصحي'" :isChecked="facilities_form_update.Sanitation" @toggle="toggle_sanitation" />
-              <ToggleCheckbox  :id="'electricity'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الكهرباء'" :isChecked="facilities_form_update.electricity" @toggle="toggle_electricity" />
-              <ToggleCheckbox  :id="'water'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الماء'" :isChecked="facilities_form_update.water" @toggle="toggle_water" />
-              <ToggleCheckbox  :id="'ventilation'" :active_value="'نعم'" :inactive_value="'لا'" :label="'التهوئة'" :isChecked="facilities_form_update.ventilation" @toggle="toggle_ventilation" />
-
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 flex items-center justify-center">
+          <form @submit.prevent="update_facility">
+            <div class="w-96 h-auto bg-white rounded shadow-xl">
+              <div class="p-6">
+                <ToggleCheckbox :id="'sanitaion'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الصرف الصحي'" :isChecked="facilities_form_update.Sanitation" @toggle="toggle_sanitation" />
+                <ToggleCheckbox :id="'electricity'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الكهرباء'" :isChecked="facilities_form_update.electricity" @toggle="toggle_electricity" />
+                <ToggleCheckbox :id="'water'" :active_value="'نعم'" :inactive_value="'لا'" :label="'الماء'" :isChecked="facilities_form_update.water" @toggle="toggle_water" />
+                <ToggleCheckbox :id="'ventilation'" :active_value="'نعم'" :inactive_value="'لا'" :label="'التهوئة'" :isChecked="facilities_form_update.ventilation" @toggle="toggle_ventilation" />
+              </div>
+              <div class="flex justify-end px-4 py-3 bg-gray-50">
+                <button @click="show_facility_modal_update = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">Cancel</button>
+                <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">Save changes</button>
+              </div>
             </div>
-            <div class="flex justify-end px-4 py-3 bg-gray-50">
-              <button @click="show_facility_modal_update = false" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">Cancel</button>
-              <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">Save changes</button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-    </div>
-
-
-
-
-
-
-
 
     <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
     <br />
@@ -283,6 +272,7 @@ import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
 import ToggleCheckbox from '../../Shared/ToggleCheckbox.vue'
+import FileInput from '@/Shared/FileInput'
 
 export default {
   components: {
@@ -293,7 +283,8 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
-    ToggleCheckbox
+    ToggleCheckbox,
+    FileInput,
   },
   layout: Layout,
   props: {
@@ -312,8 +303,6 @@ export default {
 
       note_id: null,
 
-
-
       form: this.$inertia.form({
         name: this.family.name,
         photo: this.family.photo,
@@ -327,16 +316,12 @@ export default {
         value: null,
       }),
 
-
-
       facilities_form_update: this.$inertia.form({
         Sanitation: false,
         electricity: false,
         water: false,
         ventilation: false,
       }),
-
-
 
       home_form: this.$inertia.form({
         status: null,
@@ -352,31 +337,27 @@ export default {
   },
 
   methods: {
-
-
-    toggle_sanitation(){
-      this.facilities_form_update.Sanitation = !this.facilities_form_update.Sanitation;
+    toggle_sanitation() {
+      this.facilities_form_update.Sanitation = !this.facilities_form_update.Sanitation
     },
-    toggle_water(){
-      this.facilities_form_update.water = !this.facilities_form_update.water;
+    toggle_water() {
+      this.facilities_form_update.water = !this.facilities_form_update.water
     },
-    toggle_electricity(){
-      this.facilities_form_update.electricity = !this.facilities_form_update.electricity;
+    toggle_electricity() {
+      this.facilities_form_update.electricity = !this.facilities_form_update.electricity
     },
-    toggle_ventilation(){
-      this.facilities_form_update.ventilation = !this.facilities_form_update.ventilation;
+    toggle_ventilation() {
+      this.facilities_form_update.ventilation = !this.facilities_form_update.ventilation
     },
-
 
     edit_facilities() {
       this.show_facility_modal_update = true
-      this.family.facilities.forEach(element => {
-      this.facilities_form_update.Sanitation = element.Sanitation;
-      this.facilities_form_update.ventilation = element.ventilation;
-      this.facilities_form_update.water = element.water;
-      this.facilities_form_update.electricity = element.electricity;
- });
-
+      this.family.facilities.forEach((element) => {
+        this.facilities_form_update.Sanitation = element.Sanitation
+        this.facilities_form_update.ventilation = element.ventilation
+        this.facilities_form_update.water = element.water
+        this.facilities_form_update.electricity = element.electricity
+      })
     },
 
     update_facility() {
@@ -384,23 +365,6 @@ export default {
 
       this.facilities_form_update.put(`/facilities/${this.family.id}`)
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     edit_note(id) {
       const note_title = this.family.notes.data.filter((note) => note.id === id).map((note) => note.title)

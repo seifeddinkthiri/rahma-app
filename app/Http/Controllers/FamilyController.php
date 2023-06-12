@@ -35,12 +35,29 @@ class FamilyController extends Controller
 
     public function store()
     {
-        Auth::user()->account->Families()->create(
-            Request::validate([
-                'name' => ['required', 'max:100'],
-                'photo' => ['required', 'max:100'],
-            ])
+
+        Request::validate([
+            'name' => ['required', 'max:100'],
+            'photo' => ['nullable', 'image'],
+
+        ]);
+
+
+
+
+
+
+
+
+
+      $family =  Auth::user()->account->Families()->create(
+            [
+                'name' => Request::get('name'),
+                'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+
+            ]
         );
+        Request::file('photo') ->move(public_path('uploads'), $family->photo);
 
         return Redirect::route('families')->with('success', 'Family created.');
     }
@@ -60,7 +77,7 @@ class FamilyController extends Controller
                     'deleted_at' => $member->deleted_at,
                 ];
             });
-            $notes = $family->notes()
+        $notes = $family->notes()
             ->orderBy('id')
             ->paginate(10)
             ->withQueryString()
@@ -86,7 +103,7 @@ class FamilyController extends Controller
                 'members' => $members,
                 'notes' => $notes,
                 'facilities' =>  $family->facilities()->get(),
-                'home' =>$family->home()->get(),
+                'home' => $family->home()->get(),
             ],
         ]);
     }

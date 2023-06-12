@@ -42,11 +42,8 @@
             <text-input v-model="form.education_level" :error="form.errors.education_level" class="pb-8 pr-6 w-full lg:w-1/2" label="المستوى الدراسي" />
             <ToggleCheckbox  :id="'health_insurance'" :active_value="'نعم'" :inactive_value="'لا'" :label="'التغطية الصحية'" :isChecked="form.health_insurance" @toggle="toggle_health_insurance" />
 
-            <select-input v-model="form.caregiver" :error="form.errors.caregiver" class="pb-8 pr-6 w-full lg:w-1/2" label="رب الأسرة">
-              <option :value="null" />
-              <option :value="true">نعم</option>
-              <option :value="false">لا</option>
-            </select-input>
+            <ToggleCheckbox  :id="'caregiver'" :active_value="'نعم'" :inactive_value="'لا'" :label="'معيل الأسرة'" :isChecked="form.caregiver" @toggle="toggle_caregiver" />
+
             <select-input v-model="form.kinship" :error="form.errors.kinship" class="pb-8 pr-6 w-full lg:w-1/2" label="القرابة العائلية">
               <option :value="null" />
               <option value="أخ">أخ</option>
@@ -136,9 +133,15 @@ export default {
 if (this.member.health_insurance == 0) {
   this.form.health_insurance = false;
 }
-
 if (this.member.health_insurance == 1) {
   this.form.health_insurance = true;
+}
+if (this.member.caregiver == 0) {
+  this.form.caregiver = false;
+}
+
+if (this.member.caregiver == 1) {
+  this.form.caregiver = true;
 }
 
     this.member.healthStatus.forEach(element => {
@@ -172,7 +175,7 @@ if (this.member.health_insurance == 1) {
         monthly_income: this.member.monthly_income,
         health_insurance: false,
         kinship: this.member.kinship,
-        caregiver: this.member.caregiver,
+        caregiver: false,
         education_level: this.member.education_level,
         job: this.member.job,
         job_place: this.member.job_place,
@@ -185,7 +188,9 @@ if (this.member.health_insurance == 1) {
       this.health_status_form.put(`/healthStatus/${this.member.id}`)
 
     },
-
+    toggle_caregiver(){
+      this.form.caregiver = ! this.form.caregiver;
+    },
     toggle_health_insurance(){
       this.form.health_insurance = ! this.form.health_insurance;
     },
