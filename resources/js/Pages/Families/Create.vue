@@ -12,6 +12,7 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="caregiver_cin"
             v-model="form.caregiver_cin"
+            :error="form.errors.caregiver_cin"
             label="رقم هوية معيل الأسرة"
           />
           <file-input
@@ -191,7 +192,17 @@ export default {
       this.form.other_members = !this.form.other_members;
     },
     store() {
-      this.form.post("/families");
+      if (
+        this.form.husband ||
+        this.form.wife ||
+        this.form.childrens_number > 0 ||
+        this.form.elderlies_number > 0 ||
+        this.form.other_members_number > 0
+      ) {
+        this.form.post("/families");
+      } else {
+        window.alert("تحتوي العائلة على فرد واحد علا الأقل");
+      }
     },
   },
 };
