@@ -14,11 +14,7 @@
           <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
             الوضعية القانونية
           </label>
-          <select-input
-            v-model="home_form.status"
-            :error="home_form.errors.status"
-            class="form-input"
-          >
+          <select-input v-model="home_form.status" class="form-input">
             <option :value="null" />
             <option value="Ownership">ملك</option>
             <option value="without compensation">بدون مقابل</option>
@@ -49,13 +45,13 @@
           </label>
           <TextareaInput
             v-model="home_form.desciption"
+            :error="home_form.errors.desciption"
             id="homeDescription"
             name="homeDescription"
             rows="5"
             placeholder="اكتب وصف المسكن ..."
             class="w-full"
-          ></TextareaInput
-          >>
+          ></TextareaInput>
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
           <button
@@ -199,7 +195,6 @@
             />
             <select-input
               v-model="form.birth_city"
-              :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
             >

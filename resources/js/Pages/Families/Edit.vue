@@ -467,11 +467,7 @@
               <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
                 الوضعية القانونية
               </label>
-              <select-input
-                v-model="home_form.status"
-                :error="home_form.errors.status"
-                class="pb-8 pr-6 w-full lg:w-1/2"
-              >
+              <select-input v-model="home_form.status" class="form-input">
                 <option :value="null" />
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
@@ -485,7 +481,7 @@
                 >
                   سعر الكراء
                 </label>
-                <input
+                <text-input
                   v-model="home_form.allocation_price"
                   id="allocation_price"
                   name="allocation_price"
@@ -500,14 +496,15 @@
               >
                 وصف المسكن
               </label>
-              <textarea
+              <TextareaInput
                 v-model="home_form.desciption"
+                :error="home_form.errors.desciption"
                 id="homeDescription"
                 name="homeDescription"
                 rows="5"
                 placeholder="اكتب وصف المسكن ..."
                 class="w-full"
-              ></textarea>
+              ></TextareaInput>
             </div>
             <div class="flex justify-end px-4 py-3 bg-gray-50">
               <button
@@ -542,41 +539,46 @@
               <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
                 الوضعية القانونية
               </label>
-              <input
-                id="homeStatus"
-                v-model="home_form_update.status"
-                :error="home_form_update.errors.status"
-                placeholder="اكتب وضعية المسكن القانونية ..."
-                class="w-full"
-              />
-              <label
-                for="allocation_price"
-                class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
-              >
-                سعر الكراء
-              </label>
-              <input
-                v-model="home_form_update.allocation_price"
-                id="allocation_price"
-                name="allocation_price"
-                rows="5"
-                placeholder="اكتب سعر الكراء  ..."
-                class="w-full"
-              />
+
+              <select-input v-model="home_form_update.status" class="form-input">
+                <option :value="null" />
+                <option value="Ownership">ملك</option>
+                <option value="without compensation">بدون مقابل</option>
+                <option value="inherited">ورثة</option>
+                <option value="lease">إيجار</option>
+              </select-input>
+              <div v-if="this.home_form_update.status == 'lease'">
+                <label
+                  for="allocation_price"
+                  class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
+                >
+                  سعر الكراء
+                </label>
+                <text-input
+                  v-model="home_form_update.allocation_price"
+                  id="allocation_price"
+                  name="allocation_price"
+                  rows="5"
+                  placeholder="اكتب سعر الكراء  ..."
+                  class="w-full"
+                />
+              </div>
+
               <label
                 for="homeDescription"
                 class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
               >
                 وصف المسكن
               </label>
-              <textarea
+              <TextareaInput
                 v-model="home_form_update.desciption"
+                :error="home_form_update.errors.desciption"
                 id="homeDescription"
                 name="homeDescription"
                 rows="5"
                 placeholder="اكتب وصف المسكن ..."
                 class="w-full"
-              ></textarea>
+              ></TextareaInput>
             </div>
             <div class="flex justify-end px-4 py-3 bg-gray-50">
               <button
@@ -610,6 +612,7 @@ import TrashedMessage from "@/Shared/TrashedMessage";
 import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
 import FileInput from "@/Shared/FileInput";
 import SelectInput from "@/Shared/SelectInput";
+import TextareaInput from "@/Shared/TextareaInput.vue";
 
 export default {
   components: {
@@ -622,6 +625,7 @@ export default {
     TrashedMessage,
     ToggleCheckbox,
     FileInput,
+    TextareaInput,
   },
   layout: Layout,
   props: {
