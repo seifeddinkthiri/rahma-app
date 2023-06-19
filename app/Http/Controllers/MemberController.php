@@ -15,7 +15,7 @@ class MemberController extends Controller
 
     public function create(Family $Family)
     {
-        return Inertia::render('Families/Members/Create',compact('Family'));
+        return Inertia::render('Families/Members/Create', compact('Family'));
     }
 
 
@@ -41,21 +41,27 @@ class MemberController extends Controller
         ]);
 
         $member = Auth::user()->account->members()->create($validatedData);
+        $family = $member->family; // Retrieve the Family model instance
+        if ($member->cin == $family->caregiver_cin) {
+            $family->update([
+                'name' => $member->name,
+            ]);
+        }
 
-       // Create the health status
-$validatedData = Request::validate([
-    'good' => ['required', 'boolean'],
-    'disease' => ['required', 'string', 'max:100'],
-    'disability' => ['required', 'string', 'max:100'],
-    'disability_card_number' => ['required', 'integer','digits:8'],
-]);
+        // Create the health status
+        $validatedData = Request::validate([
+            'good' => ['required', 'boolean'],
+            'disease' => ['required', 'string', 'max:100'],
+            'disability' => ['required', 'string', 'max:100'],
+            'disability_card_number' => ['required', 'integer', 'digits:8'],
+        ]);
 
-$healthStatus = new HealthStatus([
-    'good' => $validatedData['good'],
-    'disease' => $validatedData['disease'],
-    'disability' => $validatedData['disability'],
-    'disability_card_number' => $validatedData['disability_card_number'],
-]);
+        $healthStatus = new HealthStatus([
+            'good' => $validatedData['good'],
+            'disease' => $validatedData['disease'],
+            'disability' => $validatedData['disability'],
+            'disability_card_number' => $validatedData['disability_card_number'],
+        ]);
 
         $member->healthStatus()->save($healthStatus);
 
@@ -91,11 +97,11 @@ $healthStatus = new HealthStatus([
 
     public function update_health_status(Member $Member)
     {
-         Request::validate([
+        Request::validate([
             'good' => ['required', 'boolean'],
             'disease' => ['required', 'string', 'max:100'],
             'disability' => ['required', 'string', 'max:100'],
-            'disability_card_number' => ['required', 'integer','digits:8'],
+            'disability_card_number' => ['required', 'integer', 'digits:8'],
         ]);
 
         $Member->healthStatus()->update([
@@ -135,7 +141,7 @@ $healthStatus = new HealthStatus([
         );
 
         return Redirect::route('families.edit', ['family' => $Member->family_id])
-        ->with('success', 'Member updated');
+            ->with('success', 'Member updated');
     }
 
     public function destroy(Member $Member)
@@ -151,6 +157,4 @@ $healthStatus = new HealthStatus([
 
         return Redirect::back()->with('success', 'Member restored.');
     }
-
-
 }

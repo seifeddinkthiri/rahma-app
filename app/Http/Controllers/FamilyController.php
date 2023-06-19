@@ -37,7 +37,7 @@ class FamilyController extends Controller
     {
 
         Request::validate([
-            'caregiver_cin' => ['required', 'max:100'],
+            'caregiver_cin' => ['required', 'numeric'],
             'wife' => ['nullable', 'boolean'],
             'husband' => ['nullable', 'boolean'],
             'photo' => ['nullable', 'image'],

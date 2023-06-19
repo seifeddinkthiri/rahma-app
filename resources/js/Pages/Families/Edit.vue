@@ -467,27 +467,33 @@
               <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
                 الوضعية القانونية
               </label>
-              <input
-                id="homeStatus"
+              <select-input
                 v-model="home_form.status"
                 :error="home_form.errors.status"
-                placeholder="اكتب وضعية المسكن القانونية ..."
-                class="w-full"
-              />
-              <label
-                for="allocation_price"
-                class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
+                class="pb-8 pr-6 w-full lg:w-1/2"
               >
-                سعر الكراء
-              </label>
-              <input
-                v-model="home_form.allocation_price"
-                id="allocation_price"
-                name="allocation_price"
-                rows="5"
-                placeholder="اكتب سعر الكراء  ..."
-                class="w-full"
-              />
+                <option :value="null" />
+                <option value="Ownership">ملك</option>
+                <option value="without compensation">بدون مقابل</option>
+                <option value="inherited">ورثة</option>
+                <option value="lease">إيجار</option>
+              </select-input>
+              <div v-if="this.home_form.status == 'lease'">
+                <label
+                  for="allocation_price"
+                  class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
+                >
+                  سعر الكراء
+                </label>
+                <input
+                  v-model="home_form.allocation_price"
+                  id="allocation_price"
+                  name="allocation_price"
+                  rows="5"
+                  placeholder="اكتب سعر الكراء  ..."
+                  class="w-full"
+                />
+              </div>
               <label
                 for="homeDescription"
                 class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
@@ -599,11 +605,11 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import Icon from "@/Shared/Icon";
 import Layout from "@/Shared/Layout";
 import TextInput from "@/Shared/TextInput";
-import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import TrashedMessage from "@/Shared/TrashedMessage";
 import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
 import FileInput from "@/Shared/FileInput";
+import SelectInput from "@/Shared/SelectInput";
 
 export default {
   components: {

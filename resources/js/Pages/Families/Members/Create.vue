@@ -10,25 +10,29 @@
       v-if="active_step == 'home'"
     >
       <form @submit.prevent="save_home">
-        <div class="w-96 h-auto bg-white rounded shadow-xl">
-          <div class="p-6">
-            <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
-              الوضعية القانونية
-            </label>
-            <input
-              id="homeStatus"
-              v-model="home_form.status"
-              :error="home_form.errors.status"
-              placeholder="اكتب وضعية المسكن القانونية ..."
-              class="w-full"
-            />
+        <div class="p-6">
+          <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
+            الوضعية القانونية
+          </label>
+          <select-input
+            v-model="home_form.status"
+            :error="home_form.errors.status"
+            class="form-input"
+          >
+            <option :value="null" />
+            <option value="Ownership">ملك</option>
+            <option value="without compensation">بدون مقابل</option>
+            <option value="inherited">ورثة</option>
+            <option value="lease">إيجار</option>
+          </select-input>
+          <div v-if="this.home_form.status == 'lease'">
             <label
               for="allocation_price"
               class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
             >
               سعر الكراء
             </label>
-            <input
+            <text-input
               v-model="home_form.allocation_price"
               id="allocation_price"
               name="allocation_price"
@@ -36,29 +40,30 @@
               placeholder="اكتب سعر الكراء  ..."
               class="w-full"
             />
-            <label
-              for="homeDescription"
-              class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
-            >
-              وصف المسكن
-            </label>
-            <textarea
-              v-model="home_form.desciption"
-              id="homeDescription"
-              name="homeDescription"
-              rows="5"
-              placeholder="اكتب وصف المسكن ..."
-              class="w-full"
-            ></textarea>
           </div>
-          <div class="flex justify-end px-4 py-3 bg-gray-50">
-            <button
-              type="submit"
-              class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-            >
-              تسجيل
-            </button>
-          </div>
+          <label
+            for="homeDescription"
+            class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
+          >
+            وصف المسكن
+          </label>
+          <TextareaInput
+            v-model="home_form.desciption"
+            id="homeDescription"
+            name="homeDescription"
+            rows="5"
+            placeholder="اكتب وصف المسكن ..."
+            class="w-full"
+          ></TextareaInput
+          >>
+        </div>
+        <div class="flex justify-end px-4 py-3 bg-gray-50">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
+          >
+            تسجيل
+          </button>
         </div>
       </form>
     </div>
@@ -67,49 +72,47 @@
       v-if="active_step == 'facilities'"
     >
       <form @submit.prevent="define_facilities">
-        <div class="w-96 h-auto bg-white rounded shadow-xl">
-          <div class="p-6">
-            <ToggleCheckbox
-              :id="'sanitaion'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              :label="'الصرف الصحي'"
-              :isChecked="facilities_form.Sanitation"
-              @toggle="toggle_sanitation"
-            />
-            <ToggleCheckbox
-              :id="'electricity'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              :label="'الكهرباء'"
-              :isChecked="facilities_form.electricity"
-              @toggle="toggle_electricity"
-            />
-            <ToggleCheckbox
-              :id="'water'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              :label="'الماء'"
-              :isChecked="facilities_form.water"
-              @toggle="toggle_water"
-            />
-            <ToggleCheckbox
-              :id="'ventilation'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              :label="'التهوئة'"
-              :isChecked="facilities_form.ventilation"
-              @toggle="toggle_ventilation"
-            />
-          </div>
-          <div class="flex justify-end px-4 py-3 bg-gray-50">
-            <button
-              type="submit"
-              class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-            >
-              تسجيل
-            </button>
-          </div>
+        <div class="p-6">
+          <ToggleCheckbox
+            :id="'sanitaion'"
+            :active_value="'نعم'"
+            :inactive_value="'لا'"
+            :label="'الصرف الصحي'"
+            :isChecked="facilities_form.Sanitation"
+            @toggle="toggle_sanitation"
+          />
+          <ToggleCheckbox
+            :id="'electricity'"
+            :active_value="'نعم'"
+            :inactive_value="'لا'"
+            :label="'الكهرباء'"
+            :isChecked="facilities_form.electricity"
+            @toggle="toggle_electricity"
+          />
+          <ToggleCheckbox
+            :id="'water'"
+            :active_value="'نعم'"
+            :inactive_value="'لا'"
+            :label="'الماء'"
+            :isChecked="facilities_form.water"
+            @toggle="toggle_water"
+          />
+          <ToggleCheckbox
+            :id="'ventilation'"
+            :active_value="'نعم'"
+            :inactive_value="'لا'"
+            :label="'التهوئة'"
+            :isChecked="facilities_form.ventilation"
+            @toggle="toggle_ventilation"
+          />
+        </div>
+        <div class="flex justify-end px-4 py-3 bg-gray-50">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
+          >
+            تسجيل
+          </button>
         </div>
       </form>
     </div>
@@ -119,45 +122,43 @@
       v-if="active_step == 'notes'"
     >
       <form @submit.prevent="save_note">
-        <div class="w-96 h-auto bg-white rounded shadow-xl">
-          <div class="p-6">
-            <label for="title" class="block mb-2 text-gray-700 text-sm font-bold">
-              العنوان
-            </label>
-            <input
-              id="title"
-              v-model="notes_form.title"
-              :error="notes_form.errors.title"
-              placeholder="اكتب عنوان الملاحظة ..."
-              class="w-full"
-            />
-            <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold">
-              التفاصيل
-            </label>
-            <textarea
-              v-model="notes_form.value"
-              id="message"
-              name="message"
-              rows="5"
-              placeholder="اكتب تفاصيل الملاحظة ..."
-              class="w-full"
-            ></textarea>
-          </div>
-          <div class="flex justify-end px-4 py-3 bg-gray-50">
-            <button
-              type="submit"
-              class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-            >
-              تسجيل
-            </button>
-            <button
-              @click="back_to_family_create"
-              type="button"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-            >
-              عودة
-            </button>
-          </div>
+        <div class="p-6">
+          <label for="title" class="block mb-2 text-gray-700 text-sm font-bold">
+            العنوان
+          </label>
+          <text-input
+            id="title"
+            v-model="notes_form.title"
+            :error="notes_form.errors.title"
+            placeholder="اكتب عنوان الملاحظة ..."
+            class="w-full"
+          />
+          <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold">
+            التفاصيل
+          </label>
+          <TextareaInput
+            v-model="notes_form.value"
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="اكتب تفاصيل الملاحظة ..."
+            class="w-full"
+          ></TextareaInput>
+        </div>
+        <div class="flex justify-end px-4 py-3 bg-gray-50">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
+          >
+            تسجيل
+          </button>
+          <button
+            @click="back_to_family_create"
+            type="button"
+            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          >
+            عودة
+          </button>
         </div>
       </form>
     </div>
@@ -206,6 +207,18 @@
               <option value="MEDNINE">مدنين</option>
               <option value="Beja">باجة</option>
             </select-input>
+            <text-input
+              v-model="form.job_place"
+              :error="form.errors.job_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان العمل "
+            />
+            <text-input
+              v-model="form.job"
+              :error="form.errors.job"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العمل"
+            />
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -242,18 +255,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
             />
-            <text-input
-              v-model="form.job_place"
-              :error="form.errors.job_place"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="مكان العمل "
-            />
-            <text-input
-              v-model="form.job"
-              :error="form.errors.job"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="العمل"
-            />
 
             <text-input
               v-model="form.education_level"
@@ -261,47 +262,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
             />
-          </div>
-          <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <button @click="active_step = 1" class="btn-indigo" type="button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </button>
-            &nbsp;&nbsp;
-            <button @click="active_step = 3" class="btn-indigo" type="button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div ref="part3" v-if="active_step == 3">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <ToggleCheckbox
               :id="'good'"
               :isChecked="form.good"
@@ -341,7 +301,7 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button @click="active_step = 2" class="btn-indigo" type="button">
+            <button @click="active_step = 1" class="btn-indigo" type="button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -373,8 +333,8 @@ import Layout from "@/Shared/Layout";
 import TextInput from "@/Shared/TextInput";
 import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
-import ToggleCheckbox from "../../../Shared/ToggleCheckbox.vue";
-
+import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
+import TextareaInput from "@/Shared/TextareaInput.vue";
 export default {
   components: {
     Head,
@@ -383,6 +343,7 @@ export default {
     SelectInput,
     TextInput,
     ToggleCheckbox,
+    TextareaInput,
   },
   layout: Layout,
   remember: "form",
@@ -462,7 +423,6 @@ export default {
     },
     save_note() {
       this.notes_form.post(`/notes/${this.Family.id}`);
-      this.back_to_family_create();
     },
 
     back_to_family_create() {
