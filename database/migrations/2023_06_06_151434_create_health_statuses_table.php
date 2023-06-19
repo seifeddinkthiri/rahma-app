@@ -22,7 +22,7 @@ class CreateHealthStatusesTable extends Migration
                 ->onDelete('cascade');
             $table->boolean('good')->default(false);
             $table->string('disability');
-            $table->string('disability_card_number');
+            $table->string('disability_card_number')->nullable();
             $table->string('disease');
             $table->timestamps();
         });

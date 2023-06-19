@@ -287,6 +287,7 @@
               label="إعاقة"
             />
             <text-input
+              v-if="form.disability !== null"
               v-model="form.disability_card_number"
               :error="form.errors.disability_card_number"
               class="pb-8 pr-6 w-full lg:w-1/2"

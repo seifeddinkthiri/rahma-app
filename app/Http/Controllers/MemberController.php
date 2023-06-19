@@ -53,7 +53,7 @@ class MemberController extends Controller
             'good' => ['required', 'boolean'],
             'disease' => ['required', 'string', 'max:100'],
             'disability' => ['required', 'string', 'max:100'],
-            'disability_card_number' => ['required', 'integer', 'digits:8'],
+            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
         ]);
 
         $healthStatus = new HealthStatus([
@@ -101,7 +101,7 @@ class MemberController extends Controller
             'good' => ['required', 'boolean'],
             'disease' => ['required', 'string', 'max:100'],
             'disability' => ['required', 'string', 'max:100'],
-            'disability_card_number' => ['required', 'integer', 'digits:8'],
+            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
         ]);
 
         $Member->healthStatus()->update([
