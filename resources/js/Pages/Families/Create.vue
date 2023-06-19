@@ -7,15 +7,128 @@
     </h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
-        <div ref="part2">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" />
-            <file-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="الصورة" />
+        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+          <text-input
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            id="caregiver_cin"
+            v-model="form.caregiver_cin"
+            label="رقم هوية معيل الأسرة"
+          />
+          <file-input
+            id="photo"
+            v-model="form.photo"
+            :error="form.errors.photo"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            type="file"
+            accept="image/*"
+            label="الصورة"
+          />
+          <ToggleCheckbox
+            :id="'husband'"
+            :isChecked="form.husband"
+            :label="'الزوج'"
+            :active_value="'نعم'"
+            :inactive_value="'لا'"
+            @toggle="toggle_husband"
+          />
+          <ToggleCheckbox
+            :id="'wife'"
+            :isChecked="form.wife"
+            :label="'الزوجة'"
+            :active_value="'نعم'"
+            :inactive_value="'لا'"
+            @toggle="toggle_wife"
+          />
+          <div>
+            <ToggleCheckbox
+              :id="'childrens'"
+              :isChecked="form.childrens"
+              :label="'الأبناء'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_childrens"
+            />
+            <text-input
+              v-if="form.childrens"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              id="childrens_number"
+              v-model="form.childrens_number"
+              label="عددهم"
+            />
+            <text-input
+              v-else
+              disabled
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              id="childrens_number"
+              label="لا يوجد"
+            />
+          </div>
 
+          <div>
+            <ToggleCheckbox
+              :id="'elderlies'"
+              :isChecked="form.elderlies"
+              :label="'المسنين'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_elderlies"
+            />
+            <text-input
+              v-if="form.elderlies"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              id="elderlies_number"
+              v-model="form.elderlies_number"
+              label="عددهم"
+            />
+            <text-input
+              hidden
+              v-else
+              disabled
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              id="elderlies_number"
+              label="لا يوجد "
+            />
           </div>
-          <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3">
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit">إنشاء عائلة</loading-button>
+          <div>
+            <ToggleCheckbox
+              :id="'other_members'"
+              :isChecked="form.other_members"
+              :label="'أفراد آخرين'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_other_members"
+            />
+            <text-input
+              v-if="form.other_members"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              id="other_members_number"
+              v-model="form.other_members_number"
+              label="عددهم"
+            />
+            <text-input
+              v-else
+              disabled
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              id="other_members_number"
+              label="لا يوجد"
+            />
           </div>
+          <button class="btn-indigo" type="submit">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
         </div>
       </form>
     </div>
@@ -23,13 +136,13 @@
 </template>
 
 <script>
-import { Head, Link } from '@inertiajs/inertia-vue3'
-import Layout from '@/Shared/Layout'
-import TextInput from '@/Shared/TextInput'
-import SelectInput from '@/Shared/SelectInput'
-import LoadingButton from '@/Shared/LoadingButton'
-import FileInput from '@/Shared/FileInput'
-
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import Layout from "@/Shared/Layout";
+import TextInput from "@/Shared/TextInput";
+import SelectInput from "@/Shared/SelectInput";
+import LoadingButton from "@/Shared/LoadingButton";
+import FileInput from "@/Shared/FileInput";
+import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
 export default {
   components: {
     Head,
@@ -38,22 +151,48 @@ export default {
     SelectInput,
     TextInput,
     FileInput,
+    ToggleCheckbox,
   },
   layout: Layout,
-  remember: 'form',
+  remember: "form",
   data() {
     return {
       form: this.$inertia.form({
-        name: null,
         photo: null,
-
+        caregiver_cin: null,
+        wife: false,
+        husband: false,
+        elderlies: false,
+        childrens: false,
+        other_members: false,
+        childrens_number: 0,
+        elderlies_number: 0,
+        other_members_number: 0,
       }),
-    }
+    };
   },
   methods: {
+    toggle_husband() {
+      this.form.husband = !this.form.husband;
+    },
+    toggle_wife() {
+      this.form.wife = !this.form.wife;
+    },
+    toggle_childrens() {
+      this.form.childrens = !this.form.childrens;
+      this.form.childrens_number = 0;
+    },
+    toggle_elderlies() {
+      this.form.elderlies = !this.form.elderlies;
+      this.form.elderlies_number = 0;
+    },
+    toggle_other_members() {
+      this.form.other_members_number = 0;
+      this.form.other_members = !this.form.other_members;
+    },
     store() {
-      this.form.post('/families')
+      this.form.post("/families");
     },
   },
-}
+};
 </script>

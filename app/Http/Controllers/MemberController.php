@@ -59,7 +59,7 @@ $healthStatus = new HealthStatus([
 
         $member->healthStatus()->save($healthStatus);
 
-        return redirect()->route('families.edit', ['family' => $member->family])->with('success', 'Member created');
+        return redirect()->route('members.create', ['family' => $member->family])->with('success', 'Member created');
     }
 
 

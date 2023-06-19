@@ -37,32 +37,36 @@ class FamilyController extends Controller
     {
 
         Request::validate([
-            'name' => ['required', 'max:100'],
+            'caregiver_cin' => ['required', 'max:100'],
+            'wife' => ['nullable', 'boolean'],
+            'husband' => ['nullable', 'boolean'],
             'photo' => ['nullable', 'image'],
-
+            'elderlies_number' => ['nullable', 'numeric'],
+            'childrens_number' => ['nullable', 'numeric'],
+            'other_members_number' => ['nullable', 'numeric'],
         ]);
 
-
-
-
-
-
-
-
-
-      $family =  Auth::user()->account->Families()->create(
+      $Family =  Auth::user()->account->Families()->create(
             [
-                'name' => Request::get('name'),
+                'caregiver_cin' => Request::get('caregiver_cin'),
+                'wife' => Request::get('wife'),
+                'husband' => Request::get('husband'),
+                'photo' => Request::get('photo'),
+                'elderlies_number' => Request::get('elderlies_number'),
+                'childrens_number' => Request::get('childrens_number'),
+                'other_members_number' => Request::get('other_members_number'),
+
                 'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
 
             ]
         );
         if (Request::file('photo')) {
-            Request::file('photo') ->move(public_path('uploads'), $family->photo);
+            Request::file('photo') ->move(public_path('uploads'), $Family->photo);
 
         }
 
-        return Redirect::route('families')->with('success', 'Family created.');
+        return redirect()->route('members.create', ['family' => $Family])->with('success', 'Family created. please add members');
+
     }
 
     public function edit(Family $family)
