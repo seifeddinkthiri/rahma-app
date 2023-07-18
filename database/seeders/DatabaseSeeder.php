@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'account_id' => $account->id,
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'johndoe@example.com',
-            'password' => 'secret',
+            'first_name' => 'admin',
+            'last_name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => 'admin',
             'owner' => true,
+            'admin' => true,
+            'wait' => false,
         ]);
 
         User::factory(5)->create(['account_id' => $account->id]);

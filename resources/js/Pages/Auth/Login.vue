@@ -1,7 +1,5 @@
 <template>
   <Head title="Login" />
-  <div class="flex items-center justify-center p-6 min-h-screen bg-indigo-800">
-    <div class="w-full max-w-md">
       <logo class="block mx-auto w-full max-w-xs fill-white" height="50" />
       <form class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden" @submit.prevent="login">
         <div class="px-10 py-12">
@@ -14,16 +12,18 @@
             <span class="text-sm">تذكرنى</span>
           </label>
         </div>
-        <div class="flex px-10 py-4 bg-gray-100 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">تسجيل الدخول</loading-button>
+        <div class="formButtom">
+          <a  href="/register">
+            register
+          </a>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">تسجيل الدخول</loading-button>
         </div>
       </form>
-    </div>
-  </div>
 </template>
 
 <script>
 import { Head } from '@inertiajs/inertia-vue3'
+import Layout from '@/Pages/Auth/index'
 import Logo from '@/Shared/Logo'
 import TextInput from '@/Shared/TextInput'
 import LoadingButton from '@/Shared/LoadingButton'
@@ -35,11 +35,12 @@ export default {
     Logo,
     TextInput,
   },
+  layout: Layout,
   data() {
     return {
       form: this.$inertia.form({
-        email: 'johndoe@example.com',
-        password: 'secret',
+        email: 'admin@gmail.com',
+        password: 'admin',
         remember: false,
       }),
     }

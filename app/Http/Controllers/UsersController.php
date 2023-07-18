@@ -26,9 +26,12 @@ class UsersController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'owner' => $user->owner,
+                    'admin' => $user->admin,
+                    'wait' => $user->wait,
                     'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 40, 'h' => 40, 'fit' => 'crop']) : null,
                     'deleted_at' => $user->deleted_at,
-                ]),
+                ])
+                ->where('admin',false)->where('wait',false)
         ]);
     }
 
@@ -71,6 +74,8 @@ class UsersController extends Controller
                 'owner' => $user->owner,
                 'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
                 'deleted_at' => $user->deleted_at,
+                'user_page_owner' => Auth::user()->owner,
+                'user_page_admin' => Auth::user()->admin,
             ],
         ]);
     }

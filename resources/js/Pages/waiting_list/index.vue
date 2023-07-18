@@ -1,0 +1,84 @@
+<template>
+  <div>
+    <Head title="Users" />
+    <h1 class="mb-8 text-3xl font-bold">قائمة الانتظار</h1>
+    <div class="bg-white rounded-md shadow overflow-x-auto">
+      <table class="w-full whitespace-nowrap">
+        <tr class="text-left font-bold">
+          <th class="pb-4 pt-6 px-6">الاسم</th>
+          <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
+          <th class="pb-4 pt-6 px-6" colspan="2"></th>
+        </tr>
+        <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+          <td class="border-t">
+            <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              {{ user.name }}
+            </div>
+          </td>
+          <td class="border-t">
+            <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              {{ user.email }}
+            </div>
+          </td>
+          <td class="w-px border-t">
+            <Link class="flex items-center px-4" :href="`/wait_list/${user.id}/edit`" tabindex="-1">
+              <loading-button :loading="form.processing" class="btn-indigo">
+                قبول
+              </loading-button>
+            </Link>
+          </td>
+        </tr>
+        <tr v-if="users.length === 0">
+          <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على مستخدمين</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+import { Head, Link } from '@inertiajs/inertia-vue3'
+import LoadingButton from "@/Shared/LoadingButton";
+import Icon from '@/Shared/Icon'
+import pickBy from 'lodash/pickBy'
+import Layout from '@/Shared/Layout'
+import throttle from 'lodash/throttle'
+import mapValues from 'lodash/mapValues'
+import SearchFilter from '@/Shared/SearchFilter'
+
+export default {
+  components: {
+    Head,
+    Icon,
+    Link,
+    SearchFilter,
+  },
+  layout: Layout,
+  props: {
+    filters: Object,
+    users: Array,
+  },
+  data() {
+    return {
+      form: {
+        search: this.filters.search,
+        role: this.filters.role,
+        trashed: this.filters.trashed,
+      },
+    }
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler: throttle(function () {
+        this.$inertia.get('/users', pickBy(this.form), { preserveState: true })
+      }, 150),
+    },
+  },
+  methods: {
+    reset() {
+      this.form = mapValues(this.form, () => null)
+    },
+  },
+}
+</script>

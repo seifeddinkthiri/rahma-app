@@ -21,9 +21,9 @@ class CreateHealthStatusesTable extends Migration
                 ->on('members')
                 ->onDelete('cascade');
             $table->boolean('good')->default(false);
-            $table->string('disability');
+            $table->string('disability')->nullable();
             $table->string('disability_card_number')->nullable();
-            $table->string('disease');
+            $table->string('disease')->nullable();
             $table->timestamps();
         });
     }

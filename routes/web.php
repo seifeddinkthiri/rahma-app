@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\WaitingUsersController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacilityController;
@@ -29,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 // Auth
 
+//login
 Route::get('login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
     ->middleware('guest');
@@ -39,6 +42,15 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
 
 Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
+
+//register
+Route::get('register', [RegisterController::class, 'create'])
+    ->name('register')
+    ->middleware('guest');
+
+Route::post('register', [RegisterController::class, 'store'])
+    ->name('register.store')
+    ->middleware('guest');
 
 // Dashboard
 
@@ -76,6 +88,15 @@ Route::put('users/{user}/restore', [UsersController::class, 'restore'])
     ->name('users.restore')
     ->middleware('auth');
 
+//waiting list
+
+Route::get('wait_list', [WaitingUsersController::class, 'index'])
+    ->name('wait_list')
+    ->middleware('auth');
+
+Route::get('wait_list/{user}/edit', [WaitingUsersController::class, 'edit'])
+    ->name('wait_list.edit')
+    ->middleware('auth');
 // Organizations
 
 Route::get('organizations', [OrganizationsController::class, 'index'])

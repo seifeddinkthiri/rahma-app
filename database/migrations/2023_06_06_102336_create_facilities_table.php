@@ -21,9 +21,9 @@ class CreateFacilitiesTable extends Migration
             ->on('families')
             ->onDelete('cascade');
             $table->boolean('Sanitation')->default(false);
-            $table->boolean('electricity');
-            $table->boolean('water');
-            $table->boolean('ventilation');
+            $table->boolean('electricity')->default(false);
+            $table->boolean('water')->default(false);
+            $table->boolean('ventilation')->default(false);
             $table->timestamps();
 
 

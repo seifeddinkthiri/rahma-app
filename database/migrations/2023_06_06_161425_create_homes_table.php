@@ -20,9 +20,9 @@ class CreateHomesTable extends Migration
                 ->references('id')
                 ->on('families')
                 ->onDelete('cascade');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->integer('allocation_price')->nullable();
-            $table->string('desciption');
+            $table->string('desciption')->nullable();
             $table->timestamps();
         });
     }
