@@ -191,10 +191,12 @@
               type="date"
               id="birth_date"
               v-model="form.birth_date"
+              :error="form.errors.birth_date"
               label="تاريخ الولادة"
             />
             <select-input
               v-model="form.birth_city"
+              :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
             >
