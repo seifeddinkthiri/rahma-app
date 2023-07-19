@@ -30,7 +30,6 @@
       </label>
     </div>
     <div class="formButton flex items-center justify-between">
-      <a href="/register" class="px-4 py-2 rounded-md">إنشاء حساب</a>
       <loading-button :loading="form.processing" class="btn-indigo" type="submit">
         تسجيل الدخول
       </loading-button>
