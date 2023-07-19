@@ -122,7 +122,7 @@ class FamilyController extends Controller
     public function update(Family $family)
     {
         Request::validate([
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

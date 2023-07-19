@@ -257,12 +257,16 @@
         </div>
         <div ref="part2" v-if="active_step == 2">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <text-input
+            <select-input
               v-model="form.social_status"
-              :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الحالة المدنية "
-            />
+              label="الوضعية الأجتماعية "
+            >
+              <option :value="null" />
+              <option value="single">أعزب</option>
+              <option value="married">متزوج</option>
+              <option value="divorced">مطلق</option>
+            </select-input>
             <text-input
               v-model="form.monthly_income"
               :error="form.errors.monthly_income"

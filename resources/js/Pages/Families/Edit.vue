@@ -426,7 +426,10 @@
                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                 @click="edit_home()"
               >
-                {{ home.status }}
+                <p v-if="home.status == 'Ownership'">ملك</p>
+                <p v-if="home.status == 'without compensation'">بدون مقابل</p>
+                <p v-if="home.status == 'inherited'">ورثة</p>
+                <p v-if="home.status == 'lease'">إيجار</p>
                 <icon
                   v-if="home.deleted_at"
                   name="trash"
@@ -439,7 +442,7 @@
                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                 @click="edit_home()"
               >
-                {{ home.allocation_price }}
+                <p v-if="home.status == 'lease'">{{ home.allocation_price }}</p>
                 <icon
                   v-if="home.deleted_at"
                   name="trash"

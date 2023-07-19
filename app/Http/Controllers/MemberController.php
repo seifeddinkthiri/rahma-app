@@ -29,13 +29,13 @@ class MemberController extends Controller
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
-            'monthly_income' => ['required', 'integer'],
+            'monthly_income' => ['nullable', 'integer'],
             'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
             'caregiver' => ['required', 'boolean'],
-            'education_level' => ['required', 'max:100'],
-            'job' => ['required', 'max:100'],
-            'job_place' => ['required', 'max:100'],
+            'education_level' => ['nullable', 'max:100'],
+            'job' => ['nullable', 'max:100'],
+            'job_place' => ['nullable', 'max:100'],
             'family_id' => ['required', 'integer'],
 
         ]);
@@ -54,8 +54,8 @@ class MemberController extends Controller
         // Create the health status
         $validatedData = Request::validate([
             'good' => ['required', 'boolean'],
-            'disease' => ['required', 'string', 'max:100'],
-            'disability' => ['required', 'string', 'max:100'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'string', 'max:100'],
             'disability_card_number' => ['nullable', 'integer', 'digits:8'],
         ]);
 
@@ -102,8 +102,8 @@ class MemberController extends Controller
     {
         Request::validate([
             'good' => ['required', 'boolean'],
-            'disease' => ['required', 'string', 'max:100'],
-            'disability' => ['required', 'string', 'max:100'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'string', 'max:100'],
             'disability_card_number' => ['nullable', 'integer', 'digits:8'],
         ]);
 
@@ -126,20 +126,20 @@ class MemberController extends Controller
         $Member->update(
             Request::validate([
                 'name' => ['required', 'max:100'],
-                'address' => ['required', 'max:100'],
-                'cin' => ['required', 'integer', 'digits:8'],
-                'phone' => ['required', 'integer', 'digits:8'],
-                'birth_date' => ['required', 'date'],
-                'birth_city' => ['required', 'max:100'],
-                'social_status' => ['required', 'max:100'],
-                'monthly_income' => ['required', 'integer'],
-                'health_insurance' => ['required', 'max:100'],
-                'kinship' => ['required', 'max:100'],
-                'caregiver' => ['required', 'boolean'],
-                'education_level' => ['required', 'max:100'],
-                'job' => ['required', 'max:100'],
-                'job_place' => ['required', 'max:100'],
-                'family_id' => ['required', 'integer'],
+            'address' => ['required', 'max:100'],
+            'cin' => ['required', 'integer', 'digits:8'],
+            'phone' => ['required', 'integer', 'digits:8'],
+            'birth_date' => ['required', 'date'],
+            'birth_city' => ['required', 'max:100'],
+            'social_status' => ['required', 'max:100'],
+            'monthly_income' => ['nullable', 'integer'],
+            'health_insurance' => ['required', 'boolean'],
+            'kinship' => ['required', 'max:100'],
+            'caregiver' => ['required', 'boolean'],
+            'education_level' => ['nullable', 'max:100'],
+            'job' => ['nullable', 'max:100'],
+            'job_place' => ['nullable', 'max:100'],
+            'family_id' => ['required', 'integer'],
             ])
         );
 
