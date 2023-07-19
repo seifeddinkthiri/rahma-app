@@ -199,8 +199,27 @@
               label="مدينة الولادة"
             >
               <option :value="null" />
-              <option value="MEDNINE">مدنين</option>
-              <option value="Beja">باجة</option>
+              <option value="Medenine">Medenine</option>
+              <option value="Beja">Beja</option>
+              <option value="Tunis">Tunis</option>
+              <option value="Sfax">Sfax</option>
+              <option value="Sousse">Sousse</option>
+              <!-- A list containing more Tunisian cities -->
+              <option value="Ariana">Ariana</option>
+              <option value="Ben Arous">Ben Arous</option>
+              <option value="Kasserine">Kasserine</option>
+              <option value="Le Kef">Le Kef</option>
+              <option value="Mahdia">Mahdia</option>
+              <option value="Manouba">Manouba</option>
+              <option value="Monastir">Monastir</option>
+              <option value="Nabeul">Nabeul</option>
+              <option value="Sidi Bouzid">Sidi Bouzid</option>
+              <option value="Siliana">Siliana</option>
+              <option value="Gabes">Gabes</option>
+              <option value="Jendouba">Jendouba</option>
+              <option value="Tataouine">Tataouine</option>
+              <option value="Tozeur">Tozeur</option>
+              <option value="Zaghouan">Zaghouan</option>
             </select-input>
             <text-input
               v-model="form.job_place"

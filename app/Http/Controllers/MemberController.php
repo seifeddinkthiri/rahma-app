@@ -45,6 +45,9 @@ class MemberController extends Controller
         if ($member->cin == $family->caregiver_cin) {
             $family->update([
                 'name' => $member->name,
+                'phone' => $member->phone,
+                'address' => $member->address,
+
             ]);
         }
 

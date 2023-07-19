@@ -22,6 +22,8 @@ class FamilyController extends Controller
                 ->through(fn ($Family) => [
                     'id' => $Family->id,
                     'name' => $Family->name,
+                    'phone' => $Family->phone,
+                    'address' => $Family->address,
                     'photo' => $Family->photo,
                     'deleted_at' => $Family->deleted_at,
                 ]),
@@ -106,6 +108,8 @@ class FamilyController extends Controller
                 'id' => $family->id,
                 'name' => $family->name,
                 'photo' => $family->photo,
+                'phone' => $family->phone,
+                'address' => $family->address,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,
@@ -115,22 +119,28 @@ class FamilyController extends Controller
         ]);
     }
 
-
-
-    public function update(Family $Family)
+    public function update(Family $family)
     {
-        $Family->update(
-            [
-                'name' => Request::get('name'),
-                'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+        Request::validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            ]
-        );
+        $data = [
+            'name' => Request::input('name'),
+            'phone' => Request::input('phone'),
+            'address' => Request::input('address'),
+        ];
 
-        if (  Request::file('photo')) {
-            Request::file('photo') ->move(public_path('uploads'), $Family->photo);
-
+        if (Request::hasFile('photo')) {
+            $photoPath = Request::file('photo')->store('');
+            $data['photo'] = $photoPath;
+            Request::file('photo')->move(public_path('uploads'), $photoPath);
         }
+
+        $family->update($data);
 
         return Redirect::back()->with('success', 'Family updated.');
     }

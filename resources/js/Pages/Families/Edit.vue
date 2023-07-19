@@ -18,7 +18,18 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="الاسم"
           />
-
+          <text-input
+            v-model="form.phone"
+            :error="form.errors.phone"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            label="الهاتف"
+          />
+          <text-input
+            v-model="form.address"
+            :error="form.errors.address"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            label="العنوان"
+          />
           <file-input
             v-model="form.photo"
             :error="form.errors.photo"
@@ -646,6 +657,8 @@ export default {
 
       form: this.$inertia.form({
         name: this.family.name,
+        phone: this.family.phone,
+        address: this.family.address,
         photo: null,
       }),
       notes_form: this.$inertia.form({

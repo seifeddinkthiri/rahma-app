@@ -11,7 +11,7 @@ class Family extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['photo','name','caregiver_cin','wife','husband','elderlies_number',"childrens_number","other_members_number"];
+    protected $fillable = ['photo','name','phone','address','caregiver_cin','wife','husband','elderlies_number',"childrens_number","other_members_number"];
 
     public function resolveRouteBinding($value, $field = null)
     {

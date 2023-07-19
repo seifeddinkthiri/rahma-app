@@ -29,10 +29,11 @@
         <span class="text-sm">تذكرنى</span>
       </label>
     </div>
-    <div class="formButton flex items-center justify-between">
-      <loading-button :loading="form.processing" class="btn-indigo" type="submit">
-        تسجيل الدخول
-      </loading-button>
+    <div class="formButtom">
+      <a href="/register"> register </a>
+      <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+        >تسجيل الدخول</loading-button
+      >
     </div>
   </form>
 </template>
