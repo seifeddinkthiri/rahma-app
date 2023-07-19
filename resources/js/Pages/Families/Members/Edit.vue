@@ -136,15 +136,6 @@
               @toggle="toggle_health_insurance"
             />
 
-            <ToggleCheckbox
-              :id="'caregiver'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              :label="'معيل الأسرة'"
-              :isChecked="form.caregiver"
-              @toggle="toggle_caregiver"
-            />
-
             <select-input
               v-model="form.kinship"
               :error="form.errors.kinship"
@@ -320,13 +311,6 @@ export default {
     if (this.member.health_insurance == 1) {
       this.form.health_insurance = true;
     }
-    if (this.member.caregiver == 0) {
-      this.form.caregiver = false;
-    }
-
-    if (this.member.caregiver == 1) {
-      this.form.caregiver = true;
-    }
 
     this.member.healthStatus.forEach((element) => {
       this.health_status_form.good = element.good;
@@ -358,7 +342,6 @@ export default {
         monthly_income: this.member.monthly_income,
         health_insurance: false,
         kinship: this.member.kinship,
-        caregiver: false,
         education_level: this.member.education_level,
         job: this.member.job,
         job_place: this.member.job_place,
@@ -370,9 +353,7 @@ export default {
     update_health_status() {
       this.health_status_form.put(`/healthStatus/${this.member.id}`);
     },
-    toggle_caregiver() {
-      this.form.caregiver = !this.form.caregiver;
-    },
+
     toggle_health_insurance() {
       this.form.health_insurance = !this.form.health_insurance;
     },

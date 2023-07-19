@@ -36,7 +36,6 @@ class MemberController extends Controller
             'monthly_income' => ['nullable', 'integer'],
             'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
-            'caregiver' => ['required', 'boolean'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
@@ -47,6 +46,11 @@ class MemberController extends Controller
         $member = Auth::user()->account->members()->create($validatedData);
         $family = $member->family; // Retrieve the Family model instance
         if ($member->cin == $family->caregiver_cin) {
+            $member->update([
+                'caregiver' => true,
+
+            ]);
+
             $family->update([
                 'name' => $member->name,
                 'phone' => $member->phone,
@@ -91,7 +95,6 @@ class MemberController extends Controller
                 'monthly_income' => $Member->monthly_income,
                 'health_insurance' => $Member->health_insurance,
                 'kinship' => $Member->kinship,
-                'caregiver' => $Member->caregiver,
                 'education_level' => $Member->education_level,
                 'job' => $Member->job,
                 'job_place' => $Member->job_place,
@@ -139,7 +142,6 @@ class MemberController extends Controller
             'monthly_income' => ['nullable', 'integer'],
             'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
-            'caregiver' => ['required', 'boolean'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
@@ -169,7 +171,6 @@ class MemberController extends Controller
             'monthly_income' => ['nullable', 'integer'],
             'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
-            'caregiver' => ['required', 'boolean'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],

@@ -48,26 +48,26 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
             >
-              <option value="Medenine">Medenine</option>
-              <option value="Beja">Beja</option>
-              <option value="Tunis">Tunis</option>
-              <option value="Sfax">Sfax</option>
-              <option value="Sousse">Sousse</option>
-              <option value="Ariana">Ariana</option>
-              <option value="Ben Arous">Ben Arous</option>
-              <option value="Kasserine">Kasserine</option>
-              <option value="Le Kef">Le Kef</option>
-              <option value="Mahdia">Mahdia</option>
-              <option value="Manouba">Manouba</option>
-              <option value="Monastir">Monastir</option>
-              <option value="Nabeul">Nabeul</option>
-              <option value="Sidi Bouzid">Sidi Bouzid</option>
-              <option value="Siliana">Siliana</option>
-              <option value="Gabes">Gabes</option>
-              <option value="Jendouba">Jendouba</option>
-              <option value="Tataouine">Tataouine</option>
-              <option value="Tozeur">Tozeur</option>
-              <option value="Zaghouan">Zaghouan</option>
+              <option value="Medenine">مدنين</option>
+              <option value="Beja">باجة</option>
+              <option value="Tunis">تونس</option>
+              <option value="Sfax">صفاقس</option>
+              <option value="Sousse">سوسة</option>
+              <option value="Ariana">أريانة</option>
+              <option value="Ben Arous">بن عروس</option>
+              <option value="Kasserine">القصرين</option>
+              <option value="Le Kef">الكاف</option>
+              <option value="Mahdia">المهدية</option>
+              <option value="Manouba">منوبة</option>
+              <option value="Monastir">المنستير</option>
+              <option value="Nabeul">نابل</option>
+              <option value="Sidi Bouzid">سيدي بوزيد</option>
+              <option value="Siliana">سليانة</option>
+              <option value="Gabes">قابس</option>
+              <option value="Jendouba">جندوبة</option>
+              <option value="Tataouine">تطاوين</option>
+              <option value="Tozeur">توزر</option>
+              <option value="Zaghouan">زغوان</option>
             </select-input>
           </div>
           <div
