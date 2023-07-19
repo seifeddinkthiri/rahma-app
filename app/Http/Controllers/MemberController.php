@@ -18,6 +18,10 @@ class MemberController extends Controller
         return Inertia::render('Families/Members/Create', compact('Family'));
     }
 
+    public function create_new_one(Family $Family)
+    {
+        return Inertia::render('Families/Members/Create_new_one', compact('Family'));
+    }
 
     public function store()
     {
@@ -146,6 +150,52 @@ class MemberController extends Controller
         return Redirect::route('families.edit', ['family' => $Member->family_id])
             ->with('success', 'Member updated');
     }
+
+
+
+
+
+
+    public function newMembers()
+    {
+        $validatedData = Request::validate([
+            'name' => ['required', 'max:100'],
+            'address' => ['required', 'max:100'],
+            'cin' => ['required', 'integer', 'digits:8'],
+            'phone' => ['required', 'integer', 'digits:8'],
+            'birth_date' => ['required', 'date'],
+            'birth_city' => ['required', 'max:100'],
+            'social_status' => ['required', 'max:100'],
+            'monthly_income' => ['nullable', 'integer'],
+            'health_insurance' => ['required', 'boolean'],
+            'kinship' => ['required', 'max:100'],
+            'caregiver' => ['required', 'boolean'],
+            'education_level' => ['nullable', 'max:100'],
+            'job' => ['nullable', 'max:100'],
+            'job_place' => ['nullable', 'max:100'],
+            'family_id' => ['required', 'integer'],
+
+        ]);
+
+        $member = Auth::user()->account->members()->create($validatedData);
+
+
+        // Create the health status
+        $validate_HS_dData = Request::validate([
+            'good' => ['required', 'boolean'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+        ]);
+
+        $healthStatus = new HealthStatus($validate_HS_dData);
+
+        $member->healthStatus()->save($healthStatus);
+
+        return Redirect::back()->with('success', 'Member created.');
+    }
+
+
 
     public function destroy(Member $Member)
     {

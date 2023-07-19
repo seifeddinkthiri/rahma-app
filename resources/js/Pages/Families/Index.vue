@@ -11,7 +11,6 @@
       >
         <label class="block text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
-          <option :value="null" />
           <option value="with">مع المحذوف</option>
           <option value="only">فقط المحذوف</option>
         </select>

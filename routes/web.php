@@ -161,7 +161,9 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
 
     //members
 
-
+    Route::get('members/{family}/create_new_one', [MemberController::class, 'create_new_one'])
+    ->name('members.create_new_one')
+    ->middleware('auth');
 
     Route::get('members/{family}/create', [MemberController::class, 'create'])
     ->name('members.create')
@@ -170,6 +172,11 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::post('members', [MemberController::class, 'store'])
     ->name('members.store')
     ->middleware('auth');
+
+    Route::post('newMembers', [MemberController::class, 'newMembers'])
+    ->name('newMembers')
+    ->middleware('auth');
+
 
     Route::get('members/{member}/edit', [MemberController::class, 'edit'])
     ->name('members.edit')

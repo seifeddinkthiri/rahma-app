@@ -66,7 +66,7 @@
     <div ref="members" class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <br />
       <div class="flex items-center">
-        <Link :href="`/members/${family.id}/create`" class="btn-indigo">
+        <Link :href="`/members/${family.id}/create_new_one`" class="btn-indigo">
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
@@ -486,7 +486,6 @@
                 الوضعية القانونية
               </label>
               <select-input v-model="home_form.status" class="form-input">
-                <option :value="null" />
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>
@@ -559,7 +558,6 @@
               </label>
 
               <select-input v-model="home_form_update.status" class="form-input">
-                <option :value="null" />
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>

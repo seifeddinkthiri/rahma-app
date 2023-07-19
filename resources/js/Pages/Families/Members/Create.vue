@@ -14,8 +14,11 @@
           <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
             الوضعية القانونية
           </label>
-          <select-input v-model="home_form.status" class="form-input">
-            <option :value="null" />
+          <select-input
+            :error="home_form.errors.status"
+            v-model="home_form.status"
+            class="form-input"
+          >
             <option value="Ownership">ملك</option>
             <option value="without compensation">بدون مقابل</option>
             <option value="inherited">ورثة</option>
@@ -134,6 +137,7 @@
           </label>
           <TextareaInput
             v-model="notes_form.value"
+            :error="notes_form.errors.value"
             id="message"
             name="message"
             rows="5"
@@ -200,13 +204,11 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
             >
-              <option :value="null" />
               <option value="Medenine">Medenine</option>
               <option value="Beja">Beja</option>
               <option value="Tunis">Tunis</option>
               <option value="Sfax">Sfax</option>
               <option value="Sousse">Sousse</option>
-              <!-- A list containing more Tunisian cities -->
               <option value="Ariana">Ariana</option>
               <option value="Ben Arous">Ben Arous</option>
               <option value="Kasserine">Kasserine</option>
@@ -262,9 +264,8 @@
             <select-input
               v-model="form.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الوضعية الأجتماعية "
+              label="الوضعية الأجتماعية"
             >
-              <option :value="null" />
               <option value="single">أعزب</option>
               <option value="married">متزوج</option>
               <option value="divorced">مطلق</option>
@@ -456,9 +457,13 @@ export default {
     },
 
     save_home() {
-      this.home_form.post(`/home/${this.Family.id}`);
-      this.active_step = "facilities";
-      this.current_form_title = "تعديل المرافق الإساسية";
+      this.home_form.post(`/home/${this.Family.id}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.active_step = "facilities";
+          this.current_form_title = "تعديل المرافق الإساسية";
+        },
+      });
     },
     prepare_childrens() {
       const stored_childs = parseInt(localStorage.getItem("stored_childrens"));
