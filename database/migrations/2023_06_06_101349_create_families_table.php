@@ -19,7 +19,7 @@ class CreateFamiliesTable extends Migration
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->string('caregiver_cin')->nullable();
+            $table->string('caregiver_phone')->nullable();
             $table->string('photo', 100)->nullable();
             $table->boolean('wife')->nullable();
             $table->boolean('husband')->nullable();

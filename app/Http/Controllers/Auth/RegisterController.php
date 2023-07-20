@@ -30,7 +30,7 @@ class RegisterController extends Controller
         Request::validate([
             'first_name' => ['required', 'max:50'],
             'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email', Rule::unique('users')],
+            'email' => ['required', 'max:50', 'email','unique'],
             'password' => ['required'],
         ]);
 

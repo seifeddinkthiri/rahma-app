@@ -12,10 +12,10 @@
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input
             class="pb-8 pr-6 w-full lg:w-1/2"
-            id="caregiver_cin"
-            v-model="form.caregiver_cin"
-            :error="form.errors.caregiver_cin"
-            label="رقم هوية معيل الأسرة"
+            id="caregiver_phone"
+            v-model="form.caregiver_phone"
+            :error="form.errors.caregiver_phone"
+            label="رقم هاتف معيل الأسرة"
           />
           <file-input
             id="photo"
@@ -162,7 +162,7 @@ export default {
     return {
       form: this.$inertia.form({
         photo: null,
-        caregiver_cin: null,
+        caregiver_phone: null,
         wife: false,
         husband: false,
         elderlies: false,

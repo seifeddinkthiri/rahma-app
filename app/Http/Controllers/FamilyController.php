@@ -6,6 +6,7 @@ use App\Models\Family;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class FamilyController extends Controller
@@ -39,7 +40,7 @@ class FamilyController extends Controller
     {
 
         Request::validate([
-            'caregiver_cin' => ['required', 'numeric'],
+            'caregiver_phone' => 'required|numeric||digits:8|unique:'.Family::class,
             'wife' => ['nullable', 'boolean'],
             'husband' => ['nullable', 'boolean'],
             'photo' => ['nullable', 'image'],
@@ -48,9 +49,9 @@ class FamilyController extends Controller
             'other_members_number' => ['nullable', 'numeric'],
         ]);
 
-      $Family =  Auth::user()->account->Families()->create(
+        $Family =  Auth::user()->account->Families()->create(
             [
-                'caregiver_cin' => Request::get('caregiver_cin'),
+                'caregiver_phone' => Request::get('caregiver_phone'),
                 'wife' => Request::get('wife'),
                 'husband' => Request::get('husband'),
                 'photo' => Request::get('photo'),

@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 class Family extends Model
 {
 
     use HasFactory;
     use SoftDeletes;
+    use HasApiTokens;
 
     protected $fillable = ['photo','name','phone','address','caregiver_cin','wife','husband','elderlies_number',"childrens_number","other_members_number"];
 
