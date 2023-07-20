@@ -2,12 +2,14 @@
   <div>
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/families">العائلات</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/families"
+        >المنتفعين</Link
+      >
       <span class="text-indigo-400 font-medium">/</span>
       {{ form.name }}
     </h1>
     <trashed-message v-if="family.deleted_at" class="mb-6" @restore="restore"
-      >تم حذف هذه العائلة.
+      >تم حذف هذا المنتفع .
     </trashed-message>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
@@ -49,14 +51,14 @@
             type="button"
             @click="destroy"
           >
-            حذف العائلة
+            حذف المنتفع
           </button>
           <loading-button
             :loading="form.processing"
             class="btn-indigo ml-auto"
             type="submit"
           >
-            تعديل العائلة
+            تعديل المنتفع
           </loading-button>
         </div>
       </form>
@@ -792,12 +794,12 @@ export default {
       this.form.post(`/families_update/${this.family.id}`);
     },
     destroy() {
-      if (confirm("هل أنت متأكد أنك تريد حذف هذه العائلة؟")) {
+      if (confirm("هل أنت متأكد أنك تريد حذف  هذا المنتفع؟")) {
         this.$inertia.delete(`/families/${this.family.id}`);
       }
     },
     restore() {
-      if (confirm("هل أنت متأكد أنك تريد استعادة هذه العائلة؟")) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة  هذا المنتفع؟")) {
         this.$inertia.put(`/families/${this.family.id}/restore`);
       }
     },

@@ -30,10 +30,10 @@
       </label>
     </div>
     <div class="formButtom">
-      <a href="/register"> register </a>
-      <loading-button :loading="form.processing" class="btn-indigo" type="submit"
-        >تسجيل الدخول</loading-button
-      >
+      <button :loading="form.processing" class="float-left p-4 font-bold" type="submit">
+        تسجيل الدخول
+      </button>
+      <Link href="/register" class="float-left p-4"> إنشاء حساب </Link>
     </div>
   </form>
 </template>
@@ -43,12 +43,12 @@ import { Head } from "@inertiajs/inertia-vue3";
 import Layout from "@/Pages/Auth/index";
 import Logo from "@/Shared/Logo";
 import TextInput from "@/Shared/TextInput";
-import LoadingButton from "@/Shared/LoadingButton";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     Head,
-    LoadingButton,
+    Link,
     Logo,
     TextInput,
   },

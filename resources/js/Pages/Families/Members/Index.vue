@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="members" />
-    <h1 class="mb-8 text-3xl font-bold">العائلات</h1>
+    <h1 class="mb-8 text-3xl font-bold">المنتفعين</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
         :onlySearch="false"
@@ -67,7 +67,7 @@
             </td>
           </tr>
           <tr v-if="members.data.length === 0">
-            <td class="px-6 py-4 border-t" colspan="3">لم يتم العثور على عائلات</td>
+            <td class="px-6 py-4 border-t" colspan="3">قائمة فارغة</td>
           </tr>
         </tbody>
       </table>
