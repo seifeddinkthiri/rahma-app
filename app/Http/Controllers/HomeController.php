@@ -17,7 +17,7 @@ class HomeController extends Controller
         Request::validate([
             'status' => ['required', 'string', 'max:100'],
             'allocation_price' => ['nullable', 'integer'],
-            'desciption' => ['required', 'string', 'max:1000'],
+            'desciption' => ['nullable', 'string', 'max:1000'],
 
         ]);
 

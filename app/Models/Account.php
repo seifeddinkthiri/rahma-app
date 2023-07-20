@@ -28,4 +28,8 @@ class Account extends Model
     {
         return $this->hasMany(Member::class);
     }
+    public function interventions()
+    {
+        return $this->hasMany(Intervention::class);
+    }
 }
