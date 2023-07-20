@@ -262,12 +262,17 @@
         </div>
         <div ref="part2" v-if="active_step == 2">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <select-input v-model="form.social_status" :error="form.errors.social_status" class="pb-8 pr-6 w-full lg:w-1/2" label="الحالة المدنية ">
+            <select-input
+              v-model="form.social_status"
+              :error="form.errors.social_status"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الحالة المدنية "
+            >
               <option :value="null" />
-              <option value="a3zab">أعزب/عزباء</option>
-              <option value="motazawej">متزوج/متزوجة</option>
-              <option value="motala9">مطلق/مطلقة</option>
-              <option value="armal">أرمل/أرملة</option>
+              <option value="single">أعزب/عزباء</option>
+              <option value="married">متزوج/متزوجة</option>
+              <option value="divorced">مطلق/مطلقة</option>
+              <option value="widower">أرمل/أرملة</option>
             </select-input>
             <text-input
               v-model="form.monthly_income"
@@ -309,13 +314,13 @@
                 @toggle="toggle_health_Status"
               />
             </div>
-            <div v-if="form.good == false" class='w-full'>
+            <div v-if="form.good == false" class="w-full">
               <div class="w-full flex flex-row flex-nowrap">
                 <ToggleCheckbox
                   :id="'disease_verif'"
                   :class="'pb-8 pr-6 w-full'"
                   :isChecked="form.disease_verif"
-                  :label='"مرض مزمن"'
+                  :label="'مرض مزمن'"
                   :active_value="'نعم'"
                   :inactive_value="'لا'"
                   @toggle="toggle_disease"
@@ -340,7 +345,7 @@
                 <ToggleCheckbox
                   :id="'disability_verif'"
                   :isChecked="form.disability_verif"
-                  :label='"إعاقة"'
+                  :label="'إعاقة'"
                   :active_value="'نعم'"
                   :inactive_value="'لا'"
                   @toggle="toggle_disability"
@@ -474,12 +479,12 @@ export default {
   methods: {
     toggle_disease() {
       this.form.disease_verif = !this.form.disease_verif;
-      this.form.disease = '';
+      this.form.disease = "";
     },
     toggle_disability() {
       this.form.disability_verif = !this.form.disability_verif;
-      this.form.disability = '';
-      this.form.disability_card_number = '';
+      this.form.disability = "";
+      this.form.disability_card_number = "";
     },
     toggle_sanitation() {
       this.facilities_form.Sanitation = !this.facilities_form.Sanitation;
