@@ -6,17 +6,24 @@
         <slot />
       </div>
     </div>
-    <button class="text-yellow-800 hover:underline text-sm" tabindex="-1" type="button" @click="$emit('restore')">استعادة</button>
+    <button
+      class="text-yellow-800 hover:underline text-sm"
+      tabindex="-1"
+      type="button"
+      @click="$emit('restore')"
+    >
+      استعادة
+    </button>
   </div>
 </template>
 
 <script>
-import Icon from '@/Shared/Icon'
+import Icon from "@/Shared/Icon";
 
 export default {
   components: {
     Icon,
   },
-  emits: ['restore'],
-}
+  emits: ["restore"],
+};
 </script>

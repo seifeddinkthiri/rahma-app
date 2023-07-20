@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Organizations" />
-    <h1 class="mb-8 text-3xl font-bold">العائلات</h1>
+    <h1 class="mb-8 text-3xl font-bold">المنتفعين</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
         :onlySearch="false"
@@ -17,7 +17,7 @@
       </search-filter>
       <Link class="btn-indigo" href="/organizations/create">
         <span>إنشاء</span>
-        <span class="hidden md:inline">&nbsp;العائلة</span>
+        <span class="hidden md:inline">&nbsp;المنتفع</span>
       </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
@@ -77,7 +77,7 @@
             </td>
           </tr>
           <tr v-if="organizations.data.length === 0">
-            <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على عائلات</td>
+            <td class="px-6 py-4 border-t" colspan="4">قائمة فارغة</td>
           </tr>
         </tbody>
       </table>
