@@ -30,8 +30,8 @@
       </label>
     </div>
     <div class="formButtom">
-      <a href="/register"> register </a>
-      <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+      <a href="/register" class="float-left p-4"> إنشاء حساب </a>
+      <loading-button :loading="form.processing" class="float-left p-4" type="submit"
         >تسجيل الدخول</loading-button
       >
     </div>
