@@ -33,6 +33,7 @@ class CreateMembersTable extends Migration
             $table->date('birth_date')->nullable();
             $table->integer('monthly_income')->nullable();
             $table->string('education_level')->nullable();
+            $table->string('education_place')->nullable();
             $table->string('job')->nullable();
             $table->string('job_place')->nullable();
             $table->softDeletes();

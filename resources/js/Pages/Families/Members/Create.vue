@@ -178,56 +178,18 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
             />
-            <div class="w-full flex flex-row flex-nowrap">
-              <ToggleCheckbox
-                :id="'cin_verif'"
-                :isChecked="form.cin_verif"
-                :label='"بطاقة التعريف الوطنية"'
-                :active_value="'نعم'"
-                :inactive_value="'لا'"
-                @toggle="toggle_cin"
-              />
-              <text-input
-                v-if="form.cin_verif"
-                class="pb-8 pr-6 w-full"
-                id="cin"
-                v-model="form.cin"
-                :error="form.errors.cin"
-                label="رقم بطاقة التعريف الوطنية"
-              />
-              <text-input
-                v-else
-                disabled
-                class="pb-8 pr-6 w-full"
-                id="cin"
-                label="لا يوجد"
-              />
-            </div>
-            <div class="w-full flex flex-row flex-nowrap">
-              <ToggleCheckbox
-                :id="'phone_verif'"
-                :isChecked="form.phone_verif"
-                :label='"الهاتف"'
-                :active_value="'نعم'"
-                :inactive_value="'لا'"
-                @toggle="toggle_phone"
-              />
-              <text-input
-                v-if="form.phone_verif"
-                class="pb-8 pr-6 w-full"
-                id="phone"
-                v-model="form.phone"
-                :error="form.errors.phone"
-                label="رقم الهاتف"
-              />
-              <text-input
-                v-else
-                disabled
-                class="pb-8 pr-6 w-full"
-                id="phone"
-                label="لا يوجد"
-              />
-            </div>
+            <text-input
+              v-model="form.cin"
+              :error="form.errors.cin"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="بطاقة التعريف الوطنية"
+            />
+            <text-input
+              v-model="form.phone"
+              :error="form.errors.phone"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الهاتف"
+            />
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
               type="date"
@@ -264,46 +226,18 @@
               <option value="Zaghouan">زغوان</option>
             </select-input>
 
-            <div class="w-full flex flex-row flex-nowrap">
-              <ToggleCheckbox
-                :id="'job_verif'"
-                :isChecked="form.job_verif"
-                :label='"يعمل"'
-                :active_value="'نعم'"
-                :inactive_value="'لا'"
-                @toggle="toggle_job"
-              />
-              <text-input
-                v-if="form.job_verif"
-                class="pb-8 pr-6 w-full"
-                id="job"
-                v-model="form.job"
-                :error="form.errors.job"
-                label="العمل"
-              />
-              <text-input
-                v-else
-                disabled
-                class="pb-8 pr-6 w-full"
-                id="job"
-                label="لا يوجد"
-              />
-              <text-input
-                v-if="form.job_verif"
-                class="pb-8 pr-6 w-full"
-                id="job_place"
-                v-model="form.job_place"
-                :error="form.errors.job_place"
-                label="مكان العمل"
-              />
-              <text-input
-                v-else
-                disabled
-                class="pb-8 pr-6 w-full"
-                id="job_place"
-                label="لا يوجد"
-              />
-            </div>
+            <text-input
+              v-model="form.job_place"
+              :error="form.errors.job_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان العمل "
+            />
+            <text-input
+              v-model="form.job"
+              :error="form.errors.job"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العمل"
+            />
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -328,16 +262,12 @@
         </div>
         <div ref="part2" v-if="active_step == 2">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <select-input
-              v-model="form.social_status"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الوضعية الأجتماعية"
-            >
+            <select-input v-model="form.social_status" :error="form.errors.social_status" class="pb-8 pr-6 w-full lg:w-1/2" label="الحالة المدنية ">
               <option :value="null" />
-              <option value="single">أعزب/عزباء</option>
-              <option value="married">متزوج/متزوجة</option>
-              <option value="divorced">مطلق/مطلقة</option>
-              <option value="Widower">أرمل/أرملة</option>
+              <option value="a3zab">أعزب/عزباء</option>
+              <option value="motazawej">متزوج/متزوجة</option>
+              <option value="motala9">مطلق/مطلقة</option>
+              <option value="armal">أرمل/أرملة</option>
             </select-input>
             <text-input
               v-model="form.monthly_income"
@@ -346,89 +276,44 @@
               label="الدخل الشهري"
             />
 
-            <div class="w-full flex flex-row flex-nowrap">
-              <ToggleCheckbox
-                :id="'education_verif'"
-                :isChecked="form.education_verif"
-                :label='"الدراسة"'
-                :active_value="'نعم'"
-                :inactive_value="'لا'"
-                @toggle="toggle_education"
-              />
-              <text-input
-                v-if="form.education_verif"
-                class="pb-8 pr-6 w-full"
-                id="education_level"
-                v-model="form.education_level"
-                :error="form.errors.education_level"
-                label="المستوى الدراسي"
-              />
-              <text-input
-                v-else
-                disabled
-                class="pb-8 pr-6 w-full"
-                id="education_level"
-                label="لا يوجد"
-              />
-              <text-input
-                  v-if="form.education_verif"
-                  class="pb-8 pr-6 w-full"
-                  id="education_place"
-                  v-model="form.education_place"
-                  :error="form.errors.education_place"
-                  label="مكان الدراسة"
-                />
-                <text-input
-                  v-else
-                  disabled
-                  class="pb-8 pr-6 w-full"
-                  id="education_place"
-                  label="لا يوجد"
-                />
-            </div>
+            <text-input
+              v-model="form.education_level"
+              :error="form.errors.education_level"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المستوى الدراسي"
+            />
+            <text-input
+              v-model="form.education_place"
+              :error="form.errors.education_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان الدراسة"
+            />
             <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
             <div class="w-full flex flex-row flex-nowrap">
-              <div class="w-30">
-                <ToggleCheckbox
-                  :id="'health_insurance'"
-                  :class="'w-full'"
-                  :isChecked="form.health_insurance"
-                  :label="'التغطية الصحية'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_health_insurance"
-                />
-              </div>
-              <div class="w-7/10 flex flex-row flex-nowrap" style='display: flex;flex-direction: column;'>
-                <p class="title_session_families pb-8 pr-6 lg:w-1/2">الحالة الصحية</p>
-                <div style='flex-direction: row; display: flex; border-color: rgba(226, 232, 240, var(--tw-border-opacity));    border-radius: 0.25rem;border-width: 1px;'>
-                  <ToggleCheckbox
-                  :id="'good'"
-                  :name = "'helth_state'"
-                  :class="'w-1/4'"
-                  :isChecked="form.good"
-                  :label="' جيدة'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_health_Status_good"
-                />
-                <ToggleCheckbox
-                  :id="'bad'"
-                  :name = "'helth_state'"
-                  :class="'w-1/4'"
-                  :isChecked="form.bad"
-                  :label="' عليلة'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_health_Status_bad"
-                />
-                </div>
-              </div>
+              <ToggleCheckbox
+                :id="'health_insurance'"
+                :class="'lg:w-1/2'"
+                :isChecked="form.health_insurance"
+                :label="'التغطية الصحية'"
+                :active_value="'نعم'"
+                :inactive_value="'لا'"
+                @toggle="toggle_health_insurance"
+              />
+              <ToggleCheckbox
+                :id="'good'"
+                :class="'lg:w-1/2'"
+                :isChecked="form.good"
+                :label="'الحالة الصحية'"
+                :active_value="'جيدة'"
+                :inactive_value="'عليلة '"
+                @toggle="toggle_health_Status"
+              />
             </div>
-            <div v-if="form.bad">
+            <div v-if="form.good == false" class='w-full'>
               <div class="w-full flex flex-row flex-nowrap">
                 <ToggleCheckbox
                   :id="'disease_verif'"
+                  :class="'pb-8 pr-6 w-full'"
                   :isChecked="form.disease_verif"
                   :label='"مرض مزمن"'
                   :active_value="'نعم'"
@@ -573,8 +458,7 @@ export default {
         education_level: null,
         job: null,
         job_place: null,
-        good: false,
-        bad: false,
+        good: true,
         disease: null,
         disability: null,
         disability_card_number: null,
@@ -588,24 +472,6 @@ export default {
     this.prepare_childrens();
   },
   methods: {
-    toggle_cin() {
-      this.form.cin_verif = !this.form.cin_verif;
-      this.form.cin = 0;
-    },
-    toggle_phone() {
-      this.form.phone_verif = !this.form.phone_verif;
-      this.form.phone = 0;
-    },
-    toggle_job() {
-      this.form.job_verif = !this.form.job_verif;
-      this.form.job = '';
-      this.form.job_place = '';
-    },
-    toggle_education() {
-      this.form.education_verif = !this.form.education_verif;
-      this.form.education_level = '';
-      this.form.education_place = '';
-    },
     toggle_disease() {
       this.form.disease_verif = !this.form.disease_verif;
       this.form.disease = '';
@@ -711,11 +577,8 @@ export default {
       this.form.health_insurance = !this.form.health_insurance;
     },
 
-    toggle_health_Status_good() {
+    toggle_health_Status() {
       this.form.good = !this.form.good;
-    },
-    toggle_health_Status_bad() {
-      this.form.bad = !this.form.bad;
     },
     store() {
       if (this.current_form == "childrens") {

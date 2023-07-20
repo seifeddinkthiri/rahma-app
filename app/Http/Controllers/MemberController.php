@@ -28,8 +28,8 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => ['required', 'integer', 'digits:8'],
-            'phone' => ['required', 'integer', 'digits:8'],
+            'cin' => 'nullable|integer||digits:8|unique:'.Member::class,
+            'phone' => 'nullable|integer||digits:8|unique:'.Member::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
@@ -37,6 +37,7 @@ class MemberController extends Controller
             'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
+            'education_place' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
             'family_id' => ['required', 'integer'],
@@ -45,7 +46,7 @@ class MemberController extends Controller
 
         $member = Auth::user()->account->members()->create($validatedData);
         $family = $member->family; // Retrieve the Family model instance
-        if ($member->cin == $family->caregiver_cin) {
+        if ($member->phone == $family->caregiver_phone) {
             $member->update([
                 'caregiver' => true,
 
@@ -61,7 +62,7 @@ class MemberController extends Controller
 
         // Create the health status
         $validatedData = Request::validate([
-            'good' => ['required', 'boolean'],
+            'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
             'disability_card_number' => ['nullable', 'integer', 'digits:8'],
