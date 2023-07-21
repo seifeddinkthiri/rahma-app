@@ -20,6 +20,11 @@ class CreateFacilitiesTable extends Migration
             ->references('id')
             ->on('families')
             ->onDelete('cascade');
+            $table->unsignedBigInteger('individual_id');
+            $table->foreign('individual_id')
+            ->references('id')
+            ->on('individuals')
+            ->onDelete('cascade');
             $table->boolean('Sanitation')->default(false);
             $table->boolean('electricity')->default(false);
             $table->boolean('water')->default(false);

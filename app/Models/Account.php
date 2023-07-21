@@ -24,6 +24,10 @@ class Account extends Model
     {
         return $this->hasMany(Family::class);
     }
+    public function individials()
+    {
+        return $this->hasMany(Individual::class);
+    }
     public function members()
     {
         return $this->hasMany(Member::class);
