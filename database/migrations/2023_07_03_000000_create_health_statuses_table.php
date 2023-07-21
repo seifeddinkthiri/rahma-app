@@ -20,7 +20,7 @@ class CreateHealthStatusesTable extends Migration
                 ->references('id')
                 ->on('members')
                 ->onDelete('cascade');
-                $table->unsignedBigInteger('individual_id');
+                $table->unsignedBigInteger('individual_id')->nullable();
                 $table->foreign('individual_id')
                 ->references('id')
                 ->on('individuals')
