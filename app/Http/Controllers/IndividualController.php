@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HealthStatus;
 use App\Models\Individual;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -22,6 +23,7 @@ class IndividualController extends Controller
                 ->through(fn ($Individual) => [
                     'id' => $Individual->id,
                     'photo' => $Individual->photo,
+                    'name' => $Individual->name,
                     'phone' => $Individual->phone,
                     'address' => $Individual->address,
                     'cin' => $Individual->cin,
@@ -48,36 +50,38 @@ class IndividualController extends Controller
     {
 
         Request::validate([
-            'photo' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'address' => 'nullable|string',
-            'cin' => 'nullable|string',
-            'gender' => 'nullable|string',
-            'birth_date' => 'nullable|date',
-            'birth_city' => 'nullable|string',
-            'social_status' => 'nullable|string',
-            'monthly_income' => 'nullable|numeric',
-            'health_insurance' => 'nullable|string',
-            'education_level' => 'nullable|string',
-            'job' => 'nullable|string',
-            'job_place' => 'nullable|string',
+            'name' => ['required', 'max:100'],
+            'address' => ['nullable', 'max:100'],
+            'photo' => ['nullable', 'image'],
+            'gender' => ['nullable', 'max:100'],
+            'cin' => ['required', 'integer', 'digits:8'],
+            'phone' => ['required', 'integer', 'digits:8'],
+            'birth_date' => ['required', 'date'],
+            'birth_city' => ['required', 'max:100'],
+            'social_status' => ['nullable', 'max:100'],
+            'monthly_income' => ['nullable', 'integer'],
+            'health_insurance' => ['nullable', 'boolean'],
+            'education_level' => ['nullable', 'max:100'],
+            'job' => ['nullable', 'max:100'],
+            'job_place' => ['nullable', 'max:100'],
         ]);
 
         $Individual =  Auth::user()->account->Individuals()->create(
             [
-                'photo' => Request::input('photo'),
-                'phone' => Request::input('phone'),
-                'address' => Request::input('address'),
-                'cin' => Request::input('cin'),
-                'gender' => Request::input('gender'),
-                'birth_date' => Request::input('birth_date'),
-                'birth_city' => Request::input('birth_city'),
-                'social_status' => Request::input('social_status'),
-                'monthly_income' => Request::input('monthly_income'),
-                'health_insurance' => Request::input('health_insurance'),
-                'education_level' => Request::input('education_level'),
-                'job' => Request::input('job'),
-                'job_place' => Request::input('job_place'),
+                'photo' => Request::get('photo'),
+                'phone' => Request::get('phone'),
+                'name' => Request::get('name'),
+                'address' => Request::get('address'),
+                'cin' => Request::get('cin'),
+                'gender' => Request::get('gender'),
+                'birth_date' => Request::get('birth_date'),
+                'birth_city' => Request::get('birth_city'),
+                'social_status' => Request::get('social_status'),
+                'monthly_income' => Request::get('monthly_income'),
+                'health_insurance' => Request::get('health_insurance'),
+                'education_level' => Request::get('education_level'),
+                'job' => Request::get('job'),
+                'job_place' => Request::get('job_place'),
                 'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
 
             ]
@@ -86,21 +90,27 @@ class IndividualController extends Controller
             Request::file('photo')->move(public_path('uploads'), $Individual->photo);
         }
 
+
+        $Individual->healthStatus()->create(
+            Request::validate([
+                'good' => ['nullable', 'boolean'],
+                'disease' => ['nullable', 'string', 'max:100'],
+                'disability' => ['nullable', 'string', 'max:100'],
+                'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+            ])
+        );
+
+
         return redirect()->route('individuals.create', ['family' => $Individual])->with('success', 'Individual created');
     }
 
     public function edit(Individual $individual)
     {
-
-
-
-
-
-
         return Inertia::render('Individuals/Edit', [
             'individual' => [
-                'id' => $individual->id,
                 'photo' => $individual->photo,
+                'id' => $individual->id,
+                'name' => $individual->name,
                 'phone' => $individual->phone,
                 'address' => $individual->address,
                 'cin' => $individual->cin,
@@ -118,6 +128,8 @@ class IndividualController extends Controller
                 'notes' => $individual->notes()->get(),
                 'facilities' =>  $individual->facilities()->get(),
                 'home' => $individual->home()->get(),
+                'healthStatus' => $individual->healthStatus()->get(),
+
             ],
         ]);
     }
@@ -125,36 +137,38 @@ class IndividualController extends Controller
     public function update(Individual $individual)
     {
         Request::validate([
-            'photo' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'address' => 'nullable|string',
-            'cin' => 'nullable|string',
-            'gender' => 'nullable|string',
-            'birth_date' => 'nullable|date',
-            'birth_city' => 'nullable|string',
-            'social_status' => 'nullable|string',
-            'monthly_income' => 'nullable|numeric',
-            'health_insurance' => 'nullable|string',
-            'education_level' => 'nullable|string',
-            'job' => 'nullable|string',
-            'job_place' => 'nullable|string',
+            'name' => ['required', 'max:100'],
+            'address' => ['nullable', 'max:100'],
+            'photo' => ['nullable', 'image'],
+            'gender' => ['nullable', 'max:100'],
+            'cin' => ['required', 'integer', 'digits:8'],
+            'phone' => ['required', 'integer', 'digits:8'],
+            'birth_date' => ['required', 'date'],
+            'birth_city' => ['required', 'max:100'],
+            'social_status' => ['nullable', 'max:100'],
+            'monthly_income' => ['nullable', 'integer'],
+            'health_insurance' => ['nullable', 'boolean'],
+            'education_level' => ['nullable', 'max:100'],
+            'job' => ['nullable', 'max:100'],
+            'job_place' => ['nullable', 'max:100'],
         ]);
 
 
         $data = [
-            'photo' => Request::input('photo'),
-            'phone' => Request::input('phone'),
-            'address' => Request::input('address'),
-            'cin' => Request::input('cin'),
-            'gender' => Request::input('gender'),
-            'birth_date' => Request::input('birth_date'),
-            'birth_city' => Request::input('birth_city'),
-            'social_status' => Request::input('social_status'),
-            'monthly_income' => Request::input('monthly_income'),
-            'health_insurance' => Request::input('health_insurance'),
-            'education_level' => Request::input('education_level'),
-            'job' => Request::input('job'),
-            'job_place' => Request::input('job_place'),
+            'photo' => Request::get('photo'),
+            'name' => Request::get('name'),
+            'phone' => Request::get('phone'),
+            'address' => Request::get('address'),
+            'cin' => Request::get('cin'),
+            'gender' => Request::get('gender'),
+            'birth_date' => Request::get('birth_date'),
+            'birth_city' => Request::get('birth_city'),
+            'social_status' => Request::get('social_status'),
+            'monthly_income' => Request::get('monthly_income'),
+            'health_insurance' => Request::get('health_insurance'),
+            'education_level' => Request::get('education_level'),
+            'job' => Request::get('job'),
+            'job_place' => Request::get('job_place'),
             'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
         ];
 
@@ -166,6 +180,42 @@ class IndividualController extends Controller
 
         return Redirect::back()->with('success', 'Individual updated.');
     }
+
+
+
+
+
+
+
+
+    public function update_health_status(Individual $Individual)
+    {
+        Request::validate([
+            'good' => ['required', 'boolean'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+        ]);
+
+        $Individual->healthStatus()->update([
+            'good' => Request::input('good'),
+            'disease' => Request::input('disease'),
+            'disability' => Request::input('disability'),
+            'disability_card_number' => Request::input('disability_card_number'),
+        ]);
+
+        return redirect()->route('individuals.edit', ['individual' => $Individual])->with('success', 'Individual updated');
+    }
+
+
+
+
+
+
+
+
+
+
 
     public function destroy(Individual $individual)
     {

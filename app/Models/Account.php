@@ -36,4 +36,8 @@ class Account extends Model
     {
         return $this->hasMany(Intervention::class);
     }
+    public function individuals()
+    {
+        return $this->hasMany(Individual::class);
+    }
 }

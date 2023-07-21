@@ -15,7 +15,7 @@ class CreateHealthStatusesTable extends Migration
     {
         Schema::create('health_statuses', function (Blueprint $table) {
             $table->id();
-           $table->unsignedBigInteger('member_id');
+           $table->unsignedBigInteger('member_id')->nullable();
             $table->foreign('member_id')
                 ->references('id')
                 ->on('members')
