@@ -108,7 +108,29 @@
                         : 'text-indigo-300 group-hover:text-white'
                     "
                   >
-                    المنتفعين
+                    المنتفعين العائلات
+                  </div>
+                </Link>
+              </div>
+              <div class="mb-4" v-if="!auth.user.wait">
+                <Link class="group flex items-center py-3" href="/individuals">
+                  <icon
+                    name="office"
+                    class="mr-2 w-4 h-4"
+                    :class="
+                      isUrl('individuals')
+                        ? 'fill-white'
+                        : 'fill-indigo-400 group-hover:fill-white'
+                    "
+                  />
+                  <div
+                    :class="
+                      isUrl('individuals')
+                        ? 'text-white'
+                        : 'text-indigo-300 group-hover:text-white'
+                    "
+                  >
+                    المنتفعين الأفراد
                   </div>
                 </Link>
               </div>

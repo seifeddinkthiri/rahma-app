@@ -9,6 +9,7 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportsController;
@@ -127,6 +128,41 @@ Route::put('organizations/{organization}/restore', [OrganizationsController::cla
     ->middleware('auth');
 
 
+// individuals
+
+Route::get('individuals', [IndividualController::class, 'index'])
+    ->name('individuals')
+    ->middleware('auth');
+
+Route::get('individuals/create', [IndividualController::class, 'create'])
+    ->name('individuals.create')
+    ->middleware('auth');
+
+Route::post('individuals', [IndividualController::class, 'store'])
+    ->name('individuals.store')
+    ->middleware('auth');
+
+Route::get('individuals/{individual}/edit', [IndividualController::class, 'edit'])
+    ->name('individuals.edit')
+    ->middleware('auth');
+
+Route::put('individuals/{individual}', [IndividualController::class, 'update'])
+    ->name('individuals.update')
+    ->middleware('auth');
+
+Route::delete('individuals/{individual}/', [IndividualController::class, 'destroy'])
+    ->name('individuals.destroy')
+    ->middleware('auth');
+
+Route::put('individuals/{individual}/restore', [IndividualController::class, 'restore']);
+
+
+//Individual health status
+
+Route::put('healthStatus/{individual}', [IndividualController::class, 'update_health_status'])
+->name('health.update')
+->middleware('auth');
+
 
 // families
 
@@ -193,7 +229,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('members.restore')
     ->middleware('auth');
 
-    //healthStatus
+    //Member Health Status
 
     Route::put('healthStatus/{member}', [MemberController::class, 'update_health_status'])
     ->name('health.update')
