@@ -90,7 +90,7 @@
                   </div>
                 </Link>
               </div>
-              <div class="mb-4" v-if="!auth.user.wait">
+              <div class="mb-4" v-if="auth.user.wait == false">
                 <Link class="group flex items-center py-3" href="/families">
                   <icon
                     name="office"
