@@ -91,48 +91,34 @@
                 </Link>
               </div>
               <div class="mb-4" v-if="auth.user.wait == false">
-                <Link class="group flex items-center py-3" href="/families">
-                  <icon
-                    name="office"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                      isUrl('families')
-                        ? 'fill-white'
-                        : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('families')
-                        ? 'text-white'
-                        : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    المنتفعين العائلات
-                  </div>
-                </Link>
-              </div>
-              <div class="mb-4" v-if="!auth.user.wait">
-                <Link class="group flex items-center py-3" href="/individuals">
-                  <icon
-                    name="office"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                      isUrl('individuals')
-                        ? 'fill-white'
-                        : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('individuals')
-                        ? 'text-white'
-                        : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    المنتفعين الأفراد
-                  </div>
-                </Link>
+                  <Drop_down_minu>
+                  <li >
+                      <Link class="group flex items-center py-3" href="/families">
+                          <div
+                          :class="
+                              isUrl('families')
+                                  ? 'text-white'
+                                  : 'text-indigo-300 group-hover:text-white'
+                              "
+                          >
+                              العائلات
+                          </div>
+                      </Link>
+                  </li>
+                  <li>
+                      <Link class="group flex items-center py-3" href="/individuals">
+                          <div
+                          :class="
+                              isUrl('individuals')
+                              ? 'text-white'
+                              : 'text-indigo-300 group-hover:text-white'
+                          "
+                          >
+                              الأفراد
+                          </div>
+                      </Link>
+                  </li>
+                </Drop_down_minu>
               </div>
               <div class="mb-4">
                 <Link class="group flex items-center py-3" href="/interventions">
@@ -223,48 +209,34 @@
                 </Link>
               </div>
               <div class="mb-4" v-if="auth.user.admin || auth.user.owner">
-                <Link class="group flex items-center py-3" href="/users">
-                  <icon
-                    name="users"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                      isUrl('contacts')
-                        ? 'fill-white'
-                        : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('users')
-                        ? 'text-white'
-                        : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    ادارة المستخدمين
-                  </div>
-                </Link>
-              </div>
-              <div class="mb-4" v-if="auth.user.admin">
-                <Link class="group flex items-center py-3" href="/wait_list">
-                  <icon
-                    name="waiting_user"
-                    class="mr-2 w-4 h-4"
-                    :class="
-                      isUrl('wait_list')
-                        ? 'fill-white'
-                        : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('wait_list')
-                        ? 'text-white'
-                        : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    قائمة الانتظار
-                  </div>
-                </Link>
+                <Drop_down_minu_members>
+                  <li >
+                      <Link class="group flex items-center py-3" href="/users">
+                          <div
+                              :class="
+                                  isUrl('users')
+                                  ? 'text-white'
+                                  : 'text-indigo-300 group-hover:text-white'
+                              "
+                              >
+                              ادارة المستخدمين
+                          </div>
+                      </Link>
+                  </li>
+                  <li v-if="auth.user.admin">
+                      <Link class="group flex items-center py-3" href="/wait_list">
+                          <div
+                              :class="
+                                  isUrl('wait_list')
+                                  ? 'text-white'
+                                  : 'text-indigo-300 group-hover:text-white'
+                              "
+                          >
+                              قائمة الانتظار 
+                          </div>
+                      </Link>
+                  </li>
+                </Drop_down_minu_members>
               </div>
             </div>
           </div>
@@ -283,7 +255,8 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Icon from "@/Shared/Icon";
 import Logo from "@/Shared/Logo";
 import Dropdown from "@/Shared/Dropdown";
-// import MainMenu from '@/Shared/MainMenu'
+import Drop_down_minu from '@/Shared/Drop_down_minu'
+import Drop_down_minu_members from '@/Shared/Drop_down_minu_members'
 import FlashMessages from "@/Shared/FlashMessages";
 
 export default {
@@ -293,7 +266,8 @@ export default {
     Icon,
     Link,
     Logo,
-    //MainMenu,
+    Drop_down_minu,
+    Drop_down_minu_members,
   },
   props: {
     auth: Object,

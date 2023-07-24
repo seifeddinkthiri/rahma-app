@@ -12,6 +12,7 @@
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
+              id="name"
               v-model="form.name"
               :error="form.errors.name"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -40,6 +41,7 @@
               type="date"
               id="birth_date"
               v-model="form.birth_date"
+              :error="form.errors.birth_date"
               label="تاريخ الولادة"
             />
             <select-input
@@ -82,12 +84,15 @@
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
               v-model="form.social_status"
+              :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الوضعية الأجتماعية"
             >
-              <option value="single">أعزب</option>
-              <option value="married">متزوج</option>
-              <option value="divorced">مطلق</option>
+              <option :value="null" />
+              <option value="single">أعزب/عزباء</option>
+              <option value="married">متزوج/متزوجة</option>
+              <option value="divorced">مطلق/مطلقة</option>
+              <option value="widower">أرمل/أرملة</option>
             </select-input>
             <text-input
               v-model="form.monthly_income"
@@ -114,6 +119,14 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
             />
+            <text-input
+              v-model="form.education_place"
+              :error="form.errors.education_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان الدراسة"
+            />
+
+
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -129,53 +142,87 @@
         </div>
         <div ref="part3" v-if="active_step == 3">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <ToggleCheckbox
-              :id="'good'"
-              :isChecked="form.good"
-              :label="'الحالة الصحية'"
-              :active_value="'جيدة'"
-              :inactive_value="'عليلة'"
-              @toggle="toggle_health_Status"
-            />
-            <ToggleCheckbox
-              :id="'health_insurance'"
-              :isChecked="form.health_insurance"
-              :label="'التغطية الصحية'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              @toggle="toggle_health_insurance"
-            />
-
-            <select-input
-              v-model="form.kinship"
-              :error="form.errors.kinship"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="القرابة العائلية"
-            >
-              <option value="husband">زوج</option>
-              <option value="wife">زوجة</option>
-              <option value="child">إبن</option>
-              <option value="elderly">مسن</option>
-              <option value="other_member">فرد إضافي</option>
-            </select-input>
-            <text-input
-              v-model="form.disease"
-              :error="form.errors.disease"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="مرض مزمن"
-            />
-            <text-input
-              v-model="form.disability"
-              :error="form.errors.disability"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="إعاقة"
-            />
-            <text-input
-              v-model="form.disability_card_number"
-              :error="form.errors.disability_card_number"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="رقم بطاقة الإعاقة"
-            />
+            <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
+            <div class="w-full flex flex-row flex-nowrap">
+              <ToggleCheckbox
+                :id="'health_insurance'"
+                :class="'lg:w-1/2'"
+                :isChecked="form.health_insurance"
+                :label="'التغطية الصحية'"
+                :active_value="'نعم'"
+                :inactive_value="'لا'"
+                @toggle="toggle_health_insurance"
+              />
+              <ToggleCheckbox
+                :id="'good'"
+                :class="'lg:w-1/2'"
+                :isChecked="form.good"
+                :label="'الحالة الصحية'"
+                :active_value="'جيدة'"
+                :inactive_value="'عليلة '"
+                @toggle="toggle_health_Status"
+              />
+            </div>
+            <div v-if="form.good == false" class="w-full">
+              <div class="w-full flex flex-row flex-nowrap">
+                <ToggleCheckbox
+                  :id="'disease_verif'"
+                  :class="'pb-8 pr-6 w-full'"
+                  :isChecked="form.disease_verif"
+                  :label="'مرض مزمن'"
+                  :active_value="'نعم'"
+                  :inactive_value="'لا'"
+                  @toggle="toggle_disease"
+                />
+                <text-input
+                  v-if="form.disease_verif"
+                  class="pb-8 pr-6 w-full"
+                  id="disease"
+                  :error="form.errors.disease"
+                  v-model="form.disease"
+                  label="أذكر المرض المزمن"
+                />
+                <text-input
+                  v-else
+                  disabled
+                  class="pb-8 pr-6 w-full"
+                  id="disease"
+                  label="لا يوجد"
+                />
+              </div>
+              <div class="w-full flex flex-row flex-nowrap">
+                <ToggleCheckbox
+                  :id="'disability_verif'"
+                  :isChecked="form.disability_verif"
+                  :label="'إعاقة'"
+                  :active_value="'نعم'"
+                  :inactive_value="'لا'"
+                  @toggle="toggle_disability"
+                />
+                <text-input
+                  v-if="form.disability_verif"
+                  class="pb-8 pr-6 w-full"
+                  id="disability"
+                  v-model="form.disability"
+                  :error="form.errors.disability"
+                  label=" أذكر الإعاقة"
+                />
+                <text-input
+                  v-else
+                  disabled
+                  class="pb-8 pr-6 w-full"
+                  id="disability"
+                  label="لا يوجد"
+                />
+                <text-input
+                  v-if="form.disability_verif"
+                  v-model="form.disability_card_number"
+                  :error="form.errors.disability_card_number"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  label="رقم بطاقة الإعاقة"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -235,7 +282,7 @@ export default {
         education_level: null,
         job: null,
         job_place: null,
-        good: false,
+        good: true,
         disease: null,
         disability: null,
         disability_card_number: null,
@@ -247,6 +294,18 @@ export default {
       this.form.health_insurance = !this.form.health_insurance;
     },
 
+    toggle_health_Status() {
+      this.form.good = !this.form.good;
+    },
+    toggle_disability() {
+      this.form.disability_verif = !this.form.disability_verif;
+      this.form.disability = "";
+      this.form.disability_card_number = "";
+    },
+    toggle_disease() {
+      this.form.disease_verif = !this.form.disease_verif;
+      this.form.disease = "";
+    },
     toggle_health_Status() {
       this.form.good = !this.form.good;
     },
