@@ -67,18 +67,27 @@
     <br />
     <div ref="members" class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center w-full flex-row justify-around">
         <Link :href="`/members/${family.id}/create_new_one`" class="btn-indigo">
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
+        <p v-if="form.name == null" class="text-red-600 px-6">يجب تعيين معيل أسرة لهذه العائلة{{ form.id }}</p>
       </div>
       <div class="mt-6 bg-white rounded shadow overflow-x-auto">
         <table class="w-full whitespace-nowrap">
           <thead>
             <tr class="text-right font-bold">
               <th class="pb-4 pt-6 px-6">الاسم</th>
-              <th class="pb-4 pt-6 px-6" colspan="2">القرابة</th>
+              <th class="pb-4 pt-6 px-6">القرابة</th>
+              <th class="pb-4 pt-6 px-6 w-full flex flex-row justify-around "> 
+                معيل الأسرة
+                <icon 
+                  v-if="form.name == null"
+                    name="error"
+                    class="mr-2 w-4 h-4"
+                />
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -116,12 +125,18 @@
               </td>
               <td class="border-t">
                 <Link
-                  v-if="member.caregiver"
                   class="flex items-center px-6 py-4"
-                  :href="`/members/${member.id}/edit`"
+                  :href="`/members/${member.id}/edit_caregiver`"
                   tabindex="-1"
                 >
-                  معيل الأسرة
+                  <div v-if="member.caregiver">
+                    <label for="caregivertrue">نعم</label>
+                    <input type="radio" name="caregiver" id="caregivertrue" checked>
+                  </div>
+                  <div v-else>
+                    <label for="caregiverfalse">لا</label>
+                    <input type="radio" name="caregiver" id="caregiverfalse">
+                  </div>
                 </Link>
               </td>
               <td class="w-px border-t">
@@ -667,6 +682,7 @@ export default {
         phone: this.family.phone,
         address: this.family.address,
         photo: null,
+        id: this.family.id,
       }),
       notes_form: this.$inertia.form({
         title: null,

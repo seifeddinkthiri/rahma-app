@@ -11,8 +11,21 @@
       <form @submit.prevent="store">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+            <div class="w-full flex flex-row flex-nowrap">
+              <select-input
+                v-model="form.kinship"
+                :error="form.errors.kinship"
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                label="القرابة العائلية"
+              >
+                <option value="husband">زوج</option>
+                <option value="wife">زوجة</option>
+                <option value="child">إبن</option>
+                <option value="elderly">مسن</option>
+                <option value="other_member">فرد إضافي</option>
+              </select-input>
+            </div>
             <text-input
-              id="name"
               v-model="form.name"
               :error="form.errors.name"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -71,12 +84,38 @@
               <option value="Tozeur">توزر</option>
               <option value="Zaghouan">زغوان</option>
             </select-input>
+
+            <text-input
+              v-model="form.job_place"
+              :error="form.errors.job_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان العمل "
+            />
+            <text-input
+              v-model="form.job"
+              :error="form.errors.job"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العمل"
+            />
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
             <button @click="active_step = 2" class="btn-indigo" type="button">
-              التالي
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
             </button>
           </div>
         </div>
@@ -86,7 +125,7 @@
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الوضعية الأجتماعية"
+              label="الحالة المدنية "
             >
               <option :value="null" />
               <option value="single">أعزب/عزباء</option>
@@ -100,18 +139,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
             />
-            <text-input
-              v-model="form.job_place"
-              :error="form.errors.job_place"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="مكان العمل "
-            />
-            <text-input
-              v-model="form.job"
-              :error="form.errors.job"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="العمل"
-            />
 
             <text-input
               v-model="form.education_level"
@@ -119,29 +146,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
             />
-            <text-input
-              v-model="form.education_place"
-              :error="form.errors.education_place"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="مكان الدراسة"
-            />
-
-
-          </div>
-          <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <button @click="active_step = 1" class="btn-indigo" type="button">
-              العودة
-            </button>
-            &nbsp;&nbsp;
-            <button @click="active_step = 3" class="btn-indigo" type="button">
-              التالي
-            </button>
-          </div>
-        </div>
-        <div ref="part3" v-if="active_step == 3">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
             <div class="w-full flex flex-row flex-nowrap">
               <ToggleCheckbox
@@ -227,8 +231,21 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button @click="active_step = 2" class="btn-indigo" type="button">
-              العودة
+            <button @click="active_step = 1" class="btn-indigo" type="button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
             </button>
             <loading-button :loading="form.processing" class="btn-indigo" type="submit"
               >إنشاء الفرد</loading-button
@@ -297,17 +314,14 @@ export default {
     toggle_health_Status() {
       this.form.good = !this.form.good;
     },
-    toggle_disability() {
-      this.form.disability_verif = !this.form.disability_verif;
-      this.form.disability = "";
-      this.form.disability_card_number = "";
-    },
     toggle_disease() {
       this.form.disease_verif = !this.form.disease_verif;
-      this.form.disease = "";
+      this.form.disease = '';
     },
-    toggle_health_Status() {
-      this.form.good = !this.form.good;
+    toggle_disability() {
+      this.form.disability_verif = !this.form.disability_verif;
+      this.form.disability = '';
+      this.form.disability_card_number = '';
     },
     store() {
       this.form

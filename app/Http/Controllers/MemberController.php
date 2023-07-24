@@ -212,4 +212,25 @@ class MemberController extends Controller
 
         return Redirect::back()->with('success', 'Member restored.');
     }
+    //
+    public function edit_caregiver(Member $Member)
+    {
+        $members = Member::all();
+        foreach ($members as $member) {
+            if($member == $Member){
+                $member->caregiver = true;
+                $famely = Family::where('id', $member->family_id)->first();
+                $famely->update([
+                    'name' => $member->name,
+                    'phone' => $member->phone,
+                    'address' => $member->address,
+                ]);
+            }
+            else
+                $member->caregiver = false;
+            $member->save();
+        }
+
+        return Redirect::back()->with('success', 'the caregiver was changed');
+    }
 }

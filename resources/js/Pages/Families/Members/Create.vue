@@ -287,12 +287,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
             />
-            <text-input
-              v-model="form.education_place"
-              :error="form.errors.education_place"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="مكان الدراسة"
-            />
             <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
             <div class="w-full flex flex-row flex-nowrap">
               <ToggleCheckbox

@@ -97,6 +97,10 @@ Route::get('wait_list', [WaitingUsersController::class, 'index'])
 Route::get('wait_list/{user}/edit', [WaitingUsersController::class, 'edit'])
     ->name('wait_list.edit')
     ->middleware('auth');
+
+Route::get('wait_list/{user}/delete_demonde', [WaitingUsersController::class, 'delete_demonde'])
+    ->name('wait_list.delete_demonde')
+    ->middleware('auth');
 // Organizations
 
 Route::get('organizations', [OrganizationsController::class, 'index'])
@@ -227,6 +231,11 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
 
     Route::put('members/{member}/restore', [MemberController::class, 'restore'])
     ->name('members.restore')
+    ->middleware('auth');
+
+    //member edit_caregiver
+    Route::get('members/{member}/edit_caregiver', [MemberController::class, 'edit_caregiver'])
+    ->name('members.edit_caregiver')
     ->middleware('auth');
 
     //Member Health Status

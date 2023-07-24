@@ -31,14 +31,29 @@ class WaitingUsersController extends Controller
                     'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 40, 'h' => 40, 'fit' => 'crop']) : null,
                     'deleted_at' => $user->deleted_at,
                 ])
-                ->where('admin',false)->where('wait',true)
+                ->where('admin',false)
         ]);
     }
     public function edit(User $user)
     {
-        $user->wait = false;
+        $message='';
+        if($user->wait){
+            $user->wait = false;
+            $message = 'user access allowed';
+        }
+        else{
+            $user->wait = true;
+            $message = 'user access blocked';
+        }
         $user->save();
-        return Redirect::back()->with('success', 'user access allowed');
+        return Redirect::back()->with('success', $message);
+    }
+    public function delete_demonde(User $user)
+    {
+
+        $user->delete();
+
+        return Redirect::back()->with('success', 'User deleted.');
     }
 
 }
