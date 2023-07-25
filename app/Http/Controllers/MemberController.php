@@ -122,7 +122,7 @@ class MemberController extends Controller
             'disability' => Request::input('disability'),
             'disability_card_number' => Request::input('disability_card_number'),
         ]);
-
+        
         return redirect()->route('members.edit', ['member' => $Member])->with('success', 'Member updated');
     }
 
@@ -192,8 +192,10 @@ class MemberController extends Controller
         $healthStatus = new HealthStatus($validate_HS_dData);
 
         $member->healthStatus()->save($healthStatus);
+        $Family = $member->Family;
 
-        return Redirect::back()->with('success', 'Member created.');
+        return redirect()->route('families.edit', ['family' => $Family])->with('success', 'Member created');
+
     }
 
 

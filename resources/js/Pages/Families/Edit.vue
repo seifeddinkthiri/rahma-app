@@ -130,13 +130,29 @@
                   tabindex="-1"
                 >
                   <div v-if="member.caregiver">
+                    <ToggleCheckbox_caregiver
+                      :id="'sanitaion'"
+                      :class="'border-0'"
+                      :label="''"
+                      :isChecked="true"
+                    />
+                  </div>
+                  <div v-else>
+                    <ToggleCheckbox_caregiver
+                      :id="'sanitaion'"
+                      :class="'border-0'"
+                      :label="''"
+                      :isChecked="false"
+                    />
+                  </div>
+                  <!-- <div v-if="member.caregiver">
                     <label for="caregivertrue">نعم</label>
                     <input type="radio" name="caregiver" id="caregivertrue" checked>
                   </div>
                   <div v-else>
                     <label for="caregiverfalse">لا</label>
                     <input type="radio" name="caregiver" id="caregiverfalse">
-                  </div>
+                  </div> -->
                 </Link>
               </td>
               <td class="w-px border-t">
@@ -643,6 +659,7 @@ import TextInput from "@/Shared/TextInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import TrashedMessage from "@/Shared/TrashedMessage";
 import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
+import ToggleCheckbox_caregiver from "../../Shared/ToggleCheckbox_caregiver.vue";
 import FileInput from "@/Shared/FileInput";
 import SelectInput from "@/Shared/SelectInput";
 import TextareaInput from "@/Shared/TextareaInput.vue";
@@ -657,6 +674,7 @@ export default {
     TextInput,
     TrashedMessage,
     ToggleCheckbox,
+    ToggleCheckbox_caregiver,
     FileInput,
     TextareaInput,
   },
