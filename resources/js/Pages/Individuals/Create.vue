@@ -17,6 +17,15 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
             />
+            <file-input
+              id="photo"
+              v-model="form.photo"
+              :error="form.errors.photo"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="file"
+              accept="image/*"
+              label="الصورة"
+            />
             <text-input
               v-model="form.address"
               :error="form.errors.address"
@@ -125,13 +134,22 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
             />
-
             <text-input
               v-model="form.education_level"
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
             />
+            <select-input
+              v-model="form.gender"
+              :error="form.errors.gender"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label=" الجنس "
+            >
+              <option :value="null" />
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
+            </select-input>
             <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
             <div class="w-full flex flex-row flex-nowrap">
               <ToggleCheckbox
@@ -249,6 +267,7 @@ import Layout from "@/Shared/Layout";
 import TextInput from "@/Shared/TextInput";
 import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
+import FileInput from "@/Shared/FileInput";
 import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
 
 export default {
@@ -258,6 +277,7 @@ export default {
     LoadingButton,
     SelectInput,
     TextInput,
+    FileInput,
     ToggleCheckbox,
   },
   layout: Layout,

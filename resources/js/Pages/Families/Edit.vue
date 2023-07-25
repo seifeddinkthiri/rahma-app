@@ -72,7 +72,7 @@
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
-        <p v-if="form.name == null" class="text-red-600 px-6">يجب تعيين معيل أسرة لهذه العائلة{{ form.id }}</p>
+        <p v-if="form.name == null" class="text-red-600 px-6">يجب تعيين معيل أسرة لهذه العائلة</p>
       </div>
       <div class="mt-6 bg-white rounded shadow overflow-x-auto">
         <table class="w-full whitespace-nowrap">

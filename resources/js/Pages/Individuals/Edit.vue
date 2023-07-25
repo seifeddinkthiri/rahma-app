@@ -21,6 +21,15 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
             />
+            <file-input
+              id="photo"
+              v-model="form.photo"
+              :error="form.errors.photo"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="file"
+              accept="image/*"
+              label="الصورة"
+            />
             <text-input
               v-model="form.address"
               :error="form.errors.address"
@@ -31,7 +40,7 @@
               v-model="form.cin"
               :error="form.errors.cin"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="تقتعريف"
+              label="بطاقة التعريف الوطنية"
             />
             <text-input
               v-model="form.phone"
@@ -44,35 +53,35 @@
               type="date"
               id="birth_date"
               v-model="form.birth_date"
+              :error="form.errors.birth_date"
               label="تاريخ الولادة"
             />
-
             <select-input
               v-model="form.birth_city"
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
             >
-              <option value="Medenine">Medenine</option>
-              <option value="Beja">Beja</option>
-              <option value="Tunis">Tunis</option>
-              <option value="Sfax">Sfax</option>
-              <option value="Sousse">Sousse</option>
-              <option value="Ariana">Ariana</option>
-              <option value="Ben Arous">Ben Arous</option>
-              <option value="Kasserine">Kasserine</option>
-              <option value="Le Kef">Le Kef</option>
-              <option value="Mahdia">Mahdia</option>
-              <option value="Manouba">Manouba</option>
-              <option value="Monastir">Monastir</option>
-              <option value="Nabeul">Nabeul</option>
-              <option value="Sidi Bouzid">Sidi Bouzid</option>
-              <option value="Siliana">Siliana</option>
-              <option value="Gabes">Gabes</option>
-              <option value="Jendouba">Jendouba</option>
-              <option value="Tataouine">Tataouine</option>
-              <option value="Tozeur">Tozeur</option>
-              <option value="Zaghouan">Zaghouan</option>
+              <option value="Medenine">مدنين</option>
+              <option value="Beja">باجة</option>
+              <option value="Tunis">تونس</option>
+              <option value="Sfax">صفاقس</option>
+              <option value="Sousse">سوسة</option>
+              <option value="Ariana">أريانة</option>
+              <option value="Ben Arous">بن عروس</option>
+              <option value="Kasserine">القصرين</option>
+              <option value="Le Kef">الكاف</option>
+              <option value="Mahdia">المهدية</option>
+              <option value="Manouba">منوبة</option>
+              <option value="Monastir">المنستير</option>
+              <option value="Nabeul">نابل</option>
+              <option value="Sidi Bouzid">سيدي بوزيد</option>
+              <option value="Siliana">سليانة</option>
+              <option value="Gabes">قابس</option>
+              <option value="Jendouba">جندوبة</option>
+              <option value="Tataouine">تطاوين</option>
+              <option value="Tozeur">توزر</option>
+              <option value="Zaghouan">زغوان</option>
             </select-input>
           </div>
           <div
@@ -112,11 +121,29 @@
         <div ref="part2" v-if="active_step == 2">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
+              v-model="form.job_place"
+              :error="form.errors.job_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان العمل "
+            />
+            <text-input
+              v-model="form.job"
+              :error="form.errors.job"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العمل"
+            />
+            <select-input
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
-            />
+            >
+              <option :value="null" />
+              <option value="single">أعزب/عزباء</option>
+              <option value="married">متزوج/متزوجة</option>
+              <option value="divorced">مطلق/مطلقة</option>
+              <option value="widower">أرمل/أرملة</option>
+            </select-input>
             <text-input
               v-model="form.monthly_income"
               :error="form.errors.monthly_income"
@@ -129,87 +156,30 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
             />
-            <ToggleCheckbox
-              :id="'health_insurance'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              :label="'التغطية الصحية'"
-              :isChecked="form.health_insurance"
-              @toggle="toggle_health_insurance"
-            />
-
             <select-input
-              v-model="form.kinship"
-              :error="form.errors.kinship"
+              v-model="form.gender"
+              :error="form.errors.gender"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="القرابة العائلية"
+              label=" الجنس "
             >
-              <option value="husband">زوج</option>
-              <option value="wife">زوجة</option>
-              <option value="child">إبن</option>
-              <option value="elderly">مسن</option>
-              <option value="other_individual">فرد إضافي</option>
+              <option :value="null" />
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
             </select-input>
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
+            <button
+              v-if="!individual.deleted_at"
+              class="text-red-600 hover:underline"
+                tabindex="-1"
+                type="button"
+                @click="destroy"
+              >
+                حذف
+            </button>
             <button @click="active_step = 1" class="btn-indigo" type="button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </button>
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
-              >تسجيل التعديلات</loading-button
-            >
-            <button @click="active_step = 3" class="btn-indigo" type="button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div ref="part3" v-if="active_step == 3">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <text-input
-              v-model="form.job"
-              :error="form.errors.job"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="العمل"
-            />
-            <text-input
-              v-model="form.job_place"
-              :error="form.errors.job_place"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="مكان العمل "
-            />
-          </div>
-          <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <button @click="active_step = 2" class="btn-indigo" type="button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -233,48 +203,63 @@
       </form>
     </div>
     <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update_health_status">
-        <div ref="part1" v-if="active_step == 1">
-          <div
-            class="flex flex-wrap -mb-8 -mr-6 p-8"
-            v-for="status in individual.healthStatus"
-            :key="status.id"
-          >
-            <text-input
-              :label="'مرض مزمن'"
-              v-model="health_status_form.disease"
-              :error="form.errors.disease"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-            />
-            <text-input
-              :label="'إعاقة'"
-              v-model="health_status_form.disability"
-              :error="form.errors.disability"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-            />
-            <text-input
-              :label="'رقم بطاقة الإعاقة'"
-              v-model="health_status_form.disability_card_number"
-              :error="form.errors.disability_card_number"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-            />
-            <ToggleCheckbox
-              :id="'good'"
-              :active_value="'جيدة'"
-              :inactive_value="'عليلة'"
-              :label="'صفة الحالة'"
-              :isChecked="health_status_form.good"
-              @toggle="toggle_health"
-            />
+        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+          <div class="w-full flex flex-row flex-nowrap">
+              <ToggleCheckbox
+                :id="'health_insurance'"
+                :class="'lg:w-1/2'"
+                :isChecked="health_status_form.health_insurance"
+                :label="'التغطية الصحية'"
+                :active_value="'نعم'"
+                :inactive_value="'لا'"
+                @toggle="toggle_health_insurance"
+              />
+              <ToggleCheckbox
+                :id="'good'"
+                :class="'lg:w-1/2'"
+                :isChecked="health_status_form.good"
+                :label="'الحالة الصحية'"
+                :active_value="'جيدة'"
+                :inactive_value="'عليلة '"
+                @toggle="toggle_health_Status"
+              />
           </div>
-          <div v-if="individual.healthStatus.length === 0">
-            <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
+          <div v-if="health_status_form.good == false" class="w-full">
+              <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+                <div class="w-full flex flex-row flex-nowrap">
+                  <text-input
+                    class="pb-8 pr-6 w-full"
+                    id="disease"
+                    :error="health_status_form.errors.disease"
+                    v-model="health_status_form.disease"
+                    label=" المرض المزمن"
+                  />
+                </div>
+                <div class="w-full flex flex-row flex-nowrap">
+                  <text-input
+                    class="pb-8 pr-6 w-full"
+                    id="disability"
+                    v-model="health_status_form.disability"
+                    :error="health_status_form.errors.disability"
+                    label=" الإعاقة"
+                  />
+                  <text-input
+                    v-model="health_status_form.disability_card_number"
+                    :error="health_status_form.errors.disability_card_number"
+                    class="pb-8 pr-6 w-full lg:w-1/2"
+                    label="رقم بطاقة الإعاقة"
+                  />
+                </div>
+              </div>
           </div>
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit"
-            >تسجيل التعديلات</loading-button
-          >
         </div>
+        <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
+            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+              >تسجيل التعديلات
+            </loading-button>
+          </div>
       </form>
     </div>
   </div>
@@ -288,6 +273,7 @@ import TextInput from "@/Shared/TextInput";
 import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import TrashedMessage from "@/Shared/TrashedMessage";
+import FileInput from "@/Shared/FileInput";
 import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
 
 export default {
@@ -299,6 +285,7 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    FileInput,
     ToggleCheckbox,
   },
   layout: Layout,
@@ -307,14 +294,15 @@ export default {
   },
   remember: "form",
   created() {
-    if (this.individual.health_insurance == 0) {
-      this.form.health_insurance = false;
-    }
-    if (this.individual.health_insurance == 1) {
-      this.form.health_insurance = true;
-    }
+    // if (this.individual.health_insurance == 0) {
+    //   this.form.health_insurance = false;
+    // }
+    // if (this.individual.health_insurance == 1) {
+    //   this.form.health_insurance = true;
+    // }
 
     this.individual.healthStatus.forEach((element) => {
+      this.health_status_form.health_insurance = element.health_insurance;
       this.health_status_form.good = element.good;
       this.health_status_form.disease = element.disease;
       this.health_status_form.disability = element.disability;
@@ -327,10 +315,11 @@ export default {
       active_step: 1,
       healthStatusFields: [],
       health_status_form: this.$inertia.form({
-        good: this.individual.healthStatus.good,
-        disease: null,
-        disability: null,
-        disability_card_number: null,
+        health_insurance : this.individual.healthStatus.health_insurance,
+        good : this.individual.healthStatus.good,
+        disease : this.individual.healthStatus.disease,
+        disability : this.individual.healthStatus.disability,
+        disability_card_number : this.individual.healthStatus.disability_card_number,
         individual_id: this.individual.id,
       }),
       form: this.$inertia.form({
@@ -344,7 +333,6 @@ export default {
         birth_city: this.individual.birth_city,
         social_status: this.individual.social_status,
         monthly_income: this.individual.monthly_income,
-        health_insurance: this.individual.health_insurance,
         education_level: this.individual.education_level,
         job: this.individual.job,
         job_place: this.individual.job_place,
@@ -352,18 +340,18 @@ export default {
     };
   },
   methods: {
-    update_health_status() {
-      this.health_status_form.put(`/healthStatus/${this.individual.id}`);
+    toggle_health_Status() {
+      this.health_status_form.good = !this.health_status_form.good;
     },
 
     toggle_health_insurance() {
-      this.form.health_insurance = !this.form.health_insurance;
-    },
-    toggle_health() {
-      this.health_status_form.good = !this.health_status_form.good;
+      this.health_status_form.health_insurance = !this.health_status_form.health_insurance;
     },
     update() {
       this.form.put(`/individuals/${this.individual.id}`);
+    },
+    update_health_status() {
+      this.health_status_form.put(`/healthStatus/${this.individual.id}`);
     },
     destroy() {
       if (confirm("هل أنت متأكد أنك تريد حذف هذا الفرد ؟")) {

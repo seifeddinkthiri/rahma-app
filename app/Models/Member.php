@@ -25,7 +25,6 @@ class Member extends Model
         'birth_city',
         'social_status',
         'monthly_income',
-        'health_insurance',
         'kinship',
         'caregiver',
         'education_level',

@@ -26,17 +26,9 @@
             <th class="pb-4 pt-6 px-6">الاسم</th>
             <th class="pb-4 pt-6 px-6">الهاتف</th>
             <th class="pb-4 pt-6 px-6">العنوان</th>
-            <th class="pb-4 pt-6 px-6">الرقم الوطني</th>
-            <th class="pb-4 pt-6 px-6">الجنس</th>
-            <th class="pb-4 pt-6 px-6">تاريخ الميلاد</th>
-            <th class="pb-4 pt-6 px-6">مكان الميلاد</th>
-            <th class="pb-4 pt-6 px-6">الحالة الاجتماعية</th>
-            <th class="pb-4 pt-6 px-6">الدخل الشهري</th>
-            <th class="pb-4 pt-6 px-6">التأمين الصحي</th>
-            <th class="pb-4 pt-6 px-6">مستوى التعليم</th>
-            <th class="pb-4 pt-6 px-6">الوظيفة</th>
-            <th class="pb-4 pt-6 px-6">مكان العمل</th>
-            <th class="pb-4 pt-6 px-6" colspan="2">Actions</th>
+            <th class="pb-4 pt-6 px-6"> بطاقة التعريف الوطنية</th>
+            <th class="pb-4 pt-6 px-6"> الجنس</th>
+            <th class="pb-4 pt-6 px-6"> الصورة</th>
           </tr>
         </thead>
         <tbody class="text-right">
@@ -100,70 +92,17 @@
                 :href="`/individuals/${individual.id}/edit`"
                 tabindex="-1"
               >
-                {{ individual.birth_date }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.birth_city }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.social_status }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.monthly_income }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.health_insurance }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.education_level }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.job }}
-              </Link>
-            </td>
-            <td class="border-t">
-              <Link
-                class="flex items-center px-6 py-4"
-                :href="`/individuals/${individual.id}/edit`"
-                tabindex="-1"
-              >
-                {{ individual.job_place }}
+                <img
+                  v-if="individual.photo"
+                  class="block -my-2 mr-2 w-10 h-110 rounded"
+                  :src="'uploads/' + individual.photo"
+                />
+
+                <icon
+                  v-if="individual.deleted_at"
+                  name="trash"
+                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
+                />
               </Link>
             </td>
             <td class="w-px border-t">
@@ -177,7 +116,7 @@
             </td>
           </tr>
           <tr v-if="individuals.data.length === 0">
-            <td class="px-6 py-4 border-t" colspan="14">قائمة فارغة</td>
+            <td class="px-6 py-4 border-t" colspan="4">قائمة فارغة</td>
           </tr>
         </tbody>
       </table>

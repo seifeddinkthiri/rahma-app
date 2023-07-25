@@ -16,7 +16,6 @@ class CreateIndividualsTable extends Migration
         Schema::create('individuals', function (Blueprint $table) {
             $table->id();
             $table->integer('account_id')->index();
-            $table->string('health_insurance')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('cin')->nullable();

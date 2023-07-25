@@ -34,10 +34,8 @@ class MemberController extends Controller
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
             'monthly_income' => ['nullable', 'integer'],
-            'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
-            'education_place' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
             'family_id' => ['required', 'integer'],
@@ -62,6 +60,7 @@ class MemberController extends Controller
 
         // Create the health status
         $validatedData = Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
@@ -69,6 +68,7 @@ class MemberController extends Controller
         ]);
 
         $healthStatus = new HealthStatus([
+            'health_insurance' => $validatedData['health_insurance'],
             'good' => $validatedData['good'],
             'disease' => $validatedData['disease'],
             'disability' => $validatedData['disability'],
@@ -94,7 +94,6 @@ class MemberController extends Controller
                 'birth_city' => $Member->birth_city,
                 'social_status' => $Member->social_status,
                 'monthly_income' => $Member->monthly_income,
-                'health_insurance' => $Member->health_insurance,
                 'kinship' => $Member->kinship,
                 'education_level' => $Member->education_level,
                 'job' => $Member->job,
@@ -109,6 +108,7 @@ class MemberController extends Controller
     public function update_health_status(Member $Member)
     {
         Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
             'good' => ['required', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
@@ -116,6 +116,7 @@ class MemberController extends Controller
         ]);
 
         $Member->healthStatus()->update([
+            'health_insurance' => Request::input('health_insurance'),
             'good' => Request::input('good'),
             'disease' => Request::input('disease'),
             'disability' => Request::input('disability'),
@@ -134,24 +135,22 @@ class MemberController extends Controller
         $Member->update(
             Request::validate([
                 'name' => ['required', 'max:100'],
-            'address' => ['required', 'max:100'],
-            'cin' => ['required', 'integer', 'digits:8'],
-            'phone' => ['required', 'integer', 'digits:8'],
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
-            'social_status' => ['required', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
-            'health_insurance' => ['required', 'boolean'],
-            'kinship' => ['required', 'max:100'],
-            'education_level' => ['nullable', 'max:100'],
-            'job' => ['nullable', 'max:100'],
-            'job_place' => ['nullable', 'max:100'],
-            'family_id' => ['required', 'integer'],
+                'address' => ['required', 'max:100'],
+                'cin' => ['required', 'integer', 'digits:8'],
+                'phone' => ['required', 'integer', 'digits:8'],
+                'birth_date' => ['required', 'date'],
+                'birth_city' => ['required', 'max:100'],
+                'social_status' => ['required', 'max:100'],
+                'monthly_income' => ['nullable', 'integer'],
+                'kinship' => ['required', 'max:100'],
+                'education_level' => ['nullable', 'max:100'],
+                'job' => ['nullable', 'max:100'],
+                'job_place' => ['nullable', 'max:100'],
+                'family_id' => ['required', 'integer'],
             ])
         );
 
-        return Redirect::route('families.edit', ['family' => $Member->family_id])
-            ->with('success', 'Member updated');
+        return redirect()->route('members.edit', ['member' => $Member])->with('success', 'Member updated');
     }
 
 
@@ -170,7 +169,6 @@ class MemberController extends Controller
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
             'monthly_income' => ['nullable', 'integer'],
-            'health_insurance' => ['required', 'boolean'],
             'kinship' => ['required', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
@@ -184,6 +182,7 @@ class MemberController extends Controller
 
         // Create the health status
         $validate_HS_dData = Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
             'good' => ['required', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],

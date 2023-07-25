@@ -15,7 +15,7 @@ class CreateHealthStatusesTable extends Migration
     {
         Schema::create('health_statuses', function (Blueprint $table) {
             $table->id();
-           $table->unsignedBigInteger('member_id')->nullable();
+            $table->unsignedBigInteger('member_id')->nullable();
             $table->foreign('member_id')
                 ->references('id')
                 ->on('members')
@@ -25,6 +25,7 @@ class CreateHealthStatusesTable extends Migration
                 ->references('id')
                 ->on('individuals')
                 ->onDelete('cascade');
+            $table->string('health_insurance')->nullable();
             $table->boolean('good')->default(false);
             $table->string('disability')->nullable();
             $table->string('disability_card_number')->nullable();

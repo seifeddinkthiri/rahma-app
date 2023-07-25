@@ -22,7 +22,6 @@ class CreateMembersTable extends Migration
                 ->on('families')
                 ->onDelete('cascade');
             $table->boolean('caregiver')->default(false);
-            $table->string('health_insurance')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('cin')->nullable();

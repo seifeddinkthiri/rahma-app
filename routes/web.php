@@ -240,7 +240,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
 
     //Member Health Status
 
-    Route::put('healthStatus/{member}', [MemberController::class, 'update_health_status'])
+    Route::put('healthStatusMemeber/{member}', [MemberController::class, 'update_health_status'])
     ->name('health.update')
     ->middleware('auth');
 

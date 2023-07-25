@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 
 class Individual extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasApiTokens;
+
     protected $fillable = [
         'photo',
         'name',
@@ -21,7 +24,6 @@ class Individual extends Model
         'birth_city',
         'social_status',
         'monthly_income',
-        'health_insurance',
         'education_level',
         'job',
         'job_place',
