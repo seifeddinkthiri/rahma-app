@@ -1,8 +1,8 @@
 <template>
   <div>
     <Head title="Create Family" />
-    <Breadcrumb :active_step="'family'" :form_title="'إنشاء عائلة'" />
 
+    <Breadcrumb :Family="Family.id" :form_title="'تعديل معطيات العائلة'" />
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
@@ -141,7 +141,7 @@ import TextInput from "@/Shared/TextInput";
 import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import FileInput from "@/Shared/FileInput";
-import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
+import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
 import Breadcrumb from "@/Shared/Breadcrumb";
 
 export default {
@@ -157,24 +157,22 @@ export default {
   },
   layout: Layout,
   remember: "form",
-  mounted() {
-    localStorage.setItem("stored_childrens", 0);
-    localStorage.setItem("stored_elderlies", 0);
-    localStorage.setItem("stored_other_members", 0);
+  props: {
+    Family: Object,
   },
   data() {
     return {
       form: this.$inertia.form({
-        photo: null,
-        caregiver_phone: null,
-        wife: false,
-        husband: false,
-        elderlies: false,
-        childrens: false,
-        other_members: false,
-        childrens_number: 0,
-        elderlies_number: 0,
-        other_members_number: 0,
+        photo: this.Family.photo,
+        caregiver_phone: this.Family.caregiver_phone,
+        wife: this.Family.wife,
+        husband: this.Family.husband,
+        elderlies: this.Family.elderlies_number > 0,
+        childrens: this.Family.childrens_number > 0,
+        other_members: this.Family.other_members_number > 0,
+        childrens_number: this.Family.childrens_number,
+        elderlies_number: this.Family.elderlies_number,
+        other_members_number: this.Family.other_members_number,
       }),
     };
   },
@@ -205,7 +203,7 @@ export default {
         this.form.elderlies_number > 0 ||
         this.form.other_members_number > 0
       ) {
-        this.form.post("/families");
+        this.form.post(`/families_B_C/${this.Family.id}`);
       } else {
         window.alert("تحتوي العائلة على فرد واحد علا الأقل");
       }

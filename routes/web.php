@@ -177,11 +177,16 @@ Route::get('families', [FamilyController::class, 'index'])
 Route::get('families/create', [FamilyController::class, 'create'])
     ->name('families.create')
     ->middleware('auth');
+    Route::get('families/{Family}/create_B_C', [FamilyController::class, 'create_B_C'])
+    ->name('families.create_B_C')
+    ->middleware('auth');
 
 Route::post('families', [FamilyController::class, 'store'])
     ->name('families.store')
     ->middleware('auth');
-
+    Route::post('families_B_C/{Family}', [FamilyController::class, 'Store_B_C'])
+    ->name('families.Store_B_C')
+    ->middleware('auth');
 Route::get('families/{family}/edit', [FamilyController::class, 'edit'])
     ->name('families.edit')
     ->middleware('auth');

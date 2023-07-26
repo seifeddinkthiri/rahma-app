@@ -28,8 +28,8 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'nullable|integer||digits:8|unique:'.Member::class,
-            'phone' => 'nullable|integer||digits:8|unique:'.Member::class,
+            'cin' => 'required|integer||digits:8|unique:'.Member::class,
+            'phone' => 'required|integer||digits:8|unique:'.Member::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
@@ -122,7 +122,7 @@ class MemberController extends Controller
             'disability' => Request::input('disability'),
             'disability_card_number' => Request::input('disability_card_number'),
         ]);
-        
+
         return redirect()->route('members.edit', ['member' => $Member])->with('success', 'Member updated');
     }
 

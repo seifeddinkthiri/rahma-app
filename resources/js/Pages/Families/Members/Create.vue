@@ -1,9 +1,14 @@
 <template>
   <div>
     <Head title="Create Organization" />
-    <h1 class="mb-8 text-3xl font-bold">
-      {{ current_form_title }}
-    </h1>
+    <Breadcrumb
+      :Family_id="Family.id"
+      :current_form_title="current_form_title"
+      :active_step="active_step"
+      :members_form_title="members_form_title"
+      @update-active-step="updateActiveStep"
+      @update-current-form-title="updateCurrentFormTitle"
+    />
 
     <div
       class="max-w-3xl bg-white rounded-md shadow overflow-hidden"
@@ -157,7 +162,7 @@
             type="button"
             class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           >
-            عودة
+            إنشاء عائلة جديدة
           </button>
         </div>
       </form>
@@ -171,24 +176,28 @@
               :error="form.errors.name"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.address"
               :error="form.errors.address"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.cin"
               :error="form.errors.cin"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="بطاقة التعريف الوطنية"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.phone"
               :error="form.errors.phone"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
+              :disabled="isFormDisabled"
             />
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -197,12 +206,14 @@
               v-model="form.birth_date"
               :error="form.errors.birth_date"
               label="تاريخ الولادة"
+              :disabled="isFormDisabled"
             />
             <select-input
               v-model="form.birth_city"
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
+              :disabled="isFormDisabled"
             >
               <option value="Medenine">مدنين</option>
               <option value="Beja">باجة</option>
@@ -231,12 +242,14 @@
               :error="form.errors.job_place"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.job"
               :error="form.errors.job"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العمل"
+              :disabled="isFormDisabled"
             />
           </div>
           <div
@@ -267,6 +280,7 @@
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
+              :disabled="isFormDisabled"
             >
               <option :value="null" />
               <option value="single">أعزب/عزباء</option>
@@ -279,6 +293,7 @@
               :error="form.errors.monthly_income"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
+              :disabled="isFormDisabled"
             />
 
             <text-input
@@ -286,9 +301,11 @@
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
+              :disabled="isFormDisabled"
             />
-            <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
-            <div class="w-full flex flex-row flex-nowrap">
+
+            <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
+            <div class="flex flex-row flex-nowrap w-full">
               <ToggleCheckbox
                 :id="'health_insurance'"
                 :class="'lg:w-1/2'"
@@ -297,6 +314,7 @@
                 :active_value="'نعم'"
                 :inactive_value="'لا'"
                 @toggle="toggle_health_insurance"
+                :isDisabled="isFormDisabled"
               />
               <ToggleCheckbox
                 :id="'good'"
@@ -306,10 +324,11 @@
                 :active_value="'جيدة'"
                 :inactive_value="'عليلة '"
                 @toggle="toggle_health_Status"
+                :isDisabled="isFormDisabled"
               />
             </div>
             <div v-if="form.good == false" class="w-full">
-              <div class="w-full flex flex-row flex-nowrap">
+              <div class="flex flex-row flex-nowrap w-full">
                 <ToggleCheckbox
                   :id="'disease_verif'"
                   :class="'pb-8 pr-6 w-full'"
@@ -318,6 +337,7 @@
                   :active_value="'نعم'"
                   :inactive_value="'لا'"
                   @toggle="toggle_disease"
+                  :isDisabled="isFormDisabled"
                 />
                 <text-input
                   v-if="form.disease_verif"
@@ -326,6 +346,7 @@
                   :error="form.errors.disease"
                   v-model="form.disease"
                   label="أذكر المرض المزمن"
+                  :disabled="isFormDisabled"
                 />
                 <text-input
                   v-else
@@ -333,9 +354,10 @@
                   class="pb-8 pr-6 w-full"
                   id="disease"
                   label="لا يوجد"
+                  :disabled="isFormDisabled"
                 />
               </div>
-              <div class="w-full flex flex-row flex-nowrap">
+              <div class="flex flex-row flex-nowrap w-full">
                 <ToggleCheckbox
                   :id="'disability_verif'"
                   :isChecked="form.disability_verif"
@@ -343,6 +365,7 @@
                   :active_value="'نعم'"
                   :inactive_value="'لا'"
                   @toggle="toggle_disability"
+                  :isDisabled="isFormDisabled"
                 />
                 <text-input
                   v-if="form.disability_verif"
@@ -351,6 +374,7 @@
                   v-model="form.disability"
                   :error="form.errors.disability"
                   label=" أذكر الإعاقة"
+                  :disabled="isFormDisabled"
                 />
                 <text-input
                   v-else
@@ -358,6 +382,7 @@
                   class="pb-8 pr-6 w-full"
                   id="disability"
                   label="لا يوجد"
+                  :disabled="isFormDisabled"
                 />
                 <text-input
                   v-if="form.disability_verif"
@@ -365,6 +390,7 @@
                   :error="form.errors.disability_card_number"
                   class="pb-8 pr-6 w-full lg:w-1/2"
                   label="رقم بطاقة الإعاقة"
+                  :disabled="isFormDisabled"
                 />
               </div>
             </div>
@@ -406,6 +432,8 @@ import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
 import TextareaInput from "@/Shared/TextareaInput.vue";
+import Breadcrumb from "@/Shared/Breadcrumb";
+
 export default {
   components: {
     Head,
@@ -415,6 +443,7 @@ export default {
     TextInput,
     ToggleCheckbox,
     TextareaInput,
+    Breadcrumb,
   },
   layout: Layout,
   remember: "form",
@@ -423,8 +452,11 @@ export default {
   },
   data() {
     return {
+      isFormDisabled: false,
+
       active_step: 1,
       current_form_title: "",
+      members_form_title: "",
       current_form: "childrens",
       notes_form: this.$inertia.form({
         title: null,
@@ -465,12 +497,19 @@ export default {
     };
   },
   mounted() {
-    localStorage.setItem("stored_childrens", 0);
-    localStorage.setItem("stored_elderlies", 0);
-    localStorage.setItem("stored_other_members", 0);
     this.prepare_childrens();
   },
   methods: {
+    updateActiveStep(step) {
+      this.active_step = step; // Update the active_step prop in the parent component
+    },
+
+    updateCurrentFormTitle(title) {
+      this.current_form_title = title; // Update the current_form_title prop in the parent component
+    },
+    updateMembersFormTitle(title) {
+      this.members_form_title = title;
+    },
     toggle_disease() {
       this.form.disease_verif = !this.form.disease_verif;
       this.form.disease = "";
@@ -529,6 +568,7 @@ export default {
         this.active_step = 1;
         this.current_form = "childrens";
         this.current_form_title = " أدخل بيانات الإبن رقم" + stored_childs + 1;
+        this.members_form_title = " أدخل بيانات الإبن رقم" + stored_childs + 1;
       } else {
         this.prepare_elderlies();
       }
@@ -538,6 +578,8 @@ export default {
       if (stored_elderlies < this.Family.elderlies_number) {
         this.active_step = 1;
         this.current_form_title = " أدخل بيانات المسن رقم" + stored_elderlies + 1;
+        this.members_form_title = " أدخل بيانات المسن رقم" + stored_elderlies + 1;
+
         this.current_form = "elderlies";
       } else {
         this.prepare_other_members();
@@ -549,6 +591,8 @@ export default {
         this.active_step = 1;
         this.current_form_title =
           " أدخل بيانات الفرد الإضافي رقم" + stored_other_members + 1;
+        this.members_form_title =
+          " أدخل بيانات الفرد الإضافي رقم" + stored_other_members + 1;
         this.current_form = "other_members";
       } else {
         this.prepare_husband();
@@ -558,6 +602,8 @@ export default {
       if (this.Family.husband) {
         this.active_step = 1;
         this.current_form_title = "أدخل بيانات الزوج";
+        this.members_form_title = "أدخل بيانات الزوج";
+
         this.current_form = "husband";
       } else {
         this.prepare_wife();
@@ -567,6 +613,8 @@ export default {
       if (this.Family.wife) {
         this.active_step = 1;
         this.current_form_title = "أدخل بيانات الزوجة";
+        this.members_form_title = "أدخل بيانات الزوجة";
+
         this.current_form = "wife";
       } else {
         this.members_process_done();
@@ -609,7 +657,13 @@ export default {
       this.current_form_title = "أضف بيانات المسكن";
       this.active_step = "home";
       this.current_form = "";
+      this.members_form_title = "تمت إضافة كل الأفراد";
       this.form.reset();
+      (this.form.health_insurance = false), (this.form.disability = false);
+      this.form.good = false;
+      this.form.disease = false;
+      this.isFormDisabled = true;
+
       localStorage.setItem("stored_childrens", 0);
       localStorage.setItem("stored_elderlies", 0);
       localStorage.setItem("stored_other_members", 0);

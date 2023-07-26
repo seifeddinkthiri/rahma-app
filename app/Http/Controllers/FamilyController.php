@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Session;
 
 class FamilyController extends Controller
 {
@@ -34,6 +35,62 @@ class FamilyController extends Controller
     public function create()
     {
         return Inertia::render('Families/Create');
+    }
+    public function create_B_C(Family $Family)
+    {
+        $Family->members()->forceDelete();
+        $Family->notes()->delete();
+        $Family->home()->delete();
+        $facility = $Family->facilities; // Assuming you have a hasOne relationship defined for 'facilities' in the Family model
+
+        if ($facility) {
+            $facility->reinitialise();
+            $facility->save(); // Save the changes to the database if needed
+        }
+        Session::flash('success', 'تم حذف ما تم اضافته، يمكنك إعادة العملية ');
+        return Inertia::render('Families/create_B_C', compact('Family'));
+
+        return Inertia::render('Families/create_B_C', compact('Family'));
+    }
+
+
+
+    public function Store_B_C(Family $Family)
+    {
+
+        Request::validate([
+            'caregiver_phone' => [
+                'required',
+                'numeric',
+                'digits:8',
+                Rule::unique('families')->ignore($Family->id),
+            ],            'wife' => ['nullable', 'boolean'],
+            'husband' => ['nullable', 'boolean'],
+            'photo' => ['nullable', 'image'],
+            'elderlies_number' => ['nullable', 'numeric'],
+            'childrens_number' => ['nullable', 'numeric'],
+            'other_members_number' => ['nullable', 'numeric'],
+        ]);
+
+        $Family =  Auth::user()->account->Families()->update(
+            [
+                'caregiver_phone' => Request::get('caregiver_phone'),
+                'wife' => Request::get('wife'),
+                'husband' => Request::get('husband'),
+                'photo' => Request::get('photo'),
+                'elderlies_number' => Request::get('elderlies_number'),
+                'childrens_number' => Request::get('childrens_number'),
+                'other_members_number' => Request::get('other_members_number'),
+
+                'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+
+            ]
+        );
+        if (Request::file('photo')) {
+            Request::file('photo')->move(public_path('uploads'), $Family->photo);
+        }
+
+        return redirect()->route('members.create', ['family' => $Family])->with('success', 'Family data updated. Proceed through the process');
     }
 
     public function store()

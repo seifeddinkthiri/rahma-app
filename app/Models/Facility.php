@@ -23,4 +23,9 @@ class Facility extends Model
         return $this->belongsTo(Individual::class);
     }
 
+    public function reinitialise()
+    {
+        $this->Sanitation = $this->electricity = $this->water = $this->ventilation = false;
+        return $this;
+    }
 }
