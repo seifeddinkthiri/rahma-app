@@ -65,7 +65,7 @@
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button
             v-if="!user.deleted_at"
-            class="text-red-600 hover:underline"
+            class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
             tabindex="-1"
             type="button"
             @click="destroy"

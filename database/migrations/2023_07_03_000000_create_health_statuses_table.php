@@ -25,7 +25,7 @@ class CreateHealthStatusesTable extends Migration
                 ->references('id')
                 ->on('individuals')
                 ->onDelete('cascade');
-            $table->boolean('health_insurance')->default(false);
+            $table->boolean('health_insurance')->default(false)->nullable();
             $table->boolean('good')->default(false);
             $table->string('disability')->nullable();
             $table->string('disability_card_number')->nullable();

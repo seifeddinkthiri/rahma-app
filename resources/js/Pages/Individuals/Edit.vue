@@ -2,7 +2,7 @@
   <div>
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/individuals">
+      <Link class="text-blue-400 hover:text-blue-600" href="/individuals">
         المنتفعين الأفراد
       </Link>
       <span class="text-indigo-400 font-medium">/</span>
@@ -89,7 +89,7 @@
           >
             <button
               v-if="!individual.deleted_at"
-              class="text-red-600 hover:underline"
+              class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
               tabindex="-1"
               type="button"
               @click="destroy"
@@ -117,12 +117,14 @@
                 />
               </svg>
             </button>
-            <loading-button
-              :loading="form.processing"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="submit"
-              >تسجيل التعديلات</loading-button
-            >
+            <div class="mr-3">
+              <loading-button
+                :loading="form.processing"
+                class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                type="submit"
+                >تسجيل التعديلات</loading-button
+              >
+            </div>
           </div>
         </div>
         <div ref="part2" v-if="active_step == 2">
