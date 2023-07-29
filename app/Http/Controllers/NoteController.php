@@ -29,7 +29,7 @@ class NoteController extends Controller
             'value' => Request::input('value'),
         ]);
 
-        return redirect()->back()->with('success', 'Note created.');
+        return redirect()->back()->with('success', 'تم إنشاء الملاحظة.');
     }
 
 
@@ -46,7 +46,7 @@ class NoteController extends Controller
             'value' => Request::input('value'),
         ]);
 
-        return redirect()->back()->with('success', 'Note updated');
+        return redirect()->back()->with('success', 'تم تحديث الملاحظة');
     }
 
 
@@ -56,6 +56,6 @@ class NoteController extends Controller
     {
         $Note->delete();
 
-        return Redirect::back()->with('success', 'Note deleted');
+        return Redirect::back()->with('success', 'تم حذف الملاحظة');
     }
 }

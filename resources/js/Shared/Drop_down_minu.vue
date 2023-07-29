@@ -1,8 +1,8 @@
 <template>
-    <button @click="toggleDropdownMember" class="group flex items-center py-3" id="app">
+    <button @click="toggleDropdownMember" class="group flex items-center py-3 relative w-full" id="app">
             <icon
                 name="office"
-                class="mr-2 w-4 h-4"
+                class="mr-2 w-4 h-4 ml-4"
                 :class="
                     isUrl('organizations')
                     ? 'fill-white'
@@ -18,20 +18,20 @@
             >
                 المنتفعين
             </div>
-            <div v-if="DropdownOpenow">
+            <div v-if="DropdownOpenow" class="absolute left-0">
                 <icon
                     class="w-5 h-5 fill-indigo-300 group-hover:fill-white focus:fill-indigo-600"
                     name="cheveron-up"
                 />
             </div>
-            <div v-else>
+            <div v-else class="absolute left-0">
                 <icon
                     class="w-5 h-5 fill-indigo-300 group-hover:fill-white focus:fill-indigo-600"
-                    name="cheveron-down"
+                    name="cheveron-left"
                 />
             </div>
     </button>
-    <ul class="pr-9" v-if="DropdownOpenow">
+    <ul class="pr-10 mr-15 border_menu_side" v-if="DropdownOpenow">
         <slot />
     </ul>
 </template>

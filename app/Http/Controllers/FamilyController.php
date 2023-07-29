@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Family;
+use App\Models\Member;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -14,6 +15,8 @@ class FamilyController extends Controller
 {
     public function index()
     {
+        $member = Member::all();
+        $tab = $member->toArray();
         return Inertia::render('Families/Index', [
             'filters' => Request::all('search', 'trashed'),
             'families' => Auth::user()->account->families()
@@ -24,10 +27,11 @@ class FamilyController extends Controller
                 ->through(fn ($Family) => [
                     'id' => $Family->id,
                     'name' => $Family->name,
-                    'phone' => $Family->phone,
+                    'phone' => $Family->caregiver_phone,
                     'address' => $Family->address,
                     'photo' => $Family->photo,
                     'deleted_at' => $Family->deleted_at,
+                    'members_select' => $member,
                 ]),
         ]);
     }
@@ -90,7 +94,7 @@ class FamilyController extends Controller
             Request::file('photo')->move(public_path('uploads'), $Family->photo);
         }
 
-        return redirect()->route('members.create', ['family' => $Family])->with('success', 'Family data updated. Proceed through the process');
+        return redirect()->route('members.create', ['family' => $Family])->with('success', 'تم تحديث بيانات الأسرة. تابع العملية');
     }
 
     public function store()
@@ -125,7 +129,7 @@ class FamilyController extends Controller
 
         }
 
-        return redirect()->route('members.create', ['family' => $Family])->with('success', 'Family created. please add members');
+        return redirect()->route('members.create', ['family' => $Family])->with('success', 'تم انشاء الأسرة. الرجاء إضافة أعضاء');
 
     }
 
@@ -166,7 +170,7 @@ class FamilyController extends Controller
                 'id' => $family->id,
                 'name' => $family->name,
                 'photo' => $family->photo,
-                'phone' => $family->phone,
+                'phone' => $family->caregiver_phone,
                 'address' => $family->address,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
@@ -207,13 +211,13 @@ class FamilyController extends Controller
     {
         $Family->delete();
 
-        return Redirect::back()->with('success', 'Family deleted.');
+        return Redirect::back()->with('success', 'تم حذف العائلة.');
     }
 
     public function restore(Family $Family)
     {
         $Family->restore();
 
-        return Redirect::back()->with('success', 'Family restored.');
+        return Redirect::back()->with('success', 'تم استعادة الأسرة.');
     }
 }

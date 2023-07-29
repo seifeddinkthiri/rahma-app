@@ -28,8 +28,8 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'required|integer||digits:8|unique:'.Member::class,
-            'phone' => 'required|integer||digits:8|unique:'.Member::class,
+            'cin' => 'required|numeric||digits:8|unique:'.Member::class,
+            'phone' => 'required|numeric||digits:8|unique:'.Member::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
@@ -52,7 +52,7 @@ class MemberController extends Controller
 
             $family->update([
                 'name' => $member->name,
-                'phone' => $member->phone,
+                'caregiver_phone' => $member->phone,
                 'address' => $member->address,
 
             ]);
@@ -64,8 +64,21 @@ class MemberController extends Controller
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+            'disability_card_number' => ['nullable', 'required_with:disability','numeric', 'digits:8'],
         ]);
+
+        // $validatedData = Request::validate([
+        //     'health_insurance' => ['nullable', 'boolean'],
+        //     'good' => ['nullable', 'boolean'],
+        //     'disease' => ['nullable', 'string', 'max:100'],
+        //     'disability' => ['nullable', 'string', 'max:100'],
+        //     'disability_card_number' => [
+        //         'nullable', 'integer', 'digits:8',
+        //         Rule::requiredIf(function () use ($request) {
+        //             return !empty($request->input('disability');
+        //         }),
+        //     ]
+        // ]);
 
         $healthStatus = new HealthStatus([
             'health_insurance' => $validatedData['health_insurance'],
@@ -77,7 +90,7 @@ class MemberController extends Controller
 
         $member->healthStatus()->save($healthStatus);
 
-        return redirect()->route('members.create', ['family' => $member->family])->with('success', 'Member created');
+        return redirect()->route('members.create', ['family' => $member->family])->with('success', 'تم إنشاء العضو');
     }
 
 
@@ -123,7 +136,7 @@ class MemberController extends Controller
             'disability_card_number' => Request::input('disability_card_number'),
         ]);
 
-        return redirect()->route('members.edit', ['member' => $Member])->with('success', 'Member updated');
+        return redirect()->route('members.edit', ['member' => $Member])->with('success', 'تم تحديث الحالة الصحية للعضو ');
     }
 
 
@@ -149,8 +162,16 @@ class MemberController extends Controller
                 'family_id' => ['required', 'integer'],
             ])
         );
+        if($Member->caregiver){
+            $famely = Family::where('id', $Member->family_id)->first();
+            $famely->update([
+                'name' => $Member->name,
+                'caregiver_phone' => $Member->phone,
+                'address' => $Member->address,
+            ]);
+        }
 
-        return redirect()->route('members.edit', ['member' => $Member])->with('success', 'Member updated');
+        return redirect()->route('members.edit', ['member' => $Member])->with('success', 'تم تحديث العضو');
     }
 
 
@@ -194,7 +215,7 @@ class MemberController extends Controller
         $member->healthStatus()->save($healthStatus);
         $Family = $member->Family;
 
-        return redirect()->route('families.edit', ['family' => $Family])->with('success', 'Member created');
+        return redirect()->route('families.edit', ['family' => $Family])->with('success', 'تم إنشاء العضو');
 
     }
 
@@ -204,26 +225,26 @@ class MemberController extends Controller
     {
         $Member->delete();
 
-        return Redirect::back()->with('success', 'Member deleted');
+        return Redirect::back()->with('success', 'تم حذف العضو');
     }
 
     public function restore(Member $Member)
     {
         $Member->restore();
 
-        return Redirect::back()->with('success', 'Member restored.');
+        return Redirect::back()->with('success', 'تم استعادة العضو');
     }
     //
     public function edit_caregiver(Member $Member)
     {
-        $members = Member::all();
+        $members = Member::where('family_id', $Member->family_id)->get();
         foreach ($members as $member) {
             if($member == $Member){
                 $member->caregiver = true;
                 $famely = Family::where('id', $member->family_id)->first();
                 $famely->update([
                     'name' => $member->name,
-                    'phone' => $member->phone,
+                    'caregiver_phone' => $member->phone,
                     'address' => $member->address,
                 ]);
             }
@@ -232,6 +253,6 @@ class MemberController extends Controller
             $member->save();
         }
 
-        return Redirect::back()->with('success', 'the caregiver was changed');
+        return Redirect::back()->with('success', 'تم تغيير راعي الأسرة');
     }
 }

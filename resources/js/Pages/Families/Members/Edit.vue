@@ -183,31 +183,14 @@
             <loading-button :loading="form.processing" class="btn-indigo" type="submit"
               >تسجيل التعديلات</loading-button
             >
-            <button @click="active_step = 3" class="btn-indigo" type="button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
           </div>
         </div>
       </form>
     </div>
-    <h2 class="mt-12 text-2xl font-bold"> {{ member_id }}الحالة الصحية</h2>
+    <h2 class="mt-12 text-2xl font-bold"> الحالة الصحية</h2>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update_health_status">
-        <div ref="part1" v-if="active_step == 1">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <div class="w-full flex flex-row flex-nowrap">
               <ToggleCheckbox
                 :id="'health_insurance'"
@@ -257,13 +240,11 @@
               </div>
           </div>
         </div>
-          <div v-if="member.healthStatus.length === 0">
-            <td class="px-6 py-4 border-t" colspan="4">لا يوجد تفاصيل الحالة الصحية</td>
+        <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
+            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+              >تسجيل التعديلات
+            </loading-button>
           </div>
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit"
-            >تسجيل التعديلات</loading-button
-          >
-        </div>
       </form>
     </div>
   </div>
@@ -296,13 +277,6 @@ export default {
   },
   remember: "form",
   created() {
-    // if (this.member.health_insurance == 0) {
-    //   this.form.health_insurance = false;
-    // }
-    // if (this.member.health_insurance == 1) {
-    //   this.form.health_insurance = true;
-    // }
-
     this.member.healthStatus.forEach((element) => {
       this.health_status_form.health_insurance = element.health_insurance;
       this.health_status_form.good = element.good;

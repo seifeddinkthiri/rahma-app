@@ -63,7 +63,7 @@ class ContactsController extends Controller
             ])
         );
 
-        return Redirect::route('contacts')->with('success', 'Contact created.');
+        return Redirect::route('contacts')->with('success', 'تم إنشاء جهة الاتصال.');
     }
 
     public function edit(Contact $contact)
@@ -111,20 +111,20 @@ class ContactsController extends Controller
             ])
         );
 
-        return Redirect::back()->with('success', 'Contact updated.');
+        return Redirect::back()->with('success', 'تم تحديث جهة الاتصال.');
     }
 
     public function destroy(Contact $contact)
     {
         $contact->delete();
 
-        return Redirect::back()->with('success', 'Contact deleted.');
+        return Redirect::back()->with('success', 'تم حذف جهة الاتصال.');
     }
 
     public function restore(Contact $contact)
     {
         $contact->restore();
 
-        return Redirect::back()->with('success', 'Contact restored.');
+        return Redirect::back()->with('success', 'تمت استعادة الاتصال.');
     }
 }

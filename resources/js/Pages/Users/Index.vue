@@ -12,7 +12,7 @@
         <label class="block text-gray-700">الدور</label>
         <select v-model="form.role" class="form-select mt-1 w-full">
           <option value="user">مستخدم</option>
-          <option value="owner">مالك</option>
+          <option value="owner">مستخدم متميز</option>
         </select>
         <label class="block mt-4 text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">

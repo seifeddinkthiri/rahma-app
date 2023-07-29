@@ -145,14 +145,6 @@
                       :isChecked="false"
                     />
                   </div>
-                  <!-- <div v-if="member.caregiver">
-                    <label for="caregivertrue">نعم</label>
-                    <input type="radio" name="caregiver" id="caregivertrue" checked>
-                  </div>
-                  <div v-else>
-                    <label for="caregiverfalse">لا</label>
-                    <input type="radio" name="caregiver" id="caregiverfalse">
-                  </div> -->
                 </Link>
               </td>
               <td class="w-px border-t">

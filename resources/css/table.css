@@ -2,3 +2,9 @@
     justify-content: center;
     text-align: center;
 }
+.border_menu_side{
+    margin-right: 15px;
+    border: 2px solid;
+    padding-right: 37px;
+    border-color: transparent #fff transparent transparent; 
+}

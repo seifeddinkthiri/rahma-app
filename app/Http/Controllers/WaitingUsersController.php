@@ -39,11 +39,11 @@ class WaitingUsersController extends Controller
         $message='';
         if($user->wait){
             $user->wait = false;
-            $message = 'user access allowed';
+            $message = 'تم قبول المستخدم';
         }
         else{
             $user->wait = true;
-            $message = 'user access blocked';
+            $message = 'تم حضر المستخدم';
         }
         $user->save();
         return Redirect::back()->with('success', $message);
@@ -53,7 +53,7 @@ class WaitingUsersController extends Controller
 
         $user->delete();
 
-        return Redirect::back()->with('success', 'User deleted.');
+        return Redirect::back()->with('success', 'تم حذف المستخدم.');
     }
 
 }

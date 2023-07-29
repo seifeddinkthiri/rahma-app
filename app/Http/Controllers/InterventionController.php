@@ -60,7 +60,7 @@ class InterventionController extends Controller
         Request::file('file') ->move(public_path('uploads'), $intervention->file);
 
     }
-        return Redirect::route('interventions')->with('success', 'Intervention created.');
+        return Redirect::route('interventions')->with('success', 'تم إنشاء التدخل.');
     }
 
     public function edit(Intervention $intervention)
@@ -91,20 +91,20 @@ class InterventionController extends Controller
             ])
         );
 
-        return Redirect::back()->with('success', 'Intervention updated.');
+        return Redirect::back()->with('success', 'تم تحديث التدخل.');
     }
 
     public function destroy(Intervention $intervention)
     {
         $intervention->delete();
 
-        return Redirect::back()->with('success', 'Intervention deleted.');
+        return Redirect::back()->with('success', 'تم حذف التدخل.');
     }
 
     public function restore(Intervention $intervention)
     {
         $intervention->restore();
 
-        return Redirect::back()->with('success', 'Intervention restored.');
+        return Redirect::back()->with('success', 'تمت استعادة التدخل.');
     }
 }

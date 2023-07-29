@@ -199,15 +199,16 @@ export default {
     },
     store() {
       if (
-        this.form.husband ||
-        this.form.wife ||
-        this.form.childrens_number > 0 ||
-        this.form.elderlies_number > 0 ||
-        this.form.other_members_number > 0
+        (this.form.husband && this.form.wife)||
+        (this.form.husband &&( this.form.childrens_number > 0 || this.form.elderlies_number > 0 || this.form.other_members_number > 0)) ||
+        (this.form.wife &&( this.form.childrens_number > 0 || this.form.elderlies_number > 0 || this.form.other_members_number > 0)) ||
+        this.form.childrens_number > 1 ||
+        this.form.elderlies_number > 1 ||
+        this.form.other_members_number > 1
       ) {
         this.form.post("/families");
       } else {
-        window.alert("تحتوي العائلة على فرد واحد علا الأقل");
+        window.alert("تحتوي العائلة على فردين علا الأقل");
       }
     },
   },

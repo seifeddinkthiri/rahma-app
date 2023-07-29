@@ -294,13 +294,6 @@ export default {
   },
   remember: "form",
   created() {
-    // if (this.individual.health_insurance == 0) {
-    //   this.form.health_insurance = false;
-    // }
-    // if (this.individual.health_insurance == 1) {
-    //   this.form.health_insurance = true;
-    // }
-
     this.individual.healthStatus.forEach((element) => {
       this.health_status_form.health_insurance = element.health_insurance;
       this.health_status_form.good = element.good;

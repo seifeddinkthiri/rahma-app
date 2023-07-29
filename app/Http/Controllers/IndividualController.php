@@ -92,7 +92,7 @@ class IndividualController extends Controller
         );
 
 
-        return redirect()->route('individuals', ['family' => $Individual])->with('success', 'Individual created');
+        return redirect()->route('individuals', ['family' => $Individual])->with('success', 'تم إنشاء العضو');
     }
 
     public function edit(Individual $individual)
@@ -165,7 +165,7 @@ class IndividualController extends Controller
 
         $individual->update($data);
 
-        return Redirect::back()->with('success', 'Individual updated.');
+        return Redirect::back()->with('success','تم تحديث العضو');
     }
 
 
@@ -193,7 +193,7 @@ class IndividualController extends Controller
             'disability_card_number' => Request::input('disability_card_number'),
         ]);
 
-        return redirect()->route('individuals.edit', ['individual' => $Individual])->with('success', 'Individual updated');
+        return redirect()->route('individuals.edit', ['individual' => $Individual])->with('success', 'تم تحديث الحالة الصحية للعضو ');
     }
 
 
@@ -210,13 +210,13 @@ class IndividualController extends Controller
     {
         $individual->delete();
 
-        return Redirect::back()->with('success', 'Individual deleted.');
+        return Redirect::back()->with('success', 'تم حذف العضو');
     }
 
     public function restore(Individual $Individual)
     {
         $Individual->restore();
 
-        return Redirect::back()->with('success', 'Individual restored.');
+        return Redirect::back()->with('success','تم استعادة العضو');
     }
 }

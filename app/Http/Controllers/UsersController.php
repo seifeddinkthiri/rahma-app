@@ -60,7 +60,7 @@ class UsersController extends Controller
             'photo_path' => Request::file('photo') ? Request::file('photo')->store('users') : null,
         ]);
 
-        return Redirect::route('users')->with('success', 'User created.');
+        return Redirect::route('users')->with('success',  'تم إنشاء العضو');
     }
 
     public function edit(User $user)
@@ -83,7 +83,7 @@ class UsersController extends Controller
     public function update(User $user)
     {
         if (App::environment('demo') && $user->isDemoUser()) {
-            return Redirect::back()->with('error', 'Updating the demo user is not allowed.');
+            return Redirect::back()->with('error', 'لا يسمح بتحديث المستخدم التجريبي.');
         }
 
         Request::validate([
@@ -105,24 +105,24 @@ class UsersController extends Controller
             $user->update(['password' => Request::get('password')]);
         }
 
-        return Redirect::back()->with('success', 'User updated.');
+        return Redirect::back()->with('success', 'تم تحديث العضو');
     }
 
     public function destroy(User $user)
     {
         if (App::environment('demo') && $user->isDemoUser()) {
-            return Redirect::back()->with('error', 'Deleting the demo user is not allowed.');
+            return Redirect::back()->with('error', 'حذف المستخدم التجريبي غير مسموح به.');
         }
 
         $user->delete();
 
-        return Redirect::back()->with('success', 'User deleted.');
+        return Redirect::back()->with('success', 'تم حذف العضو');
     }
 
     public function restore(User $user)
     {
         $user->restore();
 
-        return Redirect::back()->with('success', 'User restored.');
+        return Redirect::back()->with('success', 'تم استعادة العضو');
     }
 }

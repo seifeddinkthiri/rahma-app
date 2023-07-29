@@ -28,7 +28,7 @@ class HomeController extends Controller
 
         ]);
 
-        return redirect()->back()->with('success', 'Home created.');
+        return redirect()->back()->with('success', 'تم إنشاء المنزل.');
     }
 
 
@@ -47,7 +47,7 @@ class HomeController extends Controller
             'desciption' => Request::input('desciption'),
         ]);
 
-        return redirect()->back()->with('success', 'Home updated');
+        return redirect()->back()->with('success', 'تم تحديث الصفحة الرئيسية');
     }
 
 
@@ -57,7 +57,7 @@ class HomeController extends Controller
     {
         $Family->home()->delete();
 
-        return Redirect::back()->with('success', 'Home deleted');
+        return Redirect::back()->with('success','تم حذف الصفحة الرئيسية');
     }
 
 
@@ -65,7 +65,7 @@ class HomeController extends Controller
     {
         $Family->home()->restore();
 
-        return Redirect::back()->with('success', 'Home restored.');
+        return Redirect::back()->with('success','تم استعادة الصفحة الرئيسية');
     }
 
 }

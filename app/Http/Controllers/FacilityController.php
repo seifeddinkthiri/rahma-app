@@ -30,7 +30,7 @@ class FacilityController extends Controller
             'ventilation' => Request::input('ventilation'),
         ]);
 
-        return redirect()->back()->with('success', 'Facility updated');
+        return redirect()->back()->with('success', 'تم تحديث المنشأة');
     }
 
 
@@ -40,7 +40,7 @@ class FacilityController extends Controller
     {
         $Facility->delete();
 
-        return Redirect::back()->with('success', 'Facility deleted');
+        return Redirect::back()->with('success', 'تم حذف المنشأة');
     }
 
 }

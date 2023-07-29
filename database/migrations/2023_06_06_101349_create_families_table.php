@@ -17,7 +17,6 @@ class CreateFamiliesTable extends Migration
             $table->id();
             $table->integer('account_id')->index();
             $table->string('name')->nullable();
-            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('caregiver_phone')->nullable();
             $table->string('photo', 100)->nullable();

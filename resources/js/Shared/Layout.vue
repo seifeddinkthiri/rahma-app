@@ -30,9 +30,9 @@
           <div
             class="md:text-md flex items-center justify-between p-4 w-full text-sm bg-white border-b md:px-12 md:py-0"
           >
-            <div v-if="auth.user.admin" class="mr-4 mt-1">admin</div>
-            <div v-else-if="auth.user.owner" class="mr-4 mt-1">super user</div>
-            <div v-else="auth.user.admin" class="mr-4 mt-1">user</div>
+            <div v-if="auth.user.admin" class="mr-4 mt-1">مسؤل</div>
+            <div v-else-if="auth.user.owner" class="mr-4 mt-1">مستخدم متميز</div>
+            <div v-else="auth.user.admin" class="mr-4 mt-1">مستخدم</div>
             <dropdown class="mt-1" placement="bottom-end">
               <template #default>
                 <div class="group flex items-center cursor-pointer select-none">
@@ -69,14 +69,14 @@
         </div>
         <div class="md:flex md:flex-grow md:overflow-hidden">
           <div
-            class="hidden flex-shrink-0 p-12 w-56 bg-indigo-800 overflow-y-auto md:block"
+            class="hidden flex-shrink-0 py-12 px-2 w-56 bg-indigo-800 overflow-y-auto md:block"
           >
             <div>
               <div class="mb-4">
-                <Link class="group flex items-center py-3" href="/">
+                <Link class="group flex items-center py-3 relative w-full" href="/">
                   <icon
                     name="dashboard"
-                    class="mr-2 w-4 h-4"
+                    class="mr-2 w-4 h-4 ml-4"
                     :class="
                       isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'
                     "
@@ -90,10 +90,10 @@
                   </div>
                 </Link>
               </div>
-              <div class="mb-4" v-if="auth.user.wait == false">
+              <div class="mb-4"  v-if="auth.user.wait == false">
                   <Drop_down_minu>
-                  <li >
-                      <Link class="group flex items-center py-3" href="/families">
+                  <li>
+                      <Link class="group flex items-center py-3 relative w-full" href="/families">
                           <div
                           :class="
                               isUrl('families')
@@ -106,7 +106,7 @@
                       </Link>
                   </li>
                   <li>
-                      <Link class="group flex items-center py-3" href="/individuals">
+                      <Link class="group flex items-center py-3 relative w-full" href="/individuals">
                           <div
                           :class="
                               isUrl('individuals')
@@ -121,10 +121,10 @@
                 </Drop_down_minu>
               </div>
               <div class="mb-4">
-                <Link class="group flex items-center py-3" href="/interventions">
+                <Link class="group flex items-center py-3 relative w-full" href="/interventions">
                   <icon
                     name="office"
-                    class="mr-2 w-4 h-4"
+                    class="mr-2 w-4 h-4 ml-4"
                     :class="
                       isUrl('interventions')
                         ? 'fill-white'
@@ -143,10 +143,10 @@
                 </Link>
               </div>
               <div class="mb-4">
-                <Link class="group flex items-center py-3" href="/organizations">
+                <Link class="group flex items-center py-3 relative w-full" href="/organizations">
                   <icon
                     name="office"
-                    class="mr-2 w-4 h-4"
+                    class="mr-2 w-4 h-4 ml-4"
                     :class="
                       isUrl('organizations')
                         ? 'fill-white'
@@ -165,10 +165,10 @@
                 </Link>
               </div>
               <div class="mb-4">
-                <Link class="group flex items-center py-3" href="/contacts">
+                <Link class="group flex items-center py-3 relative w-full" href="/contacts">
                   <icon
                     name="contact"
-                    class="mr-2 w-4 h-4"
+                    class="mr-2 w-4 h-4 ml-4"
                     :class="
                       isUrl('contacts')
                         ? 'fill-white'
@@ -187,10 +187,10 @@
                 </Link>
               </div>
               <div class="mb-4">
-                <Link class="group flex items-center py-3" href="/reports">
+                <Link class="group flex items-center py-3 relative w-full" href="/reports">
                   <icon
                     name="printer"
-                    class="mr-2 w-4 h-4"
+                    class="mr-2 w-4 h-4 ml-4"
                     :class="
                       isUrl('reports')
                         ? 'fill-white'
@@ -211,7 +211,7 @@
               <div class="mb-4" v-if="auth.user.admin || auth.user.owner">
                 <Drop_down_minu_members>
                   <li >
-                      <Link class="group flex items-center py-3" href="/users">
+                      <Link class="group flex items-center py-3 relative w-full" href="/users">
                           <div
                               :class="
                                   isUrl('users')
@@ -224,7 +224,7 @@
                       </Link>
                   </li>
                   <li v-if="auth.user.admin">
-                      <Link class="group flex items-center py-3" href="/wait_list">
+                      <Link class="group flex items-center py-3 relative w-full" href="/wait_list">
                           <div
                               :class="
                                   isUrl('wait_list')
