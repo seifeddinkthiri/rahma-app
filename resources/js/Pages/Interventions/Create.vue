@@ -21,7 +21,6 @@
             </select-input>
 
             <text-input
-
               v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
               :id="form.type === 'shipmets' ? 'shipmets' : 'cash'"
               v-model="form.value"
@@ -70,7 +69,7 @@
           >
             <button
               @click="show_second_form_part = true"
-              class="btn-indigo"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
             >
               إضافة

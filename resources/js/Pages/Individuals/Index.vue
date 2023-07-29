@@ -15,7 +15,10 @@
           <option value="only">فقط المحذوف</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/individuals/create">
+      <Link
+        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        href="/individuals/create"
+      >
         <span>إنشاء</span>
       </Link>
     </div>
@@ -26,9 +29,9 @@
             <th class="pb-4 pt-6 px-6">الاسم</th>
             <th class="pb-4 pt-6 px-6">الهاتف</th>
             <th class="pb-4 pt-6 px-6">العنوان</th>
-            <th class="pb-4 pt-6 px-6"> بطاقة التعريف الوطنية</th>
-            <th class="pb-4 pt-6 px-6"> الجنس</th>
-            <th class="pb-4 pt-6 px-6"> الصورة</th>
+            <th class="pb-4 pt-6 px-6">بطاقة التعريف الوطنية</th>
+            <th class="pb-4 pt-6 px-6">الجنس</th>
+            <th class="pb-4 pt-6 px-6">الصورة</th>
           </tr>
         </thead>
         <tbody class="text-right">

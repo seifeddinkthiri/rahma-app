@@ -87,7 +87,10 @@
         <div
           class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
         >
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+          <loading-button
+            :loading="form.processing"
+            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            type="submit"
             >إنشاء اتصال</loading-button
           >
         </div>

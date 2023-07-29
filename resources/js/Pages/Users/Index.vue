@@ -20,7 +20,10 @@
           <option value="only">فقط المحذوف</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/users/create">
+      <Link
+        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        href="/users/create"
+      >
         <span>إنشاء</span>
         <span class="hidden md:inline">&nbsp;المستخدم</span>
       </Link>

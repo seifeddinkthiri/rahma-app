@@ -55,7 +55,7 @@
           </button>
           <loading-button
             :loading="form.processing"
-            class="btn-indigo ml-auto"
+            class="ml-auto inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
             type="submit"
           >
             تعديل المنتفع
@@ -68,11 +68,16 @@
     <div ref="members" class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <br />
       <div class="flex items-center w-full flex-row justify-around">
-        <Link :href="`/members/${family.id}/create_new_one`" class="btn-indigo">
+        <Link
+          :href="`/members/${family.id}/create_new_one`"
+          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
-        <p v-if="form.name == null" class="text-red-600 px-6">يجب تعيين معيل أسرة لهذه العائلة</p>
+        <p v-if="form.name == null" class="text-red-600 px-6">
+          يجب تعيين معيل أسرة لهذه العائلة
+        </p>
       </div>
       <div class="mt-6 bg-white rounded shadow overflow-x-auto">
         <table class="w-full whitespace-nowrap">
@@ -80,13 +85,9 @@
             <tr class="text-right font-bold">
               <th class="pb-4 pt-6 px-6">الاسم</th>
               <th class="pb-4 pt-6 px-6">القرابة</th>
-              <th class="pb-4 pt-6 px-6 w-full flex flex-row justify-around "> 
+              <th class="pb-4 pt-6 px-6 w-full flex flex-row justify-around">
                 معيل الأسرة
-                <icon 
-                  v-if="form.name == null"
-                    name="error"
-                    class="mr-2 w-4 h-4"
-                />
+                <icon v-if="form.name == null" name="error" class="mr-2 w-4 h-4" />
               </th>
               <th></th>
             </tr>
@@ -279,7 +280,10 @@
     <div ref="facilities" class="max-w-3xl bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center">
-        <button class="btn-indigo" @click="edit_facilities">
+        <button
+          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          @click="edit_facilities"
+        >
           <span>تعديل</span>
           <span class="hidden md:inline">&nbsp;المرافق</span>
         </button>
@@ -354,7 +358,10 @@
     <div ref="members" class="max-w-3xl bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center">
-        <button class="btn-indigo" @click="openNoteModal">
+        <button
+          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          @click="openNoteModal"
+        >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;ملاحظة</span>
         </button>
@@ -431,7 +438,10 @@
     <div ref="members" class="max-w-3xl bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center">
-        <button class="btn-indigo" @click="openHomeModal">
+        <button
+          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          @click="openHomeModal"
+        >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;المسكن</span>
         </button>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Family;
-use App\Models\Member;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -15,8 +14,6 @@ class FamilyController extends Controller
 {
     public function index()
     {
-        $member = Member::all();
-        $tab = $member->toArray();
         return Inertia::render('Families/Index', [
             'filters' => Request::all('search', 'trashed'),
             'families' => Auth::user()->account->families()
@@ -31,7 +28,7 @@ class FamilyController extends Controller
                     'address' => $Family->address,
                     'photo' => $Family->photo,
                     'deleted_at' => $Family->deleted_at,
-                    'members_select' => $member,
+                    'members' => $Family->members()->get(),
                 ]),
         ]);
     }
@@ -192,7 +189,7 @@ class FamilyController extends Controller
 
         $data = [
             'name' => Request::input('name'),
-            'phone' => Request::input('phone'),
+            'caregiver_phone' => Request::input('phone'),
             'address' => Request::input('address'),
         ];
 

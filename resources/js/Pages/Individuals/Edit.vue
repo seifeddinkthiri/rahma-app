@@ -97,7 +97,11 @@
               حذف
             </button>
 
-            <button @click="active_step = 2" class="btn-indigo" type="button">
+            <button
+              @click="active_step = 2"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              type="button"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -113,7 +117,10 @@
                 />
               </svg>
             </button>
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+            <loading-button
+              :loading="form.processing"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              type="submit"
               >تسجيل التعديلات</loading-button
             >
           </div>
@@ -173,13 +180,17 @@
             <button
               v-if="!individual.deleted_at"
               class="text-red-600 hover:underline"
-                tabindex="-1"
-                type="button"
-                @click="destroy"
-              >
-                حذف
+              tabindex="-1"
+              type="button"
+              @click="destroy"
+            >
+              حذف
             </button>
-            <button @click="active_step = 1" class="btn-indigo" type="button">
+            <button
+              @click="active_step = 1"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              type="button"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -195,7 +206,10 @@
                 />
               </svg>
             </button>
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+            <loading-button
+              :loading="form.processing"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              type="submit"
               >تسجيل التعديلات</loading-button
             >
           </div>
@@ -207,59 +221,64 @@
       <form @submit.prevent="update_health_status">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <div class="w-full flex flex-row flex-nowrap">
-              <ToggleCheckbox
-                :id="'health_insurance'"
-                :class="'lg:w-1/2'"
-                :isChecked="health_status_form.health_insurance"
-                :label="'التغطية الصحية'"
-                :active_value="'نعم'"
-                :inactive_value="'لا'"
-                @toggle="toggle_health_insurance"
-              />
-              <ToggleCheckbox
-                :id="'good'"
-                :class="'lg:w-1/2'"
-                :isChecked="health_status_form.good"
-                :label="'الحالة الصحية'"
-                :active_value="'جيدة'"
-                :inactive_value="'عليلة '"
-                @toggle="toggle_health_Status"
-              />
+            <ToggleCheckbox
+              :id="'health_insurance'"
+              :class="'lg:w-1/2'"
+              :isChecked="health_status_form.health_insurance"
+              :label="'التغطية الصحية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_health_insurance"
+            />
+            <ToggleCheckbox
+              :id="'good'"
+              :class="'lg:w-1/2'"
+              :isChecked="health_status_form.good"
+              :label="'الحالة الصحية'"
+              :active_value="'جيدة'"
+              :inactive_value="'عليلة '"
+              @toggle="toggle_health_Status"
+            />
           </div>
           <div v-if="health_status_form.good == false" class="w-full">
-              <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                <div class="w-full flex flex-row flex-nowrap">
-                  <text-input
-                    class="pb-8 pr-6 w-full"
-                    id="disease"
-                    :error="health_status_form.errors.disease"
-                    v-model="health_status_form.disease"
-                    label=" المرض المزمن"
-                  />
-                </div>
-                <div class="w-full flex flex-row flex-nowrap">
-                  <text-input
-                    class="pb-8 pr-6 w-full"
-                    id="disability"
-                    v-model="health_status_form.disability"
-                    :error="health_status_form.errors.disability"
-                    label=" الإعاقة"
-                  />
-                  <text-input
-                    v-model="health_status_form.disability_card_number"
-                    :error="health_status_form.errors.disability_card_number"
-                    class="pb-8 pr-6 w-full lg:w-1/2"
-                    label="رقم بطاقة الإعاقة"
-                  />
-                </div>
+            <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+              <div class="w-full flex flex-row flex-nowrap">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="disease"
+                  :error="health_status_form.errors.disease"
+                  v-model="health_status_form.disease"
+                  label=" المرض المزمن"
+                />
               </div>
+              <div class="w-full flex flex-row flex-nowrap">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="disability"
+                  v-model="health_status_form.disability"
+                  :error="health_status_form.errors.disability"
+                  label=" الإعاقة"
+                />
+                <text-input
+                  v-model="health_status_form.disability_card_number"
+                  :error="health_status_form.errors.disability_card_number"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  label="رقم بطاقة الإعاقة"
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
-              >تسجيل التعديلات
-            </loading-button>
-          </div>
+        <div
+          class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+        >
+          <loading-button
+            :loading="form.processing"
+            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            type="submit"
+            >تسجيل التعديلات
+          </loading-button>
+        </div>
       </form>
     </div>
   </div>
@@ -308,11 +327,11 @@ export default {
       active_step: 1,
       healthStatusFields: [],
       health_status_form: this.$inertia.form({
-        health_insurance : this.individual.healthStatus.health_insurance,
-        good : this.individual.healthStatus.good,
-        disease : this.individual.healthStatus.disease,
-        disability : this.individual.healthStatus.disability,
-        disability_card_number : this.individual.healthStatus.disability_card_number,
+        health_insurance: this.individual.healthStatus.health_insurance,
+        good: this.individual.healthStatus.good,
+        disease: this.individual.healthStatus.disease,
+        disability: this.individual.healthStatus.disability,
+        disability_card_number: this.individual.healthStatus.disability_card_number,
         individual_id: this.individual.id,
       }),
       form: this.$inertia.form({
@@ -338,7 +357,8 @@ export default {
     },
 
     toggle_health_insurance() {
-      this.health_status_form.health_insurance = !this.health_status_form.health_insurance;
+      this.health_status_form.health_insurance = !this.health_status_form
+        .health_insurance;
     },
     update() {
       this.form.put(`/individuals/${this.individual.id}`);

@@ -15,7 +15,10 @@
           <option value="only">فقط المحذوف</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/families/create">
+      <Link
+        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        href="/families/create"
+      >
         <span>إنشاء</span>
         <span class="hidden md:inline">&nbsp;المنتفع</span>
       </Link>
@@ -104,31 +107,78 @@
               </Link>
             </td>
             <td class="border-t relative" colspan="5" v-else>
-              <div class="flex items-center focus:text-indigo-500 flex-row justify-center px-20 ">
+              <div
+                class="flex items-center focus:text-indigo-500 flex-row justify-center px-20"
+              >
                 <div class="flex items-center px-6 py-4 flex-row justify-around">
-                  <icon 
-                    v-if="form.name == null"
-                    name="error"
-                    class="mr-2 w-4 h-4"
-                  />
                   <p class="text-red-600 px-6">يجب تعيين معيل أسرة لهذه العائلة</p>
-                </div>
-                <select_caregiver>
-                  <li v-for="member_list in family.members_select" >
-                      <Link 
-                        v-if="member_list.family_id == family.id"
-                        :href="`/members/${member_list.id}/edit_caregiver`"
-                        class="group flex items-center py-3 relative w-full h-12 w-56"
-                        >
-                          <div :class="'text-gray-700 group-hover:text-indigo-600'">
-                            {{member_list.name}}
-                          </div>
-                      </Link>
-                      <div v-else class="h-0">
 
+                  <button
+                    class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                    type="button"
+                    @click="show_cargiver_modal = true"
+                  >
+                    إختيار
+                  </button>
+                </div>
+
+                <div
+                  class="mt-6 bg-white rounded shadow overflow-x-auto"
+                  v-if="show_cargiver_modal"
+                >
+                  <div
+                    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                  ></div>
+                  <div class="fixed inset-0 flex items-center justify-center">
+                    <form>
+                      <div class="w-96 h-auto bg-white rounded shadow-xl">
+                        <div class="p-6">
+                          <table class="w-full border-collapse">
+                            <thead>
+                              <tr>
+                                <th class="py-3 px-4 text-right">الإسم</th>
+                                <th class="py-3 px-4 text-right">الهاتف</th>
+                                <th class="py-3 px-4 text-right">القرابة</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="member in family.members"
+                                :key="member.id"
+                                class="inline-aflex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium hover:bg-gray-200 focus:bg-gray-300 rounded focus:outline-none"
+                              >
+                                <td class="py-3 px-4">
+                                  <Link :href="`/members/${member.id}/edit_caregiver`">{{
+                                    member.name
+                                  }}</Link>
+                                </td>
+                                <td class="py-3 px-4">
+                                  <Link :href="`/members/${member.id}/edit_caregiver`">{{
+                                    member.phone
+                                  }}</Link>
+                                </td>
+                                <td class="py-3 px-4">
+                                  <Link :href="`/members/${member.id}/edit_caregiver`">{{
+                                    member.kinship
+                                  }}</Link>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="flex justify-end px-4 py-3 bg-gray-50">
+                          <button
+                            @click="show_cargiver_modal = false"
+                            type="button"
+                            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                          >
+                            عودة
+                          </button>
+                        </div>
                       </div>
-                  </li>
-                </select_caregiver>
+                    </form>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -153,7 +203,6 @@ import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
 import SearchFilter from "@/Shared/SearchFilter";
 import SelectInput from "@/Shared/SelectInput";
-import select_caregiver from "@/Shared/selectCaregiver.vue";
 
 export default {
   components: {
@@ -163,7 +212,6 @@ export default {
     Pagination,
     SearchFilter,
     SelectInput,
-    select_caregiver,
   },
   layout: Layout,
   props: {
@@ -172,6 +220,7 @@ export default {
   },
   data() {
     return {
+      show_cargiver_modal: false,
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,

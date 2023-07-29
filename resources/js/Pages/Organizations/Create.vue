@@ -27,7 +27,7 @@
           >
             <button
               @click="show_second_form_part = true"
-              class="btn-indigo"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="button"
             >
               التالي
@@ -92,15 +92,12 @@
           <div
             class="flex space-x-3 items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-              @click="show_second_form_part = false"
-              class="btn-indigo"
-              type="button"
-            >
-              العودة
-            </button>
+            <button @click="show_second_form_part = false" type="button">العودة</button>
 
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit"
+            <loading-button
+              :loading="form.processing"
+              class="inline-aflex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium hover:bg-gray-200 focus:bg-gray-300 rounded focus:outline-none"
+              type="submit"
               >إنشاء المنتفع</loading-button
             >
           </div>
