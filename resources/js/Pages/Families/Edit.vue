@@ -2,16 +2,14 @@
   <div>
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/families"
-        >المنتفعين</Link
-      >
-      <span class="text-indigo-400 font-medium">/</span>
+      <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفعين</Link>
+      <span class="text-blue-400 font-medium">/</span>
       {{ form.name }}
     </h1>
     <trashed-message v-if="family.deleted_at" class="mb-6" @restore="restore"
       >تم حذف هذا المنتفع .
     </trashed-message>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input
@@ -41,21 +39,20 @@
             label="الصورة"
           />
         </div>
-        <div
-          class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3"
-        >
+        <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button
             v-if="!family.deleted_at"
-            class="text-red-600 hover:underline"
+            class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
             tabindex="-1"
             type="button"
             @click="destroy"
           >
             حذف المنتفع
           </button>
+
           <loading-button
             :loading="form.processing"
-            class="ml-auto inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
             type="submit"
           >
             تعديل المنتفع
@@ -65,7 +62,7 @@
     </div>
     <h2 class="mt-12 text-2xl font-bold">الأفراد</h2>
     <br />
-    <div ref="members" class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div ref="members" class="bg-white rounded-md shadow overflow-hidden">
       <br />
       <div class="flex items-center w-full flex-row justify-around">
         <Link
@@ -277,7 +274,7 @@
 
     <h2 class="mt-12 text-2xl font-bold">المرافق الأساسية</h2>
     <br />
-    <div ref="facilities" class="max-w-3xl bg-white rounded shadow overflow-hidden">
+    <div ref="facilities" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center">
         <button
@@ -355,7 +352,7 @@
 
     <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
     <br />
-    <div ref="members" class="max-w-3xl bg-white rounded shadow overflow-hidden">
+    <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center">
         <button
@@ -435,7 +432,7 @@
 
     <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
     <br />
-    <div ref="members" class="max-w-3xl bg-white rounded shadow overflow-hidden">
+    <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center">
         <button

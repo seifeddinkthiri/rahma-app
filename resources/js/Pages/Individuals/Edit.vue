@@ -11,7 +11,7 @@
     <trashed-message v-if="individual.deleted_at" class="mb-6" @restore="restore"
       >تم حذف هذا المنتفع
     </trashed-message>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
@@ -217,7 +217,7 @@
       </form>
     </div>
     <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update_health_status">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <div class="w-full flex flex-row flex-nowrap">

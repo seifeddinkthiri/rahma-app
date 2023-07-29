@@ -7,7 +7,7 @@
       >
       <span class="text-indigo-400 font-medium">/</span> إنشاء
     </h1>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">

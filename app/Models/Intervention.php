@@ -12,23 +12,8 @@ class Intervention extends Model
 
 
 
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
-    }
 
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where('intervenor', 'like', '%'.$search.'%');
-        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-            if ($trashed === 'with') {
-                $query->withTrashed();
-            } elseif ($trashed === 'only') {
-                $query->onlyTrashed();
-            }
-        });
-    }
+
 
 
     protected $fillable = [
@@ -40,4 +25,25 @@ class Intervention extends Model
         'notes',
 
     ];
+
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('intervenor', 'like', '%'.$search.'%')
+            ->orWhere('intervenor_phone', 'like', '%'.$search.'%')
+            ;
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        });
+    }
 }

@@ -3,7 +3,7 @@
     <Head title="Create Family" />
     <Breadcrumb :active_step="'family'" :form_title="'إنشاء عائلة'" />
 
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input
@@ -112,21 +112,11 @@
               label="لا يوجد"
             />
           </div>
-          <button class="btn-indigo" type="submit">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg>
+          <button
+            class="inline-flex h-16 items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            type="submit"
+          >
+            التالي
           </button>
         </div>
       </form>

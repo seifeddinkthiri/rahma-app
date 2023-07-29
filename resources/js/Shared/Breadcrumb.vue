@@ -3,7 +3,7 @@
     <h1 class="mb-8 text-3xl font-bold">
       {{ current_form_title }}
     </h1>
-    <div class="px-4 py-2 max-w-3xl bg-white rounded-lg shadow">
+    <div class="px-4 py-2 bg-white rounded-lg shadow">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-4">
           <li>

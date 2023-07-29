@@ -2,12 +2,12 @@
   <div>
     <Head title="Create Organization" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/interventions"
-        >التدخلات</Link
-      >
-      <span class="text-indigo-400 font-medium">/</span> إنشاء
+      <Link class="text-blue-400 hover:text-blue-200" href="/interventions"
+        >التبرعات
+      </Link>
+      <span class="text-blue-400 font-medium">/</span> إنشاء
     </h1>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">

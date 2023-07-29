@@ -1,18 +1,18 @@
 <template>
+  {{ form.type }}
   <div>
-    {{ form.value }}
     <Head :title="form.intervenor" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-indigo-400 hover:text-indigo-600" href="/interventions"
-        >التدخلات</Link
-      >
+        >التبرعات
+      </Link>
       <span class="text-indigo-400 font-medium">/</span>
       {{ form.intervenor }}
     </h1>
     <trashed-message v-if="intervention.deleted_at" class="mb-6" @restore="restore"
       >تم حذف هذا التدخل .
     </trashed-message>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <select-input
@@ -22,24 +22,25 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="نوع التدخل"
           >
-            <option value="shipmets">بضائع</option>
-            <option value="cash ">نقد</option>
+            <option value="shipments">بضائع</option>
+            <option value="cash">نقد</option>
           </select-input>
 
           <text-input
             v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-            :id="form.type === 'shipmets' ? 'shipmets' : 'cash'"
+            :id="form.type === 'shipments' ? 'shipments' : 'cash'"
             v-model="form.value"
             :error="form.errors.value"
             label="قيمة التدخل"
             :placeholder="
               form.type === null
                 ? 'القيمة'
-                : form.type === 'shipmets'
+                : form.type === 'shipments'
                 ? 'الكمية'
                 : 'المبلغ'
             "
           />
+
           <text-input
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="intervenor"
@@ -74,7 +75,7 @@
         >
           <button
             v-if="!intervention.deleted_at"
-            class="text-red-600 hover:underline"
+            class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
             tabindex="-1"
             type="button"
             @click="destroy"
@@ -131,15 +132,18 @@ export default {
         file: null,
         notes: this.intervention.notes,
       }),
+      intervention: {
+        type: this.intervention.type, // Assuming this is the expected type for the intervention
+        value: this.intervention.value, // Assuming this is the value you want to assign to form.value
+      },
     };
   },
   methods: {
     selectedType() {
-      console.log(this.form.type, this.intervention.type);
-      if (this.form.type !== this.intervention.type) {
-        this.form.value = null;
-      } else {
+      if (this.form.type === this.intervention.type) {
         this.form.value = this.intervention.value;
+      } else {
+        this.form.value = null;
       }
     },
     update() {

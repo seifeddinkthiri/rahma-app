@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="families" />
-    <h1 class="mb-8 text-3xl font-bold">المنتفعين</h1>
+    <h1 class="mb-8 text-3xl font-bold">المنتفعين العائلات</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
         :onlySearch="false"
@@ -141,7 +141,7 @@
                                 <th class="py-3 px-4 text-right">القرابة</th>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-if="family.members.length > 0">
                               <tr
                                 v-for="member in family.members"
                                 :key="member.id"
@@ -162,6 +162,13 @@
                                     member.kinship
                                   }}</Link>
                                 </td>
+                              </tr>
+                            </tbody>
+                            <tbody v-else>
+                              <tr
+                                class="inline-aflex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium rounded"
+                              >
+                                <td class="py-3 px-4">قائمة فارغة</td>
                               </tr>
                             </tbody>
                           </table>

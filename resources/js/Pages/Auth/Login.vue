@@ -1,6 +1,6 @@
 <template>
   <Head title="Login" />
-  <logo class="block mx-auto w-full max-w-xs fill-white" height="50" />
+  <logo class="block mx-auto h-32 w-32 max-w-xs fill-white" height="50" />
   <form
     class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden"
     @submit.prevent="login"

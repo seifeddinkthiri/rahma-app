@@ -253,6 +253,6 @@ class MemberController extends Controller
             $member->save();
         }
 
-        return Redirect::back()->with('success', 'تم تغيير راعي الأسرة');
+        return Redirect::back()->with('success', '  تم تعيين راعي الأسرة');
     }
 }

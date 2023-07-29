@@ -201,7 +201,7 @@ class FamilyController extends Controller
 
         $family->update($data);
 
-        return Redirect::back()->with('success', 'Family updated.');
+        return Redirect::back()->with('success', 'تم تحديث العائلة');
     }
 
     public function destroy(Family $Family)

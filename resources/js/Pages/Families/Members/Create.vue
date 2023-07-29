@@ -10,10 +10,7 @@
       @update-current-form-title="updateCurrentFormTitle"
     />
 
-    <div
-      class="max-w-3xl bg-white rounded-md shadow overflow-hidden"
-      v-if="active_step == 'home'"
-    >
+    <div class="bg-white rounded-md shadow overflow-hidden" v-if="active_step == 'home'">
       <form @submit.prevent="save_home">
         <div class="p-6">
           <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
@@ -72,7 +69,7 @@
       </form>
     </div>
     <div
-      class="max-w-3xl bg-white rounded-md shadow overflow-hidden"
+      class="bg-white rounded-md shadow overflow-hidden"
       v-if="active_step == 'facilities'"
     >
       <form @submit.prevent="define_facilities">
@@ -121,10 +118,7 @@
       </form>
     </div>
 
-    <div
-      class="max-w-3xl bg-white rounded-md shadow overflow-hidden"
-      v-if="active_step == 'notes'"
-    >
+    <div class="bg-white rounded-md shadow overflow-hidden" v-if="active_step == 'notes'">
       <form @submit.prevent="save_note">
         <div class="p-6">
           <label for="title" class="block mb-2 text-gray-700 text-sm font-bold">
@@ -167,7 +161,7 @@
         </div>
       </form>
     </div>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
@@ -260,20 +254,7 @@
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="button"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
+              التالي
             </button>
           </div>
         </div>
@@ -407,27 +388,17 @@
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="button"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
+              عودة
             </button>
+            <!-- Add a spacer element to create space between the buttons -->
+            <div class="w-4"></div>
             <loading-button
               :loading="form.processing"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
-              >إنشاء الفرد</loading-button
             >
+              إنشاء الفرد
+            </loading-button>
           </div>
         </div>
       </form>

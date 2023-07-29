@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
+
 class Family extends Model
 {
 
@@ -13,7 +14,9 @@ class Family extends Model
     use SoftDeletes;
     use HasApiTokens;
 
-    protected $fillable = ['photo','name','phone','address','caregiver_cin','wife','husband','elderlies_number',"childrens_number","other_members_number"];
+    protected $fillable = ['photo', 'name',
+     'phone', 'address', 'caregiver_cin', 'wife',
+      'husband', 'elderlies_number', "childrens_number", "other_members_number"];
 
     public function resolveRouteBinding($value, $field = null)
     {
@@ -23,7 +26,12 @@ class Family extends Model
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%')
+            ->orWhere('phone', 'like', '%'.$search.'%')
+            ->orWhere('address', 'like', '%'.$search.'%')
+            ->orWhere('caregiver_cin', 'like', '%'.$search.'%')
+
+            ;
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
             if ($trashed === 'with') {
                 $query->withTrashed();
@@ -64,13 +72,12 @@ class Family extends Model
 
         static::created(function ($family) {
             $family->facilities()->create([
-                'Sanitation'=>false,
-                'electricity'=>false,
-                'ventilation'=>false,
-                 'water'=>false,
+                'Sanitation' => false,
+                'electricity' => false,
+                'ventilation' => false,
+                'water' => false,
 
             ]);
         });
     }
-
 }

@@ -45,6 +45,6 @@ class RegisterController extends Controller
         $User->remember_token = Str::random(10);
 
         $User->save();
-        return redirect()->route('login')->with('success','User Created.');
+        return redirect()->route('login')->with('success','تمت إضافة المستخدم');
     }
 }

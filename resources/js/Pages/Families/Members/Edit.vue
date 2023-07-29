@@ -9,7 +9,7 @@
     <trashed-message v-if="member.deleted_at" class="mb-6" @restore="restore"
       >تم حذف هذا الفرد
     </trashed-message>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div ref="part1" v-if="active_step == 1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
@@ -76,42 +76,35 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-              v-if="!member.deleted_at"
-              class="text-red-600 hover:underline"
-              tabindex="-1"
-              type="button"
-              @click="destroy"
-            >
-              حذف
-            </button>
-
-            <button
-              @click="active_step = 2"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
+            <div class="mr-3">
+              <button
+                @click="destroy"
+                v-if="!member.deleted_at"
+                class="px-4 py-2 bg-red-500 text-white font-semibold rounded shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-            <loading-button
-              :loading="form.processing"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="submit"
-              >تسجيل التعديلات</loading-button
-            >
+                حذف
+              </button>
+            </div>
+
+            <div class="mr-3">
+              <button
+                @click="active_step = 2"
+                class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                type="button"
+              >
+                التالي
+              </button>
+            </div>
+
+            <div class="mr-3">
+              <loading-button
+                :loading="form.processing"
+                class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                type="submit"
+              >
+                تسجيل التعديلات
+              </loading-button>
+            </div>
           </div>
         </div>
         <div ref="part2" v-if="active_step == 2">
@@ -163,46 +156,27 @@
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
             <button
-              v-if="!member.deleted_at"
-              class="text-red-600 hover:underline"
-              tabindex="-1"
-              type="button"
-              @click="destroy"
-            >
-              حذف
-            </button>
-            <button
               @click="active_step = 1"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="button"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
+              العودة
             </button>
-            <loading-button
-              :loading="form.processing"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="submit"
-              >تسجيل التعديلات</loading-button
-            >
+
+            <div class="mr-3">
+              <loading-button
+                :loading="form.processing"
+                class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                type="submit"
+                >تسجيل التعديلات</loading-button
+              >
+            </div>
           </div>
         </div>
       </form>
     </div>
     <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
-    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update_health_status">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <div class="w-full flex flex-row flex-nowrap">
