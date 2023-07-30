@@ -194,7 +194,9 @@ Route::get('families/{family}/edit', [FamilyController::class, 'edit'])
 Route::post('families_update/{family}', [FamilyController::class, 'update'])
     ->name('families.update')
     ->middleware('auth');
-
+    Route::get('families/{family}/show', [FamilyController::class, 'show'])
+    ->name('families.show')
+    ->middleware('auth');
 Route::delete('families/{family}', [FamilyController::class, 'destroy'])
     ->name('families.destroy')
     ->middleware('auth');

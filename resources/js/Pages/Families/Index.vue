@@ -106,12 +106,21 @@
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
               </Link>
             </td>
+            <td class="w-px border-t" v-if="family.name">
+              <Link
+                class="flex items-center px-4"
+                :href="`/families/${family.id}/show`"
+                tabindex="-1"
+              >
+                <icon name="eye" />
+              </Link>
+            </td>
             <td class="border-t relative" colspan="5" v-else>
               <div
                 class="flex items-center focus:text-indigo-500 flex-row justify-center px-20"
               >
                 <div class="flex items-center px-6 py-4 flex-row justify-around">
-                  <p class="text-red-600 px-6">يجب تعيين معيل أسرة لهذه العائلة</p>
+                  <p class="text-red-600 px-6">يجب تعيين معيل لهذه العائلة</p>
 
                   <button
                     class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"

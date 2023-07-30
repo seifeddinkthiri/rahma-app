@@ -177,7 +177,55 @@ class FamilyController extends Controller
             ],
         ]);
     }
+    public function show(Family $family)
+    {
+        $members = $family->members()
+            ->orderBy('id')
+            ->paginate(10)
+            ->withQueryString()
+            ->through(function ($member) {
+                return [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'kinship' => $member->kinship,
+                    'caregiver' => $member->caregiver,
+                    'healthStatus' => $member->healthStatus()->get(),
+                    'deleted_at' => $member->deleted_at,
 
+                ];
+            });
+        $notes = $family->notes()
+            ->orderBy('id')
+            ->paginate(10)
+            ->withQueryString()
+            ->through(function ($note) {
+                return [
+                    'id' => $note->id,
+                    'title' => $note->title,
+                    'value' => $note->value,
+                    'deleted_at' => $note->deleted_at,
+                ];
+            });
+
+
+
+
+
+        return Inertia::render('Families/Show', [
+            'family' => [
+                'id' => $family->id,
+                'name' => $family->name,
+                'photo' => $family->photo,
+                'phone' => $family->caregiver_phone,
+                'address' => $family->address,
+                'deleted_at' => $family->deleted_at,
+                'members' => $members,
+                'notes' => $notes,
+                'facilities' =>  $family->facilities()->get(),
+                'home' => $family->home()->get(),
+            ],
+        ]);
+    }
     public function update(Family $family)
     {
         Request::validate([
