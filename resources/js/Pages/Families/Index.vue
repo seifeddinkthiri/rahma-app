@@ -119,7 +119,10 @@
               <div
                 class="flex items-center focus:text-indigo-500 flex-row justify-center px-20"
               >
-                <div class="flex items-center px-6 py-4 flex-row justify-around">
+                <div
+                  class="flex items-center px-6 py-4 flex-row justify-around"
+                  v-if="family.members.length > 1"
+                >
                   <p class="text-red-600 px-6">يجب تعيين معيل لهذه العائلة</p>
 
                   <button
@@ -129,6 +132,17 @@
                   >
                     إختيار
                   </button>
+                </div>
+                <div class="flex items-center px-6 py-4 flex-row justify-around" v-else>
+                  <p class="text-red-600 px-6">تحتوي العائلة فردين علا الأقل</p>
+
+                  <Link
+                    :href="`/members/${family.id}/create_new_one`"
+                    class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                    type="button"
+                  >
+                    إضافة
+                  </Link>
                 </div>
 
                 <div

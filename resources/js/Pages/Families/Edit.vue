@@ -2,7 +2,7 @@
   <div>
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفعين</Link>
+      <Link class="text-blue-400 hover:text-blue-600" href="/families">عائلة</Link>
       <span class="text-blue-400 font-medium">/</span>
       {{ form.name }}
     </h1>
