@@ -15,13 +15,13 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('family_id');
+            $table->unsignedBigInteger('family_id')->nullable();
             $table->foreign('family_id')
                 ->references('id')
                 ->on('families')
                 ->onDelete('cascade');
-                $table->unsignedBigInteger('individual_id')->nullable();
-                $table->foreign('individual_id')
+            $table->unsignedBigInteger('individual_id')->nullable();
+            $table->foreign('individual_id')
                 ->references('id')
                 ->on('individuals')
                 ->onDelete('cascade');

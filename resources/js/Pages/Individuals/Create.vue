@@ -1,12 +1,7 @@
 <template>
   <div>
     <Head title="Create Organization" />
-    <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/organizations">
-        الأفراد المنتفعين
-      </Link>
-      <span class="text-indigo-400 font-medium">/</span> إنشاء
-    </h1>
+    <Breadcrumb_individuals :active_step="'individual'" :form_title="' الأفراد المنتفعين'" />
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div ref="part1" v-if="active_step == 1">
@@ -280,6 +275,8 @@ import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import FileInput from "@/Shared/FileInput";
 import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
+import Breadcrumb_individuals from "@/Shared/Breadcrumb_individuals";
+
 
 export default {
   components: {
@@ -290,6 +287,7 @@ export default {
     TextInput,
     FileInput,
     ToggleCheckbox,
+    Breadcrumb_individuals,
   },
   layout: Layout,
   remember: "form",

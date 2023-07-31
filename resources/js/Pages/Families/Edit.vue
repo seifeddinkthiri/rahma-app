@@ -9,6 +9,7 @@
     <trashed-message v-if="family.deleted_at" class="mb-6" @restore="restore"
       >تم حذف هذا المنتفع .
     </trashed-message>
+    <!--  -->
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">

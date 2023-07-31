@@ -51,7 +51,6 @@ class FamilyController extends Controller
         Session::flash('success', 'تم حذف ما تم اضافته، يمكنك إعادة العملية ');
         return Inertia::render('Families/create_B_C', compact('Family'));
 
-        return Inertia::render('Families/create_B_C', compact('Family'));
     }
 
 
@@ -157,11 +156,6 @@ class FamilyController extends Controller
                     'deleted_at' => $note->deleted_at,
                 ];
             });
-
-
-
-
-
         return Inertia::render('Families/Edit', [
             'family' => [
                 'id' => $family->id,

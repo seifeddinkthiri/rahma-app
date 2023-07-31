@@ -67,19 +67,6 @@ class MemberController extends Controller
             'disability_card_number' => ['nullable', 'required_with:disability','numeric', 'digits:8'],
         ]);
 
-        // $validatedData = Request::validate([
-        //     'health_insurance' => ['nullable', 'boolean'],
-        //     'good' => ['nullable', 'boolean'],
-        //     'disease' => ['nullable', 'string', 'max:100'],
-        //     'disability' => ['nullable', 'string', 'max:100'],
-        //     'disability_card_number' => [
-        //         'nullable', 'integer', 'digits:8',
-        //         Rule::requiredIf(function () use ($request) {
-        //             return !empty($request->input('disability');
-        //         }),
-        //     ]
-        // ]);
-
         $healthStatus = new HealthStatus([
             'health_insurance' => $validatedData['health_insurance'],
             'good' => $validatedData['good'],
@@ -184,8 +171,8 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => ['required', 'integer', 'digits:8'],
-            'phone' => ['required', 'integer', 'digits:8'],
+            'cin' => 'nullable|integer||digits:8|unique:'.Member::class,
+            'phone' => 'nullable|integer||digits:8|unique:'.Member::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],

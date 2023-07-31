@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Family;
 use App\Models\Facility;
+use App\Models\Individual;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -24,6 +25,25 @@ class FacilityController extends Controller
 
 
         $Family->facilities->update([
+            'Sanitation' => Request::input('Sanitation'),
+            'electricity' => Request::input('electricity'),
+            'water' => Request::input('water'),
+            'ventilation' => Request::input('ventilation'),
+        ]);
+
+        return redirect()->back()->with('success', 'تم تحديث المنشأة');
+    }
+    public function Individualsupdate(Individual $Individual)
+    {
+        Request::validate([
+            'Sanitation' => ['nullable', 'boolean'],
+            'electricity' => ['nullable', 'boolean'],
+            'water' => ['nullable', 'boolean'],
+            'ventilation' => ['nullable', 'boolean'],
+        ]);
+
+
+        $Individual->facilities->update([
             'Sanitation' => Request::input('Sanitation'),
             'electricity' => Request::input('electricity'),
             'water' => Request::input('water'),

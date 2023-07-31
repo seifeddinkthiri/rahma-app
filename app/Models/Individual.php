@@ -81,7 +81,7 @@ class Individual extends Model
                 'Sanitation'=>false,
                 'electricity'=>false,
                 'ventilation'=>false,
-                 'water'=>false,
+                'water'=>false,
 
             ]);
         });

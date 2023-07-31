@@ -20,13 +20,13 @@ class CreateHealthStatusesTable extends Migration
                 ->references('id')
                 ->on('members')
                 ->onDelete('cascade');
-                $table->unsignedBigInteger('individual_id')->nullable();
-                $table->foreign('individual_id')
+            $table->unsignedBigInteger('individual_id')->nullable();
+            $table->foreign('individual_id')
                 ->references('id')
                 ->on('individuals')
                 ->onDelete('cascade');
             $table->boolean('health_insurance')->default(false)->nullable();
-            $table->boolean('good')->default(false);
+            $table->boolean('good')->default(false)->nullable();
             $table->string('disability')->nullable();
             $table->string('disability_card_number')->nullable();
             $table->string('disease')->nullable();

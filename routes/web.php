@@ -142,6 +142,13 @@ Route::get('individuals/create', [IndividualController::class, 'create'])
     ->name('individuals.create')
     ->middleware('auth');
 
+    Route::get('individuals/{Individual}/create_B_C', [IndividualController::class, 'create_B_C'])
+    ->name('individuals.create_B_C')
+    ->middleware('auth');
+    Route::post('individuals/{individual}/create_B_C_update', [IndividualController::class, 'create_B_C_update'])
+    ->name('individuals.create_B_C_update')
+    ->middleware('auth');
+
 Route::post('individuals', [IndividualController::class, 'store'])
     ->name('individuals.store')
     ->middleware('auth');
@@ -167,6 +174,11 @@ Route::put('healthStatus/{individual}', [IndividualController::class, 'update_he
 ->name('health.update')
 ->middleware('auth');
 
+// individuel home and notes
+
+Route::get('individuals/{Individual}/Create_complet', [IndividualController::class, 'Create_complet'])
+    ->name('individuals.Create_complet')
+    ->middleware('auth');
 
 // families
 
@@ -257,6 +269,10 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::post('notes/{family}', [NoteController::class, 'store'])
     ->name('notes.store')
     ->middleware('auth');
+    //indev_notes
+    Route::put('notes/{Individual}/IndividualStoreNote', [NoteController::class, 'IndividualStoreNote'])
+    ->name('notes.IndividualStoreNote')
+    ->middleware('auth');
 
     Route::put('notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update')
@@ -274,6 +290,10 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
  Route::post('home/{family}', [HomeController::class, 'store'])
  ->name('home.store')
  ->middleware('auth');
+//indev_homer
+ Route::put('home/{Individual}/IndividualsStore', [HomeController::class, 'IndividualsStore'])
+ ->name('home.IndividualsStore')
+ ->middleware('auth');
 
  Route::put('home/{family}', [HomeController::class, 'update'])
  ->name('home.update')
@@ -289,9 +309,14 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
 
 
 
+    //facilities
 
     Route::put('facilities/{family}', [FacilityController::class, 'update'])
     ->name('facilities.update')
+    ->middleware('auth');
+    //facilities indiv
+    Route::put('facilities/{Individual}/Individualsupdate', [FacilityController::class, 'Individualsupdate'])
+    ->name('facilities.Individualsupdate')
     ->middleware('auth');
 
     Route::delete('facilities/{family}', [FacilityController::class, 'destroy'])
