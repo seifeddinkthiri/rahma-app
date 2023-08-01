@@ -44,6 +44,7 @@ class MemberController extends Controller
 
         $member = Auth::user()->account->members()->create($validatedData);
         $family = $member->family;
+        $family->members()->update(['caregiver' => false]);
 
         $husband = $family->members()
             ->where('kinship', 'husband')
