@@ -187,7 +187,7 @@ class MemberController extends Controller
             $famely = Family::where('id', $Member->family_id)->first();
             $famely->update([
                 'name' => $Member->name,
-                'family_caregiver' => $Member->phone,
+                'caregiver_phone' => $Member->phone,
                 'address' => $Member->address,
             ]);
         }
@@ -264,7 +264,7 @@ class MemberController extends Controller
                 $famely = Family::where('id', $member->family_id)->first();
                 $famely->update([
                     'name' => $member->name,
-                    'family_caregiver' => $member->phone,
+                    'caregiver_phone' => $member->phone,
                     'address' => $member->address,
                 ]);
             } else
