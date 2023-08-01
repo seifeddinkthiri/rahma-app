@@ -6,6 +6,7 @@
 
       <div class="relative">
         <img
+          v-if="family.photo"
           :src="`/uploads/${family.photo}`"
           alt="family Image"
           class="w-32 h-32 rounded absolute top-0 left-0 -mt-6 -ml-6 pt-6 pl-6"
