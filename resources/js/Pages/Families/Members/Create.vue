@@ -397,7 +397,7 @@
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
             >
-              إنشاء الفرد
+            التالي
             </loading-button>
           </div>
         </div>
@@ -583,8 +583,8 @@ export default {
     prepare_husband() {
       if (this.Family.husband) {
         this.active_step = 1;
-        this.current_form_title = "أدخل بيانات الزوج";
-        this.members_form_title = "أدخل بيانات الزوج";
+        this.current_form_title = "(اختياري) أدخل بيانات الزوج";
+        this.members_form_title = "(اختياري) أدخل بيانات الزوج";
 
         this.current_form = "husband";
       } else {
@@ -594,8 +594,8 @@ export default {
     prepare_wife() {
       if (this.Family.wife) {
         this.active_step = 1;
-        this.current_form_title = "أدخل بيانات الزوجة";
-        this.members_form_title = "أدخل بيانات الزوجة";
+        this.current_form_title = "(اختياري) أدخل بيانات الزوجة";
+        this.members_form_title = "(اختياري) أدخل بيانات الزوجة";
 
         this.current_form = "wife";
       } else {
@@ -635,11 +635,22 @@ export default {
         this.store_wife();
       }
     },
+    members_count() {
+      let stored_childs = parseInt(localStorage.getItem("stored_childrens"));
+      let stored_elderlies = parseInt(localStorage.getItem("stored_childrens"));
+      let stored_other_members = parseInt(localStorage.getItem("stored_childrens"));
+      return stored_other_members + stored_elderlies + stored_childs;
+    },
     members_process_done() {
       this.current_form_title = "أضف بيانات المسكن";
       this.active_step = "home";
       this.current_form = "";
-      this.members_form_title = "تمت إضافة كل الأفراد";
+
+      if (this.members_count() > 0) {
+        this.members_form_title = "تمت إضافة كل الأفراد";
+      } else {
+        this.members_form_title = " done ";
+      }
       this.form.reset();
       (this.form.health_insurance = false), (this.form.disability = false);
       this.form.good = false;

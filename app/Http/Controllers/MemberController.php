@@ -25,94 +25,125 @@ class MemberController extends Controller
 
     public function store()
     {
-        $validatedData = Request::validate([
-            'name' => ['required', 'max:100'],
-            'address' => ['required', 'max:100'],
-            'cin' => 'required|numeric||digits:8|unique:' . Member::class,
-            'phone' => 'required|numeric||digits:8|unique:' . Member::class,
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
-            'social_status' => ['required', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
-            'kinship' => ['required', 'max:100'],
-            'education_level' => ['nullable', 'max:100'],
-            'job' => ['nullable', 'max:100'],
-            'job_place' => ['nullable', 'max:100'],
-            'family_id' => ['required', 'integer'],
+        $kinship = Request::get('kinship');
+        $member = null;
+        if ($kinship == 'husband' || $kinship == 'wife') {
+            $validatedData = Request::validate([
+                'name' => ['nullable', 'max:100'],
+                'address' => ['nullable', 'max:100'],
+                'cin' => 'nullable|numeric||digits:8|unique:' . Member::class,
+                'phone' => 'nullable|numeric||digits:8|unique:' . Member::class,
+                'birth_date' => ['nullable', 'date'],
+                'birth_city' => ['nullable', 'max:100'],
+                'social_status' => ['nullable', 'max:100'],
+                'monthly_income' => ['nullable', 'integer'],
+                'kinship' => ['nullable', 'max:100'],
+                'education_level' => ['nullable', 'max:100'],
+                'job' => ['nullable', 'max:100'],
+                'job_place' => ['nullable', 'max:100'],
+                'family_id' => ['required', 'integer'],
+            ]);
+            $emptyRequest = true;
+            // Remove keys from the input data
+            $keysToExclude = ['family_id', 'health_insurance', 'kinship', 'caregiver', 'good'];
+            $DataWithoutKey = Request::except($keysToExclude);
+            foreach ($DataWithoutKey as $value) {
+                if ($value !== null) {
+                    $emptyRequest = false;
+                }
+            }
+            if (!$emptyRequest) {
+                $member = Auth::user()->account->members()->create($validatedData);
+            }
+        } else {
+            $validatedData = Request::validate([
+                'name' => ['required', 'max:100'],
+                'address' => ['required', 'max:100'],
+                'cin' => 'required|numeric||digits:8|unique:' . Member::class,
+                'phone' => 'required|numeric||digits:8|unique:' . Member::class,
+                'birth_date' => ['required', 'date'],
+                'birth_city' => ['required', 'max:100'],
+                'social_status' => ['required', 'max:100'],
+                'monthly_income' => ['nullable', 'integer'],
+                'kinship' => ['required', 'max:100'],
+                'education_level' => ['nullable', 'max:100'],
+                'job' => ['nullable', 'max:100'],
+                'job_place' => ['nullable', 'max:100'],
+                'family_id' => ['required', 'integer'],
 
-        ]);
+            ]);
+            $member = Auth::user()->account->members()->create($validatedData);
+        }
+        if ($member) {
+            $family = $member->family;
+            $family->members()->update(['caregiver' => false]);
 
-        $member = Auth::user()->account->members()->create($validatedData);
-        $family = $member->family;
-        $family->members()->update(['caregiver' => false]);
-
-        $husband = $family->members()
-            ->where('kinship', 'husband')
-            ->first();
-
-        if (!$husband) {
-            $wife = $family->members()
-                ->where('kinship', 'wife')
+            $husband = $family->members()
+                ->where('kinship', 'husband')
                 ->first();
 
-            if (!$wife) {
-                $child = $family->members()
-                    ->where('kinship', 'child')
-                    ->orderBy('created_at')
+            if (!$husband) {
+                $wife = $family->members()
+                    ->where('kinship', 'wife')
                     ->first();
 
-                if (!$child) {
-                    $other_member = $family->members()
-                        ->where('kinship', 'other_member')
+                if (!$wife) {
+                    $child = $family->members()
+                        ->where('kinship', 'child')
                         ->orderBy('created_at')
                         ->first();
 
-                    $family_caregiver = $other_member;
+                    if (!$child) {
+                        $other_member = $family->members()
+                            ->where('kinship', 'other_member')
+                            ->orderBy('created_at')
+                            ->first();
+
+                        $family_caregiver = $other_member;
+                    } else {
+                        $family_caregiver = $child;
+                    }
                 } else {
-                    $family_caregiver = $child;
+                    $family_caregiver = $wife;
                 }
             } else {
-                $family_caregiver = $wife;
+                $family_caregiver = $husband;
             }
+            //Updtae family and her caregiver details
+            if ($family_caregiver) {
+                $family_caregiver->update([
+                    'caregiver' => true,
+                ]);
+                $family->update([
+                    'name' => $family_caregiver->name,
+                    'caregiver_phone' => $family_caregiver->phone,
+                    'address' => $family_caregiver->address,
+
+                ]);
+            }
+            // Create the health status
+            $validatedData = Request::validate([
+                'health_insurance' => ['nullable', 'boolean'],
+                'good' => ['nullable', 'boolean'],
+                'disease' => ['nullable', 'string', 'max:100'],
+                'disability' => ['nullable', 'string', 'max:100'],
+                'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+            ]);
+
+            $healthStatus = new HealthStatus([
+                'health_insurance' => $validatedData['health_insurance'],
+                'good' => $validatedData['good'],
+                'disease' => $validatedData['disease'],
+                'disability' => $validatedData['disability'],
+                'disability_card_number' => $validatedData['disability_card_number'],
+            ]);
+
+            $member->healthStatus()->save($healthStatus);
+
+            return redirect()->route('members.create', ['family' => $member->family])->with('success', 'تم إنشاء العضو');
         } else {
-            $family_caregiver = $husband;
+            return Redirect::back();
         }
-       //Updtae family and her caregiver details
-        if ($family_caregiver) {
-            $family_caregiver->update([
-                'caregiver' => true,
-            ]);
-            $family->update([
-                'name' => $family_caregiver->name,
-                'caregiver_phone' => $family_caregiver->phone,
-                'address' => $family_caregiver->address,
-
-            ]);
-
-        }
-
-
-
-        // Create the health status
-        $validatedData = Request::validate([
-            'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['nullable', 'boolean'],
-            'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
-        ]);
-
-        $healthStatus = new HealthStatus([
-            'health_insurance' => $validatedData['health_insurance'],
-            'good' => $validatedData['good'],
-            'disease' => $validatedData['disease'],
-            'disability' => $validatedData['disability'],
-            'disability_card_number' => $validatedData['disability_card_number'],
-        ]);
-
-        $member->healthStatus()->save($healthStatus);
-
-        return redirect()->route('members.create', ['family' => $member->family])->with('success', 'تم إنشاء العضو');
     }
 
 

@@ -99,8 +99,6 @@ class FamilyController extends Controller
         Request::validate([
            // 'caregiver_phone' => 'required|numeric||digits:8|unique:'.Family::class,
             'photo' => ['nullable', 'image'],
-            'wife' => ['nullable', 'boolean'],
-            'husband' => ['nullable', 'boolean'],
             'elderlies_number' => ['nullable', 'numeric'],
             'childrens_number' => ['nullable', 'numeric'],
             'other_members_number' => ['nullable', 'numeric'],
@@ -110,9 +108,8 @@ class FamilyController extends Controller
             [
                 'caregiver_phone' =>null,// Request::get('caregiver_phone'),
                 'photo' =>Request::get('photo'),
-
-                'wife' => Request::get('wife'),
-                'husband' => Request::get('husband'),
+                'wife' => true,
+                'husband' => true,
                 'elderlies_number' => Request::get('elderlies_number'),
                 'childrens_number' => Request::get('childrens_number'),
                 'other_members_number' => Request::get('other_members_number'),

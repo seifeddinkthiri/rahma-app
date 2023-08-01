@@ -14,22 +14,6 @@
             label="رقم هاتف معيل الأسرة"
           />-->
 
-          <ToggleCheckbox
-            :id="'husband'"
-            :isChecked="form.husband"
-            :label="'الزوج'"
-            :active_value="'نعم'"
-            :inactive_value="'لا'"
-            @toggle="toggle_husband"
-          />
-          <ToggleCheckbox
-            :id="'wife'"
-            :isChecked="form.wife"
-            :label="'الزوجة'"
-            :active_value="'نعم'"
-            :inactive_value="'لا'"
-            @toggle="toggle_wife"
-          />
           <div>
             <ToggleCheckbox
               :id="'childrens'"
@@ -160,8 +144,6 @@ export default {
       form: this.$inertia.form({
         photo: null,
         // caregiver_phone: null,
-        wife: false,
-        husband: false,
         elderlies: false,
         childrens: false,
         other_members: false,
@@ -172,12 +154,7 @@ export default {
     };
   },
   methods: {
-    toggle_husband() {
-      this.form.husband = !this.form.husband;
-    },
-    toggle_wife() {
-      this.form.wife = !this.form.wife;
-    },
+
     toggle_childrens() {
       this.form.childrens = !this.form.childrens;
       this.form.childrens_number = 0;
@@ -190,24 +167,11 @@ export default {
       this.form.other_members_number = 0;
       this.form.other_members = !this.form.other_members;
     },
-    TotalMembers() {
-      return (
-        this.form.childrens_number +
-        this.form.elderlies_number +
-        this.form.other_members_number
-      );
-    },
+
     store() {
-      if (
-        (this.form.husband && this.form.wife) ||
-        (this.form.husband && this.TotalMembers() > 0) ||
-        (this.form.wife && this.TotalMembers() > 0) ||
-        this.TotalMembers() >= 2
-      ) {
+
         this.form.post("/families");
-      } else {
-        window.alert("تحتوي العائلة على فردين على الأقل");
-      }
+
     },
   },
 };
