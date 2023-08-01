@@ -10,42 +10,60 @@
             <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
             <th class="pb-4 pt-6 px-6" colspan="2"></th>
           </tr>
-          <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+          <tr
+            v-for="user in users"
+            :key="user.id"
+            class="hover:bg-gray-100 focus-within:bg-gray-100"
+          >
             <td class="border-t" v-if="user.wait">
-              <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              <div
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                :href="`/users/${user.id}/edit`"
+              >
                 {{ user.name }}
               </div>
             </td>
             <td class="border-t" v-if="user.wait">
-              <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              <div
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                :href="`/users/${user.id}/edit`"
+              >
                 {{ user.email }}
               </div>
             </td>
             <td class="w-px border-t" v-if="user.wait">
-              <Link class="flex items-center px-4" :href="`/wait_list/${user.id}/edit`" tabindex="-1">
-                <loading-button :loading="form.processing" class="btn-indigo bg-green-600 flex flex-row">
+              <Link
+                class="flex items-center px-4"
+                :href="`/wait_list/${user.id}/edit`"
+                tabindex="-1"
+              >
+                <loading-button
+                  :loading="form.processing"
+                  class="btn-indigo bg-green-600 flex flex-row"
+                >
                   قبول
-                  <icon
-                    name="accepet"
-                    class="mr-2 w-4 h-4 fill-white"
-                  />
+                  <icon name="accepet" class="mr-2 w-4 h-4 fill-white" />
                 </loading-button>
               </Link>
             </td>
             <td class="w-px border-t" v-if="user.wait">
-              <Link class="flex items-center px-4 " :href="`/wait_list/${user.id}/delete_demonde`" tabindex="-1">
-                <loading-button :loading="form.processing" class="btn-indigo bg-red-500 flex flex-row">
+              <Link
+                class="flex items-center px-4"
+                :href="`/wait_list/${user.id}/delete_demonde`"
+                tabindex="-1"
+              >
+                <loading-button
+                  :loading="form.processing"
+                  class="btn-indigo bg-red-500 flex flex-row"
+                >
                   حذف
-                  <icon
-                    name="delete"
-                    class="mr-2 w-4 h-4 fill-white"
-                  />
+                  <icon name="delete" class="mr-2 w-4 h-4 fill-white" />
                 </loading-button>
               </Link>
             </td>
           </tr>
           <tr v-if="users.length === 0">
-            <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على مستخدمين</td>
+            <td class="px-6 py-4 border-t" colspan="4">لا يوجد مستخدمين</td>
           </tr>
         </table>
       </div>
@@ -59,31 +77,45 @@
             <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
             <th class="pb-4 pt-6 px-6" colspan="2"></th>
           </tr>
-          <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+          <tr
+            v-for="user in users"
+            :key="user.id"
+            class="hover:bg-gray-100 focus-within:bg-gray-100"
+          >
             <td class="border-t" v-if="user.wait == false">
-              <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              <div
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                :href="`/users/${user.id}/edit`"
+              >
                 {{ user.name }}
               </div>
             </td>
             <td class="border-t" v-if="user.wait == false">
-              <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+              <div
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                :href="`/users/${user.id}/edit`"
+              >
                 {{ user.email }}
               </div>
             </td>
             <td class="w-px border-t" v-if="user.wait == false">
-              <Link class="flex items-center px-4 " :href="`/wait_list/${user.id}/edit`" tabindex="-1">
-                <loading-button :loading="form.processing" class="btn-indigo bg-red-500 flex flex-row">
+              <Link
+                class="flex items-center px-4"
+                :href="`/wait_list/${user.id}/edit`"
+                tabindex="-1"
+              >
+                <loading-button
+                  :loading="form.processing"
+                  class="btn-indigo bg-red-500 flex flex-row"
+                >
                   حظر
-                  <icon
-                    name="block"
-                    class="mr-2 w-4 h-4 fill-white"
-                  />
+                  <icon name="block" class="mr-2 w-4 h-4 fill-white" />
                 </loading-button>
               </Link>
             </td>
           </tr>
           <tr v-if="users.length === 0">
-            <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على مستخدمين</td>
+            <td class="px-6 py-4 border-t" colspan="4">لا يوجد مستخدمين</td>
           </tr>
         </table>
       </div>
@@ -92,14 +124,14 @@
 </template>
 
 <script>
-import { Head, Link } from '@inertiajs/inertia-vue3'
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import LoadingButton from "@/Shared/LoadingButton";
-import Icon from '@/Shared/Icon'
-import pickBy from 'lodash/pickBy'
-import Layout from '@/Shared/Layout'
-import throttle from 'lodash/throttle'
-import mapValues from 'lodash/mapValues'
-import SearchFilter from '@/Shared/SearchFilter'
+import Icon from "@/Shared/Icon";
+import pickBy from "lodash/pickBy";
+import Layout from "@/Shared/Layout";
+import throttle from "lodash/throttle";
+import mapValues from "lodash/mapValues";
+import SearchFilter from "@/Shared/SearchFilter";
 
 export default {
   components: {
@@ -120,20 +152,20 @@ export default {
         role: this.filters.role,
         trashed: this.filters.trashed,
       },
-    }
+    };
   },
   watch: {
     form: {
       deep: true,
       handler: throttle(function () {
-        this.$inertia.get('/users', pickBy(this.form), { preserveState: true })
+        this.$inertia.get("/users", pickBy(this.form), { preserveState: true });
       }, 150),
     },
   },
   methods: {
     reset() {
-      this.form = mapValues(this.form, () => null)
+      this.form = mapValues(this.form, () => null);
     },
   },
-}
+};
 </script>

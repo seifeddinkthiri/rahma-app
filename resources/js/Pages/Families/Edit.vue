@@ -157,7 +157,7 @@
               </td>
             </tr>
             <tr v-if="family.members.length === 0">
-              <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على الأفراد</td>
+              <td class="px-6 py-4 border-t" colspan="4">لا يوجد على الأفراد</td>
             </tr>
           </tbody>
         </table>

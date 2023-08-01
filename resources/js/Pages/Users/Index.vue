@@ -87,7 +87,7 @@
           </td>
         </tr>
         <tr v-if="users.length === 0">
-          <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على مستخدمين</td>
+          <td class="px-6 py-4 border-t" colspan="4">لا يوجد مستخدمين</td>
         </tr>
       </table>
     </div>

@@ -94,7 +94,7 @@
                 </td>
               </tr>
               <tr v-if="family.members.data.length === 0">
-                <td class="px-6 py-4 border-t" colspan="4">لم يتم العثور على الأفراد</td>
+                <td class="px-6 py-4 border-t" colspan="4">لا يوجد أفراد</td>
               </tr>
             </tbody>
           </table>
@@ -151,7 +151,7 @@
         </div>
       </div>
       <div v-if="family.notes.data.length === 0">
-        <p class="text-center text-xl font-bold">لم يتم العثور على ملاحظات</p>
+        <p class="text-center text-xl font-bold">لا يوجد ملاحظات</p>
       </div>
     </div>
 
@@ -173,7 +173,7 @@
         </div>
       </div>
       <div v-if="family.home.length === 0">
-        <p class="text-center text-xl font-bold">لم يتم العثور على مساكن</p>
+        <p class="text-center text-xl font-bold">لا يوجد مساكن</p>
       </div>
     </div>
   </div>
