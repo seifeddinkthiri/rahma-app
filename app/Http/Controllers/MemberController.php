@@ -28,8 +28,8 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'required|numeric||digits:8|unique:'.Member::class,
-            'phone' => 'required|numeric||digits:8|unique:'.Member::class,
+            'cin' => 'required|numeric||digits:8|unique:' . Member::class,
+            'phone' => 'required|numeric||digits:8|unique:' . Member::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
@@ -43,20 +43,54 @@ class MemberController extends Controller
         ]);
 
         $member = Auth::user()->account->members()->create($validatedData);
-        $family = $member->family; // Retrieve the Family model instance
-        if ($member->phone == $family->caregiver_phone) {
-            $member->update([
-                'caregiver' => true,
+        $family = $member->family;
 
-            ]);
+        $husband = $family->members()
+            ->where('kinship', 'husband')
+            ->first();
 
-            $family->update([
-                'name' => $member->name,
-                'caregiver_phone' => $member->phone,
-                'address' => $member->address,
+        if (!$husband) {
+            $wife = $family->members()
+                ->where('kinship', 'wife')
+                ->first();
 
-            ]);
+            if (!$wife) {
+                $child = $family->members()
+                    ->where('kinship', 'child')
+                    ->orderBy('created_at')
+                    ->first();
+
+                if (!$child) {
+                    $other_member = $family->members()
+                        ->where('kinship', 'other_member')
+                        ->orderBy('created_at')
+                        ->first();
+
+                    $family_caregiver = $other_member;
+                } else {
+                    $family_caregiver = $child;
+                }
+            } else {
+                $family_caregiver = $wife;
+            }
+        } else {
+            $family_caregiver = $husband;
         }
+       //Updtae family and her caregiver details
+        if ($family_caregiver) {
+            $family_caregiver->update([
+                'caregiver' => true,
+            ]);
+            $family->update([
+                'name' => $family_caregiver->name,
+                'caregiver_phone' => $family_caregiver->phone,
+                'address' => $family_caregiver->address,
+
+            ]);
+
+        }
+
+
 
         // Create the health status
         $validatedData = Request::validate([
@@ -64,7 +98,7 @@ class MemberController extends Controller
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability','numeric', 'digits:8'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
 
         $healthStatus = new HealthStatus([
@@ -149,11 +183,11 @@ class MemberController extends Controller
                 'family_id' => ['required', 'integer'],
             ])
         );
-        if($Member->caregiver){
+        if ($Member->caregiver) {
             $famely = Family::where('id', $Member->family_id)->first();
             $famely->update([
                 'name' => $Member->name,
-                'caregiver_phone' => $Member->phone,
+                'family_caregiver' => $Member->phone,
                 'address' => $Member->address,
             ]);
         }
@@ -171,8 +205,8 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'nullable|integer||digits:8|unique:'.Member::class,
-            'phone' => 'nullable|integer||digits:8|unique:'.Member::class,
+            'cin' => 'nullable|integer||digits:8|unique:' . Member::class,
+            'phone' => 'nullable|integer||digits:8|unique:' . Member::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['required', 'max:100'],
@@ -203,7 +237,6 @@ class MemberController extends Controller
         $Family = $member->Family;
 
         return redirect()->route('families.edit', ['family' => $Family])->with('success', 'تم إنشاء العضو');
-
     }
 
 
@@ -226,16 +259,15 @@ class MemberController extends Controller
     {
         $members = Member::where('family_id', $Member->family_id)->get();
         foreach ($members as $member) {
-            if($member == $Member){
+            if ($member == $Member) {
                 $member->caregiver = true;
                 $famely = Family::where('id', $member->family_id)->first();
                 $famely->update([
                     'name' => $member->name,
-                    'caregiver_phone' => $member->phone,
+                    'family_caregiver' => $member->phone,
                     'address' => $member->address,
                 ]);
-            }
-            else
+            } else
                 $member->caregiver = false;
             $member->save();
         }

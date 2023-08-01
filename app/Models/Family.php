@@ -15,15 +15,14 @@ class Family extends Model
     use HasApiTokens;
 
     protected $fillable = [
-        'photo', 
+        'photo',
         'name',
-        'phone', 
-        'address', 
-        'caregiver_cin', 
+        'caregiver_phone',
+        'address',
         'wife',
-        'husband', 
-        'elderlies_number', 
-        "childrens_number", 
+        'husband',
+        'elderlies_number',
+        "childrens_number",
         "other_members_number"];
 
     public function resolveRouteBinding($value, $field = null)
@@ -35,9 +34,8 @@ class Family extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%')
-            ->orWhere('phone', 'like', '%'.$search.'%')
+            ->orWhere('caregiver_phone', 'like', '%'.$search.'%')
             ->orWhere('address', 'like', '%'.$search.'%')
-            ->orWhere('caregiver_cin', 'like', '%'.$search.'%')
 
             ;
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {

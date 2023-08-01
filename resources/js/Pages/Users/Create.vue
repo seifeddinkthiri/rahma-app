@@ -2,8 +2,8 @@
   <div>
     <Head title="Create User" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/users">المستخدمون</Link>
-      <span class="text-indigo-400 font-medium">/</span> إنشاء
+      <Link class="text-blue-400 hover:text-blue-600" href="/users">المستخدمون</Link>
+      <span class="text-blue-400 font-medium">/</span> إنشاء
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">

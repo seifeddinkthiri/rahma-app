@@ -2,10 +2,12 @@
   <div>
     <Head title="Create Organization" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/organizations"
+      <Link
+        class="text-blue-400 hover:text-blue-600"
+        :href="`/families/${Family.id}/edit`"
         >الأفراد</Link
       >
-      <span class="text-indigo-400 font-medium">/</span> إنشاء
+      <span class="text-blue-400 font-medium">/</span> إنشاء
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">

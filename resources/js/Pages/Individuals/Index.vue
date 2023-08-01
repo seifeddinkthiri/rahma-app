@@ -42,7 +42,7 @@
           >
             <td class="border-t">
               <Link
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                class="flex items-center px-6 py-4 focus:text-blue-500"
                 :href="`/individuals/${individual.id}/edit`"
               >
                 {{ individual.name }}

@@ -1,12 +1,12 @@
 <template>
-  {{ form.type }}
+
   <div>
     <Head :title="form.intervenor" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/interventions"
+      <Link class="text-blue-400 hover:text-blue-600" href="/interventions"
         >التبرعات
       </Link>
-      <span class="text-indigo-400 font-medium">/</span>
+      <span class="text-blue-400 font-medium">/</span>
       {{ form.intervenor }}
     </h1>
     <trashed-message v-if="intervention.deleted_at" class="mb-6" @restore="restore"

@@ -2,8 +2,8 @@
   <div>
     <Head :title="form.name" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/members">الأفراد</Link>
-      <span class="text-indigo-400 font-medium">/</span>
+      <Link class="text-blue-400 hover:text-blue-600" href="/members">الأفراد</Link>
+      <span class="text-blue-400 font-medium">/</span>
       {{ form.name }}
     </h1>
     <trashed-message v-if="member.deleted_at" class="mb-6" @restore="restore"

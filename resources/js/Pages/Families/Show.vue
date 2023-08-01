@@ -1,55 +1,51 @@
 <template>
   <div>
-    <Head :title="form.name" />
-    <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفعين</Link>
-      <span class="text-blue-400 font-medium">/</span>
-      {{ form.name }}
-    </h1>
     <!-- Family Card -->
-    <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
-    <br />
-    <div class="bg-white rounded-md shadow p-4">
-      <table class="table-auto w-full">
-        <tbody>
-          <tr class="w-10 h-10">
-            <td class="border px-4 py-2">الاسم</td>
-            <td class="border px-4 py-2">
-              {{ form.name }}
-            </td>
-          </tr>
-          <tr>
-            <td class="border px-4 py-2">الهاتف</td>
-            <td class="border px-4 py-2">
-              {{ form.phone }}
-            </td>
-          </tr>
-          <tr>
-            <td class="border px-4 py-2">العنوان</td>
-            <td class="border px-4 py-2">
-              {{ form.address }}
-            </td>
-          </tr>
-          <tr v-if="form.photo">
-            <td class="border px-4 py-2">الصورة</td>
-            <td class="border px-4 py-2">
-              <img
-                :src="form.photo"
-                alt="صورة المنتفع"
-                class="h-32 w-32 object-contain"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="p-6 bg-white rounded-md shadow">
+      <Head :title="form.name" />
+
+      <div class="relative">
+        <img
+          :src="`/uploads/${family.photo}`"
+          alt="family Image"
+          class="w-32 h-32 rounded absolute top-0 left-0 -mt-6 -ml-6 pt-6 pl-6"
+        />
+        <h1 class="pl-28 text-3xl font-bold">
+          <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
+          <span class="text-blue-400 font-medium">/</span>
+          {{ form.name }}
+        </h1>
+      </div>
+
+      <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
+
+      <div class="mt-8 p-4 bg-white rounded-md shadow">
+        <table class="w-full">
+          <tbody>
+            <tr>
+              <td class="px-4 py-2 border">الاسم</td>
+              <td class="px-4 py-2 border">{{ form.name }}</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">الهاتف</td>
+              <td class="px-4 py-2 border">{{ form.phone }}</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">العنوان</td>
+              <td class="px-4 py-2 border">{{ form.address }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
     <h2 class="mt-12 text-2xl font-bold">الأفراد</h2>
     <br />
     <div>
       <div class="bg-white rounded-md shadow overflow-hidden">
         <br />
-        <div class="flex items-center w-full flex-row justify-around">
-          <p v-if="form.name == null" class="text-red-600 px-6">
+        <div class="flex flex-row items-center justify-around w-full">
+          <p v-if="form.name == null" class="px-6 text-red-600">
             يجب تعيين معيل أسرة لهذه العائلة
           </p>
         </div>
@@ -109,36 +105,36 @@
     <!-- Facilities -->
     <h2 class="mt-12 text-2xl font-bold">المرافق الأساسية</h2>
     <br />
-    <div class="bg-white rounded-md shadow p-4">
+    <div class="p-4 bg-white rounded-md shadow">
       <table class="table-auto w-full">
         <tbody>
           <tr>
-            <td class="border px-4 py-2">الصرف الصحي</td>
-            <td class="border px-4 py-2" v-if="family.facilities[0].Sanitaion">
+            <td class="px-4 py-2 border">الصرف الصحي</td>
+            <td class="px-4 py-2 border" v-if="family.facilities[0].Sanitaion">
               <icon name="check" />
             </td>
-            <td class="border px-4 py-2" v-else><icon name="minus" /></td>
+            <td class="px-4 py-2 border" v-else><icon name="minus" /></td>
           </tr>
           <tr>
-            <td class="border px-4 py-2">الكهرباء</td>
-            <td class="border px-4 py-2" v-if="family.facilities[0].electricity">
+            <td class="px-4 py-2 border">الكهرباء</td>
+            <td class="px-4 py-2 border" v-if="family.facilities[0].electricity">
               <icon name="check" />
             </td>
-            <td class="border px-4 py-2" v-else><icon name="minus" /></td>
+            <td class="px-4 py-2 border" v-else><icon name="minus" /></td>
           </tr>
           <tr>
-            <td class="border px-4 py-2">الماء</td>
-            <td class="border px-4 py-2" v-if="family.facilities[0].water">
+            <td class="px-4 py-2 border">الماء</td>
+            <td class="px-4 py-2 border" v-if="family.facilities[0].water">
               <icon name="check" />
             </td>
-            <td class="border px-4 py-2" v-else><icon name="minus" /></td>
+            <td class="px-4 py-2 border" v-else><icon name="minus" /></td>
           </tr>
           <tr>
-            <td class="border px-4 py-2">التهوئة</td>
-            <td class="border px-4 py-2" v-if="family.facilities[0].ventilation">
+            <td class="px-4 py-2 border">التهوئة</td>
+            <td class="px-4 py-2 border" v-if="family.facilities[0].ventilation">
               <icon name="check" />
             </td>
-            <td class="border px-4 py-2" v-else><icon name="minus" /></td>
+            <td class="px-4 py-2 border" v-else><icon name="minus" /></td>
           </tr>
         </tbody>
       </table>
@@ -149,13 +145,13 @@
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="note in family.notes.data" :key="note.id">
-        <div class="bg-white rounded-md shadow p-4">
-          <h3 class="text-xl font-bold mb-2">{{ note.title }}</h3>
+        <div class="p-4 bg-white rounded-md shadow">
+          <h3 class="mb-2 text-xl font-bold">{{ note.title }}</h3>
           <p class="text-gray-700 truncate">{{ note.value }}</p>
         </div>
       </div>
       <div v-if="family.notes.data.length === 0">
-        <p class="text-xl font-bold text-center">لم يتم العثور على ملاحظات</p>
+        <p class="text-center text-xl font-bold">لم يتم العثور على ملاحظات</p>
       </div>
     </div>
 
@@ -163,21 +159,21 @@
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="home in family.home" :key="home.id">
-        <div class="bg-white rounded-md shadow p-4">
-          <h3 class="text-xl font-bold mb-2">
+        <div class="p-4 bg-white rounded-md shadow">
+          <h3 class="mb-2 text-xl font-bold">
             <span v-if="home.status == 'Ownership'">ملك</span>
             <span v-else-if="home.status == 'without compensation'">بدون مقابل</span>
             <span v-else-if="home.status == 'inherited'">ورثة</span>
             <span v-else-if="home.status == 'lease'">إيجار</span>
           </h3>
-          <p class="text-gray-700 mb-2" v-if="home.status == 'lease'">
+          <p class="mb-2 text-gray-700" v-if="home.status == 'lease'">
             سعر الكراء: {{ home.allocation_price }}
           </p>
           <p class="text-gray-700 truncate">{{ home.desciption }}</p>
         </div>
       </div>
       <div v-if="family.home.length === 0">
-        <p class="text-xl font-bold text-center">لم يتم العثور على مساكن</p>
+        <p class="text-center text-xl font-bold">لم يتم العثور على مساكن</p>
       </div>
     </div>
   </div>
@@ -208,7 +204,7 @@ export default {
         name: this.family.name,
         phone: this.family.phone,
         address: this.family.address,
-        photo: null,
+        photo: this.family.photo,
         id: this.family.id,
       }),
     };

@@ -5,7 +5,7 @@
       <Link class="text-blue-400 hover:text-blue-600" href="/individuals">
         المنتفعين الأفراد
       </Link>
-      <span class="text-indigo-400 font-medium">/</span>
+      <span class="text-blue-400 font-medium">/</span>
       {{ form.name }}
     </h1>
     <trashed-message v-if="individual.deleted_at" class="mb-6" @restore="restore"
@@ -392,7 +392,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                class="flex items-center px-6 py-4 focus:text-blue-500"
                 @click="edit_note(note.id)"
               >
                 {{ note.title }}
@@ -474,7 +474,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                class="flex items-center px-6 py-4 focus:text-blue-500"
                 @click="edit_home()"
               >
                 <p v-if="home.status == 'Ownership'">ملك</p>
@@ -490,7 +490,7 @@
             </td>
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                class="flex items-center px-6 py-4 focus:text-blue-500"
                 @click="edit_home()"
               >
                 <p v-if="home.status == 'lease'">{{ home.allocation_price }}</p>
@@ -883,7 +883,6 @@ export default {
     };
   },
   methods: {
-
     toggle_sanitation() {
       this.facilities_form_update.Sanitation = !this.facilities_form_update.Sanitation;
     },
@@ -937,7 +936,9 @@ export default {
     update_facility() {
       this.show_facility_modal_update = false;
 
-      this.facilities_form_update.put(`/facilities/${this.individual.id}/Individualsupdate`);
+      this.facilities_form_update.put(
+        `/facilities/${this.individual.id}/Individualsupdate`
+      );
     },
 
     edit_note(id) {
@@ -983,7 +984,9 @@ export default {
       this.show_home_modal_update = true;
 
       const home_status = this.individual.home.map((home) => home.status);
-      const home_allocation_price = this.individual.home.map((home) => home.allocation_price);
+      const home_allocation_price = this.individual.home.map(
+        (home) => home.allocation_price
+      );
       const home_desciption = this.individual.home.map((home) => home.desciption);
 
       this.home_form_update.status = home_status.toString();
@@ -1006,7 +1009,6 @@ export default {
     openHomeModal() {
       this.show_home_modal = true;
     },
-
   },
 };
 </script>

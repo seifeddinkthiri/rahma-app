@@ -6,22 +6,14 @@
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <text-input
+          <!--    <text-input
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="caregiver_phone"
             v-model="form.caregiver_phone"
             :error="form.errors.caregiver_phone"
             label="رقم هاتف معيل الأسرة"
-          />
-          <file-input
-            id="photo"
-            v-model="form.photo"
-            :error="form.errors.photo"
-            class="pb-8 pr-6 w-full lg:w-1/2"
-            type="file"
-            accept="image/*"
-            label="الصورة"
-          />
+          />-->
+
           <ToggleCheckbox
             :id="'husband'"
             :isChecked="form.husband"
@@ -112,12 +104,21 @@
               label="لا يوجد"
             />
           </div>
+
           <button
-            class="inline-flex h-16 items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            class="inline-flex h-12 items-center justify-center px-4 py-2 text-white hover:text-white text-sm font-medium bg-gray-600 hover:bg-gray-800 rounded focus:outline-none"
             type="submit"
           >
-            التالي
-          </button>
+            التالي</button
+          ><file-input
+            id="photo"
+            v-model="form.photo"
+            :error="form.errors.photo"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            type="file"
+            accept="image/*"
+            label=" الصورة (اخيتاري)  "
+          />
         </div>
       </form>
     </div>
@@ -133,6 +134,7 @@ import LoadingButton from "@/Shared/LoadingButton";
 import FileInput from "@/Shared/FileInput";
 import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
 import Breadcrumb from "@/Shared/Breadcrumb";
+import Icon from "@/Shared/Icon";
 
 export default {
   components: {
@@ -144,6 +146,7 @@ export default {
     FileInput,
     ToggleCheckbox,
     Breadcrumb,
+    Icon,
   },
   layout: Layout,
   remember: "form",
@@ -156,7 +159,7 @@ export default {
     return {
       form: this.$inertia.form({
         photo: null,
-        caregiver_phone: null,
+        // caregiver_phone: null,
         wife: false,
         husband: false,
         elderlies: false,
@@ -187,20 +190,19 @@ export default {
       this.form.other_members_number = 0;
       this.form.other_members = !this.form.other_members;
     },
+    TotalMembers() {
+      return (
+        this.form.childrens_number +
+        this.form.elderlies_number +
+        this.form.other_members_number
+      );
+    },
     store() {
       if (
         (this.form.husband && this.form.wife) ||
-        (this.form.husband &&
-          (this.form.childrens_number > 0 ||
-            this.form.elderlies_number > 0 ||
-            this.form.other_members_number > 0)) ||
-        (this.form.wife &&
-          (this.form.childrens_number > 0 ||
-            this.form.elderlies_number > 0 ||
-            this.form.other_members_number > 0)) ||
-        this.form.childrens_number > 1 ||
-        this.form.elderlies_number > 1 ||
-        this.form.other_members_number > 1
+        (this.form.husband && this.TotalMembers() > 0) ||
+        (this.form.wife && this.TotalMembers() > 0) ||
+        this.TotalMembers() >= 2
       ) {
         this.form.post("/families");
       } else {
