@@ -110,7 +110,9 @@ Route::get('individuals', [IndividualController::class, 'index'])
 Route::get('individuals/create', [IndividualController::class, 'create'])
     ->name('individuals.create')
     ->middleware('auth');
-
+    Route::get('individuals/{Individual}/show', [IndividualController::class, 'show'])
+    ->name('individuals.show')
+    ->middleware('auth');
     Route::get('individuals/{Individual}/create_B_C', [IndividualController::class, 'create_B_C'])
     ->name('individuals.create_B_C')
     ->middleware('auth');

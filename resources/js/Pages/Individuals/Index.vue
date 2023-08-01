@@ -86,7 +86,8 @@
                 :href="`/individuals/${individual.id}/edit`"
                 tabindex="-1"
               >
-                {{ individual.gender }}
+                <p v-if="individual.gender == 'male'">ذكر</p>
+                <p v-else>أنثى</p>
               </Link>
             </td>
             <td class="border-t">
@@ -115,6 +116,15 @@
                 tabindex="-1"
               >
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+              </Link>
+            </td>
+            <td class="w-px border-t">
+              <Link
+                class="flex items-center px-4"
+                :href="`/individuals/${individual.id}/show`"
+                tabindex="-1"
+              >
+                <icon name="eye" />
               </Link>
             </td>
           </tr>

@@ -76,7 +76,36 @@ class IndividualController extends Controller
             ],
         ]);
     }
+    public function show(Individual $Individual)
+    {
 
+        $notes = $Individual->notes()
+            ->orderBy('id')
+            ->paginate(10)
+            ->withQueryString()
+            ->through(function ($note) {
+                return [
+                    'id' => $note->id,
+                    'title' => $note->title,
+                    'value' => $note->value,
+                    'deleted_at' => $note->deleted_at,
+                ];
+            });
+
+        return Inertia::render('Individuals/Show', [
+            'individual' => [
+                'id' => $Individual->id,
+                'name' => $Individual->name,
+                'photo' => $Individual->photo,
+                'phone' => $Individual->phone,
+                'address' => $Individual->address,
+                'deleted_at' => $Individual->deleted_at,
+                'notes' => $notes,
+                'facilities' => $Individual->facilities()->get(),
+                'home' => $Individual->home()->get(),
+            ],
+        ]);
+    }
     public function store()
     {
 
@@ -168,7 +197,7 @@ class IndividualController extends Controller
                 'job' => $individual->job,
                 'job_place' => $individual->job_place,
                 'deleted_at' => $individual->deleted_at,
-                
+
                 'healthStatus' => $individual->healthStatus()->get(),
                 'facilities' =>  $individual->facilities()->get(),
                 'home' => $individual->home()->get(),

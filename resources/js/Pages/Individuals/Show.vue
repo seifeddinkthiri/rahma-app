@@ -1,13 +1,13 @@
 <template>
   <div>
-    <!-- Family Card -->
+    <!-- individual Card -->
     <div class="p-6 bg-white rounded-md shadow">
       <Head :title="form.name" />
 
       <div class="relative">
         <img
-          :src="`/uploads/${family.photo}`"
-          alt="family Image"
+          :src="`/uploads/${individual.photo}`"
+          alt="individual Image"
           class="w-32 h-32 rounded absolute top-0 left-0 -mt-6 -ml-6 pt-6 pl-6"
         />
         <h1 class="pl-28 text-3xl font-bold">
@@ -17,7 +17,7 @@
         </h1>
       </div>
 
-      <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
+      <h2 class="mt-12 text-2xl font-bold">الفرد</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <table class="w-full">
@@ -34,80 +34,23 @@
               <td class="px-4 py-2 border">العنوان</td>
               <td class="px-4 py-2 border">{{ form.address }}</td>
             </tr>
+            <tr>
+              <td class="px-4 py-2 border">الجنس</td>
+              <td class="px-4 py-2 border">
+                <p v-if="individual.gender == 'male'">ذكر</p>
+                <p v-else>أنثى</p>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
-
-    <h2 class="mt-12 text-2xl font-bold">الأفراد</h2>
-    <br />
-    <div>
-      <div class="bg-white rounded-md shadow overflow-hidden">
-        <br />
-        <div class="flex flex-row items-center justify-around w-full">
-          <p v-if="form.name == null" class="px-6 text-red-600">
-            يجب تعيين معيل أسرة لهذه العائلة
-          </p>
-        </div>
-        <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-          <table class="w-full whitespace-nowrap">
-            <thead>
-              <tr class="text-right font-bold">
-                <th class="pb-4 pt-6 px-6">الاسم</th>
-                <th class="pb-4 pt-6 px-6">القرابة</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="member in family.members.data"
-                :key="member.id"
-                class="hover:bg-gray-100 focus-within:bg-gray-100"
-              >
-                <td class="border-t">
-                  <Link
-                    class="flex items-center px-6 py-4 focus:text-indigo-500"
-                    :to="`/members/${member.id}/edit`"
-                  >
-                    {{ member.name }}
-                    <icon
-                      v-if="member.deleted_at"
-                      name="trash"
-                      class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-                    />
-                  </Link>
-                </td>
-                <td class="border-t">
-                  <Link
-                    class="flex items-center px-6 py-4"
-                    :to="`/members/${member.id}/edit`"
-                    tabindex="-1"
-                  >
-                    <p v-if="member.kinship == 'husband'">زوج</p>
-                    <p v-if="member.kinship == 'wife'">زوجة</p>
-                    <p v-if="member.kinship == 'child'">إبن</p>
-                    <p v-if="member.kinship == 'elderly'">مسن</p>
-                    <p v-if="member.kinship == 'other_member'">فرد إضافي</p>
-                  </Link>
-                </td>
-                <td class="border-t">
-                  <p v-if="member.caregiver">معيل الأسرة</p>
-                </td>
-              </tr>
-              <tr v-if="family.members.data.length === 0">
-                <td class="px-6 py-4 border-t" colspan="4">لا يوجد أفراد</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
     <!-- Facilities -->
     <h2 class="mt-12 text-2xl font-bold">المرافق الأساسية</h2>
     <br />
     <div class="p-4 bg-white rounded-md shadow">
       <table class="table-auto w-full">
-        <tbody v-for="(facility, index) in family.facilities" :key="index">
+        <tbody v-for="(facility, index) in individual.facilities" :key="index">
           <tr>
             <td class="px-4 py-2 border">الصرف الصحي</td>
             <td class="px-4 py-2 border" v-if="facility.Sanitation">
@@ -144,13 +87,13 @@
     <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="note in family.notes.data" :key="note.id">
+      <div v-for="note in individual.notes.data" :key="note.id">
         <div class="p-4 bg-white rounded-md shadow">
           <h3 class="mb-2 text-xl font-bold">{{ note.title }}</h3>
           <p class="text-gray-700 truncate">{{ note.value }}</p>
         </div>
       </div>
-      <div v-if="family.notes.data.length === 0">
+      <div v-if="individual.notes.data.length === 0">
         <p class="text-center text-xl font-bold">لا يوجد ملاحظات</p>
       </div>
     </div>
@@ -158,7 +101,7 @@
     <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="home in family.home" :key="home.id">
+      <div v-for="home in individual.home" :key="home.id">
         <div class="p-4 bg-white rounded-md shadow">
           <h3 class="mb-2 text-xl font-bold">
             <span v-if="home.status == 'Ownership'">ملك</span>
@@ -172,7 +115,7 @@
           <p class="text-gray-700 truncate">{{ home.desciption }}</p>
         </div>
       </div>
-      <div v-if="family.home.length === 0">
+      <div v-if="individual.home.length === 0">
         <p class="text-center text-xl font-bold">لا يوجد مساكن</p>
       </div>
     </div>
@@ -192,7 +135,7 @@ export default {
   },
   layout: Layout,
   props: {
-    family: Object,
+    individual: Object,
   },
   remember: "form",
 
@@ -201,11 +144,11 @@ export default {
       note_id: null,
 
       form: this.$inertia.form({
-        name: this.family.name,
-        phone: this.family.phone,
-        address: this.family.address,
-        photo: this.family.photo,
-        id: this.family.id,
+        name: this.individual.name,
+        phone: this.individual.phone,
+        address: this.individual.address,
+        photo: this.individual.photo,
+        id: this.individual.id,
       }),
     };
   },
