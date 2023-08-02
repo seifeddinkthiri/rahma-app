@@ -17,7 +17,14 @@
           {{ form.name }}
         </h1>
       </div>
-
+      <div class="relative">
+        <button
+          @click="back"
+          class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        >
+          عودة
+        </button>
+      </div>
       <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
@@ -209,6 +216,11 @@ export default {
         id: this.family.id,
       }),
     };
+  },
+  methods: {
+    back() {
+      window.history.back();
+    },
   },
 };
 </script>

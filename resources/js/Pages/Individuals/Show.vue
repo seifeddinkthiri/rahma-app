@@ -4,6 +4,7 @@
     <div class="p-6 bg-white rounded-md shadow">
       <Head :title="form.name" />
 
+
       <div class="relative">
         <img
           v-if="individual.photo"
@@ -17,27 +18,34 @@
           {{ form.name }}
         </h1>
       </div>
-
+      <div class="relative">
+        <button
+          @click="goBack"
+          class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        >
+          عودة
+        </button>
+      </div>
       <h2 class="mt-12 text-2xl font-bold">الفرد</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <table class="w-full">
           <tbody>
             <tr>
-              <td class="px-4 py-2 border">الاسم</td>
-              <td class="px-4 py-2 border">{{ form.name }}</td>
+              <td class="px-4 py-2 border h-16">الاسم</td>
+              <td class="px-4 py-2 border h-16">{{ form.name }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border">الهاتف</td>
-              <td class="px-4 py-2 border">{{ form.phone }}</td>
+              <td class="px-4 py-2 border h-16">الهاتف</td>
+              <td class="px-4 py-2 border h-16">{{ form.phone }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border">العنوان</td>
-              <td class="px-4 py-2 border">{{ form.address }}</td>
+              <td class="px-4 py-2 border h-16">العنوان</td>
+              <td class="px-4 py-2 border h-16">{{ form.address }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border">الجنس</td>
-              <td class="px-4 py-2 border">
+              <td class="px-4 py-2 border h-16">الجنس</td>
+              <td class="px-4 py-2 border h-16">
                 <p v-if="individual.gender == 'male'">ذكر</p>
                 <p v-else>أنثى</p>
               </td>
@@ -152,6 +160,11 @@ export default {
         id: this.individual.id,
       }),
     };
+  },
+  methods: {
+    goBack() {
+      window.history.back();
+    },
   },
 };
 </script>

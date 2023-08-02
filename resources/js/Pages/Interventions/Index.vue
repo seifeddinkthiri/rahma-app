@@ -30,8 +30,8 @@
             <th class="pb-4 pt-6 px-6">النوع</th>
             <th class="pb-4 pt-6 px-6">القيمة</th>
 
-            <th class="pb-4 pt-6 px-6">المتدخل</th>
-            <th class="pb-4 pt-6 px-6">هاتف المتدخل</th>
+            <th class="pb-4 pt-6 px-6">المسؤل</th>
+            <th class="pb-4 pt-6 px-6">هاتف المسؤل</th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +88,15 @@
                 tabindex="-1"
               >
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+              </Link>
+            </td>
+            <td class="w-px border-t">
+              <Link
+                class="flex items-center px-4"
+                :href="`/interventions/${intervention.id}/show`"
+                tabindex="-1"
+              >
+                <icon name="eye" class="block w-6 h-6" />
               </Link>
             </td>
           </tr>

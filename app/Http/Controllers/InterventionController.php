@@ -97,6 +97,24 @@ class InterventionController extends Controller
         ]);
     }
 
+    public function show(Intervention $intervention)
+    {
+        return Inertia::render('Interventions/Show', [
+            'intervention' => [
+                'id' => $intervention->id,
+                'family' => $intervention->family()->get(),
+                'individual' => $intervention->individual()->get(),
+                'type' => $intervention->type,
+                'value' => $intervention->value,
+                'intervenor' => $intervention->intervenor,
+                'intervenor_phone' => $intervention->intervenor_phone,
+                'file' => $intervention->file,
+                'notes' => $intervention->notes,
+                'deleted_at' => $intervention->deleted_at,
+            ],
+        ]);
+    }
+
     public function update(Intervention $intervention)
     {
         $intervention->update(

@@ -51,7 +51,7 @@ class Family extends Model
 
     public function interventions()
     {
-        return $this->belongsToMany(Intervention::class);
+        return $this->hasMany(Intervention::class);
     }
 
     public function home()

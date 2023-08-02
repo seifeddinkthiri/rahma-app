@@ -25,13 +25,13 @@ class Intervention extends Model
         'notes',
 
     ];
-    public function families()
+    public function family()
     {
-        return $this->belongsToMany(Family::class);
+        return $this->belongsTo(Family::class);
     }
-    public function individuals()
+    public function individual()
     {
-        return $this->belongsToMany(Individual::class);
+        return $this->belongsTo(Individual::class);
     }
     public function resolveRouteBinding($value, $field = null)
     {

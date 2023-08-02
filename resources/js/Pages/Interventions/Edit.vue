@@ -45,14 +45,14 @@
             id="intervenor"
             v-model="form.intervenor"
             :error="form.errors.intervenor"
-            label="إسم المتدخل"
+            label="إسم المسؤل"
           />
           <text-input
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="intervenor"
             v-model="form.intervenor_phone"
             :error="form.errors.intervenor_phone"
-            label="هاتف المتدخل"
+            label="هاتف المسؤل"
           />
           <TextAreaInput
             class="pb-8 pr-6 w-full lg:w-1/2"
