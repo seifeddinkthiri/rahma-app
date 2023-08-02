@@ -397,7 +397,7 @@
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
             >
-            التالي
+              التالي
             </loading-button>
           </div>
         </div>
@@ -583,8 +583,8 @@ export default {
     prepare_husband() {
       if (this.Family.husband) {
         this.active_step = 1;
-        this.current_form_title = "(اختياري) أدخل بيانات الزوج";
-        this.members_form_title = "(اختياري) أدخل بيانات الزوج";
+        this.current_form_title = "أدخل بيانات الزوج (اختياري) ";
+        this.members_form_title = " أدخل بيانات الزوج(اختياري)";
 
         this.current_form = "husband";
       } else {
@@ -594,8 +594,8 @@ export default {
     prepare_wife() {
       if (this.Family.wife) {
         this.active_step = 1;
-        this.current_form_title = "(اختياري) أدخل بيانات الزوجة";
-        this.members_form_title = "(اختياري) أدخل بيانات الزوجة";
+        this.current_form_title = "أدخل بيانات الزوجة(اختياري) ";
+        this.members_form_title = "أدخل بيانات الزوجة(اختياري) ";
 
         this.current_form = "wife";
       } else {

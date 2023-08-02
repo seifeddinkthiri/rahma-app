@@ -31,6 +31,7 @@
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
+          <th class="pb-4 pt-6 px-6">الصورة</th>
           <th class="pb-4 pt-6 px-6">الاسم</th>
           <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
           <th class="pb-4 pt-6 px-6" colspan="2">الدور</th>
@@ -41,15 +42,17 @@
           class="hover:bg-gray-100 focus-within:bg-gray-100"
         >
           <td class="border-t">
+            <img
+              v-if="user.photo"
+              class="w-8 h-8 rounded-full flex items-center justify-center transform -translate-x-16"
+              :src="user.photo"
+            />
+          </td>
+          <td class="border-t">
             <Link
               class="flex items-center px-6 py-4 focus:text-indigo-500"
               :href="`/users/${user.id}/edit`"
             >
-              <img
-                v-if="user.photo"
-                class="block -my-2 mr-2 w-5 h-5 rounded-full"
-                :src="user.photo"
-              />
               {{ user.name }}
               <icon
                 v-if="user.deleted_at"
@@ -69,7 +72,7 @@
           </td>
           <td class="border-t">
             <Link
-              class="flex items-center px-6 py-4"
+              class="flex items-center px-6 py-4 transform -translate-x-6"
               :href="`/users/${user.id}/edit`"
               tabindex="-1"
             >

@@ -1,6 +1,13 @@
 <template>
-  <div>
+  <div class="p-6 bg-white rounded-md shadow">
     <Head :title="`${form.first_name} ${form.last_name}`" />
+    <div class="relative">
+      <img
+        v-if="user.photo"
+        class="w-32 h-32 rounded absolute top-0 left-0 -mt-6 -ml-6 pt-6 pl-6"
+        :src="user.photo"
+      />
+    </div>
     <div class="flex justify-start mb-8 max-w-3xl">
       <h1 class="text-3xl font-bold">
         <Link class="text-indigo-400 hover:text-indigo-600" href="/users"
@@ -9,8 +16,8 @@
         <span class="text-indigo-400 font-medium">/</span>
         {{ form.first_name }} {{ form.last_name }}
       </h1>
-      <img v-if="user.photo" class="block ml-4 w-8 h-8 rounded-full" :src="user.photo" />
     </div>
+
     <trashed-message v-if="user.deleted_at" class="mb-6" @restore="restore">
       تم حذف هذا المستخدم
     </trashed-message>

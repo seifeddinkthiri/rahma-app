@@ -15,77 +15,28 @@
           />-->
 
           <div>
-            <ToggleCheckbox
-              :id="'childrens'"
-              :isChecked="form.childrens"
-              :label="'الأبناء'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              @toggle="toggle_childrens"
-            />
             <text-input
-              v-if="form.childrens"
               class="pb-8 pr-6 w-full lg:w-1/2"
               id="childrens_number"
               v-model="form.childrens_number"
-              label="عددهم"
-            />
-            <text-input
-              v-else
-              disabled
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              id="childrens_number"
-              label="لا يوجد"
+              label="الأبناء"
             />
           </div>
 
           <div>
-            <ToggleCheckbox
-              :id="'elderlies'"
-              :isChecked="form.elderlies"
-              :label="'المسنين'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              @toggle="toggle_elderlies"
-            />
             <text-input
-              v-if="form.elderlies"
               class="pb-8 pr-6 w-full lg:w-1/2"
               id="elderlies_number"
               v-model="form.elderlies_number"
-              label="عددهم"
-            />
-            <text-input
-              hidden
-              v-else
-              disabled
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              id="elderlies_number"
-              label="لا يوجد "
+              label="المسنين "
             />
           </div>
           <div>
-            <ToggleCheckbox
-              :id="'other_members'"
-              :isChecked="form.other_members"
-              :label="'أفراد آخرين'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              @toggle="toggle_other_members"
-            />
             <text-input
-              v-if="form.other_members"
               class="pb-8 pr-6 w-full lg:w-1/2"
               id="other_members_number"
               v-model="form.other_members_number"
-              label="عددهم"
-            />
-            <text-input
-              v-else
-              disabled
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              id="other_members_number"
-              label="لا يوجد"
+              label="أفراد آخرين"
             />
           </div>
 
@@ -93,7 +44,7 @@
             class="inline-flex h-12 items-center justify-center px-4 py-2 text-white hover:text-white text-sm font-medium bg-gray-600 hover:bg-gray-800 rounded focus:outline-none"
             type="submit"
           >
-            التالي</button
+            أنشاء</button
           ><file-input
             id="photo"
             v-model="form.photo"
@@ -144,9 +95,7 @@ export default {
       form: this.$inertia.form({
         photo: null,
         // caregiver_phone: null,
-        elderlies: false,
-        childrens: false,
-        other_members: false,
+
         childrens_number: 0,
         elderlies_number: 0,
         other_members_number: 0,
@@ -154,24 +103,8 @@ export default {
     };
   },
   methods: {
-
-    toggle_childrens() {
-      this.form.childrens = !this.form.childrens;
-      this.form.childrens_number = 0;
-    },
-    toggle_elderlies() {
-      this.form.elderlies = !this.form.elderlies;
-      this.form.elderlies_number = 0;
-    },
-    toggle_other_members() {
-      this.form.other_members_number = 0;
-      this.form.other_members = !this.form.other_members;
-    },
-
     store() {
-
-        this.form.post("/families");
-
+      this.form.post("/families");
     },
   },
 };
