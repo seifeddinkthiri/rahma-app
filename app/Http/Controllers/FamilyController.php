@@ -165,6 +165,7 @@ class FamilyController extends Controller
                 'members' => $members,
                 'notes' => $notes,
                 'facilities' =>  $family->facilities()->get(),
+                'interventions' => $family->interventions()->get(),
                 'home' => $family->home()->get(),
             ],
         ]);
@@ -214,6 +215,7 @@ class FamilyController extends Controller
                 'members' => $members,
                 'notes' => $notes,
                 'facilities' =>  $family->facilities()->get(),
+                'interventions' => $family->interventions()->get(),
                 'home' => $family->home()->get(),
             ],
         ]);

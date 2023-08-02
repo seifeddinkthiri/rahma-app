@@ -375,11 +375,6 @@
       </div>
       <br />
       <table class="w-full whitespace-nowrap">
-        <thead>
-          <tr class="text-right font-bold">
-            <th class="pb-4 pt-6 px-6">العنوان</th>
-          </tr>
-        </thead>
         <tbody>
           <tr
             v-for="note in family.notes.data"
@@ -435,6 +430,60 @@
           </tr>
           <tr v-if="family.notes.length === 0">
             <td class="px-6 py-4 border-t" colspan="2">لا يوجد ملاحظات</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
+    <br />
+    <div ref="members" class="bg-white rounded shadow overflow-hidden">
+      <table class="w-full text-right table-auto">
+        <thead class="text-right">
+          <tr class="text-right font-bold">
+            <th class="pb-4 pt-6 px-6">النوع</th>
+            <th class="pb-4 pt-6 px-6">القيمة</th>
+            <th class="pb-4 pt-6 px-6">المتدخل</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="intervention in family.interventions"
+            :key="intervention.id"
+            class="hover:bg-gray-100 h-16 focus-within:bg-gray-100"
+          >
+            <td class="border-t px-6 py-4">
+              <Link
+                class="flex items-center"
+                :href="`/interventions/${intervention.id}/edit`"
+                tabindex="-1"
+              >
+                <p class="whitespace-nowrap">
+                  {{ intervention.type === "cash" ? "نقدي" : "عيني" }}
+                </p>
+              </Link>
+            </td>
+            <td class="border-t px-6 py-4">
+              <Link
+                class="flex items-center"
+                :href="`/interventions/${intervention.id}/edit`"
+                tabindex="-1"
+              >
+                <p class="whitespace-nowrap">{{ intervention.value }}</p>
+              </Link>
+            </td>
+            <td class="border-t px-6 py-4">
+              <Link
+                class="flex items-center"
+                :href="`/interventions/${intervention.id}/edit`"
+                tabindex="-1"
+              >
+                <p class="whitespace-nowrap">{{ intervention.intervenor }}</p>
+              </Link>
+            </td>
+          </tr>
+          <tr v-if="family.interventions.length === 0">
+            <td class="px-6 py-4 border-t" colspan="3">لا يوجد تدخلات</td>
           </tr>
         </tbody>
       </table>

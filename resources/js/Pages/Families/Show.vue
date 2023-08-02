@@ -154,12 +154,33 @@
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="note in family.notes.data" :key="note.id">
         <div class="p-4 bg-white rounded-md shadow">
-          <h3 class="mb-2 text-xl font-bold">{{ note.title }}</h3>
+          <h3 class="mb-2 text-xl">{{ note.title }}</h3>
           <p class="text-gray-700 truncate">{{ note.value }}</p>
         </div>
       </div>
       <div v-if="family.notes.data.length === 0">
-        <p class="text-center text-xl font-bold">لا يوجد ملاحظات</p>
+        <p class="text-center text-xl">لا يوجد ملاحظات</p>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
+    <br />
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div v-for="intervention in family.interventions" :key="intervention.id">
+        <div class="p-4 bg-white rounded-md shadow">
+          <Link :href="`/interventions/${intervention.id}/show`">
+            <h3 class="mb-2 text-xl">
+              <p v-if="intervention.type == 'cash'">النوع: نقدي</p>
+              <p v-if="intervention.type == 'shipmets'">النوع :عيني</p>
+            </h3>
+            <h3 class="mb-2 text-xl">القيمة : {{ intervention.value }}</h3>
+            <h3 class="mb-2 text-xl">المتدخل :{{ intervention.intervenor }}</h3>
+          </Link>
+        </div>
+      </div>
+      <div v-if="family.interventions.length === 0">
+        <p class="text-center text-xl">لا يوجد تدخلات</p>
       </div>
     </div>
 
@@ -168,7 +189,7 @@
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="home in family.home" :key="home.id">
         <div class="p-4 bg-white rounded-md shadow">
-          <h3 class="mb-2 text-xl font-bold">
+          <h3 class="mb-2 text-xl">
             <span v-if="home.status == 'Ownership'">ملك</span>
             <span v-else-if="home.status == 'without compensation'">بدون مقابل</span>
             <span v-else-if="home.status == 'inherited'">ورثة</span>
@@ -181,7 +202,7 @@
         </div>
       </div>
       <div v-if="family.home.length === 0">
-        <p class="text-center text-xl font-bold">لا يوجد مساكن</p>
+        <p class="text-center text-xl">لا يوجد مساكن</p>
       </div>
     </div>
   </div>
