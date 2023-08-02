@@ -1,10 +1,9 @@
 <template>
-
   <div>
     <Head :title="form.intervenor" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-blue-400 hover:text-blue-600" href="/interventions"
-        >التبرعات
+        >التدخلات
       </Link>
       <span class="text-blue-400 font-medium">/</span>
       {{ form.intervenor }}

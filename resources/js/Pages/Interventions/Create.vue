@@ -3,7 +3,7 @@
     <Head title="Create Organization" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-blue-400 hover:text-blue-200" href="/interventions"
-        >التبرعات
+        >التدخلات
       </Link>
       <span class="text-blue-400 font-medium">/</span> إنشاء
     </h1>
@@ -12,12 +12,27 @@
         <div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العائلة"
+              :error="form.errors.family"
+            >
+              <option v-for="family in filteredFamilies" :value="family.id">
+                {{ family.caregiver_phone }} - {{ family.name }}
+              </option>
+              <option :value="null" v-if="filteredFamilies.length == 0">
+                قائمة فارغة
+              </option>
+            </select-input>
+
+            <select-input
               v-model="form.type"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="نوع التدخل"
+              :error="form.errors.type"
             >
-              <option value="shipmets">بضائع</option>
-              <option value="cash ">نقد</option>
+              <option value="shipmets">عيني</option>
+              <option value="cash ">نقدي</option>
             </select-input>
 
             <text-input
@@ -101,6 +116,9 @@ export default {
     FileInput,
   },
   layout: Layout,
+  props: {
+    families: Object,
+  },
   remember: "form",
   data() {
     return {
@@ -112,8 +130,14 @@ export default {
         intervenor_phone: null,
         file: null,
         notes: null,
+        family: null,
       }),
     };
+  },
+  computed: {
+    filteredFamilies() {
+      return this.families.filter((family) => family.name !== null);
+    },
   },
   methods: {
     store() {

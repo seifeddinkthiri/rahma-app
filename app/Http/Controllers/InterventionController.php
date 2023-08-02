@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Intervention;
+use App\Models\Family;
 
 class InterventionController extends Controller
 {
@@ -34,32 +35,33 @@ class InterventionController extends Controller
 
     public function create()
     {
-        return Inertia::render('Interventions/Create');
+        $families = Family::select('id', 'name', 'caregiver_phone')->get();
+        return Inertia::render('Interventions/Create', compact('families'));
     }
 
     public function store()
     {
-
-
         Request::validate([
-        'type' => ['required', 'max:100'],
-        'intervenor' => ['nullable', 'max:50'],
-        'intervenor_phone' => ['nullable', 'max:50'],
-        'file' => 'nullable|file',
-        'notes' => ['nullable', 'max:100']]);
-       $intervention = Auth::user()->account->interventions()->create([
-        'type' => Request::get('type'),
-        'value' => Request::get('value'),
-        'intervenor' => Request::get('intervenor'),
-        'intervenor_phone' => Request::get('intervenor_phone'),
-        'notes' => Request::get('notes'),
-        'file' => Request::file('file') ? Request::file('file')->store('') : null,
+            'type' => ['required', 'max:100'],
+            'family' => ['required', 'numeric'],
+            'intervenor' => ['nullable', 'max:50'],
+            'intervenor_phone' => ['nullable', 'max:50'],
+            'file' => 'nullable|file',
+            'notes' => ['nullable', 'max:100']
+        ]);
+        $intervention = Auth::user()->account->interventions()->create([
+            'type' => Request::get('type'),
+            'value' => Request::get('value'),
+            'family_id' => Request::get('family'),
+            'intervenor' => Request::get('intervenor'),
+            'intervenor_phone' => Request::get('intervenor_phone'),
+            'notes' => Request::get('notes'),
+            'file' => Request::file('file') ? Request::file('file')->store('') : null,
 
-       ]);
-       if (Request::file('file')) {
-        Request::file('file') ->move(public_path('uploads'), $intervention->file);
-
-    }
+        ]);
+        if (Request::file('file')) {
+            Request::file('file')->move(public_path('uploads'), $intervention->file);
+        }
         return Redirect::route('interventions')->with('success', 'تم إنشاء التدخل.');
     }
 

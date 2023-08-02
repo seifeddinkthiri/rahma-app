@@ -24,16 +24,16 @@
         <table class="w-full">
           <tbody>
             <tr>
-              <td class="px-4 py-2 border">الاسم</td>
-              <td class="px-4 py-2 border">{{ form.name }}</td>
+              <td class="px-4 py-2 border h-16">الاسم</td>
+              <td class="px-4 py-2 border h-16">{{ form.name }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border">الهاتف</td>
-              <td class="px-4 py-2 border">{{ form.phone }}</td>
+              <td class="px-4 py-2 border h-16">الهاتف</td>
+              <td class="px-4 py-2 border h-16">{{ form.phone }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border">العنوان</td>
-              <td class="px-4 py-2 border">{{ form.address }}</td>
+              <td class="px-4 py-2 border h-16">العنوان</td>
+              <td class="px-4 py-2 border h-16">{{ form.address }}</td>
             </tr>
           </tbody>
         </table>

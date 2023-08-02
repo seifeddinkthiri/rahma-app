@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Interventions" />
-    <h1 class="mb-8 text-3xl font-bold">التبرعات</h1>
+    <h1 class="mb-8 text-3xl font-bold">التدخلات</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
         :onlySearch="false"

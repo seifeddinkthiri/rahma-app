@@ -29,7 +29,7 @@
 
       <!-- Beneficials Card -->
       <div class="bg-white rounded-lg shadow-lg p-4">
-        <h2 class="text-xl font-semibold mb-2">إدارة التبرعات</h2>
+        <h2 class="text-xl font-semibold mb-2">إدارة التدخلات</h2>
         <p class="text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>

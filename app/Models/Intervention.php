@@ -25,7 +25,10 @@ class Intervention extends Model
         'notes',
 
     ];
-
+    public function families()
+    {
+        return $this->belongsToMany(Family::class);
+    }
 
     public function resolveRouteBinding($value, $field = null)
     {

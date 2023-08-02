@@ -112,7 +112,7 @@
                         : 'text-indigo-300 group-hover:text-white'
                     "
                   >
-                    التبرعات
+                    التدخلات
                   </div>
                 </Link>
               </div>
