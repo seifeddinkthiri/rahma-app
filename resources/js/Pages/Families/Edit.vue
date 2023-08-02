@@ -155,6 +155,15 @@
                   <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
                 </Link>
               </td>
+              <td class="w-px border-t">
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/members/${member.id}/show`"
+                  tabindex="-1"
+                >
+                  <icon name="eye" class="block w-6 h-6" />
+                </Link>
+              </td>
             </tr>
             <tr v-if="family.members.length === 0">
               <td class="px-6 py-4 border-t" colspan="4">لا يوجد على الأفراد</td>

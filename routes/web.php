@@ -197,6 +197,9 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::get('members/{family}/create', [MemberController::class, 'create'])
     ->name('members.create')
     ->middleware('auth');
+    Route::get('members/{member}/show', [MemberController::class, 'show'])
+    ->name('members.show')
+    ->middleware('auth');
 
     Route::post('members', [MemberController::class, 'store'])
     ->name('members.store')

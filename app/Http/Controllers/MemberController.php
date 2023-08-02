@@ -146,7 +146,29 @@ class MemberController extends Controller
         }
     }
 
-
+    public function show(Member $Member)
+    {
+        return Inertia::render('Families/Members/Show', [
+            'member' => [
+                'id' => $Member->id,
+                'name' => $Member->name,
+                'address' => $Member->address,
+                'cin' => $Member->cin,
+                'phone' => $Member->phone,
+                'birth_date' => $Member->birth_date,
+                'birth_city' => $Member->birth_city,
+                'social_status' => $Member->social_status,
+                'monthly_income' => $Member->monthly_income,
+                'kinship' => $Member->kinship,
+                'education_level' => $Member->education_level,
+                'job' => $Member->job,
+                'job_place' => $Member->job_place,
+                'family_id' => $Member->family_id,
+                'healthStatus' => $Member->healthStatus()->get(),
+                'deleted_at' => $Member->deleted_at,
+            ],
+        ]);
+    }
     public function edit(Member $Member)
     {
         return Inertia::render('Families/Members/Edit', [

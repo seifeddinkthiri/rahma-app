@@ -209,26 +209,26 @@
               label="مدينة الولادة"
               :disabled="isFormDisabled"
             >
-              <option value="Medenine">مدنين</option>
-              <option value="Beja">باجة</option>
-              <option value="Tunis">تونس</option>
-              <option value="Sfax">صفاقس</option>
-              <option value="Sousse">سوسة</option>
-              <option value="Ariana">أريانة</option>
-              <option value="Ben Arous">بن عروس</option>
-              <option value="Kasserine">القصرين</option>
-              <option value="Le Kef">الكاف</option>
-              <option value="Mahdia">المهدية</option>
-              <option value="Manouba">منوبة</option>
-              <option value="Monastir">المنستير</option>
-              <option value="Nabeul">نابل</option>
-              <option value="Sidi Bouzid">سيدي بوزيد</option>
-              <option value="Siliana">سليانة</option>
-              <option value="Gabes">قابس</option>
-              <option value="Jendouba">جندوبة</option>
-              <option value="Tataouine">تطاوين</option>
-              <option value="Tozeur">توزر</option>
-              <option value="Zaghouan">زغوان</option>
+              <option value="مدنين">مدنين</option>
+              <option value="باجة">باجة</option>
+              <option value="تونس">تونس</option>
+              <option value="صفاقس">صفاقس</option>
+              <option value="سوسة">سوسة</option>
+              <option value="أريانة">أريانة</option>
+              <option value="بن عروس">بن عروس</option>
+              <option value="القصرين">القصرين</option>
+              <option value="الكاف">الكاف</option>
+              <option value="المهدية">المهدية</option>
+              <option value="منوبة">منوبة</option>
+              <option value="المنستير">المنستير</option>
+              <option value="نابل">نابل</option>
+              <option value="سيدي بوزيد">سيدي بوزيد</option>
+              <option value="سليانة">سليانة</option>
+              <option value="قابس">قابس</option>
+              <option value="جندوبة">جندوبة</option>
+              <option value="تطاوين">تطاوين</option>
+              <option value="توزر">توزر</option>
+              <option value="زغوان">زغوان</option>
             </select-input>
 
             <text-input
@@ -635,22 +635,14 @@ export default {
         this.store_wife();
       }
     },
-    members_count() {
-      let stored_childs = parseInt(localStorage.getItem("stored_childrens"));
-      let stored_elderlies = parseInt(localStorage.getItem("stored_childrens"));
-      let stored_other_members = parseInt(localStorage.getItem("stored_childrens"));
-      return stored_other_members + stored_elderlies + stored_childs;
-    },
+
     members_process_done() {
       this.current_form_title = "أضف بيانات المسكن";
       this.active_step = "home";
       this.current_form = "";
 
-      if (this.members_count() > 0) {
-        this.members_form_title = "تمت إضافة كل الأفراد";
-      } else {
-        this.members_form_title = " done ";
-      }
+      this.members_form_title = "تم";
+
       this.form.reset();
       (this.form.health_insurance = false), (this.form.disability = false);
       this.form.good = false;
