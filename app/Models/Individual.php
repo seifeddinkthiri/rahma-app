@@ -31,7 +31,10 @@ class Individual extends Model
 
 
 
-
+    public function interventions()
+    {
+        return $this->belongsToMany(Intervention::class);
+    }
 
     public function resolveRouteBinding($value, $field = null)
     {

@@ -314,63 +314,24 @@
             </div>
             <div v-if="form.good == false" class="w-full">
               <div class="flex flex-row flex-nowrap w-full">
-                <ToggleCheckbox
-                  :id="'disease_verif'"
-                  :class="'pb-8 pr-6 w-full'"
-                  :isChecked="form.disease_verif"
-                  :label="'مرض مزمن'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_disease"
-                  :isDisabled="isFormDisabled"
-                />
                 <text-input
-                  v-if="form.disease_verif"
                   class="pb-8 pr-6 w-full"
                   id="disease"
                   :error="form.errors.disease"
                   v-model="form.disease"
-                  label="أذكر المرض المزمن"
+                  label="مرض مزمن"
                   :disabled="isFormDisabled"
                 />
                 <text-input
-                  v-else
-                  disabled
-                  class="pb-8 pr-6 w-full"
-                  id="disease"
-                  label="لا يوجد"
-                  :disabled="isFormDisabled"
-                />
-              </div>
-              <div class="flex flex-row flex-nowrap w-full">
-                <ToggleCheckbox
-                  :id="'disability_verif'"
-                  :isChecked="form.disability_verif"
-                  :label="'إعاقة'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_disability"
-                  :isDisabled="isFormDisabled"
-                />
-                <text-input
-                  v-if="form.disability_verif"
                   class="pb-8 pr-6 w-full"
                   id="disability"
                   v-model="form.disability"
                   :error="form.errors.disability"
-                  label=" أذكر الإعاقة"
+                  label=" إعاقة"
                   :disabled="isFormDisabled"
                 />
+
                 <text-input
-                  v-else
-                  disabled
-                  class="pb-8 pr-6 w-full"
-                  id="disability"
-                  label="لا يوجد"
-                  :disabled="isFormDisabled"
-                />
-                <text-input
-                  v-if="form.disability_verif"
                   v-model="form.disability_card_number"
                   :error="form.errors.disability_card_number"
                   class="pb-8 pr-6 w-full lg:w-1/2"
@@ -492,15 +453,7 @@ export default {
     updateMembersFormTitle(title) {
       this.members_form_title = title;
     },
-    toggle_disease() {
-      this.form.disease_verif = !this.form.disease_verif;
-      this.form.disease = "";
-    },
-    toggle_disability() {
-      this.form.disability_verif = !this.form.disability_verif;
-      this.form.disability = "";
-      this.form.disability_card_number = "";
-    },
+
     toggle_sanitation() {
       this.facilities_form.Sanitation = !this.facilities_form.Sanitation;
     },

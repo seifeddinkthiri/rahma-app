@@ -29,7 +29,10 @@ class Intervention extends Model
     {
         return $this->belongsToMany(Family::class);
     }
-
+    public function individuals()
+    {
+        return $this->belongsToMany(Individual::class);
+    }
     public function resolveRouteBinding($value, $field = null)
     {
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();

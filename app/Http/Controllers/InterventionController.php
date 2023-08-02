@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Intervention;
 use App\Models\Family;
+use App\Models\Individual;
 
 class InterventionController extends Controller
 {
@@ -36,14 +37,23 @@ class InterventionController extends Controller
     public function create()
     {
         $families = Family::select('id', 'name', 'caregiver_phone')->get();
-        return Inertia::render('Interventions/Create', compact('families'));
+        $individuals = Individual::select('id', 'name', 'phone')->get();
+
+        return Inertia::render('Interventions/Create', compact('families','individuals'));
     }
 
     public function store()
     {
+       $family =Request::get('family');
+       $individual =Request::get('individual');
+
+       if (!$family && !$individual) {
+        return Redirect::back()->with('error', 'يجب إختيار منتفع');
+
+       } else {
+
         Request::validate([
             'type' => ['required', 'max:100'],
-            'family' => ['required', 'numeric'],
             'intervenor' => ['nullable', 'max:50'],
             'intervenor_phone' => ['nullable', 'max:50'],
             'file' => 'nullable|file',
@@ -53,6 +63,7 @@ class InterventionController extends Controller
             'type' => Request::get('type'),
             'value' => Request::get('value'),
             'family_id' => Request::get('family'),
+            'individual_id' => Request::get('individual'),
             'intervenor' => Request::get('intervenor'),
             'intervenor_phone' => Request::get('intervenor_phone'),
             'notes' => Request::get('notes'),
@@ -63,6 +74,9 @@ class InterventionController extends Controller
             Request::file('file')->move(public_path('uploads'), $intervention->file);
         }
         return Redirect::route('interventions')->with('success', 'تم إنشاء التدخل.');
+       }
+
+
     }
 
     public function edit(Intervention $intervention)
@@ -70,6 +84,8 @@ class InterventionController extends Controller
         return Inertia::render('Interventions/Edit', [
             'intervention' => [
                 'id' => $intervention->id,
+                'family_id' => $intervention->family_id,
+                'individual_id' => $intervention->individual_id,
                 'type' => $intervention->type,
                 'value' => $intervention->value,
                 'intervenor' => $intervention->intervenor,

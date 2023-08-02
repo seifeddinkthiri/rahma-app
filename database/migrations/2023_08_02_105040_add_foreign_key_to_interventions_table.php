@@ -19,6 +19,11 @@ class AddForeignKeyToInterventionsTable extends Migration
                 ->references('id')
                 ->on('families')
                 ->onDelete('cascade');
+                $table->unsignedBigInteger('individual_id')->nullable();
+                $table->foreign('individual_id')
+                    ->references('id')
+                    ->on('individuals')
+                    ->onDelete('cascade');
         });
     }
 
@@ -31,6 +36,8 @@ class AddForeignKeyToInterventionsTable extends Migration
     {
         Schema::table('interventions', function (Blueprint $table) {
             $table->dropForeign(['family_id']);
+            $table->dropForeign(['individual_id']);
+
         });
     }
 }

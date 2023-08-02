@@ -12,10 +12,18 @@
         <div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
+              v-model="beneficial"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المنتفع"
+            >
+              <option value="family">عائلة</option>
+              <option value="individual">فرد</option>
+            </select-input>
+            <select-input
+              v-if="beneficial == 'family'"
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العائلة"
-              :error="form.errors.family"
             >
               <option v-for="family in filteredFamilies" :value="family.id">
                 {{ family.caregiver_phone }} - {{ family.name }}
@@ -24,7 +32,17 @@
                 قائمة فارغة
               </option>
             </select-input>
-
+            <select-input
+              v-if="beneficial == 'individual'"
+              v-model="form.individual"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الفرد"
+            >
+              <option v-for="indiv in individuals" :value="indiv.id">
+                {{ indiv.phone }} - {{ indiv.name }}
+              </option>
+              <option :value="null" v-if="individuals.length == 0">قائمة فارغة</option>
+            </select-input>
             <select-input
               v-model="form.type"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -118,10 +136,12 @@ export default {
   layout: Layout,
   props: {
     families: Object,
+    individuals: Object,
   },
   remember: "form",
   data() {
     return {
+      beneficial: "",
       show_second_form_part: false,
       form: this.$inertia.form({
         type: null,
@@ -131,6 +151,7 @@ export default {
         file: null,
         notes: null,
         family: null,
+        individual: null,
       }),
     };
   },
