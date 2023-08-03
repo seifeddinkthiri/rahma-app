@@ -133,7 +133,10 @@
                     إختيار
                   </button>
                 </div>
-                <div class="flex items-center px-6 py-4 flex-row justify-around" v-else>
+                <div
+                  class="flex items-center px-6 py-4 flex-row justify-around space-x-2"
+                  v-else
+                >
                   <p class="text-red-600 px-6">تحتوي العائلة فردين علا الأقل</p>
 
                   <Link
@@ -141,8 +144,15 @@
                     class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
                     type="button"
                   >
-                    إضافة
+                    فرد إضافة
                   </Link>
+                  <button
+                    type="button"
+                    @click="delete_family(family.id)"
+                    class="inline-flex items-center justify-center px-4 py-2 text-red-700 text-sm font-medium bg-red-200 hover:bg-red-300 focus:bg-red-300 rounded focus:outline-none"
+                  >
+                    حذف العائلة
+                  </button>
                 </div>
 
                 <div
@@ -266,6 +276,12 @@ export default {
     },
   },
   methods: {
+    delete_family(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذه العائلة")) {
+        this.$inertia.delete(`/families/${id}`);
+      }
+    },
+
     reset() {
       this.form = mapValues(this.form, () => null);
     },
