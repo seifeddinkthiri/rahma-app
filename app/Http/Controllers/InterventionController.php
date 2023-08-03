@@ -53,11 +53,12 @@ class InterventionController extends Controller
        } else {
 
         Request::validate([
-            'type' => ['required', 'max:100'],
-            'intervenor' => ['nullable', 'max:50'],
-            'intervenor_phone' => ['nullable', 'max:50'],
-            'file' => 'nullable|file',
-            'notes' => ['nullable', 'max:100']
+            'type' => ['required', 'string', 'max:100'],
+            'intervenor' => ['nullable', 'string', 'max:50'],
+            'intervenor_phone' => ['required', 'numeric', 'digits:8'],
+
+            'file' => ['nullable', 'file'],
+            'notes' => ['nullable', 'string', 'max:100'],
         ]);
         $intervention = Auth::user()->account->interventions()->create([
             'type' => Request::get('type'),

@@ -114,12 +114,12 @@ class IndividualController extends Controller
             'address' => ['required', 'max:100'],
             'photo' => ['nullable', 'image'],
             'gender' => ['required'],
-            'cin' => 'nullable|integer||digits:8|unique:'.Individual::class,
-            'phone' => 'nullable|integer||digits:8|unique:'.Individual::class,
+            'cin' => 'nullable|numeric||digits:8|unique:'.Individual::class,
+            'phone' => 'nullable|numeric||digits:8|unique:'.Individual::class,
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
+            'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
@@ -155,7 +155,7 @@ class IndividualController extends Controller
                 'good' => ['nullable', 'boolean'],
                 'disease' => ['nullable', 'string', 'max:100'],
                 'disability' => ['nullable', 'string', 'max:100'],
-                'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+                'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
             ])
         );
 
@@ -197,9 +197,9 @@ class IndividualController extends Controller
                 'job' => $individual->job,
                 'job_place' => $individual->job_place,
                 'deleted_at' => $individual->deleted_at,
-
                 'healthStatus' => $individual->healthStatus()->get(),
                 'facilities' =>  $individual->facilities()->get(),
+                'interventions' =>  $individual->interventions()->get(),
                 'home' => $individual->home()->get(),
                 'notes' => $notes,
             ],
@@ -213,12 +213,12 @@ class IndividualController extends Controller
             'address' => ['nullable', 'max:100'],
             'photo' => ['nullable', 'image'],
             'gender' => ['nullable', 'max:100'],
-            'cin' => ['required', 'integer', 'digits:8'],
-            'phone' => ['required', 'integer', 'digits:8'],
+            'cin' => ['required', 'numeric', 'digits:8'],
+            'phone' => ['required', 'numeric', 'digits:8'],
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
+            'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
@@ -258,12 +258,12 @@ class IndividualController extends Controller
             'address' => ['nullable', 'max:100'],
             'photo' => ['nullable', 'image'],
             'gender' => ['nullable', 'max:100'],
-            'cin' => ['required', 'integer', 'digits:8'],
-            'phone' => ['required', 'integer', 'digits:8'],
+            'cin' => ['required', 'numeric', 'digits:8'],
+            'phone' => ['required', 'numeric', 'digits:8'],
             'birth_date' => ['required', 'date'],
             'birth_city' => ['required', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
+            'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
@@ -271,7 +271,7 @@ class IndividualController extends Controller
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+            'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
         ]);
 
 
@@ -325,7 +325,7 @@ class IndividualController extends Controller
             'good' => ['required', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
+            'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
         ]);
 
         $Individual->healthStatus()->update([

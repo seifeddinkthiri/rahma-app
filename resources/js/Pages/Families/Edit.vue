@@ -894,7 +894,13 @@ export default {
 
   methods: {
     store_intervention() {
-      this.intervention_form.post("/interventions");
+      this.intervention_form.post("/interventions", {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.intervention_form.reset();
+          this.show_intervention_modal = false;
+        },
+      });
     },
     destroy_note(id) {
       if (confirm("هل أنت متأكد أنك تريد حذف هذه الملاحظة؟")) {
