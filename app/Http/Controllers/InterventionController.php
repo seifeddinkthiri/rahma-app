@@ -73,7 +73,7 @@ class InterventionController extends Controller
         if (Request::file('file')) {
             Request::file('file')->move(public_path('uploads'), $intervention->file);
         }
-        return Redirect::route('interventions')->with('success', 'تم إنشاء التدخل.');
+        return Redirect::back()->with('success', 'تم إنشاء التدخل.');
        }
 
 

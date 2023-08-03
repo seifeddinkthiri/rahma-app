@@ -1,6 +1,14 @@
 <template>
   <div>
     <Head :title="form.name" />
+    <div class="relative">
+      <button
+        @click="show_intervention_modal = true"
+        class="absolute left-0 mt-4 ml-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+      >
+        أضف تدخل
+      </button>
+    </div>
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-blue-400 hover:text-blue-600" href="/families">عائلة</Link>
       <span class="text-blue-400 font-medium">/</span>
@@ -437,6 +445,91 @@
 
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
+    <div
+      class="mt-6 bg-white rounded shadow overflow-x-auto"
+      ref="intervention_modal"
+      v-if="show_intervention_modal"
+    >
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <div class="fixed inset-0 flex items-center justify-center">
+        <form @submit.prevent="store_intervention">
+          <div class="w-96 h-auto bg-white rounded shadow-xl">
+            <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+              <select-input
+                v-model="intervention_form.type"
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                label="نوع التدخل"
+                :error="intervention_form.errors.type"
+              >
+                <option value="shipmets">عيني</option>
+                <option value="cash ">نقدي</option>
+              </select-input>
+
+              <text-input
+                v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                :id="intervention_form.type === 'shipmets' ? 'shipmets' : 'cash'"
+                v-model="intervention_form.value"
+                :error="intervention_form.errors.value"
+                label="قيمة التدخل"
+                :placeholder="
+                  intervention_form.type === null
+                    ? 'القيمة'
+                    : intervention_form.type === 'shipmets'
+                    ? 'الكمية'
+                    : 'المبلغ'
+                "
+              />
+
+              <text-input
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                id="intervenor"
+                v-model="intervention_form.intervenor"
+                :error="intervention_form.errors.intervenor"
+                label="إسم المسؤل"
+              />
+              <text-input
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                id="intervenor"
+                v-model="intervention_form.intervenor_phone"
+                :error="intervention_form.errors.intervenor_phone"
+                label="هاتف المسؤل"
+              />
+              <TextAreaInput
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                id="notes"
+                v-model="intervention_form.notes"
+                :error="intervention_form.errors.notes"
+                label="ملاحظات"
+              />
+              <file-input
+                v-model="intervention_form.file"
+                :error="intervention_form.errors.file"
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                type="file"
+                label="أضف ملف"
+              />
+            </div>
+            <div
+              class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+            >
+              <button
+                class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                type="submit"
+              >
+                إضافة
+              </button>
+              <button
+                @click="show_intervention_modal = false"
+                class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                type="button"
+              >
+                عودة
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <table class="w-full text-right table-auto">
         <thead class="text-right">
@@ -746,13 +839,23 @@ export default {
     return {
       show_note_modal: false,
       show_home_modal: false,
+      show_intervention_modal: false,
 
       show_note_modal_update: false,
       show_facility_modal_update: false,
       show_home_modal_update: false,
-
       note_id: null,
 
+      intervention_form: this.$inertia.form({
+        type: null,
+        value: null,
+        intervenor: null,
+        intervenor_phone: null,
+        file: null,
+        notes: null,
+        family: this.family.id,
+        individual: null,
+      }),
       form: this.$inertia.form({
         name: this.family.name,
         phone: this.family.phone,
@@ -790,6 +893,9 @@ export default {
   },
 
   methods: {
+    store_intervention() {
+      this.intervention_form.post("/interventions");
+    },
     destroy_note(id) {
       if (confirm("هل أنت متأكد أنك تريد حذف هذه الملاحظة؟")) {
         this.$inertia.delete(`/notes/${id}`);
