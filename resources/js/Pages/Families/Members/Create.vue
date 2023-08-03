@@ -440,7 +440,7 @@ export default {
     };
   },
   mounted() {
-    this.prepare_childrens();
+    this.prepare_husband();
   },
   methods: {
     updateActiveStep(step) {
@@ -476,7 +476,12 @@ export default {
       });
     },
     save_note() {
-      this.notes_form.post(`/notes/${this.Family.id}`);
+      this.notes_form.post(`/notes/${this.Family.id}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.notes_form.reset();
+        },
+      });
     },
 
     back_to_family_create() {
@@ -496,6 +501,13 @@ export default {
           this.current_form_title = "تعديل المرافق الإساسية";
         },
       });
+    },
+    toggle_health_insurance() {
+      this.form.health_insurance = !this.form.health_insurance;
+    },
+
+    toggle_health_Status() {
+      this.form.good = !this.form.good;
     },
     prepare_childrens() {
       const stored_childs = parseInt(localStorage.getItem("stored_childrens"));
@@ -530,7 +542,7 @@ export default {
           " أدخل بيانات الفرد الإضافي رقم" + stored_other_members + 1;
         this.current_form = "other_members";
       } else {
-        this.prepare_husband();
+        this.members_process_done();
       }
     },
     prepare_husband() {
@@ -552,16 +564,10 @@ export default {
 
         this.current_form = "wife";
       } else {
-        this.members_process_done();
+        this.prepare_childrens();
       }
     },
-    toggle_health_insurance() {
-      this.form.health_insurance = !this.form.health_insurance;
-    },
 
-    toggle_health_Status() {
-      this.form.good = !this.form.good;
-    },
     store() {
       if (this.current_form == "childrens") {
         this.form.kinship = "child";
@@ -589,23 +595,6 @@ export default {
       }
     },
 
-    members_process_done() {
-      this.current_form_title = "أضف بيانات المسكن";
-      this.active_step = "home";
-      this.current_form = "";
-
-      this.members_form_title = "تم";
-
-      this.form.reset();
-      (this.form.health_insurance = false), (this.form.disability = false);
-      this.form.good = false;
-      this.form.disease = false;
-      this.isFormDisabled = true;
-
-      localStorage.setItem("stored_childrens", 0);
-      localStorage.setItem("stored_elderlies", 0);
-      localStorage.setItem("stored_other_members", 0);
-    },
     store_husband() {
       if (this.Family.husband) {
         this.form.post("/members", {
@@ -625,11 +614,15 @@ export default {
         this.form.post("/members", {
           preserveScroll: true,
           onSuccess: () => {
-            this.members_process_done();
+            this.form.reset();
+            this.active_step = 1;
+            this.prepare_childrens();
           },
         });
       } else {
-        this.members_process_done();
+        this.form.reset();
+        this.active_step = 1;
+        this.prepare_childrens();
       }
     },
     store_childrens() {
@@ -711,14 +704,31 @@ export default {
                 this.current_form_title =
                   " أدخل بيانات الفرد الإضافي رقم " + nextOtherMembersNumber;
               } else {
-                this.prepare_other_members();
+                this.members_process_done();
               }
             },
           });
         }
       } else {
-        this.prepare_other_members();
+        this.members_process_done();
       }
+    },
+    members_process_done() {
+      this.current_form_title = "أضف بيانات المسكن";
+      this.active_step = "home";
+      this.current_form = "";
+
+      this.members_form_title = "تم";
+
+      this.form.reset();
+      (this.form.health_insurance = false), (this.form.disability = false);
+      this.form.good = false;
+      this.form.disease = false;
+      this.isFormDisabled = true;
+
+      localStorage.setItem("stored_childrens", 0);
+      localStorage.setItem("stored_elderlies", 0);
+      localStorage.setItem("stored_other_members", 0);
     },
   },
 };

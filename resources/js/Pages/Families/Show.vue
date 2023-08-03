@@ -2,32 +2,38 @@
   <div>
     <!-- Family Card -->
     <div class="p-6 bg-white rounded-md shadow">
+      <div class="relative">
+        <ul class="absolute left-0 top-0 space-y-3">
+          <li>
+            <img
+              v-if="family.photo"
+              :src="`/uploads/${family.photo}`"
+              alt="family Image"
+              class="w-32 h-32 rounded"
+            />
+          </li>
+          <li>
+            <button
+              @click="back"
+              class="absolute left-0 mt-4 ml-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              عودة
+            </button>
+          </li>
+        </ul>
+      </div>
       <Head :title="form.name" />
 
-      <div class="relative">
-        <img
-          v-if="family.photo"
-          :src="`/uploads/${family.photo}`"
-          alt="family Image"
-          class="w-32 h-32 rounded absolute top-0 left-0 -mt-6 -ml-6 pt-6 pl-6"
-        />
-        <h1 class="pl-28 text-3xl font-bold">
-          <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
-          <span class="text-blue-400 font-medium">/</span>
-          {{ form.name }}
-        </h1>
-      </div>
-      <div class="relative">
-        <button
-          @click="back"
-          class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-        >
-          عودة
-        </button>
-      </div>
+      <h1 class="pl-28 text-3xl font-bold">
+        <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
+        <span class="text-blue-400 font-medium">/</span>
+        {{ form.name }}
+      </h1>
+
       <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
+        <br /><br />
         <table class="w-full">
           <tbody>
             <tr>
