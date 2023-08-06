@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Head title="Create Organization" />
     <Breadcrumb
       :Family_id="Family.id"
       :current_form_title="current_form_title"
       :active_step="active_step"
+      :HorW="HorW"
+      @update-H-or-W="updateHorW"
       @update-active-step="updateActiveStep"
       @update-current-form-title="updateCurrentFormTitle"
     />
-
     <div class="bg-white rounded-md shadow overflow-hidden" v-if="active_step == 'home'">
       <form @submit.prevent="save_home">
         <div class="p-6">
@@ -162,7 +162,7 @@
     </div>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
-        <div ref="part1" v-if="active_step == 1">
+        <div ref="part1" v-if="active_step == 'part1'">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
               v-model="form.name"
@@ -172,10 +172,11 @@
               :disabled="isFormDisabled"
             />
             <select-input
+              v-if="HorW !== 'husband' && HorW !== 'wife'"
               v-model="form.kinship"
               :error="form.errors.kinship"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="العضوية/القرابة"
+              label="الفرد"
               :disabled="isFormDisabled"
             >
               <option value="child">إبن</option>
@@ -262,7 +263,7 @@
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
             <button
-              @click="active_step = 2"
+              @click="active_step = 'part2'"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="button"
             >
@@ -270,7 +271,7 @@
             </button>
           </div>
         </div>
-        <div ref="part2" v-if="active_step == 2">
+        <div ref="part2" v-if="active_step == 'part2'">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
               v-model="form.social_status"
@@ -363,7 +364,7 @@
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
             <button
-              @click="active_step = 1"
+              @click="active_step = 'part1'"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="button"
             >
@@ -416,8 +417,8 @@ export default {
   data() {
     return {
       isFormDisabled: false,
-
-      active_step: 1,
+      HorW: "husband",
+      active_step: "part1",
       current_form_title: "",
       current_form: "childrens",
       notes_form: this.$inertia.form({
@@ -464,7 +465,9 @@ export default {
     updateActiveStep(step) {
       this.active_step = step; // Update the active_step prop in the parent component
     },
-
+    updateHorW(HorW) {
+      this.HorW = HorW;
+    },
     updateCurrentFormTitle(title) {
       this.current_form_title = title; // Update the current_form_title prop in the parent component
     },
@@ -526,13 +529,35 @@ export default {
     },
 
     store() {
-      this.form.post("/members", {
-        preserveScroll: true,
-        onSuccess: () => {
-          this.form.reset();
-          this.active_step = 1;
-        },
-      });
+      if (this.HorW == "husband") {
+        this.form.kinship = "husband";
+        this.form.post("/members", {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.form.reset();
+            this.active_step = "part1";
+            this.HorW = "wife";
+          },
+        });
+      } else if (this.HorW == "wife") {
+        this.form.kinship = "wife";
+        this.form.post("/members", {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.form.reset();
+            this.active_step = "part1";
+            this.HorW = "";
+          },
+        });
+      } else {
+        this.form.post("/members", {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.form.reset();
+            this.active_step = "home";
+          },
+        });
+      }
     },
   },
 };

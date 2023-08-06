@@ -37,21 +37,6 @@ class FamilyController extends Controller
     {
         return Inertia::render('Families/Create');
     }
-    public function create_B_C(Family $Family)
-    {
-        $Family->members()->forceDelete();
-        $Family->notes()->delete();
-        $Family->home()->delete();
-        $facility = $Family->facilities; // Assuming you have a hasOne relationship defined for 'facilities' in the Family model
-
-        if ($facility) {
-            $facility->reinitialise();
-            $facility->save(); // Save the changes to the database if needed
-        }
-        Session::flash('success', 'تم حذف ما تم اضافته، يمكنك إعادة العملية ');
-        return Inertia::render('Families/create_B_C', compact('Family'));
-
-    }
 
 
 
