@@ -150,7 +150,6 @@ export default {
       type: String, // Change this to Number if active_step can also be a number
       default: "",
     },
-    members_form_title: String,
   },
   data() {
     return {};
@@ -163,7 +162,6 @@ export default {
 
     restoreMembersStep() {
       this.$emit("update-active-step", 1); // Emit the 'update-active-step' event with the new active step value
-      this.$emit("update-current-form-title", this.members_form_title); // Emit the 'update-current-form-title' event with the new current form title value
     },
   },
 };

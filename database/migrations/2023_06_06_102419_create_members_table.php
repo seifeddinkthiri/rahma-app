@@ -35,6 +35,8 @@ class CreateMembersTable extends Migration
             $table->string('education_place')->nullable();
             $table->string('job')->nullable();
             $table->string('job_place')->nullable();
+            $table->string('photo', 100)->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

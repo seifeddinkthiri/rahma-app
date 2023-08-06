@@ -95,35 +95,20 @@ class FamilyController extends Controller
 
     public function store()
     {
-
-        Request::validate([
-           // 'caregiver_phone' => 'required|numeric||digits:8|unique:'.Family::class,
-            'photo' => ['nullable', 'image'],
-            'elderlies_number' => ['nullable', 'numeric'],
-            'childrens_number' => ['nullable', 'numeric'],
-            'other_members_number' => ['nullable', 'numeric'],
-        ]);
-
         $Family =  Auth::user()->account->Families()->create(
             [
                 'caregiver_phone' =>null,// Request::get('caregiver_phone'),
-                'photo' =>Request::get('photo'),
+                'photo' =>null,
                 'wife' => true,
                 'husband' => true,
-                'elderlies_number' => Request::get('elderlies_number'),
-                'childrens_number' => Request::get('childrens_number'),
-                'other_members_number' => Request::get('other_members_number'),
+                'elderlies_number' => 0,
+                'childrens_number' => 0,
+                'other_members_number' => 0,
 
-                'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
 
             ]
         );
-        if (Request::file('photo')) {
-            Request::file('photo') ->move(public_path('uploads'), $Family->photo);
-
-        }
-
-        return redirect()->route('members.create', ['family' => $Family])->with('success', 'تم انشاء الأسرة. الرجاء إضافة أعضاء');
+        return redirect()->route('members.create', ['family' => $Family])->with('success', 'تم انشاء أسرة. الرجاء إضافة أعضاء');
 
     }
 

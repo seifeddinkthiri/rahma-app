@@ -25,125 +25,123 @@ class MemberController extends Controller
 
     public function store()
     {
-        $kinship = Request::get('kinship');
-        $member = null;
-        if ($kinship == 'husband' || $kinship == 'wife') {
-            $validatedData = Request::validate([
-                'name' => ['nullable', 'max:100'],
-                'address' => ['nullable', 'max:100'],
-                'cin' => 'nullable|numeric||digits:8|unique:' . Member::class,
-                'phone' => 'nullable|numeric||digits:8|unique:' . Member::class,
-                'birth_date' => ['nullable', 'date'],
-                'birth_city' => ['nullable', 'max:100'],
-                'social_status' => ['nullable', 'max:100'],
-                'monthly_income' => ['nullable', 'integer'],
-                'kinship' => ['nullable', 'max:100'],
-                'education_level' => ['nullable', 'max:100'],
-                'job' => ['nullable', 'max:100'],
-                'job_place' => ['nullable', 'max:100'],
-                'family_id' => ['required', 'integer'],
-            ]);
-            $emptyRequest = true;
-            // Remove keys from the input data
-            $keysToExclude = ['family_id', 'health_insurance', 'kinship', 'caregiver', 'good'];
-            $DataWithoutKey = Request::except($keysToExclude);
-            foreach ($DataWithoutKey as $value) {
-                if ($value !== null) {
-                    $emptyRequest = false;
-                }
-            }
-            if (!$emptyRequest) {
-                $member = Auth::user()->account->members()->create($validatedData);
-            }
-        } else {
-            $validatedData = Request::validate([
-                'name' => ['required', 'max:100'],
-                'address' => ['required', 'max:100'],
-                'cin' => 'required|numeric||digits:8|unique:' . Member::class,
-                'phone' => 'required|numeric||digits:8|unique:' . Member::class,
-                'birth_date' => ['required', 'date'],
-                'birth_city' => ['required', 'max:100'],
-                'social_status' => ['required', 'max:100'],
-                'monthly_income' => ['nullable', 'integer'],
-                'kinship' => ['required', 'max:100'],
-                'education_level' => ['nullable', 'max:100'],
-                'job' => ['nullable', 'max:100'],
-                'job_place' => ['nullable', 'max:100'],
-                'family_id' => ['required', 'integer'],
+        Request::validate([
+            'name' => ['required', 'max:100'],
+            'address' => ['required', 'max:100'],
+            'cin' => 'required|numeric||digits:8|unique:' . Member::class,
+            'phone' => 'required|numeric||digits:8|unique:' . Member::class,
+            'birth_date' => ['required', 'date'],
+            'birth_city' => ['required', 'max:100'],
+            'social_status' => ['required', 'max:100'],
+            'monthly_income' => ['nullable', 'integer'],
+            'kinship' => ['required', 'max:100'],
+            'education_level' => ['nullable', 'max:100'],
+            'job' => ['nullable', 'max:100'],
+            'job_place' => ['nullable', 'max:100'],
+            'family_id' => ['required', 'integer'],
 
-            ]);
-            $member = Auth::user()->account->members()->create($validatedData);
+        ]);
+        $member = Auth::user()->account->members()->create([
+
+            'name' => Request::get('name'),
+            'address' => Request::get('address'),
+            'cin' => Request::get('cin'),
+            'phone' => Request::get('phone'),
+            'birth_date' => Request::get('birth_date'),
+            'birth_city' => Request::get('birth_city'),
+            'social_status' => Request::get('social_status'),
+            'monthly_income' => Request::get('monthly_income'),
+            'kinship' => Request::get('kinship'),
+            'education_level' => Request::get('education_level'),
+            'job' => Request::get('job'),
+            'job_place' => Request::get('job_place'),
+            'family_id' => Request::get('family_id'),
+            'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+        ]);
+
+        if (Request::file('photo')) {
+            Request::file('photo')->move(public_path('uploads'), $member->photo);
         }
-        if ($member) {
-            $family = $member->family;
-            $family->members()->update(['caregiver' => false]);
 
-            $husband = $family->members()
-                ->where('kinship', 'husband')
+        $family = $member->family;
+        $family->members()->update(['caregiver' => false]);
+
+        $husband = $family->members()
+            ->where('kinship', 'husband')
+            ->first();
+
+        if (!$husband) {
+            $wife = $family->members()
+                ->where('kinship', 'wife')
                 ->first();
 
-            if (!$husband) {
-                $wife = $family->members()
-                    ->where('kinship', 'wife')
+            if (!$wife) {
+                $child = $family->members()
+                    ->where('kinship', 'child')
+                    ->orderBy('created_at')
                     ->first();
 
-                if (!$wife) {
-                    $child = $family->members()
-                        ->where('kinship', 'child')
+                if (!$child) {
+                    $other_member = $family->members()
+                        ->where('kinship', 'other_member')
                         ->orderBy('created_at')
                         ->first();
 
-                    if (!$child) {
-                        $other_member = $family->members()
-                            ->where('kinship', 'other_member')
+                    if (!$other_member) {
+                        // Set the member with kinship = "elderly" if no other members exist
+                        $elderly_member = $family->members()
+                            ->where('kinship', 'elderly')
                             ->orderBy('created_at')
                             ->first();
 
-                        $family_caregiver = $other_member;
+                        $family_caregiver = $elderly_member;
                     } else {
-                        $family_caregiver = $child;
+                        $family_caregiver = $other_member;
                     }
                 } else {
-                    $family_caregiver = $wife;
+                    $family_caregiver = $child;
                 }
             } else {
-                $family_caregiver = $husband;
+                $family_caregiver = $wife;
             }
-            //Updtae family and her caregiver details
-            if ($family_caregiver) {
-                $family_caregiver->update([
-                    'caregiver' => true,
-                ]);
-                $family->update([
-                    'name' => $family_caregiver->name,
-                    'caregiver_phone' => $family_caregiver->phone,
-                    'address' => $family_caregiver->address,
-
-                ]);
-            }
-            // Create the health status
-            $validatedData = Request::validate([
-                'health_insurance' => ['nullable', 'boolean'],
-                'good' => ['nullable', 'boolean'],
-                'disease' => ['nullable', 'string', 'max:100'],
-                'disability' => ['nullable', 'string', 'max:100'],
-                'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
-            ]);
-
-            $healthStatus = new HealthStatus([
-                'health_insurance' => $validatedData['health_insurance'],
-                'good' => $validatedData['good'],
-                'disease' => $validatedData['disease'],
-                'disability' => $validatedData['disability'],
-                'disability_card_number' => $validatedData['disability_card_number'],
-            ]);
-
-            $member->healthStatus()->save($healthStatus);
-
-            return redirect()->route('members.create', ['family' => $member->family])->with('success', 'تم إنشاء العضو');
         } else {
-            return Redirect::back();
+            $family_caregiver = $husband;
         }
+
+        // Update family and her caregiver details
+        if ($family_caregiver) {
+            $family_caregiver->update([
+                'caregiver' => true,
+            ]);
+            $family->update([
+                'name' => $family_caregiver->name,
+                'caregiver_phone' => $family_caregiver->phone,
+                'address' => $family_caregiver->address,
+                'photo' => $family_caregiver->photo,
+
+            ]);
+        }
+
+        // Create the health status
+        $validatedData = Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
+            'good' => ['nullable', 'boolean'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+        ]);
+
+        $healthStatus = new HealthStatus([
+            'health_insurance' => $validatedData['health_insurance'],
+            'good' => $validatedData['good'],
+            'disease' => $validatedData['disease'],
+            'disability' => $validatedData['disability'],
+            'disability_card_number' => $validatedData['disability_card_number'],
+        ]);
+
+        $member->healthStatus()->save($healthStatus);
+
+        return redirect()->route('members.create', ['family' => $member->family])->with('success', 'تم إنشاء العضو');
     }
 
     public function show(Member $Member)
@@ -320,12 +318,14 @@ class MemberController extends Controller
                     'name' => $member->name,
                     'caregiver_phone' => $member->phone,
                     'address' => $member->address,
+                    'photo' => $member->photo,
+
                 ]);
             } else
                 $member->caregiver = false;
             $member->save();
         }
 
-        return Redirect::back()->with('success', '  تم تعيين راعي الأسرة');
+        return Redirect::back()->with('success', '  تم تحديث راعي الأسرة');
     }
 }

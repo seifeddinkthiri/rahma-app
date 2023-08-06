@@ -21,6 +21,7 @@ class Member extends Model
         'address',
         'cin',
         'phone',
+        'photo',
         'birth_date',
         'birth_city',
         'social_status',

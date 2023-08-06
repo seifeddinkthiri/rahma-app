@@ -5,7 +5,6 @@
       :Family_id="Family.id"
       :current_form_title="current_form_title"
       :active_step="active_step"
-      :members_form_title="members_form_title"
       @update-active-step="updateActiveStep"
       @update-current-form-title="updateCurrentFormTitle"
     />
@@ -172,6 +171,19 @@
               label="الإسم"
               :disabled="isFormDisabled"
             />
+            <select-input
+              v-model="form.kinship"
+              :error="form.errors.kinship"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العضوية/القرابة"
+              :disabled="isFormDisabled"
+            >
+              <option value="child">إبن</option>
+              <option value="elderly">مسن</option>
+              <option value="husband">زوج</option>
+              <option value="wife">زوجة</option>
+              <option value="other_member">فرد آخر</option>
+            </select-input>
             <text-input
               v-model="form.address"
               :error="form.errors.address"
@@ -288,7 +300,13 @@
               label="المستوى الدراسي"
               :disabled="isFormDisabled"
             />
-
+            <file-input
+              v-model="form.photo"
+              :error="form.errors.photo"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="file"
+              label="الصورة "
+            />
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
             <div class="flex flex-row flex-nowrap w-full">
               <ToggleCheckbox
@@ -358,7 +376,7 @@
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
             >
-              التالي
+              إضافة
             </loading-button>
           </div>
         </div>
@@ -376,6 +394,7 @@ import LoadingButton from "@/Shared/LoadingButton";
 import ToggleCheckbox from "@/Shared/ToggleCheckbox.vue";
 import TextareaInput from "@/Shared/TextareaInput.vue";
 import Breadcrumb from "@/Shared/Breadcrumb";
+import FileInput from "@/Shared/FileInput";
 
 export default {
   components: {
@@ -387,6 +406,7 @@ export default {
     ToggleCheckbox,
     TextareaInput,
     Breadcrumb,
+    FileInput,
   },
   layout: Layout,
   remember: "form",
@@ -399,7 +419,6 @@ export default {
 
       active_step: 1,
       current_form_title: "",
-      members_form_title: "",
       current_form: "childrens",
       notes_form: this.$inertia.form({
         title: null,
@@ -427,6 +446,7 @@ export default {
         social_status: null,
         monthly_income: null,
         health_insurance: false,
+        photo: null,
         kinship: null,
         caregiver: false,
         education_level: null,
@@ -439,9 +459,7 @@ export default {
       }),
     };
   },
-  mounted() {
-    this.prepare_husband();
-  },
+
   methods: {
     updateActiveStep(step) {
       this.active_step = step; // Update the active_step prop in the parent component
@@ -449,9 +467,6 @@ export default {
 
     updateCurrentFormTitle(title) {
       this.current_form_title = title; // Update the current_form_title prop in the parent component
-    },
-    updateMembersFormTitle(title) {
-      this.members_form_title = title;
     },
 
     toggle_sanitation() {
@@ -509,226 +524,15 @@ export default {
     toggle_health_Status() {
       this.form.good = !this.form.good;
     },
-    prepare_childrens() {
-      const stored_childs = parseInt(localStorage.getItem("stored_childrens"));
-      if (stored_childs < this.Family.childrens_number) {
-        this.active_step = 1;
-        this.current_form = "childrens";
-        this.current_form_title = " أدخل بيانات الإبن رقم" + stored_childs + 1;
-        this.members_form_title = " أدخل بيانات الإبن رقم" + stored_childs + 1;
-      } else {
-        this.prepare_elderlies();
-      }
-    },
-    prepare_elderlies() {
-      const stored_elderlies = parseInt(localStorage.getItem("stored_elderlies"));
-      if (stored_elderlies < this.Family.elderlies_number) {
-        this.active_step = 1;
-        this.current_form_title = " أدخل بيانات المسن رقم" + stored_elderlies + 1;
-        this.members_form_title = " أدخل بيانات المسن رقم" + stored_elderlies + 1;
-
-        this.current_form = "elderlies";
-      } else {
-        this.prepare_other_members();
-      }
-    },
-    prepare_other_members() {
-      const stored_other_members = parseInt(localStorage.getItem("stored_other_members"));
-      if (stored_other_members < this.Family.other_members_number) {
-        this.active_step = 1;
-        this.current_form_title =
-          " أدخل بيانات الفرد الإضافي رقم" + stored_other_members + 1;
-        this.members_form_title =
-          " أدخل بيانات الفرد الإضافي رقم" + stored_other_members + 1;
-        this.current_form = "other_members";
-      } else {
-        this.members_process_done();
-      }
-    },
-    prepare_husband() {
-      if (this.Family.husband) {
-        this.active_step = 1;
-        this.current_form_title = "أدخل بيانات الزوج (اختياري) ";
-        this.members_form_title = " أدخل بيانات الزوج(اختياري)";
-
-        this.current_form = "husband";
-      } else {
-        this.prepare_wife();
-      }
-    },
-    prepare_wife() {
-      if (this.Family.wife) {
-        this.active_step = 1;
-        this.current_form_title = "أدخل بيانات الزوجة(اختياري) ";
-        this.members_form_title = "أدخل بيانات الزوجة(اختياري) ";
-
-        this.current_form = "wife";
-      } else {
-        this.prepare_childrens();
-      }
-    },
 
     store() {
-      if (this.current_form == "childrens") {
-        this.form.kinship = "child";
-        this.store_childrens();
-      }
-      if (this.current_form == "elderlies") {
-        this.form.kinship = "elderly";
-
-        this.store_elderlies();
-      }
-      if (this.current_form == "other_members") {
-        this.form.kinship = "other_member";
-
-        this.store_other_members();
-      }
-      if (this.current_form == "husband") {
-        this.form.kinship = "husband";
-
-        this.store_husband();
-      }
-      if (this.current_form == "wife") {
-        this.form.kinship = "wife";
-
-        this.store_wife();
-      }
-    },
-
-    store_husband() {
-      if (this.Family.husband) {
-        this.form.post("/members", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.form.reset();
-            this.active_step = 1;
-            this.prepare_wife();
-          },
-        });
-      } else {
-        this.prepare_wife();
-      }
-    },
-    store_wife() {
-      if (this.Family.wife) {
-        this.form.post("/members", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.form.reset();
-            this.active_step = 1;
-            this.prepare_childrens();
-          },
-        });
-      } else {
-        this.form.reset();
-        this.active_step = 1;
-        this.prepare_childrens();
-      }
-    },
-    store_childrens() {
-      if (this.Family.childrens_number > 0) {
-        let stored_childs = parseInt(localStorage.getItem("stored_childrens"));
-
-        if (stored_childs < this.Family.childrens_number) {
-          this.form.post("/members", {
-            preserveScroll: true,
-            onSuccess: () => {
-              const updated_s_ch = stored_childs + 1;
-              localStorage.setItem("stored_childrens", updated_s_ch);
-              stored_childs = parseInt(localStorage.getItem("stored_childrens"));
-
-              this.form.reset();
-              this.active_step = 1;
-
-              if (stored_childs < this.Family.childrens_number) {
-                const nextChildNumber = updated_s_ch + 1;
-                this.current_form_title = " أدخل بيانات الإبن رقم " + nextChildNumber;
-              } else {
-                this.prepare_elderlies();
-              }
-            },
-          });
-        }
-      } else {
-        this.prepare_elderlies();
-      }
-    },
-
-    store_elderlies() {
-      if (this.Family.elderlies_number > 0) {
-        let stored_elderlies = parseInt(localStorage.getItem("stored_elderlies"));
-
-        if (stored_elderlies < this.Family.elderlies_number) {
-          this.form.post("/members", {
-            preserveScroll: true,
-            onSuccess: () => {
-              const updated_s_e = stored_elderlies + 1;
-              localStorage.setItem("stored_elderlies", updated_s_e);
-              stored_elderlies = parseInt(localStorage.getItem("stored_elderlies"));
-
-              this.form.reset();
-              this.active_step = 1;
-
-              if (stored_elderlies < this.Family.elderlies_number) {
-                const nextErderlyNumber = updated_s_e + 1;
-                this.current_form_title = " أدخل بيانات المسن رقم " + nextErderlyNumber;
-              } else {
-                this.prepare_other_members();
-              }
-            },
-          });
-        }
-      } else {
-        this.prepare_other_members();
-      }
-    },
-    store_other_members() {
-      if (this.Family.other_members_number > 0) {
-        let stored_other_members = parseInt(localStorage.getItem("stored_other_members"));
-
-        if (stored_other_members < this.Family.other_members_number) {
-          this.form.post("/members", {
-            preserveScroll: true,
-            onSuccess: () => {
-              const updated_o_m = stored_other_members + 1;
-              localStorage.setItem("stored_other_members", updated_o_m);
-              stored_other_members = parseInt(
-                localStorage.getItem("stored_other_members")
-              );
-
-              this.form.reset();
-              this.active_step = 1;
-
-              if (stored_other_members < this.Family.other_members_number) {
-                const nextOtherMembersNumber = updated_o_m + 1;
-                this.current_form_title =
-                  " أدخل بيانات الفرد الإضافي رقم " + nextOtherMembersNumber;
-              } else {
-                this.members_process_done();
-              }
-            },
-          });
-        }
-      } else {
-        this.members_process_done();
-      }
-    },
-    members_process_done() {
-      this.current_form_title = "أضف بيانات المسكن";
-      this.active_step = "home";
-      this.current_form = "";
-
-      this.members_form_title = "تم";
-
-      this.form.reset();
-      (this.form.health_insurance = false), (this.form.disability = false);
-      this.form.good = false;
-      this.form.disease = false;
-      this.isFormDisabled = true;
-
-      localStorage.setItem("stored_childrens", 0);
-      localStorage.setItem("stored_elderlies", 0);
-      localStorage.setItem("stored_other_members", 0);
+      this.form.post("/members", {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.form.reset();
+          this.active_step = 1;
+        },
+      });
     },
   },
 };
