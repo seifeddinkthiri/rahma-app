@@ -181,8 +181,6 @@
             >
               <option value="child">إبن</option>
               <option value="elderly">مسن</option>
-              <option value="husband">زوج</option>
-              <option value="wife">زوجة</option>
               <option value="other_member">فرد آخر</option>
             </select-input>
             <text-input
@@ -547,6 +545,7 @@ export default {
             this.form.reset();
             this.active_step = "part1";
             this.HorW = "";
+            this.current_form_title = "أضف بيانات الأفراد";
           },
         });
       } else {
@@ -554,7 +553,8 @@ export default {
           preserveScroll: true,
           onSuccess: () => {
             this.form.reset();
-            this.active_step = "home";
+            this.active_step = "part1";
+            this.current_form_title = "إضافة فرد آخر";
           },
         });
       }
