@@ -30,7 +30,10 @@ class Individual extends Model
     ];
 
 
-
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
     public function interventions()
     {
         return $this->hasMany(Intervention::class);

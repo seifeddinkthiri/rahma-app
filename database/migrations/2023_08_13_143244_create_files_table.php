@@ -20,6 +20,11 @@ class CreateFilesTable extends Migration
                 ->references('id')
                 ->on('families')
                 ->onDelete('cascade');
+                $table->unsignedBigInteger('individual_id')->nullable();
+                $table->foreign('individual_id')
+                    ->references('id')
+                    ->on('individuals')
+                    ->onDelete('cascade');
             $table->string('title')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();

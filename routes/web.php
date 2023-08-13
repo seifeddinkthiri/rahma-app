@@ -238,7 +238,14 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::delete('files/{file}', [FileController::class, 'destroy'])
     ->name('files.destroy')
     ->middleware('auth');
+    //files_individuals
 
+    Route::post('files_individual/{individual}', [FileController::class, 'store_for_Individual'])
+    ->name('files.individuals.store')
+    ->middleware('auth');
+    Route::delete('files/{file}', [FileController::class, 'destroy'])
+    ->name('files.destroy')
+    ->middleware('auth');
     //notes
     Route::post('notes/{family}', [NoteController::class, 'store'])
     ->name('notes.store')

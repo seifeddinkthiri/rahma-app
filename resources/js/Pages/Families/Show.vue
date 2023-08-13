@@ -169,13 +169,13 @@
       </div>
     </div>
 
-    <!-- Notes -->
+    <!-- files -->
     <h2 class="mt-12 text-2xl font-bold">الملفات</h2>
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="file in family.files" :key="file.id">
         <div class="p-4 bg-white rounded-md shadow">
-          <Link :href="getFileUrl(file.file)">{{ file.title }}</Link>
+          <a :href="getFileUrl(file.file)">{{ file.title }}</a>
         </div>
       </div>
       <div v-if="family.files.length === 0">

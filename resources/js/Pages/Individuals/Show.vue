@@ -112,6 +112,20 @@
       </div>
     </div>
 
+    <!-- files -->
+    <h2 class="mt-12 text-2xl font-bold">الملفات</h2>
+    <br />
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div v-for="file in individual.files" :key="file.id">
+        <div class="p-4 bg-white rounded-md shadow">
+          <a :href="getFileUrl(file.file)">{{ file.title }}</a>
+        </div>
+      </div>
+      <div v-if="individual.files.length === 0">
+        <p class="text-center text-xl">لا يوجد ملفات</p>
+      </div>
+    </div>
+
     <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -169,6 +183,10 @@ export default {
   methods: {
     goBack() {
       window.history.back();
+    },
+    getFileUrl(fileName) {
+      const baseUrl = "http://127.0.0.1:8000";
+      return `${baseUrl}/${fileName}`;
     },
   },
 };

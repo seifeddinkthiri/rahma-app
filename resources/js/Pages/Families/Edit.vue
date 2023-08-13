@@ -517,7 +517,7 @@
                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                 @click="edit_file(file.id)"
               >
-                <Link :href="getFileUrl(file.file)">{{ file.title }}</Link>
+                <a :href="getFileUrl(file.file)">{{ file.title }}</a>
                 <icon
                   v-if="file.deleted_at"
                   name="trash"
@@ -1079,11 +1079,10 @@ export default {
     },
 
     save_file() {
-      this.show_file_modal = false;
-
       this.files_form.post(`/files/${this.family.id}`);
       this.files_form.title = null;
       this.files_form.file = null;
+      this.show_file_modal = false;
     },
 
     save_note() {
