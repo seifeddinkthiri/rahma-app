@@ -67,6 +67,10 @@ class Family extends Model
     {
         return $this->hasMany(Note::class);
     }
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
     public function facilities()
     {
         return $this->hasOne(Facility::class);

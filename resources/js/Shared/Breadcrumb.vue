@@ -139,6 +139,30 @@
               الملاحظات
             </button>
           </li>
+          <li>
+            <svg
+              class="w-6 h-6 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </li>
+          <li>
+            <button
+              @click="update_step('files', 'أضف ملف')"
+              class="text-gray-500 hover:text-gray-900 transition-colors"
+              :class="{ 'text-gray-900 font-bold': active_step === 'files' }"
+            >
+              الملفات
+            </button>
+          </li>
         </ol>
       </nav>
     </div>

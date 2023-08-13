@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
@@ -157,11 +158,6 @@ Route::get('families', [FamilyController::class, 'index'])
     ->name('families')
     ->middleware('auth');
 
-Route::get('families/create', [FamilyController::class, 'create'])
-    ->name('families.create')
-    ->middleware('auth');
-
-
 Route::post('families', [FamilyController::class, 'store'])
     ->name('families.store')
     ->middleware('auth');
@@ -235,7 +231,10 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('health.update')
     ->middleware('auth');
 
-
+    //notes
+    Route::post('files/{family}', [FileController::class, 'store'])
+    ->name('files.store')
+    ->middleware('auth');
 
     //notes
     Route::post('notes/{family}', [NoteController::class, 'store'])

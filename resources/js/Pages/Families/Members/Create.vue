@@ -150,12 +150,43 @@
           >
             تسجيل
           </button>
+        </div>
+      </form>
+    </div>
+    <div class="bg-white rounded-md shadow overflow-hidden" v-if="active_step == 'files'">
+      <form @submit.prevent="save_files">
+        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+          <text-input
+            v-model="files_form.title"
+            :error="files_form.errors.title"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            id="file_title"
+            name="file_title"
+            label="العنوان"
+          />
+          <file-input
+            id="file"
+            v-model="files_form.file"
+            :error="files_form.errors.file"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            type="file"
+            label="الملف"
+          />
+        </div>
+
+        <div class="flex justify-end px-4 py-3 bg-gray-50">
           <button
-            @click="back_to_family_create"
+            type="submit"
+            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
+          >
+            إضافة
+          </button>
+          <button
+            @click="back"
             type="button"
             class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           >
-            إنشاء عائلة جديدة
+            عودة
           </button>
         </div>
       </form>
@@ -423,6 +454,11 @@ export default {
         title: null,
         value: null,
       }),
+
+      files_form: this.$inertia.form({
+        title: null,
+        file: null,
+      }),
       facilities_form: this.$inertia.form({
         Sanitation: false,
         electricity: false,
@@ -495,13 +531,23 @@ export default {
       this.notes_form.post(`/notes/${this.Family.id}`, {
         preserveScroll: true,
         onSuccess: () => {
+          this.active_step = "files";
+
           this.notes_form.reset();
         },
       });
     },
-
-    back_to_family_create() {
-      this.$inertia.get("/families/create");
+    save_files() {
+      this.files_form.post(`/files/${this.Family.id}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.active_step = "files";
+          this.files_form.reset();
+        },
+      });
+    },
+    back() {
+      this.$inertia.get("/families");
     },
     define_facilities() {
       this.facilities_form.put(`/facilities/${this.Family.id}`);
