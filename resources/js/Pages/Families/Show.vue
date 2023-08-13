@@ -170,6 +170,20 @@
     </div>
 
     <!-- Notes -->
+    <h2 class="mt-12 text-2xl font-bold">الملفات</h2>
+    <br />
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div v-for="file in family.files" :key="file.id">
+        <div class="p-4 bg-white rounded-md shadow">
+          <Link :href="getFileUrl(file.file)">{{ file.title }}</Link>
+        </div>
+      </div>
+      <div v-if="family.files.length === 0">
+        <p class="text-center text-xl">لا يوجد ملفات</p>
+      </div>
+    </div>
+
+    <!-- Interventions -->
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -247,6 +261,10 @@ export default {
   methods: {
     back() {
       window.history.back();
+    },
+    getFileUrl(fileName) {
+      const baseUrl = "http://127.0.0.1:8000";
+      return `${baseUrl}/${fileName}`;
     },
   },
 };

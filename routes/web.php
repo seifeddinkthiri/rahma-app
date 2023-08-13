@@ -231,9 +231,12 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('health.update')
     ->middleware('auth');
 
-    //notes
+    //files
     Route::post('files/{family}', [FileController::class, 'store'])
     ->name('files.store')
+    ->middleware('auth');
+    Route::delete('files/{file}', [FileController::class, 'destroy'])
+    ->name('files.destroy')
     ->middleware('auth');
 
     //notes

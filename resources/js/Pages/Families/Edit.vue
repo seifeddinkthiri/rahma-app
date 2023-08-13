@@ -443,6 +443,120 @@
       </table>
     </div>
 
+    <h2 class="mt-12 text-2xl font-bold">الملفات</h2>
+
+    <div
+      class="mt-6 bg-white rounded shadow overflow-x-auto"
+      ref="file_modal"
+      v-if="show_file_modal"
+    >
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <div class="fixed inset-0 flex items-center justify-center">
+        <form @submit.prevent="save_file">
+          <div class="w-96 h-auto bg-white rounded shadow-xl">
+            <div class="p-6">
+              <text-input
+                id="title"
+                v-model="files_form.title"
+                :error="files_form.errors.title"
+                placeholder="اكتب عنوان الملف ..."
+                class="w-full"
+                label="العنوان"
+              />
+
+              <file-input
+                id="file"
+                v-model="files_form.file"
+                :error="files_form.errors.file"
+                class="w-full"
+                type="file"
+                label="الملف"
+              />
+            </div>
+            <div class="flex justify-end px-4 py-3 bg-gray-50">
+              <button
+                @click="show_file_modal = false"
+                type="button"
+                class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              >
+                إلغاء
+              </button>
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
+              >
+                إضافة
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div ref="files" class="bg-white rounded shadow overflow-hidden">
+      <br />
+      <div class="flex items-center">
+        <button
+          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          @click="show_file_modal = true"
+        >
+          <span>إنشاء</span>
+          <span class="hidden md:inline">&nbsp;ملف</span>
+        </button>
+      </div>
+      <br />
+      <table class="w-full whitespace-nowrap">
+        <tbody>
+          <tr
+            v-for="file in family.files"
+            :key="file.id"
+            class="hover:bg-gray-100 focus-within:bg-gray-100"
+          >
+            <td class="border-t">
+              <button
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                @click="edit_file(file.id)"
+              >
+                <Link :href="getFileUrl(file.file)">{{ file.title }}</Link>
+                <icon
+                  v-if="file.deleted_at"
+                  name="trash"
+                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
+                />
+              </button>
+            </td>
+
+            <td class="w-px border-t">
+              <button
+                @click="destroy_file(file.id)"
+                type="button"
+                class="flex items-center px-4"
+                tabindex="-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <tr v-if="family.files.length === 0">
+            <td class="px-6 py-4 border-t" colspan="2">لا يوجد ملفات</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
     <div
@@ -837,6 +951,7 @@ export default {
 
   data() {
     return {
+      show_file_modal: false,
       show_note_modal: false,
       show_home_modal: false,
       show_intervention_modal: false,
@@ -866,6 +981,10 @@ export default {
       notes_form: this.$inertia.form({
         title: null,
         value: null,
+      }),
+      files_form: this.$inertia.form({
+        title: null,
+        file: null,
       }),
       notes_form_update: this.$inertia.form({
         title: null,
@@ -907,7 +1026,15 @@ export default {
         this.$inertia.delete(`/notes/${id}`);
       }
     },
-
+    getFileUrl(fileName) {
+      const baseUrl = "http://127.0.0.1:8000";
+      return `${baseUrl}/${fileName}`;
+    },
+    destroy_file(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا الملف ")) {
+        this.$inertia.delete(`/files/${id}`);
+      }
+    },
     toggle_sanitation() {
       this.facilities_form_update.Sanitation = !this.facilities_form_update.Sanitation;
     },
@@ -950,6 +1077,15 @@ export default {
       this.notes_form_update.value = note_value.toString();
       this.note_id = id;
     },
+
+    save_file() {
+      this.show_file_modal = false;
+
+      this.files_form.post(`/files/${this.family.id}`);
+      this.files_form.title = null;
+      this.files_form.file = null;
+    },
+
     save_note() {
       this.show_note_modal = false;
 
