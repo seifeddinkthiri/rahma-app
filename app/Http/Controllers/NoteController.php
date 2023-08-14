@@ -17,7 +17,7 @@ class NoteController extends Controller
     {
         Request::validate([
             'title' => ['required', 'string', 'max:100'],
-            'value' => ['required', 'string', 'max:1000'],
+            'value' => ['required'],
         ]);
 
         $family->notes()->create([
@@ -32,13 +32,13 @@ class NoteController extends Controller
     {
         Request::validate([
             'title' => ['required', 'string', 'max:100'],
-            'value' => ['required', 'string', 'max:1000'],
+            'value' => ['required'],
         ]);
         $Individual->notes()->create([
             'title' => Request::input('title'),
             'value' => Request::input('value'),
         ]);
-        
+
         return redirect()->back()->with('success', 'تم إنشاء الملاحظة.');
     }
 
@@ -47,7 +47,7 @@ class NoteController extends Controller
     {
         Request::validate([
             'title' => ['required', 'string', 'max:100'],
-            'value' => ['required', 'string', 'max:1000'],
+            'value' => ['required'],
 
         ]);
 

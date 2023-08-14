@@ -153,19 +153,34 @@
         </tbody>
       </table>
     </div>
-
     <!-- Notes -->
-    <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
-    <br />
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="note in family.notes.data" :key="note.id">
-        <div class="p-4 bg-white rounded-md shadow">
-          <h3 class="mb-2 text-xl">{{ note.title }}</h3>
-          <p class="text-gray-700 truncate">{{ note.value }}</p>
+    <div>
+      <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
+      <br />
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div v-for="note in family.notes.data" :key="note.id">
+          <div class="p-4 bg-white rounded-md shadow text-center">
+            <h3 class="mb-2 text-xl font-bold">{{ note.title }}</h3>
+            <div v-if="toggledNoteIds.includes(note.id)">
+              <p class="text-gray-700">{{ note.value }}</p>
+            </div>
+            <div v-else>
+              <p class="text-gray-700 truncate">{{ note.value }}</p>
+            </div>
+            <button
+              v-if="!toggledNoteIds.includes(note.id)"
+              @click="toggleNoteVisibility(note.id)"
+            >
+              <icon name="cheveron-down" class="h-4 w-4" />
+            </button>
+            <button v-else @click="toggleNoteVisibility(note.id)">
+              <icon name="cheveron-up" class="h-4 w-4" />
+            </button>
+          </div>
         </div>
-      </div>
-      <div v-if="family.notes.data.length === 0">
-        <p class="text-center text-xl">لا يوجد ملاحظات</p>
+        <div v-if="family.notes.data.length === 0">
+          <p class="text-center text-xl font-bold">لا يوجد ملاحظات</p>
+        </div>
       </div>
     </div>
 
@@ -247,8 +262,8 @@ export default {
 
   data() {
     return {
+      toggledNoteIds: [],
       note_id: null,
-
       form: this.$inertia.form({
         name: this.family.name,
         phone: this.family.phone,
@@ -258,6 +273,7 @@ export default {
       }),
     };
   },
+
   methods: {
     back() {
       window.history.back();
@@ -265,6 +281,14 @@ export default {
     getFileUrl(fileName) {
       const baseUrl = "http://127.0.0.1:8000";
       return `${baseUrl}/${fileName}`;
+    },
+    toggleNoteVisibility(noteId) {
+      const index = this.toggledNoteIds.indexOf(noteId);
+      if (index !== -1) {
+        this.toggledNoteIds.splice(index, 1); // Remove the noteId from the array
+      } else {
+        this.toggledNoteIds.push(noteId); // Add the noteId to the array
+      }
     },
   },
 };

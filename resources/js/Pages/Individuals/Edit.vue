@@ -640,11 +640,7 @@
       </div>
       <br />
       <table class="w-full whitespace-nowrap">
-        <thead>
-          <tr class="text-right font-bold">
-            <th class="pb-4 pt-6 px-6">العنوان</th>
-          </tr>
-        </thead>
+
         <tbody>
           <tr
             v-for="note in individual.notes.data"

@@ -26,7 +26,7 @@ class CreateNotesTable extends Migration
                 ->on('individuals')
                 ->onDelete('cascade');
                 $table->string('title')->nullable();
-                $table->string('value')->nullable();
+                $table->text('value')->nullable();
 
             $table->timestamps();
         });
