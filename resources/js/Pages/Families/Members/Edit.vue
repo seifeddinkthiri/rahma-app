@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head :title="form.name" />
-    <h1 class="mb-8 text-3xl font-bold">
+    <h1 class="mb-8 text-xl font-bold">
       <Link class="text-blue-400 hover:text-blue-600" href="/members">الأفراد</Link>
       <span class="text-blue-400 font-medium">/</span>
       {{ form.name }}

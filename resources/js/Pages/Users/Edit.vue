@@ -8,8 +8,8 @@
         :src="user.photo"
       />
     </div>
-    <div class="flex justify-start mb-8 max-w-3xl">
-      <h1 class="text-3xl font-bold">
+    <div class="flex justify-start mb-8 max-w-xl">
+      <h1 class="text-xl font-bold">
         <Link class="text-indigo-400 hover:text-indigo-600" href="/users"
           >المستخدمون</Link
         >

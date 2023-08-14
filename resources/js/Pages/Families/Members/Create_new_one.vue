@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Create Organization" />
-    <h1 class="mb-8 text-3xl font-bold">
+    <h1 class="mb-8 text-xl font-bold">
       <Link
         class="text-blue-400 hover:text-blue-600"
         :href="`/families/${Family.id}/edit`"

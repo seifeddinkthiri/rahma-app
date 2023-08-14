@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="families" />
-    <h1 class="mb-8 text-3xl font-bold">المنتفعين العائلات</h1>
+    <h1 class="mb-8 text-xl font-bold">المنتفعين العائلات</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
         :onlySearch="false"
