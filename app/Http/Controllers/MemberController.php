@@ -153,6 +153,7 @@ class MemberController extends Controller
                 'address' => $Member->address,
                 'cin' => $Member->cin,
                 'phone' => $Member->phone,
+                'photo' => $Member->photo,
                 'birth_date' => $Member->birth_date,
                 'birth_city' => $Member->birth_city,
                 'social_status' => $Member->social_status,
@@ -233,8 +234,20 @@ class MemberController extends Controller
                 'job' => ['nullable', 'max:100'],
                 'job_place' => ['nullable', 'max:100'],
                 'family_id' => ['required', 'integer'],
+
             ])
         );
+
+        if (Request::file('photo')) {
+            $Member->update(
+                [
+                    'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+                ]
+            );
+            Request::file('photo')->move(public_path('uploads'), $Member->photo);
+
+        }
+
         if ($Member->caregiver) {
             $famely = Family::where('id', $Member->family_id)->first();
             $famely->update([

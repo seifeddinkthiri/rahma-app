@@ -208,7 +208,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('members.edit')
     ->middleware('auth');
 
-    Route::put('members/{member}', [MemberController::class, 'update'])
+    Route::post('members_update/{member}', [MemberController::class, 'update'])
     ->name('members.update')
     ->middleware('auth');
 

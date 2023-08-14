@@ -1,17 +1,28 @@
 <template>
-  <div>
+  <div class="relative">
     <!-- Member Card -->
     <div class="p-6 bg-white rounded-md shadow">
       <Head :title="member.name" />
-      <div class="relative">
-        <button
-          @click="goBack"
-          class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-        >
-          عودة
-        </button>
-      </div>
-
+      <ul class="absolute left-0 top-0 space-y-3 pt-4 pl-4">
+        <li>
+          <img
+            v-if="member.photo"
+            :src="`/uploads/${member.photo}`"
+            alt="member Image"
+            class="w-32 h-32 rounded"
+          />
+        </li>
+        <li>
+          <button
+            @click="goBack"
+            class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          >
+            عودة
+          </button>
+        </li>
+      </ul>
+      <br />
+      <br /><br /><br />
       <h2 class="mt-12 text-2xl font-bold">الفرد / {{ member.name }}</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">

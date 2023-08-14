@@ -37,6 +37,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
             />
+
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
               type="date"
@@ -109,12 +110,19 @@
         </div>
         <div ref="part2" v-if="active_step == 2">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-            <text-input
+            <select-input
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
-            />
+              :disabled="isFormDisabled"
+            >
+              <option :value="null" />
+              <option value="single">أعزب/عزباء</option>
+              <option value="married">متزوج/متزوجة</option>
+              <option value="divorced">مطلق/مطلقة</option>
+              <option value="widower">أرمل/أرملة</option>
+            </select-input>
             <text-input
               v-model="form.monthly_income"
               :error="form.errors.monthly_income"
@@ -151,6 +159,15 @@
               <option value="elderly">مسن</option>
               <option value="other_member">فرد إضافي</option>
             </select-input>
+
+            <file-input
+              v-model="form.photo"
+              :error="form.errors.photo"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="file"
+              accept="image/*"
+              label="الصورة "
+            />
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -252,6 +269,7 @@ import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import TrashedMessage from "@/Shared/TrashedMessage";
 import ToggleCheckbox from "../../../Shared/ToggleCheckbox.vue";
+import FileInput from "@/Shared/FileInput";
 
 export default {
   components: {
@@ -263,6 +281,7 @@ export default {
     TextInput,
     TrashedMessage,
     ToggleCheckbox,
+    FileInput,
   },
   layout: Layout,
   props: {
@@ -296,6 +315,7 @@ export default {
         address: this.member.address,
         cin: this.member.cin,
         phone: this.member.phone,
+        photo: null,
         birth_date: this.member.birth_date,
         birth_city: this.member.birth_city,
         social_status: this.member.social_status,
@@ -321,7 +341,7 @@ export default {
       this.health_status_form.good = !this.health_status_form.good;
     },
     update() {
-      this.form.put(`/members/${this.member.id}`);
+      this.form.post(`/members_update/${this.member.id}`);
     },
     destroy() {
       if (confirm("هل أنت متأكد أنك تريد حذف هذا الفرد ؟")) {
