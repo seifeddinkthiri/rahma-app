@@ -7,7 +7,7 @@
           <li>
             <button
               @click="updateHorW('husband')"
-              class="text-gray-500 hover:text-black-800 transition-colors"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
               :class="{ 'text-gray-900 font-bold': HorW == 'husband' }"
             >
               الزوج
@@ -31,13 +31,12 @@
           <li>
             <button
               @click="updateHorW('wife')"
-              class="text-gray-500 hover:text-black-800 transition-colors"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
               :class="{ 'text-gray-900 font-bold': HorW == 'wife' }"
             >
               الزوجة
             </button>
           </li>
-
           <li>
             <svg
               class="w-6 h-6 text-gray-500"
@@ -56,36 +55,10 @@
           <li>
             <button
               @click="update_step('part1', 'أضف بيانات الأفراد')"
-              class="text-gray-500 hover:text-gray-900 transition-colors"
-              :class="{
-                'text-gray-900 font-bold': active_step === 'part1' && !HorW,
-              }"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
+              :class="{ 'text-gray-900 font-bold': active_step === 'part1' && !HorW }"
             >
-              بقية الأفراد
-            </button>
-          </li>
-          <li>
-            <svg
-              class="w-6 h-6 text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-          </li>
-          <li>
-            <button
-              @click="update_step('home', 'أضف بيانات المسكن')"
-              class="text-gray-500 hover:text-gray-900 transition-colors"
-              :class="{ 'text-gray-900 font-bold': active_step === 'home' }"
-            >
-              المسكن
+              الأفراد
             </button>
           </li>
           <li>
@@ -107,12 +80,13 @@
             <button
               type="button"
               @click="update_step('facilities', 'تعديل المرافق الإساسية')"
+              class="border-blue-500 border rounded-lg"
             >
               <span
                 :class="{ 'text-gray-900 font-bold': active_step === 'facilities' }"
                 class="text-gray-500 hover:text-gray-900"
-                >المرافق الصحية</span
-              >
+                >المرافق
+              </span>
             </button>
           </li>
           <li>
@@ -132,8 +106,33 @@
           </li>
           <li>
             <button
+              @click="update_step('home', 'أضف بيانات المسكن')"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
+              :class="{ 'text-gray-900 font-bold': active_step === 'home' }"
+            >
+              المسكن
+            </button>
+          </li>
+
+          <li>
+            <svg
+              class="w-6 h-6 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </li>
+          <li>
+            <button
               @click="update_step('notes', 'أضف  ملاحظة')"
-              class="text-gray-500 hover:text-gray-900 transition-colors"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
               :class="{ 'text-gray-900 font-bold': active_step === 'notes' }"
             >
               الملاحظات
@@ -157,7 +156,7 @@
           <li>
             <button
               @click="update_step('files', 'أضف ملف')"
-              class="text-gray-500 hover:text-gray-900 transition-colors"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
               :class="{ 'text-gray-900 font-bold': active_step === 'files' }"
             >
               الملفات
@@ -168,7 +167,7 @@
     </div>
 
     <!-- Other content of the child component -->
-    <h1 class="mb-8 text-3xl font-bold">{{ current_form_title }}</h1>
+    <h1 class="mb-8 text-xl font-bold">{{ current_form_title }}</h1>
     <!-- ... -->
   </div>
 </template>

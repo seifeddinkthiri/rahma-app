@@ -1,38 +1,25 @@
 <template>
-  <div class="container mx-auto py-6 space-y-5" ref="breadcrumb">
-    <h1 class="mb-8 text-3xl font-bold">
-      {{ current_form_title }}
-    </h1>
+  <div class="container mx-auto py-3 space-y-5" ref="breadcrumb">
+    <!-- Breadcrumb -->
     <div class="px-4 py-2 bg-white rounded-lg shadow">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-4">
-          <!--  -->
-          <li>
-            <svg
-              class="w-6 h-6 text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-          </li>
-          <li>
+          <li></li>
+          <li v-if="Individual_id">
             <Link
-              v-if="Individual_id"
               :href="`/individuals/${Individual_id}/create_B_C`"
-              class="text-gray-500 hover:text-gray-800"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
             >
               الفرد
             </Link>
-            <Link v-else class="text-gray-500 hover:text-gray-800"> الفرد </Link>
           </li>
-
+          <li v-else>
+            <Link
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
+            >
+              الفرد
+            </Link>
+          </li>
           <!--  -->
           <li>
             <svg
@@ -53,12 +40,17 @@
             <button
               v-if="Individual_id"
               @click="switch_form_BC('home', 'أضف بيانات المسكن')"
-              class="text-gray-500 hover:text-gray-800"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
               :class="{ 'text-gray-900 font-bold': active_step === 'home' }"
             >
               المسكن
             </button>
-            <p v-else class="text-gray-500 hover:text-gray-800">المسكن</p>
+            <p
+              v-else
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
+            >
+              المسكن
+            </p>
           </li>
 
           <!--  -->
@@ -80,16 +72,22 @@
           <li>
             <button
               v-if="Individual_id"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
               type="button"
               @click="switch_form_BC('facilities', 'تعديل المرافق الإساسية')"
             >
               <span
                 :class="{ 'text-gray-900 font-bold': active_step === 'facilities' }"
                 class="text-gray-500 hover:text-gray-800"
-                >المرافق الصحية</span
-              >
+                >المرافق
+              </span>
             </button>
-            <p v-else class="text-gray-500 hover:text-gray-800">المرافق الصحية</p>
+            <p
+              v-else
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
+            >
+              المرافق
+            </p>
           </li>
 
           <!--  -->
@@ -112,12 +110,17 @@
             <button
               v-if="Individual_id"
               @click="switch_form_BC('notes', 'أضف  ملاحظة')"
-              class="text-gray-500 hover:text-gray-800"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
               :class="{ 'text-gray-900 font-bold': active_step === 'notes' }"
             >
               الملاحظات
             </button>
-            <p v-else class="text-gray-500 hover:text-gray-800">الملاحظات</p>
+            <p
+              v-else
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
+            >
+              الملاحظات
+            </p>
           </li>
           <li>
             <svg
@@ -138,16 +141,24 @@
             <button
               v-if="Individual_id"
               @click="switch_form_BC('files', 'أضف  ملف')"
-              class="text-gray-500 hover:text-gray-800"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
               :class="{ 'text-gray-900 font-bold': active_step === 'files' }"
             >
               الملفات
             </button>
-            <p v-else class="text-gray-500 hover:text-gray-800">الملفات</p>
+            <p
+              v-else
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
+            >
+              الملفات
+            </p>
           </li>
         </ol>
       </nav>
     </div>
+    <h1 class="mb-8 text-xl font-bold">
+      {{ current_form_title }}
+    </h1>
   </div>
 </template>
 <script>
