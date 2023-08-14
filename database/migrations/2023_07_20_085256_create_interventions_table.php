@@ -20,7 +20,7 @@ class CreateInterventionsTable extends Migration
             $table->string('value')->nullable();
             $table->string('intervenor')->nullable();
             $table->string('intervenor_phone')->nullable();
-            $table->string('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -55,7 +55,7 @@ class InterventionController extends Controller
             'type' => ['required', 'string', 'max:100'],
             'intervenor' => ['nullable', 'string', 'max:50'],
             'intervenor_phone' => ['required', 'numeric', 'digits:8'],
-            'notes' => ['nullable', 'string', 'max:100'],
+            'notes' => ['nullable'],
         ]);
         $intervention = Auth::user()->account->interventions()->create([
             'type' => Request::get('type'),
@@ -125,7 +125,7 @@ class InterventionController extends Controller
                 'type' => ['nullable', 'max:100'],
                 'intervenor' => ['nullable', 'max:50'],
                 'intervenor_phone' => ['nullable', 'max:50'],
-                'notes' => ['nullable', 'max:100'],
+                'notes' => ['nullable'],
             ])
 
         );
