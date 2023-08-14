@@ -62,8 +62,31 @@
               <td class="px-4 py-2 h-16 border">{{ intervention.intervenor_phone }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 h-16 border">الملف</td>
-              <td class="px-4 py-2 h-16 border">{{ intervention.file }}</td>
+              <td class="px-4 py-2 h-16 border">الملفات</td>
+              <td class="px-4 py-2 h-16 border">
+                <!-- files -->
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div v-for="file in intervention.files" :key="file.id" class="relative">
+                    <div
+                      class="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition-all"
+                    >
+                      <a :href="getFileUrl(file.file)" class="text-blue-600">{{
+                        file.title
+                      }}</a>
+                      <button
+                        @click="deleteFile(file.id)"
+                        type="button"
+                        class="absolute top-0 left-0 m-2"
+                      >
+                        <icon name="close" class="text-red-600" />
+                      </button>
+                    </div>
+                  </div>
+                  <div v-if="intervention.files.length === 0">
+                    <p class="text-center">لا يوجد ملفات</p>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr>
               <td class="px-4 py-2 h-16 border">الملاحظات</td>
@@ -104,8 +127,17 @@ export default {
     return {};
   },
   methods: {
+    deleteFile(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا الملف ؟")) {
+        this.$inertia.delete(`/files/${id}`);
+      }
+    },
     goBack() {
       window.history.back();
+    },
+    getFileUrl(fileName) {
+      const baseUrl = "http://127.0.0.1:8000";
+      return `${baseUrl}/${fileName}`;
     },
   },
 };

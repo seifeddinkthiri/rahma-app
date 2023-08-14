@@ -335,6 +335,7 @@
               :error="form.errors.photo"
               class="pb-8 pr-6 w-full lg:w-1/2"
               type="file"
+              accept="image/*"
               label="الصورة "
             />
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>

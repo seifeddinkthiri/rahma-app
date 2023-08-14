@@ -15,6 +15,11 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('intervention_id')->nullable();
+            $table->foreign('intervention_id')
+                ->references('id')
+                ->on('interventions')
+                ->onDelete('cascade');
             $table->unsignedBigInteger('family_id')->nullable();
             $table->foreign('family_id')
                 ->references('id')

@@ -54,19 +54,27 @@
             :error="form.errors.intervenor_phone"
             label="هاتف المسؤل"
           />
-          <TextAreaInput
-            class="pb-8 pr-6 w-full lg:w-1/2"
-            id="notes"
-            v-model="form.notes"
-            :error="form.errors.notes"
-            label="ملاحظات"
-          />
+
           <file-input
             v-model="form.file"
             :error="form.errors.file"
             class="pb-8 pr-6 w-full lg:w-1/2"
             type="file"
             label="أضف ملف"
+          />
+          <text-input
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            id="intervenor"
+            v-model="form.title"
+            :error="form.errors.title"
+            label="عنوان الملف"
+          />
+          <TextAreaInput
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            id="notes"
+            v-model="form.notes"
+            :error="form.errors.notes"
+            label="ملاحظات"
           />
         </div>
         <div
@@ -104,6 +112,7 @@ import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import TrashedMessage from "@/Shared/TrashedMessage";
 import FileInput from "@/Shared/FileInput";
+import TextAreaInput from "@/Shared/TextareaInput";
 
 export default {
   components: {
@@ -115,6 +124,7 @@ export default {
     TextInput,
     TrashedMessage,
     FileInput,
+    TextAreaInput,
   },
   layout: Layout,
   props: {
@@ -128,8 +138,9 @@ export default {
         value: this.intervention.value,
         intervenor: this.intervention.intervenor,
         intervenor_phone: this.intervention.intervenor_phone,
-        file: null,
         notes: this.intervention.notes,
+        file: null,
+        title: null,
       }),
       intervention: {
         type: this.intervention.type, // Assuming this is the expected type for the intervention
@@ -146,15 +157,15 @@ export default {
       }
     },
     update() {
-      this.form.put(`/interventions/${this.intervention.id}`);
+      this.form.post(`/interventions/${this.intervention.id}`);
     },
     destroy() {
-      if (confirm("Are you sure you want to delete this intervention?")) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا التدخل ؟")) {
         this.$inertia.delete(`/interventions/${this.intervention.id}`);
       }
     },
     restore() {
-      if (confirm("Are you sure you want to restore this intervention?")) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا التدخل ؟")) {
         this.$inertia.put(`/interventions/${this.intervention.id}/restore`);
       }
     },

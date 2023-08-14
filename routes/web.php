@@ -339,7 +339,7 @@ Route::get('interventions/{intervention}/edit', [InterventionController::class, 
 Route::get('interventions/{intervention}/show', [InterventionController::class, 'show'])
 ->name('interventions.show')
 ->middleware('auth');
-Route::put('interventions/{intervention}', [InterventionController::class, 'update'])
+Route::post('interventions/{intervention}', [InterventionController::class, 'update'])
 ->name('interventions.update')
 ->middleware('auth');
 

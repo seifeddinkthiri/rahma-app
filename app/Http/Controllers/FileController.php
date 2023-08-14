@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Family;
 use App\Models\File;
 use App\Models\Individual;
+use App\Models\Intervention;
+
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 
@@ -77,6 +79,7 @@ public function store_for_Individual( Individual $individual)
 
     return Redirect::back()->with('success', 'تمت إضافة الملف');
 }
+
 
 
 

@@ -27,7 +27,6 @@ class InterventionController extends Controller
                     'value' => $intervention->value,
                     'intervenor' => $intervention->intervenor,
                     'intervenor_phone' => $intervention->intervenor_phone,
-                    'file' => $intervention->file,
                     'notes' => $intervention->notes,
                     'deleted_at' => $intervention->deleted_at,
                 ]),
@@ -56,8 +55,6 @@ class InterventionController extends Controller
             'type' => ['required', 'string', 'max:100'],
             'intervenor' => ['nullable', 'string', 'max:50'],
             'intervenor_phone' => ['required', 'numeric', 'digits:8'],
-
-            'file' => ['nullable', 'file'],
             'notes' => ['nullable', 'string', 'max:100'],
         ]);
         $intervention = Auth::user()->account->interventions()->create([
@@ -68,12 +65,18 @@ class InterventionController extends Controller
             'intervenor' => Request::get('intervenor'),
             'intervenor_phone' => Request::get('intervenor_phone'),
             'notes' => Request::get('notes'),
-            'file' => Request::file('file') ? Request::file('file')->store('') : null,
 
         ]);
+
+
         if (Request::file('file')) {
-            Request::file('file')->move(public_path('uploads'), $intervention->file);
+            $file = $intervention->files()->create([
+                'title' =>Request::input('title'),
+                'file' =>Request::file('file') ?Request::file('file')->store('uploads/files') : null,
+            ]);
+           Request::file('file')->move(public_path('uploads/files'), $file->file);
         }
+
         return Redirect::back()->with('success', 'تم إنشاء التدخل.');
        }
 
@@ -91,7 +94,6 @@ class InterventionController extends Controller
                 'value' => $intervention->value,
                 'intervenor' => $intervention->intervenor,
                 'intervenor_phone' => $intervention->intervenor_phone,
-                'file' => $intervention->file,
                 'notes' => $intervention->notes,
                 'deleted_at' => $intervention->deleted_at,
             ],
@@ -109,8 +111,8 @@ class InterventionController extends Controller
                 'value' => $intervention->value,
                 'intervenor' => $intervention->intervenor,
                 'intervenor_phone' => $intervention->intervenor_phone,
-                'file' => $intervention->file,
                 'notes' => $intervention->notes,
+                'files' =>  $intervention->files()->get(),
                 'deleted_at' => $intervention->deleted_at,
             ],
         ]);
@@ -120,13 +122,20 @@ class InterventionController extends Controller
     {
         $intervention->update(
             Request::validate([
-                'type' => ['required', 'max:100'],
+                'type' => ['nullable', 'max:100'],
                 'intervenor' => ['nullable', 'max:50'],
                 'intervenor_phone' => ['nullable', 'max:50'],
-                'file' => 'nullable|file',
                 'notes' => ['nullable', 'max:100'],
             ])
+
         );
+        if (Request::file('file')) {
+            $file = $intervention->files()->create([
+                'title' =>Request::input('title'),
+                'file' =>Request::file('file') ?Request::file('file')->store('uploads/files') : null,
+            ]);
+           Request::file('file')->move(public_path('uploads/files'), $file->file);
+        }
 
         return Redirect::back()->with('success', 'تم تحديث التدخل.');
     }

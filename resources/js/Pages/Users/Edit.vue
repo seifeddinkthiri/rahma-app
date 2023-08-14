@@ -137,12 +137,12 @@ export default {
       });
     },
     destroy() {
-      if (confirm("Are you sure you want to delete this user?")) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا المستخدم؟")) {
         this.$inertia.delete(`/users/${this.user.id}`);
       }
     },
     restore() {
-      if (confirm("Are you sure you want to restore this user?")) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا المستخدم؟")) {
         this.$inertia.put(`/users/${this.user.id}/restore`);
       }
     },

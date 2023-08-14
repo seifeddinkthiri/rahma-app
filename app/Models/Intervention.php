@@ -21,10 +21,14 @@ class Intervention extends Model
         'value',
         'intervenor',
         'intervenor_phone',
-        'file',
         'notes',
 
     ];
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
     public function family()
     {
         return $this->belongsTo(Family::class);

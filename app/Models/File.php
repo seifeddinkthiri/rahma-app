@@ -14,7 +14,10 @@ class File extends Model
         'file',
     ];
 
-
+    public function intervention()
+    {
+        return $this->belongsTo(Intervention::class);
+    }
     public function family()
     {
         return $this->belongsTo(Family::class);
