@@ -81,11 +81,9 @@
             <button
               type="button"
               @click="update_step('facilities', 'تعديل المرافق الإساسية')"
-              class="border-blue-500 border rounded-lg"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
             >
-              <span
-                :class="{ 'text-gray-900 font-bold': active_step === 'facilities' }"
-                class="text-gray-500 hover:text-gray-900"
+              <span :class="{ 'text-gray-900 font-bold': active_step === 'facilities' }"
                 >المرافق
               </span>
             </button>
