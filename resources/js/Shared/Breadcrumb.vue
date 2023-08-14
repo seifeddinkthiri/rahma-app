@@ -4,6 +4,7 @@
     <div class="px-4 py-2 bg-white rounded-lg shadow">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-4">
+          <li></li>
           <li>
             <button
               @click="updateHorW('husband')"
