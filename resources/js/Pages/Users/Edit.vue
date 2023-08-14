@@ -2,12 +2,15 @@
   <div class="p-6 bg-white rounded-md shadow">
     <Head :title="`${form.first_name} ${form.last_name}`" />
     <div class="relative">
-      <img
-        v-if="user.photo"
-        class="w-32 h-32 rounded absolute top-0 left-0 -mt-6 -ml-6 pt-6 pl-6"
-        :src="user.photo"
-      />
+      <div>
+        <img
+          v-if="user.photo"
+          class="w-18 h-18 rounded absolute top-0 left-0 border border-indigo-600"
+          :src="user.photo"
+        />
+      </div>
     </div>
+    <br />
     <div class="flex justify-start mb-8 max-w-xl">
       <h1 class="text-xl font-bold">
         <Link class="text-indigo-400 hover:text-indigo-600" href="/users"
