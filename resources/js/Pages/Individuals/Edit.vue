@@ -387,7 +387,7 @@
                 id="title"
                 v-model="files_form.title"
                 :error="files_form.errors.title"
-                placeholder="اكتب عنوان الملف ..."
+                placeholder="اكتب عنوان الملف "
                 class="w-full"
                 label="العنوان"
               />
@@ -809,7 +809,7 @@
                   id="allocation_price"
                   name="allocation_price"
                   rows="5"
-                  placeholder="اكتب سعر الكراء  ..."
+                  placeholder="اكتب سعر الكراء  "
                   class="w-full"
                 />
               </div>
@@ -825,7 +825,7 @@
                 id="homeDescription"
                 name="homeDescription"
                 rows="5"
-                placeholder="اكتب وصف المسكن ..."
+                placeholder="اكتب وصف المسكن "
                 class="w-full"
               ></TextareaInput>
             </div>
@@ -883,7 +883,7 @@
                   id="allocation_price"
                   name="allocation_price"
                   rows="5"
-                  placeholder="اكتب سعر الكراء  ..."
+                  placeholder="اكتب سعر الكراء  "
                   class="w-full"
                 />
               </div>
@@ -900,7 +900,7 @@
                 id="homeDescription"
                 name="homeDescription"
                 rows="5"
-                placeholder="اكتب وصف المسكن ..."
+                placeholder="اكتب وصف المسكن "
                 class="w-full"
               ></TextareaInput>
             </div>
@@ -942,7 +942,7 @@
                 id="title"
                 v-model="notes_form.title"
                 :error="notes_form.errors.title"
-                placeholder="اكتب عنوان الملاحظة ..."
+                placeholder="اكتب عنوان الملاحظة "
                 class="w-full"
               />
               <label
@@ -956,7 +956,7 @@
                 id="message"
                 name="message"
                 rows="5"
-                placeholder="اكتب تفاصيل الملاحظة ..."
+                placeholder="اكتب تفاصيل الملاحظة "
                 class="w-full"
               ></textarea>
             </div>
@@ -997,7 +997,7 @@
                 id="title"
                 v-model="notes_form_update.title"
                 :error="notes_form_update.errors.title"
-                placeholder="اكتب عنوان الملاحظة ..."
+                placeholder="اكتب عنوان الملاحظة "
                 class="w-full"
               />
               <label
@@ -1011,7 +1011,7 @@
                 id="message"
                 name="message"
                 rows="5"
-                placeholder="اكتب تفاصيل الملاحظة ..."
+                placeholder="اكتب تفاصيل الملاحظة "
                 class="w-full"
               ></textarea>
             </div>

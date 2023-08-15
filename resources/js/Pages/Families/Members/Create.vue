@@ -19,7 +19,7 @@
             :error="home_form.errors.status"
             v-model="home_form.status"
             class="form-input"
-            ><option disabled hidden>إختر وضعية المسكن</option>
+            ><option :value="null" disabled hidden>إختر وضعية المسكن</option>
             <option value="Ownership">ملك</option>
             <option value="without compensation">بدون مقابل</option>
             <option value="inherited">ورثة</option>
@@ -37,7 +37,7 @@
               id="allocation_price"
               name="allocation_price"
               rows="5"
-              placeholder="اكتب سعر الكراء  ..."
+              placeholder="اكتب سعر الكراء"
               class="w-full"
             />
           </div>
@@ -53,7 +53,7 @@
             id="homeDescription"
             name="homeDescription"
             rows="5"
-            placeholder="اكتب وصف المسكن ..."
+            placeholder="اكتب وصف المسكن"
             class="w-full"
           ></TextareaInput>
         </div>
@@ -127,7 +127,7 @@
             id="title"
             v-model="notes_form.title"
             :error="notes_form.errors.title"
-            placeholder="اكتب عنوان الملاحظة ..."
+            placeholder="اكتب عنوان الملاحظة"
             class="w-full"
           />
           <label for="message" class="block mb-2 mt-6 text-gray-700 text-sm font-bold">
@@ -139,7 +139,7 @@
             id="message"
             name="message"
             rows="5"
-            placeholder="اكتب تفاصيل الملاحظة ..."
+            placeholder="اكتب تفاصيل الملاحظة"
             class="w-full"
           ></TextareaInput>
         </div>
@@ -236,7 +236,7 @@
               label="مدينة الولادة"
               :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر المدينة</option>
+              <option :value="null" disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -333,7 +333,7 @@
               label="الفرد"
               :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر نوع الفرد</option>
+              <option :value="null" disabled hidden>إختر نوع الفرد</option>
 
               <option value="child">إبن</option>
               <option value="elderly">مسن</option>

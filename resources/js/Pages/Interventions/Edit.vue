@@ -110,6 +110,7 @@
               v-model="form.title"
               :error="form.errors.title"
               class="pb-8 pr-6 w-full lg:w-1/2"
+              placeholder="عنوان الملف هنا"
               label="عنوان الملف"
             />
           </div>

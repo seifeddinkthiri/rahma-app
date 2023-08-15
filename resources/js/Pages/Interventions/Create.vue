@@ -80,6 +80,7 @@
               id="intervenor"
               v-model="form.intervenor"
               :error="form.errors.intervenor"
+              placeholder="إسم المسؤل هنا"
               label="إسم المسؤل"
             />
             <text-input
@@ -87,6 +88,7 @@
               id="intervenor"
               v-model="form.intervenor_phone"
               :error="form.errors.intervenor_phone"
+              placeholder="هاتف المسؤل هنا"
               label="هاتف المسؤل"
             />
             <TextAreaInput
@@ -94,6 +96,7 @@
               id="notes"
               v-model="form.notes"
               :error="form.errors.notes"
+              placeholder="اكتب ملاحظاتك هنا"
               label="ملاحظات"
             />
             <file-input
@@ -108,6 +111,7 @@
               :error="form.errors.title"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="عنوان الملف"
+              placeholder="عنوان الملف هنا"
             />
           </div>
           <div

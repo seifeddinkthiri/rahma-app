@@ -76,7 +76,7 @@
     <br />
     <div ref="members" class="bg-white rounded-md shadow overflow-hidden">
       <br />
-      <div class="flex flex-row items-center justify-around w-full">
+      <div class="flex flex-row items-center justify-around w-full pr-4">
         <Link
           :href="`/members/${family.id}/create_new_one`"
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
@@ -200,7 +200,7 @@
                 id="title"
                 v-model="notes_form.title"
                 :error="notes_form.errors.title"
-                placeholder="اكتب عنوان الملاحظة ..."
+                placeholder="اكتب عنوان الملاحظة "
                 class="w-full"
               />
               <label
@@ -214,7 +214,7 @@
                 id="message"
                 name="message"
                 rows="5"
-                placeholder="اكتب تفاصيل الملاحظة ..."
+                placeholder="اكتب تفاصيل الملاحظة "
                 class="w-full"
               ></textarea>
             </div>
@@ -255,7 +255,7 @@
                 id="title"
                 v-model="notes_form_update.title"
                 :error="notes_form_update.errors.title"
-                placeholder="اكتب عنوان الملاحظة ..."
+                placeholder="اكتب عنوان الملاحظة "
                 class="w-full"
               />
               <label
@@ -269,7 +269,7 @@
                 id="message"
                 name="message"
                 rows="5"
-                placeholder="اكتب تفاصيل الملاحظة ..."
+                placeholder="اكتب تفاصيل الملاحظة "
                 class="w-full"
               ></textarea>
             </div>
@@ -297,7 +297,7 @@
     <br />
     <div ref="facilities" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="edit_facilities"
@@ -375,7 +375,7 @@
     <br />
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="openNoteModal"
@@ -462,7 +462,7 @@
                 id="title"
                 v-model="files_form.title"
                 :error="files_form.errors.title"
-                placeholder="اكتب عنوان الملف ..."
+                placeholder="اكتب عنوان الملف "
                 class="w-full"
                 label="العنوان"
               />
@@ -498,7 +498,7 @@
     <br />
     <div ref="files" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="show_file_modal = true"
@@ -649,10 +649,10 @@
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <table class="table-auto w-full text-right">
         <thead class="text-right">
-          <tr class="text-right font-bold">
-            <th class="pb-4 pt-6 px-6">النوع</th>
-            <th class="pb-4 pt-6 px-6">القيمة</th>
-            <th class="pb-4 pt-6 px-6">المتدخل</th>
+          <tr class="text-right font-bold h-12">
+            <th class="pr-4">النوع</th>
+            <th class="pr-4">القيمة</th>
+            <th class="pr-4">المتدخل</th>
           </tr>
         </thead>
         <tbody>
@@ -702,7 +702,7 @@
     <br />
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="openHomeModal"
@@ -714,9 +714,9 @@
       <br />
       <table class="w-full whitespace-nowrap">
         <thead>
-          <tr class="text-right font-bold">
-            <th class="pb-4 pt-6 px-6">الوضعية القانونية</th>
-            <th class="pb-4 pt-6 px-6">سعر الكراء</th>
+          <tr class="text-right h-12 font-bold">
+            <th>الوضعية القانونية</th>
+            <th>سعر الكراء</th>
           </tr>
         </thead>
         <tbody>
@@ -783,7 +783,7 @@
           <div class="w-96 h-auto bg-white rounded shadow-xl">
             <div class="p-6">
               <select-input v-model="home_form.status" class="form-input">
-                <option disabled hidden>الوضعية القانونية</option>
+                <option disabled hidden selected :value="null">الوضعية القانونية</option>
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>
@@ -801,7 +801,7 @@
                   id="allocation_price"
                   name="allocation_price"
                   rows="5"
-                  placeholder="اكتب سعر الكراء  ..."
+                  placeholder="اكتب سعر الكراء  "
                   class="w-full"
                 />
               </div>
@@ -817,7 +817,7 @@
                 id="homeDescription"
                 name="homeDescription"
                 rows="5"
-                placeholder="اكتب وصف المسكن ..."
+                placeholder="اكتب وصف المسكن "
                 class="w-full"
               ></TextareaInput>
             </div>
@@ -871,7 +871,7 @@
                   id="allocation_price"
                   name="allocation_price"
                   rows="5"
-                  placeholder="اكتب سعر الكراء  ..."
+                  placeholder="اكتب سعر الكراء  "
                   class="w-full"
                 />
               </div>
@@ -888,7 +888,7 @@
                 id="homeDescription"
                 name="homeDescription"
                 rows="5"
-                placeholder="اكتب وصف المسكن ..."
+                placeholder="اكتب وصف المسكن "
                 class="w-full"
               ></TextareaInput>
             </div>
