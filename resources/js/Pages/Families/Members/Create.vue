@@ -288,19 +288,6 @@
               :disabled="isFormDisabled"
             />
           </div>
-          <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <button
-              @click="active_step = 'part2'"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              التالي
-            </button>
-          </div>
-        </div>
-        <div ref="part2" v-if="active_step == 'part2'">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
               v-model="form.social_status"
@@ -393,13 +380,6 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-              @click="active_step = 'part1'"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              عودة
-            </button>
             <!-- Add a spacer element to create space between the buttons -->
             <div class="w-4"></div>
             <loading-button
@@ -449,7 +429,7 @@ export default {
       isFormDisabled: false,
       HorW: "husband",
       active_step: "part1",
-      current_form_title: "",
+      current_form_title: "أضف بيانات الزوج",
       current_form: "childrens",
       notes_form: this.$inertia.form({
         title: null,
@@ -552,16 +532,16 @@ export default {
     },
     define_facilities() {
       this.facilities_form.put(`/facilities/${this.Family.id}`);
-      this.active_step = "notes";
-      this.current_form_title = "أضف  ملاحظة";
+      this.active_step = "home";
+      this.current_form_title = "بيانات المسكن";
     },
 
     save_home() {
       this.home_form.post(`/home/${this.Family.id}`, {
         preserveScroll: true,
         onSuccess: () => {
-          this.active_step = "facilities";
-          this.current_form_title = "تعديل المرافق الإساسية";
+          this.active_step = "notes";
+          this.current_form_title = " أضف ملاحظة";
         },
       });
     },
@@ -582,6 +562,7 @@ export default {
             this.form.reset();
             this.active_step = "part1";
             this.HorW = "wife";
+            this.current_form_title = "أضف بيانات الزوجة";
           },
         });
       } else if (this.HorW == "wife") {
