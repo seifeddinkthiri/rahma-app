@@ -19,7 +19,7 @@
             :error="home_form.errors.status"
             v-model="home_form.status"
             class="form-input"
-          >
+            ><option disabled hidden>إختر وضعية المسكن</option>
             <option value="Ownership">ملك</option>
             <option value="without compensation">بدون مقابل</option>
             <option value="inherited">ورثة</option>
@@ -236,6 +236,7 @@
               label="مدينة الولادة"
               :disabled="isFormDisabled"
             >
+              <option disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -293,7 +294,7 @@
               label="الحالة المدنية "
               :disabled="isFormDisabled"
             >
-              <option :value="null" />
+              <option disabled hidden :value="null">إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
               <option value="divorced">مطلق/مطلقة</option>
@@ -332,6 +333,8 @@
               label="الفرد"
               :disabled="isFormDisabled"
             >
+              <option disabled hidden>إختر نوع الفرد</option>
+
               <option value="child">إبن</option>
               <option value="elderly">مسن</option>
               <option value="other_member">فرد آخر</option>

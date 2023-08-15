@@ -20,7 +20,7 @@
             :error="home_form.errors.status"
             v-model="home_form.status"
             class="form-input"
-          >
+            ><option hidden disabled :value="null">إختر وضعية المسكن</option>
             <option value="Ownership">ملك</option>
             <option value="without compensation">بدون مقابل</option>
             <option value="inherited">ورثة</option>

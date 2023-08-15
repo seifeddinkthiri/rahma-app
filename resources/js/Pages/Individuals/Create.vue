@@ -56,6 +56,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
             >
+              <option hidden disabled :value="null">إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -124,7 +125,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
             >
-              <option :value="null" />
+              <option disabled hidden>إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
               <option value="divorced">مطلق/مطلقة</option>
@@ -148,7 +149,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label=" الجنس "
             >
-              <option :value="null" />
+              <option hidden disabled :value="null">إختر الجنس</option>
               <option value="male">ذكر</option>
               <option value="female">أنثى</option>
             </select-input>

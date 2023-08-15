@@ -51,7 +51,7 @@
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
-            >
+              ><option disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -117,7 +117,7 @@
               label="الحالة المدنية "
               :disabled="isFormDisabled"
             >
-              <option :value="null" />
+              <option disabled hidden>إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
               <option value="divorced">مطلق/مطلقة</option>
@@ -151,8 +151,8 @@
               v-model="form.kinship"
               :error="form.errors.kinship"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="القرابة العائلية"
-            >
+              label="  نوع الفرد"
+              ><option disabled hidden>إختر نوع الفرد</option>
               <option value="husband">زوج</option>
               <option value="wife">زوجة</option>
               <option value="child">إبن</option>

@@ -70,7 +70,7 @@
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
-            >
+              ><option hidden disabled :value="null">إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -156,7 +156,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
             >
-              <option :value="null" />
+              <option disabled hidden>إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
               <option value="divorced">مطلق/مطلقة</option>
@@ -180,7 +180,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label=" الجنس "
             >
-              <option :value="null" />
+              <option hidden disabled :value="null">إختر الجنس</option>
               <option value="male">ذكر</option>
               <option value="female">أنثى</option>
             </select-input>
@@ -503,6 +503,7 @@
                 label="نوع التدخل"
                 :error="intervention_form.errors.type"
               >
+                <option hidden disabled :value="null">إختر النوع</option>
                 <option value="shipmets">عيني</option>
                 <option value="cash ">نقدي</option>
               </select-input>
@@ -640,7 +641,6 @@
       </div>
       <br />
       <table class="w-full whitespace-nowrap">
-
         <tbody>
           <tr
             v-for="note in individual.notes.data"
@@ -791,6 +791,7 @@
                 الوضعية القانونية
               </label>
               <select-input v-model="home_form.status" class="form-input">
+                <option disabled hidden>إختر وضعية المسكن</option>
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>
@@ -863,6 +864,8 @@
               </label>
 
               <select-input v-model="home_form_update.status" class="form-input">
+                <option disabled hidden>إختر وضعية المسكن</option>
+
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>

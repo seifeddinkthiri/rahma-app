@@ -4,7 +4,7 @@
     <div class="relative">
       <button
         @click="show_intervention_modal = true"
-        class="absolute left-0 mt-4 ml-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        class="absolute left-0 ml-4 mt-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
       >
         أضف تدخل
       </button>
@@ -54,7 +54,7 @@
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button
             v-if="!family.deleted_at"
-            class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
+            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:ring-red-600 focus:ring-opacity-50"
             tabindex="-1"
             type="button"
             @click="destroy"
@@ -76,7 +76,7 @@
     <br />
     <div ref="members" class="bg-white rounded-md shadow overflow-hidden">
       <br />
-      <div class="flex items-center w-full flex-row justify-around">
+      <div class="flex flex-row items-center justify-around w-full">
         <Link
           :href="`/members/${family.id}/create_new_one`"
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
@@ -84,7 +84,7 @@
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
-        <p v-if="form.name == null" class="text-red-600 px-6">
+        <p v-if="form.name == null" class="px-6 text-red-600">
           يجب تعيين معيل أسرة لهذه العائلة
         </p>
       </div>
@@ -94,7 +94,7 @@
             <tr class="text-right font-bold">
               <th class="pb-4 pt-6 px-6">الاسم</th>
               <th class="pb-4 pt-6 px-6">القرابة</th>
-              <th class="pb-4 pt-6 px-6 w-full flex flex-row justify-around">
+              <th class="flex flex-row justify-around pb-4 pt-6 px-6 w-full">
                 معيل الأسرة
                 <icon v-if="form.name == null" name="error" class="mr-2 w-4 h-4" />
               </th>
@@ -575,9 +575,9 @@
               <select-input
                 v-model="intervention_form.type"
                 class="pb-8 pr-6 w-full lg:w-1/2"
-                label="نوع التدخل"
                 :error="intervention_form.errors.type"
               >
+                <option hidden disabled :value="null">نوع التدخل</option>
                 <option value="shipmets">عيني</option>
                 <option value="cash ">نقدي</option>
               </select-input>
@@ -587,7 +587,6 @@
                 :id="intervention_form.type === 'shipmets' ? 'shipmets' : 'cash'"
                 v-model="intervention_form.value"
                 :error="intervention_form.errors.value"
-                label="قيمة التدخل"
                 :placeholder="
                   intervention_form.type === null
                     ? 'القيمة'
@@ -602,21 +601,21 @@
                 id="intervenor"
                 v-model="intervention_form.intervenor"
                 :error="intervention_form.errors.intervenor"
-                label="إسم المسؤل"
+                placeholder="إسم المسؤل هنا"
               />
               <text-input
                 class="pb-8 pr-6 w-full lg:w-1/2"
                 id="intervenor"
                 v-model="intervention_form.intervenor_phone"
                 :error="intervention_form.errors.intervenor_phone"
-                label="هاتف المسؤل"
+                placeholder="هاتف المسؤل هنا"
               />
               <TextAreaInput
                 class="pb-8 pr-6 w-full lg:w-1/2"
                 id="notes"
                 v-model="intervention_form.notes"
                 :error="intervention_form.errors.notes"
-                label="ملاحظات"
+                placeholder="اكتب ملاحظاتك"
               />
               <file-input
                 v-model="intervention_form.file"
@@ -648,7 +647,7 @@
       </div>
     </div>
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
-      <table class="w-full text-right table-auto">
+      <table class="table-auto w-full text-right">
         <thead class="text-right">
           <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">النوع</th>
@@ -660,9 +659,9 @@
           <tr
             v-for="intervention in family.interventions"
             :key="intervention.id"
-            class="hover:bg-gray-100 h-16 focus-within:bg-gray-100"
+            class="h-16 hover:bg-gray-100 focus-within:bg-gray-100"
           >
-            <td class="border-t px-6 py-4">
+            <td class="px-6 py-4 border-t">
               <Link
                 class="flex items-center"
                 :href="`/interventions/${intervention.id}/edit`"
@@ -673,7 +672,7 @@
                 </p>
               </Link>
             </td>
-            <td class="border-t px-6 py-4">
+            <td class="px-6 py-4 border-t">
               <Link
                 class="flex items-center"
                 :href="`/interventions/${intervention.id}/edit`"
@@ -682,7 +681,7 @@
                 <p class="whitespace-nowrap">{{ intervention.value }}</p>
               </Link>
             </td>
-            <td class="border-t px-6 py-4">
+            <td class="px-6 py-4 border-t">
               <Link
                 class="flex items-center"
                 :href="`/interventions/${intervention.id}/edit`"
@@ -783,10 +782,8 @@
         <form @submit.prevent="save_home">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
             <div class="p-6">
-              <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
-                الوضعية القانونية
-              </label>
               <select-input v-model="home_form.status" class="form-input">
+                <option disabled hidden>الوضعية القانونية</option>
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>
@@ -854,11 +851,9 @@
         <form @submit.prevent="update_home">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
             <div class="p-6">
-              <label for="homeStatus" class="block mb-2 text-gray-700 text-sm font-bold">
-                الوضعية القانونية
-              </label>
-
               <select-input v-model="home_form_update.status" class="form-input">
+                <option disabled hidden>الوضعية القانونية</option>
+
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>

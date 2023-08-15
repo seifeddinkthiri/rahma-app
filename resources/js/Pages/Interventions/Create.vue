@@ -18,6 +18,7 @@
             >
               <option value="family">عائلة</option>
               <option value="individual">فرد</option>
+              <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
             </select-input>
             <select-input
               v-if="beneficial == 'family'"
@@ -25,6 +26,8 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العائلة"
             >
+              <option hidden disabled :value="null">إختر العائلة</option>
+
               <option v-for="family in filteredFamilies" :value="family.id">
                 {{ family.caregiver_phone }} - {{ family.name }}
               </option>
@@ -38,6 +41,8 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الفرد"
             >
+              <option hidden disabled :value="null">إختر المنتفع</option>
+
               <option v-for="indiv in individuals" :value="indiv.id">
                 {{ indiv.phone }} - {{ indiv.name }}
               </option>
@@ -49,6 +54,7 @@
               label="نوع التدخل"
               :error="form.errors.type"
             >
+              <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
               <option value="shipmets">عيني</option>
               <option value="cash ">نقدي</option>
             </select-input>

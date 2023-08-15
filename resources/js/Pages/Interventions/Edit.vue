@@ -21,7 +21,9 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="نوع التدخل"
           >
-            <option value="shipments">بضائع</option>
+            <option value="" disabled hidden>إختر نوع التدخل</option>
+
+            <option value="shipments">عيني</option>
             <option value="cash">نقد</option>
           </select-input>
 
