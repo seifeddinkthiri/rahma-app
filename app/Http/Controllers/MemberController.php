@@ -202,14 +202,24 @@ class MemberController extends Controller
             'disability_card_number' => ['nullable', 'integer', 'digits:8'],
         ]);
 
-        $Member->healthStatus()->update([
-            'health_insurance' => Request::input('health_insurance'),
-            'good' => Request::input('good'),
-            'disease' => Request::input('disease'),
-            'disability' => Request::input('disability'),
-            'disability_card_number' => Request::input('disability_card_number'),
-        ]);
 
+        if (Request::get('good') == true) {
+            $Member->healthStatus()->update([
+                'health_insurance' => Request::get('health_insurance'),
+                'good' => Request::get('good'),
+                'disease' => null,
+                'disability' => null,
+                'disability_card_number' => null,
+            ]);
+        } else {
+            $Member->healthStatus()->update([
+                'health_insurance' => Request::get('health_insurance'),
+                'good' => Request::get('good'),
+                'disease' => Request::get('disease'),
+                'disability' => Request::get('disability'),
+                'disability_card_number' => Request::get('disability_card_number'),
+            ]);
+        }
         return redirect()->route('members.edit', ['member' => $Member])->with('success', 'تم تحديث الحالة الصحية للعضو ');
     }
 
@@ -245,7 +255,6 @@ class MemberController extends Controller
                 ]
             );
             Request::file('photo')->move(public_path('uploads'), $Member->photo);
-
         }
 
         if ($Member->caregiver) {
@@ -287,14 +296,14 @@ class MemberController extends Controller
         $member = Auth::user()->account->members()->create($validatedData);
 
         if (Request::file('photo')) {
-                   $member->update(
-                    [
-                        'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+            $member->update(
+                [
+                    'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
 
-                    ]
-                   );
-                  Request::file('photo')->move(public_path('uploads'), $member->photo);
-              }
+                ]
+            );
+            Request::file('photo')->move(public_path('uploads'), $member->photo);
+        }
 
 
         // Create the health status

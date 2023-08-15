@@ -11,7 +11,7 @@
     </trashed-message>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
-        <div ref="part1" v-if="active_step == 1">
+        <div ref="part1">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
               v-model="form.name"
@@ -76,46 +76,15 @@
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <div class="mr-3">
-              <button
-                @click="destroy"
-                v-if="!member.deleted_at"
-                class="px-4 py-2 bg-red-500 text-white font-semibold rounded shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
-              >
-                حذف
-              </button>
-            </div>
-
-            <div class="mr-3">
-              <button
-                @click="active_step = 2"
-                class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-                type="button"
-              >
-                التالي
-              </button>
-            </div>
-
-            <div class="mr-3">
-              <loading-button
-                :loading="form.processing"
-                class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-                type="submit"
-              >
-                تسجيل التعديلات
-              </loading-button>
-            </div>
-          </div>
+          ></div>
         </div>
-        <div ref="part2" v-if="active_step == 2">
+        <div ref="part2">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
-              :disabled="isFormDisabled"
             >
               <option disabled hidden>إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
@@ -172,14 +141,15 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-              @click="active_step = 1"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              العودة
-            </button>
-
+            <div class="mr-3">
+              <button
+                @click="destroy"
+                v-if="!member.deleted_at"
+                class="px-4 py-2 text-white font-semibold bg-red-500 hover:bg-red-600 rounded focus:outline-none shadow-md focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+              >
+                حذف
+              </button>
+            </div>
             <div class="mr-3">
               <loading-button
                 :loading="form.processing"
@@ -196,7 +166,7 @@
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update_health_status">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <div class="w-full flex flex-row flex-nowrap">
+          <div class="flex flex-row flex-nowrap w-full">
             <ToggleCheckbox
               :id="'health_insurance'"
               :class="'lg:w-1/2'"
@@ -217,31 +187,31 @@
             />
           </div>
           <div v-if="health_status_form.good == false" class="w-full">
-            <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-              <div class="w-full flex flex-row flex-nowrap">
-                <text-input
-                  class="pb-8 pr-6 w-full"
-                  id="disease"
-                  :error="health_status_form.errors.disease"
-                  v-model="health_status_form.disease"
-                  label=" المرض المزمن"
-                />
-              </div>
-              <div class="w-full flex flex-row flex-nowrap">
-                <text-input
-                  class="pb-8 pr-6 w-full"
-                  id="disability"
-                  v-model="health_status_form.disability"
-                  :error="health_status_form.errors.disability"
-                  label=" الإعاقة"
-                />
-                <text-input
-                  v-model="health_status_form.disability_card_number"
-                  :error="health_status_form.errors.disability_card_number"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  label="رقم بطاقة الإعاقة"
-                />
-              </div>
+            <div class="flex flex-row flex-nowrap w-full">
+              <text-input
+                class="pb-8 pr-6 w-full"
+                id="disease"
+                :error="health_status_form.errors.disease"
+                v-model="health_status_form.disease"
+                label="مرض مزمن"
+                placeholder="  المرض المزمن هنا"
+              />
+              <text-input
+                class="pb-8 pr-6 w-full"
+                id="disability"
+                v-model="health_status_form.disability"
+                :error="health_status_form.errors.disability"
+                label=" إعاقة"
+                placeholder="الإعاقة هنا"
+              />
+
+              <text-input
+                v-model="health_status_form.disability_card_number"
+                :error="health_status_form.errors.disability_card_number"
+                class="pb-8 pr-6 w-full lg:w-1/2"
+                label="رقم بطاقة الإعاقة"
+                placeholder="الرقم هنا"
+              />
             </div>
           </div>
         </div>
@@ -300,7 +270,6 @@ export default {
 
   data() {
     return {
-      active_step: 1,
       healthStatusFields: [],
       health_status_form: this.$inertia.form({
         good: this.member.healthStatus.good,
