@@ -504,20 +504,20 @@
                 :error="intervention_form.errors.type"
               >
                 <option hidden disabled :value="null">إختر النوع</option>
-                <option value="shipmets">عيني</option>
+                <option value="shipments">عيني</option>
                 <option value="cash ">نقدي</option>
               </select-input>
 
               <text-input
                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-                :id="intervention_form.type === 'shipmets' ? 'shipmets' : 'cash'"
+                :id="intervention_form.type === 'shipments' ? 'shipments' : 'cash'"
                 v-model="intervention_form.value"
                 :error="intervention_form.errors.value"
                 label="قيمة التدخل"
                 :placeholder="
                   intervention_form.type === null
                     ? 'القيمة'
-                    : intervention_form.type === 'shipmets'
+                    : intervention_form.type === 'shipments'
                     ? 'الكمية'
                     : 'المبلغ'
                 "

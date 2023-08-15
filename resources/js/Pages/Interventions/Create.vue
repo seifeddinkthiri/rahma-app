@@ -12,16 +12,17 @@
         <div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
-              v-model="beneficial"
+              v-model="form.beneficial"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="المنتفع"
+              label="نوع المنتفع"
+              :error="form.errors.beneficial"
             >
+              <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة</option>
               <option value="individual">فرد</option>
-              <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
             </select-input>
             <select-input
-              v-if="beneficial == 'family'"
+              v-if="form.beneficial == 'family'"
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العائلة"
@@ -36,7 +37,7 @@
               </option>
             </select-input>
             <select-input
-              v-if="beneficial == 'individual'"
+              v-if="form.beneficial == 'individual'"
               v-model="form.individual"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الفرد"
@@ -55,20 +56,20 @@
               :error="form.errors.type"
             >
               <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
-              <option value="shipmets">عيني</option>
+              <option value="shipments">عيني</option>
               <option value="cash ">نقدي</option>
             </select-input>
 
             <text-input
               v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-              :id="form.type === 'shipmets' ? 'shipmets' : 'cash'"
+              :id="form.type === 'shipments' ? 'shipments' : 'cash'"
               v-model="form.value"
               :error="form.errors.value"
               label="قيمة التدخل"
               :placeholder="
                 form.type === null
                   ? 'القيمة'
-                  : form.type === 'shipmets'
+                  : form.type === 'shipments'
                   ? 'الكمية'
                   : 'المبلغ'
               "
@@ -153,9 +154,9 @@ export default {
   remember: "form",
   data() {
     return {
-      beneficial: "",
       show_second_form_part: false,
       form: this.$inertia.form({
+        beneficial: null,
         type: null,
         value: null,
         intervenor: null,

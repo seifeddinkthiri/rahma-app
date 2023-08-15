@@ -38,53 +38,53 @@ class InterventionController extends Controller
         $families = Family::select('id', 'name', 'caregiver_phone')->get();
         $individuals = Individual::select('id', 'name', 'phone')->get();
 
-        return Inertia::render('Interventions/Create', compact('families','individuals'));
+        return Inertia::render('Interventions/Create', compact('families', 'individuals'));
     }
 
     public function store()
     {
-       $family =Request::get('family');
-       $individual =Request::get('individual');
+        $family = Request::get('family');
+        $individual = Request::get('individual');
 
-       if (!$family && !$individual) {
-        return Redirect::back()->with('error', 'يجب إختيار منتفع');
+        if (!$family && !$individual) {
+            return Redirect::back()->with('error', 'يجب إختيار منتفع');
+        } else {
 
-       } else {
-
-        Request::validate([
-            'type' => ['required', 'string', 'max:100'],
-            'intervenor' => ['nullable', 'string', 'max:50'],
-            'intervenor_phone' => ['required', 'numeric', 'digits:8'],
-            'notes' => ['nullable'],
-        ]);
-        $intervention = Auth::user()->account->interventions()->create([
-            'type' => Request::get('type'),
-            'value' => Request::get('value'),
-            'family_id' => Request::get('family'),
-            'individual_id' => Request::get('individual'),
-            'intervenor' => Request::get('intervenor'),
-            'intervenor_phone' => Request::get('intervenor_phone'),
-            'notes' => Request::get('notes'),
-
-        ]);
-
-
-        if (Request::file('file')) {
-            $file = $intervention->files()->create([
-                'title' =>Request::input('title'),
-                'file' =>Request::file('file') ?Request::file('file')->store('uploads/files') : null,
+            Request::validate([
+                'type' => ['required', 'string', 'max:100'],
+                'intervenor' => ['nullable', 'string', 'max:50'],
+                'intervenor_phone' => ['required', 'numeric', 'digits:8'],
+                'notes' => ['nullable'],
             ]);
-           Request::file('file')->move(public_path('uploads/files'), $file->file);
+            $intervention = Auth::user()->account->interventions()->create([
+                'type' => Request::get('type'),
+                'value' => Request::get('value'),
+                'family_id' => Request::get('family'),
+                'individual_id' => Request::get('individual'),
+                'intervenor' => Request::get('intervenor'),
+                'intervenor_phone' => Request::get('intervenor_phone'),
+                'notes' => Request::get('notes'),
+
+            ]);
+
+
+            if (Request::file('file')) {
+                $file = $intervention->files()->create([
+                    'title' => Request::input('title'),
+                    'file' => Request::file('file') ? Request::file('file')->store('uploads/files') : null,
+                ]);
+                Request::file('file')->move(public_path('uploads/files'), $file->file);
+            }
+
+            return Redirect::back()->with('success', 'تم إنشاء التدخل.');
         }
-
-        return Redirect::back()->with('success', 'تم إنشاء التدخل.');
-       }
-
-
     }
 
     public function edit(Intervention $intervention)
     {
+        $families = Family::select('id', 'name', 'caregiver_phone')->get();
+        $individuals = Individual::select('id', 'name', 'phone')->get();
+
         return Inertia::render('Interventions/Edit', [
             'intervention' => [
                 'id' => $intervention->id,
@@ -95,8 +95,12 @@ class InterventionController extends Controller
                 'intervenor' => $intervention->intervenor,
                 'intervenor_phone' => $intervention->intervenor_phone,
                 'notes' => $intervention->notes,
+                'notes' => $intervention->notes,
+
                 'deleted_at' => $intervention->deleted_at,
             ],
+            'families' => $families,
+            'individuals' => $individuals,
         ]);
     }
 
@@ -131,10 +135,10 @@ class InterventionController extends Controller
         );
         if (Request::file('file')) {
             $file = $intervention->files()->create([
-                'title' =>Request::input('title'),
-                'file' =>Request::file('file') ?Request::file('file')->store('uploads/files') : null,
+                'title' => Request::input('title'),
+                'file' => Request::file('file') ? Request::file('file')->store('uploads/files') : null,
             ]);
-           Request::file('file')->move(public_path('uploads/files'), $file->file);
+            Request::file('file')->move(public_path('uploads/files'), $file->file);
         }
 
         return Redirect::back()->with('success', 'تم تحديث التدخل.');

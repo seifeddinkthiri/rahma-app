@@ -207,7 +207,7 @@
           <Link :href="`/interventions/${intervention.id}/show`">
             <h3 class="mb-2 text-xl">
               <p v-if="intervention.type == 'cash'">النوع: نقدي</p>
-              <p v-if="intervention.type == 'shipmets'">النوع :عيني</p>
+              <p v-if="intervention.type == 'shipments'">النوع :عيني</p>
             </h3>
             <h3 class="mb-2 text-xl">القيمة : {{ intervention.value }}</h3>
             <h3 class="mb-2 text-xl">المتدخل :{{ intervention.intervenor }}</h3>
