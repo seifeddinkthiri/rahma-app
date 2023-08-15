@@ -202,18 +202,7 @@
               label="الإسم"
               :disabled="isFormDisabled"
             />
-            <select-input
-              v-if="HorW !== 'husband' && HorW !== 'wife'"
-              v-model="form.kinship"
-              :error="form.errors.kinship"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الفرد"
-              :disabled="isFormDisabled"
-            >
-              <option value="child">إبن</option>
-              <option value="elderly">مسن</option>
-              <option value="other_member">فرد آخر</option>
-            </select-input>
+
             <text-input
               v-model="form.address"
               :error="form.errors.address"
@@ -233,15 +222,6 @@
               :error="form.errors.phone"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
-              :disabled="isFormDisabled"
-            />
-            <text-input
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              type="date"
-              id="birth_date"
-              v-model="form.birth_date"
-              :error="form.errors.birth_date"
-              label="تاريخ الولادة"
               :disabled="isFormDisabled"
             />
             <select-input
@@ -272,6 +252,15 @@
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
             </select-input>
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="birth_date"
+              v-model="form.birth_date"
+              :error="form.errors.birth_date"
+              label="تاريخ الولادة"
+              :disabled="isFormDisabled"
+            />
 
             <text-input
               v-model="form.job_place"
@@ -325,6 +314,18 @@
               accept="image/*"
               label="الصورة "
             />
+            <select-input
+              v-if="HorW !== 'husband' && HorW !== 'wife'"
+              v-model="form.kinship"
+              :error="form.errors.kinship"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الفرد"
+              :disabled="isFormDisabled"
+            >
+              <option value="child">إبن</option>
+              <option value="elderly">مسن</option>
+              <option value="other_member">فرد آخر</option>
+            </select-input>
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
             <div class="flex flex-row flex-nowrap w-full">
               <ToggleCheckbox
