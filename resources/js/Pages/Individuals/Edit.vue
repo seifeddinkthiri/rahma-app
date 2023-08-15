@@ -27,50 +27,53 @@
             <text-input
               v-model="form.name"
               :error="form.errors.name"
+              placeholder=" الإسم هنا"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
+              :disabled="isFormDisabled"
             />
-            <file-input
-              id="photo"
-              v-model="form.photo"
-              :error="form.errors.photo"
+            <select-input
+              v-model="form.gender"
+              :error="form.errors.gender"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              type="file"
-              accept="image/*"
-              label="الصورة"
-            />
+              label=" الجنس "
+            >
+              <option hidden disabled :value="null">إختر الجنس</option>
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
+            </select-input>
             <text-input
               v-model="form.address"
               :error="form.errors.address"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
+              placeholder=" العنوان هنا"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.cin"
               :error="form.errors.cin"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="بطاقة التعريف الوطنية"
+              placeholder=" بطاقة التعريف الوطنية هنا"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.phone"
               :error="form.errors.phone"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
-            />
-            <text-input
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              type="date"
-              id="birth_date"
-              v-model="form.birth_date"
-              :error="form.errors.birth_date"
-              label="تاريخ الولادة"
+              placeholder="الهاتف هنا"
+              :disabled="isFormDisabled"
             />
             <select-input
               v-model="form.birth_city"
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
-              ><option hidden disabled :value="null">إختر المدينة</option>
+              :disabled="isFormDisabled"
+            >
+              <option :value="null" disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -92,71 +95,42 @@
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
             </select-input>
-          </div>
-          <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <button
-              v-if="!individual.deleted_at"
-              class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
-              tabindex="-1"
-              type="button"
-              @click="destroy"
-            >
-              حذف
-            </button>
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="birth_date"
+              v-model="form.birth_date"
+              :error="form.errors.birth_date"
+              label="تاريخ الولادة"
+              placeholder=" تاريخ الولادة هنا"
+              :disabled="isFormDisabled"
+            />
 
-            <button
-              @click="active_step = 2"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-            <div class="mr-3">
-              <loading-button
-                :loading="form.processing"
-                class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-                type="submit"
-                >تسجيل التعديلات</loading-button
-              >
-            </div>
-          </div>
-        </div>
-        <div ref="part2" v-if="active_step == 2">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
               v-model="form.job_place"
               :error="form.errors.job_place"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
+              placeholder="  مكان العمل هنا"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.job"
               :error="form.errors.job"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العمل"
+              placeholder="   العمل هنا"
+              :disabled="isFormDisabled"
             />
+
             <select-input
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
+              :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر الحالة</option>
+              <option disabled hidden :value="null">إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
               <option value="divorced">مطلق/مطلقة</option>
@@ -167,137 +141,117 @@
               :error="form.errors.monthly_income"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
+              placeholder="الدخل الشهري هنا"
+              :disabled="isFormDisabled"
             />
+
             <text-input
               v-model="form.education_level"
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
+              placeholder=" المستوى الدراسي هنا"
+              :disabled="isFormDisabled"
             />
-            <select-input
-              v-model="form.gender"
-              :error="form.errors.gender"
+            <file-input
+              v-model="form.photo"
+              :error="form.errors.photo"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label=" الجنس "
-            >
-              <option hidden disabled :value="null">إختر الجنس</option>
-              <option value="male">ذكر</option>
-              <option value="female">أنثى</option>
-            </select-input>
+              type="file"
+              accept="image/*"
+              label="الصورة "
+            />
           </div>
           <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+            class="flex items-center pr-4 justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-              v-if="!individual.deleted_at"
-              class="text-red-600 hover:underline"
-              tabindex="-1"
-              type="button"
-              @click="destroy"
-            >
-              حذف
-            </button>
-            <button
-              @click="active_step = 1"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </button>
+            <!-- Add a spacer element to create space between the buttons -->
+            <div class="w-4"></div>
             <loading-button
               :loading="form.processing"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
-              >تسجيل التعديلات</loading-button
             >
+              تسجيل التعديلات
+            </loading-button>
           </div>
         </div>
       </form>
     </div>
-    <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
-    <div class="bg-white rounded-md shadow overflow-hidden">
-      <form @submit.prevent="update_health_status">
-        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <div class="w-full flex flex-row flex-nowrap">
-            <ToggleCheckbox
-              :id="'health_insurance'"
-              :class="'lg:w-1/2'"
-              :isChecked="health_status_form.health_insurance"
-              :label="'التغطية الصحية'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              @toggle="toggle_health_insurance"
-            />
-            <ToggleCheckbox
-              :id="'good'"
-              :class="'lg:w-1/2'"
-              :isChecked="health_status_form.good"
-              :label="'الحالة الصحية'"
-              :active_value="'جيدة'"
-              :inactive_value="'عليلة '"
-              @toggle="toggle_health_Status"
-            />
-          </div>
-          <div v-if="health_status_form.good == false" class="w-full">
-            <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-              <div class="w-full flex flex-row flex-nowrap">
-                <text-input
-                  class="pb-8 pr-6 w-full"
-                  id="disease"
-                  :error="health_status_form.errors.disease"
-                  v-model="health_status_form.disease"
-                  label=" المرض المزمن"
-                />
-              </div>
-              <div class="w-full flex flex-row flex-nowrap">
-                <text-input
-                  class="pb-8 pr-6 w-full"
-                  id="disability"
-                  v-model="health_status_form.disability"
-                  :error="health_status_form.errors.disability"
-                  label=" الإعاقة"
-                />
-                <text-input
-                  v-model="health_status_form.disability_card_number"
-                  :error="health_status_form.errors.disability_card_number"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  label="رقم بطاقة الإعاقة"
-                />
-              </div>
-            </div>
-          </div>
+
+    <p class="mt-12 text-2xl font-bold">البيانات الصحية</p>
+    <br />
+    <div ref="facilities" class="bg-white rounded shadow overflow-hidden">
+      <br />
+      <div class="flex flex-row flex-nowrap w-full pl-2">
+        <ToggleCheckbox
+          :id="'health_insurance'"
+          :class="'lg:w-1/2'"
+          :isChecked="health_status_form.health_insurance"
+          :label="'التغطية الصحية'"
+          :active_value="'نعم'"
+          :inactive_value="'لا'"
+          @toggle="toggle_health_insurance"
+        />
+        <ToggleCheckbox
+          :id="'good'"
+          :class="'lg:w-1/2'"
+          :isChecked="health_status_form.good"
+          :label="'الحالة الصحية'"
+          :active_value="'جيدة'"
+          :inactive_value="'عليلة '"
+          @toggle="toggle_health_Status"
+        />
+      </div>
+      <div v-if="health_status_form.good == false" class="w-full">
+        <div class="flex flex-row flex-nowrap w-full">
+          <text-input
+            class="pb-8 pr-6 w-full"
+            id="disease"
+            :error="health_status_form.errors.disease"
+            v-model="health_status_form.disease"
+            label="مرض مزمن"
+            placeholder="  المرض المزمن هنا"
+          />
+          <text-input
+            class="pb-8 pr-6 w-full"
+            id="disability"
+            v-model="health_status_form.disability"
+            :error="health_status_form.errors.disability"
+            label=" إعاقة"
+            placeholder="الإعاقة هنا"
+            :disabled="isFormDisabled"
+          />
+
+          <text-input
+            v-model="health_status_form.disability_card_number"
+            :error="health_status_form.errors.disability_card_number"
+            class="pb-8 pl-2 pr-6 w-full lg:w-1/2"
+            label="رقم بطاقة الإعاقة"
+            placeholder="الرقم هنا"
+            :disabled="isFormDisabled"
+          />
         </div>
-        <div
-          class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-        >
-          <loading-button
-            :loading="form.processing"
-            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-            type="submit"
-            >تسجيل التعديلات
-          </loading-button>
-        </div>
-      </form>
+      </div>
+<div class="pr-4 pb-4">
+
+  <loading-button
+        :loading="health_status_form.processing"
+        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        type="button"
+        @click="update_health_status"
+      >
+        تسجيل التعديلات
+      </loading-button>
+</div>
     </div>
+
     <!--  -->
     <h2 class="mt-12 text-2xl font-bold">المرافق الأساسية</h2>
     <br />
     <div ref="facilities" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="edit_facilities"
@@ -423,7 +377,7 @@
     <br />
     <div ref="files" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="show_file_modal = true"
@@ -442,7 +396,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                class="flex items-center pr-4 px-6 py-4 focus:text-indigo-500"
                 @click="edit_file(file.id)"
               >
                 <a :href="getFileUrl(file.file)">{{ file.title }}</a>
@@ -458,7 +412,7 @@
               <button
                 @click="destroy_file(file.id)"
                 type="button"
-                class="flex items-center px-4"
+                class="flex items-center pr-4 px-4"
                 tabindex="-1"
               >
                 <svg
@@ -553,7 +507,7 @@
               />
             </div>
             <div
-              class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+              class="flex items-center pr-4 justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
             >
               <button
                 class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
@@ -590,7 +544,7 @@
           >
             <td class="border-t px-6 py-4">
               <Link
-                class="flex items-center"
+                class="flex items-center pr-4"
                 :href="`/interventions/${intervention.id}/edit`"
                 tabindex="-1"
               >
@@ -601,7 +555,7 @@
             </td>
             <td class="border-t px-6 py-4">
               <Link
-                class="flex items-center"
+                class="flex items-center pr-4"
                 :href="`/interventions/${intervention.id}/edit`"
                 tabindex="-1"
               >
@@ -610,7 +564,7 @@
             </td>
             <td class="border-t px-6 py-4">
               <Link
-                class="flex items-center"
+                class="flex items-center pr-4"
                 :href="`/interventions/${intervention.id}/edit`"
                 tabindex="-1"
               >
@@ -630,7 +584,7 @@
     <br />
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="openNoteModal"
@@ -649,7 +603,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-blue-500"
+                class="flex items-center pr-4 px-6 py-4 focus:text-blue-500"
                 @click="edit_note(note.id)"
               >
                 {{ note.title }}
@@ -664,7 +618,7 @@
               <button
                 @click="edit_note(note.id)"
                 type="button"
-                class="flex items-center px-4"
+                class="flex items-center pr-4 px-4"
                 tabindex="-1"
               >
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
@@ -674,7 +628,7 @@
               <button
                 @click="destroy_note(note.id)"
                 type="button"
-                class="flex items-center px-4"
+                class="flex items-center pr-4 px-4"
                 tabindex="-1"
               >
                 <svg
@@ -706,7 +660,7 @@
     <br />
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex items-center">
+      <div class="flex items-center pr-4">
         <button
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
           @click="openHomeModal"
@@ -731,7 +685,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-blue-500"
+                class="flex items-center pr-4 px-6 py-4 focus:text-blue-500"
                 @click="edit_home()"
               >
                 <p v-if="home.status == 'Ownership'">ملك</p>
@@ -747,7 +701,7 @@
             </td>
             <td class="border-t">
               <button
-                class="flex items-center px-6 py-4 focus:text-blue-500"
+                class="flex items-center pr-4 px-6 py-4 focus:text-blue-500"
                 @click="edit_home()"
               >
                 <p v-if="home.status == 'lease'">{{ home.allocation_price }}</p>
@@ -762,7 +716,7 @@
               <button
                 @click="edit_home()"
                 type="button"
-                class="flex items-center px-4"
+                class="flex items-center pr-4 px-4"
                 tabindex="-1"
               >
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
@@ -791,7 +745,7 @@
                 الوضعية القانونية
               </label>
               <select-input v-model="home_form.status" class="form-input">
-                <option disabled hidden>إختر وضعية المسكن</option>
+                <option selected disabled hidden :value="null">إختر وضعية المسكن</option>
                 <option value="Ownership">ملك</option>
                 <option value="without compensation">بدون مقابل</option>
                 <option value="inherited">ورثة</option>

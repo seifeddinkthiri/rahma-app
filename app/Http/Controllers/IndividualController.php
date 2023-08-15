@@ -330,14 +330,23 @@ class IndividualController extends Controller
             'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
         ]);
 
-        $Individual->healthStatus()->update([
-            'health_insurance' => Request::input('health_insurance'),
-            'good' => Request::input('good'),
-            'disease' => Request::input('disease'),
-            'disability' => Request::input('disability'),
-            'disability_card_number' => Request::input('disability_card_number'),
-        ]);
-
+        if (Request::get('good') == true) {
+            $Individual->healthStatus()->update([
+                'health_insurance' => Request::get('health_insurance'),
+                'good' => Request::get('good'),
+                'disease' => null,
+                'disability' => null,
+                'disability_card_number' => null,
+            ]);
+        } else {
+            $Individual->healthStatus()->update([
+                'health_insurance' => Request::get('health_insurance'),
+                'good' => Request::get('good'),
+                'disease' => Request::get('disease'),
+                'disability' => Request::get('disability'),
+                'disability_card_number' => Request::get('disability_card_number'),
+            ]);
+        }
         return redirect()->route('individuals.edit', ['individual' => $Individual])->with('success', 'تم تحديث الحالة الصحية للعضو ');
     }
 
