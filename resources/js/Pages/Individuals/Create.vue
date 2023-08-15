@@ -3,7 +3,7 @@
     <Head title="Create Organization" />
     <Breadcrumb_individuals
       :active_step="'individual'"
-      :form_title="' الأفراد المنتفعين'"
+      :current_form_title="'أضف بيانات الفرد '"
     />
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
@@ -12,51 +12,53 @@
             <text-input
               v-model="form.name"
               :error="form.errors.name"
+              placeholder=" الإسم هنا"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
+              :disabled="isFormDisabled"
             />
-            <file-input
-              id="photo"
-              v-model="form.photo"
-              :error="form.errors.photo"
+            <select-input
+              v-model="form.gender"
+              :error="form.errors.gender"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              type="file"
-              accept="image/*"
-              label="الصورة"
-            />
+              label=" الجنس "
+            >
+              <option hidden disabled :value="null">إختر الجنس</option>
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
+            </select-input>
             <text-input
               v-model="form.address"
               :error="form.errors.address"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
+              placeholder=" العنوان هنا"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.cin"
               :error="form.errors.cin"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="بطاقة التعريف الوطنية"
+              placeholder=" بطاقة التعريف الوطنية هنا"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.phone"
               :error="form.errors.phone"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
-            />
-            <text-input
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              type="date"
-              id="birth_date"
-              v-model="form.birth_date"
-              :error="form.errors.birth_date"
-              label="تاريخ الولادة"
+              placeholder="الهاتف هنا"
+              :disabled="isFormDisabled"
             />
             <select-input
               v-model="form.birth_city"
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
+              :disabled="isFormDisabled"
             >
-              <option hidden disabled :value="null">إختر المدينة</option>
+              <option :value="null" disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -78,54 +80,42 @@
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
             </select-input>
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="birth_date"
+              v-model="form.birth_date"
+              :error="form.errors.birth_date"
+              label="تاريخ الولادة"
+              placeholder=" تاريخ الولادة هنا"
+              :disabled="isFormDisabled"
+            />
 
             <text-input
               v-model="form.job_place"
               :error="form.errors.job_place"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
+              placeholder="  مكان العمل هنا"
+              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.job"
               :error="form.errors.job"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العمل"
+              placeholder="   العمل هنا"
+              :disabled="isFormDisabled"
             />
-          </div>
-          <div
-            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-          >
-            <button
-              @click="active_step = 2"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div ref="part2" v-if="active_step == 2">
-          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+
             <select-input
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
+              :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر الحالة</option>
+              <option disabled hidden :value="null">إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
               <option value="divorced">مطلق/مطلقة</option>
@@ -136,25 +126,29 @@
               :error="form.errors.monthly_income"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
+              placeholder="الدخل الشهري هنا"
+              :disabled="isFormDisabled"
             />
+
             <text-input
               v-model="form.education_level"
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
+              placeholder=" المستوى الدراسي هنا"
+              :disabled="isFormDisabled"
             />
-            <select-input
-              v-model="form.gender"
-              :error="form.errors.gender"
+            <file-input
+              v-model="form.photo"
+              :error="form.errors.photo"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label=" الجنس "
-            >
-              <option hidden disabled :value="null">إختر الجنس</option>
-              <option value="male">ذكر</option>
-              <option value="female">أنثى</option>
-            </select-input>
-            <p class="w-full text-black font-bold text-18 pb-8 pr-6">البيانات الصحة</p>
-            <div class="w-full flex flex-row flex-nowrap">
+              type="file"
+              accept="image/*"
+              label="الصورة "
+            />
+
+            <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
+            <div class="flex flex-row flex-nowrap w-full">
               <ToggleCheckbox
                 :id="'health_insurance'"
                 :class="'lg:w-1/2'"
@@ -163,6 +157,7 @@
                 :active_value="'نعم'"
                 :inactive_value="'لا'"
                 @toggle="toggle_health_insurance"
+                :isDisabled="isFormDisabled"
               />
               <ToggleCheckbox
                 :id="'good'"
@@ -172,65 +167,37 @@
                 :active_value="'جيدة'"
                 :inactive_value="'عليلة '"
                 @toggle="toggle_health_Status"
+                :isDisabled="isFormDisabled"
               />
             </div>
             <div v-if="form.good == false" class="w-full">
-              <div class="w-full flex flex-row flex-nowrap">
-                <ToggleCheckbox
-                  :id="'disease_verif'"
-                  :class="'pb-8 pr-6 w-full'"
-                  :isChecked="form.disease_verif"
-                  :label="'مرض مزمن'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_disease"
-                />
+              <div class="flex flex-row flex-nowrap w-full">
                 <text-input
-                  v-if="form.disease_verif"
                   class="pb-8 pr-6 w-full"
                   id="disease"
                   :error="form.errors.disease"
                   v-model="form.disease"
-                  label="أذكر المرض المزمن"
+                  label="مرض مزمن"
+                  placeholder="  المرض المزمن هنا"
+                  :disabled="isFormDisabled"
                 />
                 <text-input
-                  v-else
-                  disabled
-                  class="pb-8 pr-6 w-full"
-                  id="disease"
-                  label="لا يوجد"
-                />
-              </div>
-              <div class="w-full flex flex-row flex-nowrap">
-                <ToggleCheckbox
-                  :id="'disability_verif'"
-                  :isChecked="form.disability_verif"
-                  :label="'إعاقة'"
-                  :active_value="'نعم'"
-                  :inactive_value="'لا'"
-                  @toggle="toggle_disability"
-                />
-                <text-input
-                  v-if="form.disability_verif"
                   class="pb-8 pr-6 w-full"
                   id="disability"
                   v-model="form.disability"
                   :error="form.errors.disability"
-                  label=" أذكر الإعاقة"
+                  label=" إعاقة"
+                  placeholder="الإعاقة هنا"
+                  :disabled="isFormDisabled"
                 />
+
                 <text-input
-                  v-else
-                  disabled
-                  class="pb-8 pr-6 w-full"
-                  id="disability"
-                  label="لا يوجد"
-                />
-                <text-input
-                  v-if="form.disability_verif"
                   v-model="form.disability_card_number"
                   :error="form.errors.disability_card_number"
                   class="pb-8 pr-6 w-full lg:w-1/2"
                   label="رقم بطاقة الإعاقة"
+                  placeholder="الرقم هنا"
+                  :disabled="isFormDisabled"
                 />
               </div>
             </div>
@@ -238,32 +205,15 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-              @click="active_step = 1"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </button>
+            <!-- Add a spacer element to create space between the buttons -->
+            <div class="w-4"></div>
             <loading-button
               :loading="form.processing"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
               type="submit"
-              >إنشاء الفرد</loading-button
             >
+              إضافة
+            </loading-button>
           </div>
         </div>
       </form>

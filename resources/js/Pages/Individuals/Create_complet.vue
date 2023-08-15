@@ -164,6 +164,7 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="file_title"
             name="file_title"
+            placeholder="  عنوان الملف هنا "
             label="العنوان"
           />
           <file-input
@@ -229,7 +230,7 @@ export default {
       isFormDisabled: false,
 
       active_step: "home",
-      current_form_title: "",
+      current_form_title: "أضف بيانات المسكن",
       members_form_title: "",
       current_form: "childrens",
       notes_form: this.$inertia.form({
@@ -339,7 +340,7 @@ export default {
         preserveScroll: true,
         onSuccess: () => {
           this.active_step = "files";
-          this.current_form_title = "تم إضافة الملاحظة";
+          this.current_form_title = "أضف ملف  ";
           this.notes_form.reset();
         },
       });

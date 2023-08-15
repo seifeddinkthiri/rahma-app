@@ -8,6 +8,7 @@
           <li v-if="Individual_id">
             <Link
               :href="`/individuals/${Individual_id}/create_B_C`"
+              :class="{ 'text-gray-900 font-bold': active_step === 'individual' }"
               class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
             >
               الفرد
@@ -15,6 +16,7 @@
           </li>
           <li v-else>
             <Link
+              :class="{ 'text-gray-900 font-bold': active_step === 'individual' }"
               class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
             >
               الفرد
