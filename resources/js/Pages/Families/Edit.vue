@@ -26,18 +26,21 @@
             :error="form.errors.name"
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="الاسم"
+            placeholder="الإسم هنا"
           />
           <text-input
             v-model="form.phone"
             :error="form.errors.phone"
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="الهاتف"
+            placeholder="الهاتف هنا"
           />
           <text-input
             v-model="form.address"
             :error="form.errors.address"
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="العنوان"
+            placeholder="العنوان هنا"
           />
           <file-input
             v-model="form.photo"

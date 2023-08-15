@@ -162,6 +162,7 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="file_title"
             name="file_title"
+            placeholder="اكتب عنوان الملف"
             label="العنوان"
           />
           <file-input
@@ -198,6 +199,7 @@
             <text-input
               v-model="form.name"
               :error="form.errors.name"
+              placeholder=" الإسم هنا"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
               :disabled="isFormDisabled"
@@ -208,6 +210,7 @@
               :error="form.errors.address"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
+              placeholder=" العنوان هنا"
               :disabled="isFormDisabled"
             />
             <text-input
@@ -215,6 +218,7 @@
               :error="form.errors.cin"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="بطاقة التعريف الوطنية"
+              placeholder=" بطاقة التعريف الوطنية هنا"
               :disabled="isFormDisabled"
             />
             <text-input
@@ -222,6 +226,7 @@
               :error="form.errors.phone"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
+              placeholder="الهاتف هنا"
               :disabled="isFormDisabled"
             />
             <select-input
@@ -259,6 +264,7 @@
               v-model="form.birth_date"
               :error="form.errors.birth_date"
               label="تاريخ الولادة"
+              placeholder=" تاريخ الولادة هنا"
               :disabled="isFormDisabled"
             />
 
@@ -267,6 +273,7 @@
               :error="form.errors.job_place"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
+              placeholder="  مكان العمل هنا"
               :disabled="isFormDisabled"
             />
             <text-input
@@ -274,6 +281,7 @@
               :error="form.errors.job"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العمل"
+              placeholder="   العمل هنا"
               :disabled="isFormDisabled"
             />
           </div>
@@ -296,6 +304,7 @@
               :error="form.errors.monthly_income"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
+              placeholder="الدخل الشهري هنا"
               :disabled="isFormDisabled"
             />
 
@@ -304,6 +313,7 @@
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المستوى الدراسي"
+              placeholder=" المستوى الدراسي هنا"
               :disabled="isFormDisabled"
             />
             <file-input
@@ -357,6 +367,7 @@
                   :error="form.errors.disease"
                   v-model="form.disease"
                   label="مرض مزمن"
+                  placeholder="  المرض المزمن هنا"
                   :disabled="isFormDisabled"
                 />
                 <text-input
@@ -365,6 +376,7 @@
                   v-model="form.disability"
                   :error="form.errors.disability"
                   label=" إعاقة"
+                  placeholder="الإعاقة هنا"
                   :disabled="isFormDisabled"
                 />
 
@@ -373,6 +385,7 @@
                   :error="form.errors.disability_card_number"
                   class="pb-8 pr-6 w-full lg:w-1/2"
                   label="رقم بطاقة الإعاقة"
+                  placeholder="الرقم هنا"
                   :disabled="isFormDisabled"
                 />
               </div>

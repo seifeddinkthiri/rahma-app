@@ -286,6 +286,16 @@ class MemberController extends Controller
 
         $member = Auth::user()->account->members()->create($validatedData);
 
+        if (Request::file('photo')) {
+                   $member->update(
+                    [
+                        'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+
+                    ]
+                   );
+                  Request::file('photo')->move(public_path('uploads'), $member->photo);
+              }
+
 
         // Create the health status
         $validate_HS_dData = Request::validate([
