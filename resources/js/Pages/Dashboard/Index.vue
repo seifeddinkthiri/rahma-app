@@ -8,11 +8,11 @@
       </div>
     </div>
 
-    <div
+    <div v-if="$page.props.auth.user.wait == false"
       class="container mx-auto mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
     >
       <!-- Users Card -->
-      <div class="bg-white rounded-lg shadow-lg p-4">
+      <div class="bg-white rounded-lg shadow-lg p-4" v-if="$page.props.auth.user.admin || $page.props.auth.user.owner">
         <Link class="text-blue-400 hover:text-blue-600" href="/users">
           <h2 class="text-xl font-semibold mb-2 hover:underline">إدارة المستخدمين</h2>
           <p class="text-gray-600">

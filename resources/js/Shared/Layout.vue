@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="md:flex md:flex-grow md:overflow-hidden">
-          <div
+          <div v-if="auth.user.wait == false"
             class="hidden flex-shrink-0 py-12 px-2 w-56 bg-indigo-800 overflow-y-auto md:block"
           >
             <div>
@@ -116,7 +116,7 @@
                   </div>
                 </Link>
               </div>
-              <div class="mb-4" v-if="auth.user.wait == false">
+              <div class="mb-4" >
                 <Drop_down_minu>
                   <li>
                     <Link
@@ -171,7 +171,7 @@
                       </div>
                     </Link>
                   </li>
-                  <li v-if="auth.user.admin">
+                  <li >
                     <Link
                       class="group flex items-center py-3 relative w-full"
                       href="/wait_list"

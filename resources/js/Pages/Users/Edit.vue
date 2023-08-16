@@ -61,7 +61,7 @@
             placeholder="كلمة المرور هنا"
 
           />
-          <select-input
+          <select-input v-if="$page.props.auth.user.admin"
             v-model="form.owner"
             :error="form.errors.owner"
             class="pb-8 pr-6 w-full lg:w-1/2"
