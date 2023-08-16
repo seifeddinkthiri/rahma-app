@@ -37,13 +37,13 @@
                 :href="`/wait_list/${user.id}/edit`"
                 tabindex="-1"
               >
-                <loading-button
+                <button
                   :loading="form.processing"
                   class="btn-indigo bg-green-600 flex flex-row"
                 >
                   قبول
                   <icon name="accepet" class="mr-2 w-4 h-4 fill-white" />
-                </loading-button>
+                </button>
               </Link>
             </td>
             <td class="w-px border-t" v-if="user.wait">
@@ -52,13 +52,13 @@
                 :href="`/wait_list/${user.id}/delete_demonde`"
                 tabindex="-1"
               >
-                <loading-button
+                <button
                   :loading="form.processing"
-                  class="btn-indigo bg-red-500 flex flex-row"
+                  class="btn-indigo bg-red-600 flex flex-row"
                 >
                   حذف
                   <icon name="delete" class="mr-2 w-4 h-4 fill-white" />
-                </loading-button>
+                </button>
               </Link>
             </td>
           </tr>
@@ -104,13 +104,13 @@
                 :href="`/wait_list/${user.id}/edit`"
                 tabindex="-1"
               >
-                <loading-button
+                <button
                   :loading="form.processing"
-                  class="btn-indigo bg-red-500 flex flex-row"
+                  class="btn-indigo bg-red-600 flex flex-row"
                 >
                   حظر
                   <icon name="block" class="mr-2 w-4 h-4 fill-white" />
-                </loading-button>
+                </button>
               </Link>
             </td>
           </tr>

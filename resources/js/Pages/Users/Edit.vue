@@ -32,18 +32,24 @@
             :error="form.errors.first_name"
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="الاسم"
+            placeholder="الإسم هنا"
           />
           <text-input
             v-model="form.last_name"
             :error="form.errors.last_name"
             class="pb-8 pr-6 w-full lg:w-1/2"
-            label="الاسم العائلي"
+            label="الاسم الأخير"
+            placeholder="الإسم الأخير هنا"
+
           />
           <text-input
             v-model="form.email"
             :error="form.errors.email"
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="البريد الإلكتروني"
+            placeholder="البريد الإلكتروني هنا"
+
+
           />
           <text-input
             v-model="form.password"
@@ -52,16 +58,17 @@
             type="password"
             autocomplete="new-password"
             label="كلمة المرور"
+            placeholder="كلمة المرور هنا"
+
           />
           <select-input
-            v-if="form.user_page_admin || form.user_page_owner"
             v-model="form.owner"
             :error="form.errors.owner"
             class="pb-8 pr-6 w-full lg:w-1/2"
-            label="الدور"
+            label="المالك"
           >
-            <option :value="true">مستخدم متميز</option>
-            <option :value="false">مستخدم</option>
+            <option :value="true">نعم</option>
+            <option :value="false">لا</option>
           </select-input>
           <file-input
             v-model="form.photo"
