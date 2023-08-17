@@ -296,7 +296,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="intervention in family.interventions" :key="intervention.id" class="h-16 hover:bg-gray-100 focus-within:bg-gray-100">
+          <tr v-for="intervention in family.interventions" :key="intervention.id" class="h-12 hover:bg-gray-100 focus-within:bg-gray-100">
             <td class="px-6 py-4 border-t">
               <Link class="flex items-center" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
                 <p class="whitespace-nowrap">
