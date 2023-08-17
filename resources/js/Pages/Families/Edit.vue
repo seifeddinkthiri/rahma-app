@@ -1,9 +1,7 @@
 <template>
   <div>
     <Head :title="form.name" />
-    <div class="relative">
-      <button @click="show_intervention_modal = true" class="absolute left-0 ml-4 mt-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">أضف تدخل</button>
-    </div>
+
     <h1 class="mb-8 text-xl font-bold">
       <Link class="text-blue-400 hover:text-blue-600" href="/families">عائلة</Link>
       <span class="text-blue-400 font-medium">/</span>
@@ -254,8 +252,13 @@
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
 
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto" ref="intervention_modal" v-if="show_intervention_modal">
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="mt-6 bg-white rounded shadow overflow-x-auto" >
+
+      <div class="flex items-center pr-4">
+      <button @click="show_intervention_modal = true" class="inline-flex items-center justify-center px-4 py-2 my-4 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">أضف تدخل</button>
+    </div>
+   <div ref="intervention_modal" v-if="show_intervention_modal">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="store_intervention">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -280,6 +283,8 @@
           </div>
         </form>
       </div>
+   </div>
+
     </div>
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <table class="table-auto w-full text-right">
@@ -308,6 +313,18 @@
               <Link class="flex items-center" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
                 <p class="whitespace-nowrap">{{ intervention.intervenor }}</p>
               </Link>
+            </td>
+            <td class="w-px border-t">
+                <Link class="flex items-center px-4" :href="`/interventions/${intervention.id}/show`" tabindex="-1">
+                  <icon name="eye" class="block w-6 h-6" />
+                </Link>
+              </td>
+              <td class="w-px border-t">
+              <button @click="destroy_intervention(intervention.id)" type="button" class="flex items-center px-4" tabindex="-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </button>
             </td>
           </tr>
           <tr v-if="family.interventions.length === 0">
@@ -403,6 +420,7 @@
                 </svg>
               </button>
             </td>
+
           </tr>
           <tr v-if="family.files.length === 0">
             <td class="px-6 py-4 border-t" colspan="2">لا يوجد ملفات</td>
@@ -526,6 +544,11 @@ export default {
     destroy_file(id) {
       if (confirm('هل أنت متأكد أنك تريد حذف هذا الملف ')) {
         this.$inertia.delete(`/files/${id}`)
+      }
+    },
+    destroy_intervention(id) {
+      if (confirm('هل أنت متأكد أنك تريد حذف هذا التدخل ')) {
+        this.$inertia.delete(`/interventions/${id}`)
       }
     },
     toggle_sanitation() {
