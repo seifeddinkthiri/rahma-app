@@ -7,6 +7,7 @@ use App\Models\Family;
 use App\Models\Individual;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+
 class HomeController extends Controller
 {
 
@@ -21,22 +22,34 @@ class HomeController extends Controller
             'desciption' => ['nullable', 'string', 'max:1000'],
 
         ]);
+        $home = $family->home()->first() ?? null;
+        if ($home == null) {
+            $family->home()->create([
+                'status' => Request::input('status'),
+                'allocation_price' => Request::input('allocation_price'),
+                'desciption' => Request::input('desciption'),
 
-        $family->home()->create([
-            'status' => Request::input('status'),
-            'allocation_price' => Request::input('allocation_price'),
-            'desciption' => Request::input('desciption'),
+            ]);
 
-        ]);
+            return redirect()->back()->with('success', 'تم إنشاء المنزل.');
+        } else {
 
-        return redirect()->back()->with('success', 'تم إنشاء المنزل.');
+            $family->home()->update([
+                'status' => Request::input('status'),
+                'allocation_price' => Request::input('allocation_price'),
+                'desciption' => Request::input('desciption'),
+
+            ]);
+
+            return redirect()->back()->with('success', 'تم تحديث المنزل.');
+        }
     }
 
     public function IndividualsStore(Individual $Individual)
     {
         Request::validate([
             'status' => ['required', 'string', 'max:100'],
-            'allocation_price' => ['nullable', 'integer','required_with:disability'],
+            'allocation_price' => ['nullable', 'integer', 'required_with:disability'],
             'desciption' => ['nullable', 'string', 'max:1000'],
         ]);
 
@@ -51,30 +64,13 @@ class HomeController extends Controller
     }
 
 
-    public function update(Family $Family)
-    {
-        Request::validate([
-            'status' => ['required', 'string', 'max:100'],
-            'allocation_price' => ['nullable', 'integer'],
-            'desciption' => ['required', 'string', 'max:1000'],
-
-        ]);
-
-        $Family->home()->update([
-            'status' => Request::input('status'),
-            'allocation_price' => Request::input('allocation_price'),
-            'desciption' => Request::input('desciption'),
-        ]);
-
-        return redirect()->back()->with('success', 'تم تحديث الصفحة الرئيسية');
-    }
 
 
     public function destroy(Family $Family)
     {
         $Family->home()->delete();
 
-        return Redirect::back()->with('success','تم حذف الصفحة الرئيسية');
+        return Redirect::back()->with('success', 'تم حذف الصفحة الرئيسية');
     }
 
 
@@ -82,7 +78,6 @@ class HomeController extends Controller
     {
         $Family->home()->restore();
 
-        return Redirect::back()->with('success','تم استعادة الصفحة الرئيسية');
+        return Redirect::back()->with('success', 'تم استعادة الصفحة الرئيسية');
     }
-
 }

@@ -276,9 +276,6 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
  ->name('home.IndividualsStore')
  ->middleware('auth');
 
- Route::put('home/{family}', [HomeController::class, 'update'])
- ->name('home.update')
- ->middleware('auth');
 
  Route::delete('home/{family}', [HomeController::class, 'destroy'])
  ->name('home.destroy')

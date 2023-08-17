@@ -27,7 +27,7 @@ class CreateHomesTable extends Migration
                 ->onDelete('cascade');
             $table->string('status')->nullable();
             $table->integer('allocation_price')->nullable();
-            $table->string('desciption')->nullable();
+            $table->text('desciption')->nullable();
             $table->timestamps();
         });
     }
