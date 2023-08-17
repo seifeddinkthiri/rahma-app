@@ -27,7 +27,7 @@
       <table class="w-full">
         <thead>
           <tr class="text-right font-bold">
-            <th class="pb-4 pt-6 px-6">معيل أسرة</th>
+            <th class="pb-4 pt-6 px-6"> المعيل</th>
             <th class="pb-4 pt-6 px-6">العنوان</th>
             <th class="pb-4 pt-6 px-6">الهاتف</th>
             <th class="pb-4 pt-6 px-6" colspan="2">الصورة</th>
@@ -126,19 +126,16 @@
                 </p>
                 <div class="flex items-center">
                   <div>
-                    <Link :href="`/members/${family.id}/create_new_one`" type="button">
-                      <icon name="add" class="w-4 h-4"></icon>
-                    </Link>
+                    <Link class="underline"  :href="`/members/${family.id}/create_new_one`" type="button">
+                      إضافة                      </Link>
                   </div>
                   <div class="mr-4 ml-4">
-                    <Link :href="`/families/${family.id}/edit`">
-                      <icon name="edit" class="w-4 h-4"></icon>
-                    </Link>
+                    <Link  class="underline"    :href="`/families/${family.id}/edit`">
+                      تعديل                    </Link>
                   </div>
                   <div>
-                    <button type="button" @click="delete_family(family.id)">
-                      <icon name="delete" class="w-4 h-4"></icon>
-                    </button>
+                    <button class="underline"  type="button" @click="delete_family(family.id)">
+                      حذف                    </button>
                   </div>
                 </div>
               </div>
