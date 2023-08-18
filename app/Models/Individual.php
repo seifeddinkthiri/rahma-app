@@ -18,6 +18,7 @@ class Individual extends Model
         'name',
         'phone',
         'address',
+        'status',
         'cin',
         'gender',
         'birth_date',

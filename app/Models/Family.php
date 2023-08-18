@@ -21,6 +21,7 @@ class Family extends Model
         'address',
         'wife',
         'husband',
+        'status',
         'elderlies_number',
         "childrens_number",
         "other_members_number"];

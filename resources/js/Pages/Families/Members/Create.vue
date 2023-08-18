@@ -111,7 +111,18 @@
             </select-input>
             <text-input v-model="form.monthly_income" :error="form.errors.monthly_income" class="pb-8 pr-6 w-full lg:w-1/2" label="الدخل الشهري" placeholder="الدخل الشهري هنا" :disabled="isFormDisabled" />
 
-            <text-input v-model="form.education_level" :error="form.errors.education_level" class="pb-8 pr-6 w-full lg:w-1/2" label="المستوى الدراسي" placeholder=" المستوى الدراسي هنا" :disabled="isFormDisabled" />
+
+            <select-input
+              v-model="form.education_level"
+              :error="form.errors.education_level"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label=" المستوى الدراسي "
+            >
+              <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="primary">إعدادي</option>
+              <option value="secondary">ثاناوي </option>
+              <option value="university "> جامعي</option>
+            </select-input>
             <file-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="الصورة " />
             <select-input  v-if="HorW !== 'husband' && HorW !== 'wife'" v-model="form.kinship" :error="form.errors.kinship" class="pb-8 pr-6 w-full lg:w-1/2" label="الفرد" :disabled="isFormDisabled">
               <option :value="null" disabled hidden>إختر نوع الفرد</option>
@@ -119,6 +130,8 @@
               <option value="child">إبن</option>
               <option value="elderly">مسن</option>
               <option value="other_member">فرد آخر</option>
+              <option value="single_mother">أم عزباء</option>
+
             </select-input>
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
             <div class="flex flex-row flex-nowrap w-full">

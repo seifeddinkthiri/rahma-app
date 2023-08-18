@@ -54,6 +54,10 @@
               <td class="px-4 py-2 h-16 border">{{ intervention.value }}</td>
             </tr>
             <tr>
+              <td class="px-4 py-2 h-16 border">تاريخ التدخل</td>
+              <td class="px-4 py-2 h-16 border">{{ intervention.date }}</td>
+            </tr>
+            <tr>
               <td class="px-4 py-2 h-16 border">المتدخل</td>
               <td class="px-4 py-2 h-16 border">{{ intervention.intervenor }}</td>
             </tr>

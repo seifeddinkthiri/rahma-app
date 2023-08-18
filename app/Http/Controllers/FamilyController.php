@@ -26,6 +26,7 @@ class FamilyController extends Controller
                     'name' => $Family->name,
                     'phone' => $Family->caregiver_phone,
                     'address' => $Family->address,
+                    'status' => $Family->status,
                     'photo' => $Family->photo,
                     'deleted_at' => $Family->deleted_at,
                     'members' => $Family->members()->get(),
@@ -129,6 +130,7 @@ class FamilyController extends Controller
                 'photo' => $family->photo,
                 'phone' => $family->caregiver_phone,
                 'address' => $family->address,
+                'status' => $family->status,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,
@@ -180,6 +182,7 @@ class FamilyController extends Controller
                 'photo' => $family->photo,
                 'phone' => $family->caregiver_phone,
                 'address' => $family->address,
+                'status' => $family->status,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,
@@ -203,6 +206,8 @@ class FamilyController extends Controller
             'name' => Request::input('name'),
             'caregiver_phone' => Request::input('phone'),
             'address' => Request::input('address'),
+            'status' => Request::input('status'),
+
         ];
 
         if (Request::hasFile('photo')) {

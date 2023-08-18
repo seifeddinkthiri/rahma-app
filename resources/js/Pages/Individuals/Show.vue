@@ -45,6 +45,14 @@
               <td class="px-4 py-2 border h-16">{{ form.phone }}</td>
             </tr>
             <tr>
+              <td class="px-4 py-2 border h-16">الحالة</td>
+              <td class="px-4 py-2 border h-16">{{ form.status }}</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border h-16">الهاتف</td>
+              <td class="px-4 py-2 border h-16">{{ form.status }}</td>
+            </tr>
+            <tr>
               <td class="px-4 py-2 border h-16">العنوان</td>
               <td class="px-4 py-2 border h-16">{{ form.address }}</td>
             </tr>
@@ -189,6 +197,7 @@ export default {
       form: this.$inertia.form({
         name: this.individual.name,
         phone: this.individual.phone,
+        status: this.individual.status,
         address: this.individual.address,
         photo: this.individual.photo,
         id: this.individual.id,

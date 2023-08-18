@@ -28,6 +28,7 @@
           <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">الاسم</th>
             <th class="pb-4 pt-6 px-6">الهاتف</th>
+            <th class="pb-4 pt-6 px-6">الحالة</th>
             <th class="pb-4 pt-6 px-6">العنوان</th>
             <th class="pb-4 pt-6 px-6">بطاقة التعريف الوطنية</th>
             <th class="pb-4 pt-6 px-6">الجنس</th>
@@ -60,6 +61,14 @@
                 tabindex="-1"
               >
                 {{ individual.phone }}
+              </Link>
+            </td>
+            <td class="border-t" >
+              <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/individuals/${individual.id}/edit`">
+                <p v-if="individual.status == 'active'">نشط</p>
+                <p v-if="individual.status == 'inactive'">غير نشط</p>
+                <p v-if="individual.status == 'disabled'">محضور</p>
+                <icon v-if="individual.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
               </Link>
             </td>
             <td class="border-t">

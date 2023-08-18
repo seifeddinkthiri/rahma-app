@@ -29,7 +29,7 @@
           <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">النوع</th>
             <th class="pb-4 pt-6 px-6">القيمة</th>
-
+            <th class="pb-4 pt-6 px-6">التاريخ</th>
             <th class="pb-4 pt-6 px-6">المسؤل</th>
             <th class="pb-4 pt-6 px-6">هاتف المسؤل</th>
           </tr>
@@ -56,6 +56,15 @@
                 tabindex="-1"
               >
                 {{ intervention.value }}
+              </Link>
+            </td>
+            <td class="border-t">
+              <Link
+                class="flex items-center px-6 py-4"
+                :href="`/interventions/${intervention.id}/edit`"
+                tabindex="-1"
+              >
+                {{ intervention.date }}
               </Link>
             </td>
             <td class="border-t">

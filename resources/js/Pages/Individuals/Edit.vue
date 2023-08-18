@@ -23,8 +23,19 @@
               placeholder=" الإسم هنا"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
-              :disabled="isFormDisabled"
+
             />
+            <select-input
+              v-model="form.status"
+              :error="form.errors.status"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label=" الحالة "
+            >
+              <option hidden disabled :value="null">إختر الحالة</option>
+              <option value="active">نشط</option>
+              <option value="disabled">محضور</option>
+              <option value="inactive">غير نشط</option>
+            </select-input>
             <select-input
               v-model="form.gender"
               :error="form.errors.gender"
@@ -41,7 +52,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
               placeholder=" العنوان هنا"
-              :disabled="isFormDisabled"
+
             />
             <text-input
               v-model="form.cin"
@@ -49,7 +60,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="بطاقة التعريف الوطنية"
               placeholder=" بطاقة التعريف الوطنية هنا"
-              :disabled="isFormDisabled"
+
             />
             <text-input
               v-model="form.phone"
@@ -57,14 +68,14 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
               placeholder="الهاتف هنا"
-              :disabled="isFormDisabled"
+
             />
             <select-input
               v-model="form.birth_city"
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
-              :disabled="isFormDisabled"
+
             >
               <option :value="null" disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
@@ -96,7 +107,7 @@
               :error="form.errors.birth_date"
               label="تاريخ الولادة"
               placeholder=" تاريخ الولادة هنا"
-              :disabled="isFormDisabled"
+
             />
 
             <text-input
@@ -105,7 +116,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
               placeholder="  مكان العمل هنا"
-              :disabled="isFormDisabled"
+
             />
             <text-input
               v-model="form.job"
@@ -113,7 +124,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العمل"
               placeholder="   العمل هنا"
-              :disabled="isFormDisabled"
+
             />
 
             <select-input
@@ -121,7 +132,7 @@
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
-              :disabled="isFormDisabled"
+
             >
               <option disabled hidden :value="null">إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
@@ -135,17 +146,22 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الدخل الشهري"
               placeholder="الدخل الشهري هنا"
-              :disabled="isFormDisabled"
+
             />
 
-            <text-input
+
+            <select-input
               v-model="form.education_level"
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="المستوى الدراسي"
-              placeholder=" المستوى الدراسي هنا"
-              :disabled="isFormDisabled"
-            />
+              label=" المستوى الدراسي "
+            >
+              <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="primary">إعدادي</option>
+              <option value="secondary">ثاناوي </option>
+              <option value="university "> جامعي</option>
+            </select-input>
+
             <file-input
               v-model="form.photo"
               :error="form.errors.photo"
@@ -213,7 +229,7 @@
             :error="health_status_form.errors.disability"
             label=" إعاقة"
             placeholder="الإعاقة هنا"
-            :disabled="isFormDisabled"
+
           />
 
           <text-input
@@ -222,7 +238,7 @@
             class="pb-8 pl-2 pr-6 w-full lg:w-1/2"
             label="رقم بطاقة الإعاقة"
             placeholder="الرقم هنا"
-            :disabled="isFormDisabled"
+
           />
         </div>
       </div>
@@ -457,7 +473,6 @@
 
               <text-input class="pb-8 pr-6 w-full lg:w-1/2" id="intervenor" v-model="intervention_form.intervenor" :error="intervention_form.errors.intervenor" placeholder="إسم المسؤل هنا" />
               <text-input class="pb-8 pr-6 w-full lg:w-1/2" id="intervenor" v-model="intervention_form.intervenor_phone" :error="intervention_form.errors.intervenor_phone" placeholder="هاتف المسؤل هنا" />
-              <TextAreaInput class="pb-8 pr-6 w-full lg:w-1/2" id="notes" v-model="intervention_form.notes" :error="intervention_form.errors.notes" placeholder="اكتب ملاحظاتك" />
               <file-input v-model="intervention_form.file" :error="intervention_form.errors.file" class="pb-8 pr-6 w-full lg:w-1/2" type="file" label="أضف ملف" />
             </div>
             <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
@@ -1006,11 +1021,12 @@ export default {
         individual: this.individual.id,
       }),
       form: this.$inertia.form({
-        photo: this.individual.photo,
+        photo: null,
         phone: this.individual.phone,
         name: this.individual.name,
         address: this.individual.address,
         cin: this.individual.cin,
+        status:this.individual.status,
         gender: this.individual.gender,
         birth_date: this.individual.birth_date,
         birth_city: this.individual.birth_city,

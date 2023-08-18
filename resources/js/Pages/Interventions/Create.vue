@@ -74,7 +74,15 @@
                   : 'المبلغ'
               "
             />
-
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="date"
+              v-model="form.date"
+              :error="form.errors.date"
+              label="تاريخ التدخل"
+              placeholder=" تاريخ التدخل هنا"
+            />
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
               id="intervenor"
@@ -163,6 +171,7 @@ export default {
         beneficial: null,
         type: null,
         value: null,
+        date:null,
         intervenor: null,
         intervenor_phone: null,
         file: null,

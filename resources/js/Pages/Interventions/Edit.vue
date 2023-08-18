@@ -77,7 +77,15 @@
                   : 'المبلغ'
               "
             />
-
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="date"
+              v-model="form.date"
+              :error="form.errors.date"
+              label="تاريخ التدخل"
+              placeholder=" تاريخ التدخل هنا"
+            />
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
               id="intervenor"
@@ -185,6 +193,7 @@ export default {
         family: this.intervention.family_id,
         individual: this.intervention.individual_id,
         type: this.intervention.type,
+        date: this.intervention.date,
         value: this.intervention.value,
         intervenor: this.intervention.intervenor,
         intervenor_phone: this.intervention.intervenor_phone,

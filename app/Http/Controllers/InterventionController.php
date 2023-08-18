@@ -25,6 +25,7 @@ class InterventionController extends Controller
                     'id' => $intervention->id,
                     'type' => $intervention->type,
                     'value' => $intervention->value,
+                    'date' => $intervention->date,
                     'intervenor' => $intervention->intervenor,
                     'intervenor_phone' => $intervention->intervenor_phone,
                     'notes' => $intervention->notes,
@@ -59,6 +60,7 @@ class InterventionController extends Controller
             $intervention = Auth::user()->account->interventions()->create([
                 'type' => Request::get('type'),
                 'value' => Request::get('value'),
+                'date' => Request::get('date'),
                 'family_id' => Request::get('family'),
                 'individual_id' => Request::get('individual'),
                 'intervenor' => Request::get('intervenor'),
@@ -92,6 +94,7 @@ class InterventionController extends Controller
                 'individual_id' => $intervention->individual_id,
                 'type' => $intervention->type,
                 'value' => $intervention->value,
+                'date' => $intervention->date,
                 'intervenor' => $intervention->intervenor,
                 'intervenor_phone' => $intervention->intervenor_phone,
                 'notes' => $intervention->notes,
@@ -113,6 +116,7 @@ class InterventionController extends Controller
                 'individual' => $intervention->individual()->get(),
                 'type' => $intervention->type,
                 'value' => $intervention->value,
+                'date' => $intervention->date,
                 'intervenor' => $intervention->intervenor,
                 'intervenor_phone' => $intervention->intervenor_phone,
                 'notes' => $intervention->notes,
@@ -128,6 +132,7 @@ class InterventionController extends Controller
             Request::validate([
                 'type' => ['nullable', 'max:100'],
                 'intervenor' => ['nullable', 'max:50'],
+                'date' => ['nullable'],
                 'intervenor_phone' => ['nullable', 'max:50'],
                 'notes' => ['nullable'],
             ])

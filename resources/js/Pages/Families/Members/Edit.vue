@@ -110,12 +110,19 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
             />
-            <text-input
+
+            <select-input
               v-model="form.education_level"
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="المستوى الدراسي"
-            />
+              label=" المستوى الدراسي "
+            >
+              <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="primary">إعدادي</option>
+              <option value="secondary">ثاناوي </option>
+              <option value="university "> جامعي</option>
+            </select-input>
+
             <select-input
               v-model="form.kinship"
               :error="form.errors.kinship"
@@ -126,6 +133,7 @@
               <option value="wife">زوجة</option>
               <option value="child">إبن</option>
               <option value="elderly">مسن</option>
+              <option value="single_mother">أم عزباء</option>
               <option value="other_member">فرد إضافي</option>
             </select-input>
 

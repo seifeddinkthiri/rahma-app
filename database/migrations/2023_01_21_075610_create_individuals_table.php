@@ -19,6 +19,7 @@ class CreateIndividualsTable extends Migration
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('cin')->nullable();
+            $table->string('status')->nullable()->default('active');
             $table->string('phone')->nullable();
             $table->string('gender')->nullable();
             $table->string('birth_city')->nullable();

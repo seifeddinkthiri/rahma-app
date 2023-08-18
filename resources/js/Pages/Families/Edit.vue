@@ -13,6 +13,17 @@
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="الاسم" placeholder="الإسم هنا" />
+          <select-input
+              v-model="form.status"
+              :error="form.errors.status"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label=" الحالة "
+            >
+              <option hidden disabled :value="null">إختر الحالة</option>
+              <option value="active">نشط</option>
+              <option value="disabled">محضور</option>
+              <option value="inactive">غير نشط</option>
+            </select-input>
           <text-input v-model="form.phone" :error="form.errors.phone" class="pb-8 pr-6 w-full lg:w-1/2" label="الهاتف" placeholder="الهاتف هنا" />
           <text-input v-model="form.address" :error="form.errors.address" class="pb-8 pr-6 w-full lg:w-1/2" label="العنوان" placeholder="العنوان هنا" />
           <file-input v-model="form.photo" :error="form.errors.photo" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="الصورة" />
@@ -273,7 +284,6 @@
 
               <text-input class="pb-8 pr-6 w-full lg:w-1/2" id="intervenor" v-model="intervention_form.intervenor" :error="intervention_form.errors.intervenor" placeholder="إسم المسؤل هنا" />
               <text-input class="pb-8 pr-6 w-full lg:w-1/2" id="intervenor" v-model="intervention_form.intervenor_phone" :error="intervention_form.errors.intervenor_phone" placeholder="هاتف المسؤل هنا" />
-              <TextAreaInput class="pb-8 pr-6 w-full lg:w-1/2" id="notes" v-model="intervention_form.notes" :error="intervention_form.errors.notes" placeholder="اكتب ملاحظاتك" />
               <file-input v-model="intervention_form.file" :error="intervention_form.errors.file" class="pb-8 pr-6 w-full lg:w-1/2" type="file" label="أضف ملف" />
             </div>
             <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
@@ -490,6 +500,7 @@ export default {
       form: this.$inertia.form({
         name: this.family.name,
         phone: this.family.phone,
+        status: this.family.status,
         address: this.family.address,
         photo: null,
         id: this.family.id,

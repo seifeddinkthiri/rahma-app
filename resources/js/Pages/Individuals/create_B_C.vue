@@ -130,14 +130,19 @@
               :disabled="isFormDisabled"
             />
 
-            <text-input
+
+            <select-input
               v-model="form.education_level"
               :error="form.errors.education_level"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="المستوى الدراسي"
-              placeholder=" المستوى الدراسي هنا"
-              :disabled="isFormDisabled"
-            />
+              label=" المستوى الدراسي "
+            >
+              <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="primary">إعدادي</option>
+              <option value="secondary">ثاناوي </option>
+              <option value="university "> جامعي</option>
+            </select-input>
+
             <file-input
               v-model="form.photo"
               :error="form.errors.photo"

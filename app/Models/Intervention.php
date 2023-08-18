@@ -22,6 +22,7 @@ class Intervention extends Model
         'intervenor',
         'intervenor_phone',
         'notes',
+        'date'
 
     ];
 
