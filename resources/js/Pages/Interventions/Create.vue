@@ -57,7 +57,7 @@
             >
               <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
               <option value="shipments">عيني</option>
-              <option value="cash ">نقدي</option>
+              <option value="cash">نقدي</option>
             </select-input>
 
             <text-input

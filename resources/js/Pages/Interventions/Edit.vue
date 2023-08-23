@@ -61,7 +61,7 @@
             >
               <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
               <option value="shipments">عيني</option>
-              <option value="cash ">نقدي</option>
+              <option value="cash">نقدي</option>
             </select-input>
             <text-input
               v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
@@ -213,13 +213,7 @@ export default {
     },
   },
   methods: {
-    selectedType() {
-      if (this.form.type === this.intervention.type) {
-        this.form.value = this.intervention.value;
-      } else {
-        this.form.value = null;
-      }
-    },
+
     update() {
       this.form.post(`/interventions/${this.intervention.id}`);
     },
