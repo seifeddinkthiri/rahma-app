@@ -14,7 +14,11 @@ class FamilyController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Families/Index', [
+        $emptyFamilies = Family::doesntHave('members')->get();
+        foreach ($emptyFamilies as $emptyFamily) {
+            $emptyFamily->forceDelete();
+        }
+                return Inertia::render('Families/Index', [
             'filters' => Request::all('search', 'trashed'),
             'families' => Auth::user()->account->families()
                 ->orderBy('name')
