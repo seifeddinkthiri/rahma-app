@@ -47,39 +47,40 @@ class InterventionController extends Controller
         $family = Request::get('family');
         $individual = Request::get('individual');
 
-        if (!$family && !$individual) {
+       /* if (!$family && !$individual) {
             return Redirect::back()->with('error', 'يجب إختيار منتفع');
         } else {
 
-            Request::validate([
-                'type' => ['required', 'string', 'max:100'],
-                'intervenor' => ['nullable', 'string', 'max:50'],
-                'intervenor_phone' => ['required', 'numeric', 'digits:8'],
-                'notes' => ['nullable'],
+
+        }*/
+        Request::validate([
+            'type' => ['required', 'string', 'max:100'],
+            'intervenor' => ['nullable', 'string', 'max:50'],
+            'intervenor_phone' => ['required', 'numeric', 'digits:8'],
+            'notes' => ['nullable'],
+        ]);
+        $intervention = Auth::user()->account->interventions()->create([
+            'type' => Request::get('type'),
+            'value' => Request::get('value'),
+            'date' => Request::get('date'),
+            'family_id' => Request::get('family'),
+            'individual_id' => Request::get('individual'),
+            'intervenor' => Request::get('intervenor'),
+            'intervenor_phone' => Request::get('intervenor_phone'),
+            'notes' => Request::get('notes'),
+
+        ]);
+
+
+        if (Request::file('file')) {
+            $file = $intervention->files()->create([
+                'title' => Request::input('title'),
+                'file' => Request::file('file') ? Request::file('file')->store('uploads/files') : null,
             ]);
-            $intervention = Auth::user()->account->interventions()->create([
-                'type' => Request::get('type'),
-                'value' => Request::get('value'),
-                'date' => Request::get('date'),
-                'family_id' => Request::get('family'),
-                'individual_id' => Request::get('individual'),
-                'intervenor' => Request::get('intervenor'),
-                'intervenor_phone' => Request::get('intervenor_phone'),
-                'notes' => Request::get('notes'),
-
-            ]);
-
-
-            if (Request::file('file')) {
-                $file = $intervention->files()->create([
-                    'title' => Request::input('title'),
-                    'file' => Request::file('file') ? Request::file('file')->store('uploads/files') : null,
-                ]);
-                Request::file('file')->move(public_path('uploads/files'), $file->file);
-            }
-
-            return Redirect::back()->with('success', 'تم إنشاء التدخل.');
+            Request::file('file')->move(public_path('uploads/files'), $file->file);
         }
+
+        return Redirect::back()->with('success', 'تم إنشاء التدخل.');
     }
 
     public function edit(Intervention $intervention)
