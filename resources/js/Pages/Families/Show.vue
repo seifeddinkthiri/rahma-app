@@ -33,7 +33,9 @@
       <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
-      <br />      <br> <br>
+        <br />
+        <br />
+        <br />
 
         <table class="w-full">
           <tbody>
@@ -213,6 +215,7 @@
             <h3 class="mb-2 text-xl">
               <p v-if="intervention.type == 'cash'">النوع: نقدي</p>
               <p v-if="intervention.type == 'shipments'">النوع :عيني</p>
+              <p v-if="intervention.type == 'other'">النوع :آخر</p>
             </h3>
             <h3 class="mb-2 text-xl">القيمة : {{ intervention.value }}</h3>
             <h3 class="mb-2 text-xl">المتدخل :{{ intervention.intervenor }}</h3>

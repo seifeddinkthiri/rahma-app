@@ -62,19 +62,28 @@
               <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
               <option value="shipments">عيني</option>
               <option value="cash">نقدي</option>
+              <option value="other">آخر</option>
             </select-input>
             <text-input
               v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-              :id="form.type === 'shipments' ? 'shipments' : 'cash'"
               v-model="form.value"
               :error="form.errors.value"
               label="قيمة التدخل"
+              :id="
+                form.type === 'shipments'
+                  ? 'shipments'
+                  : form.type === 'cash'
+                  ? 'cash'
+                  : 'other'
+              "
               :placeholder="
                 form.type === null
                   ? 'القيمة'
                   : form.type === 'shipments'
                   ? 'الكمية'
-                  : 'المبلغ'
+                  : form.type === 'cash'
+                  ? 'المبلغ'
+                  : 'القيمة الأخرى'
               "
             />
             <text-input
@@ -213,7 +222,6 @@ export default {
     },
   },
   methods: {
-
     update() {
       this.form.post(`/interventions/${this.intervention.id}`);
     },
