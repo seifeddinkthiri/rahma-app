@@ -161,9 +161,7 @@ Route::get('families', [FamilyController::class, 'index'])
 Route::post('families', [FamilyController::class, 'store'])
     ->name('families.store')
     ->middleware('auth');
-    Route::post('families_B_C/{Family}', [FamilyController::class, 'Store_B_C'])
-    ->name('families.Store_B_C')
-    ->middleware('auth');
+
 Route::get('families/{family}/edit', [FamilyController::class, 'edit'])
     ->name('families.edit')
     ->middleware('auth');

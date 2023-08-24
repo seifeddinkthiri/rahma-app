@@ -43,44 +43,12 @@ class FamilyController extends Controller
 
 
 
-    public function Store_B_C(Family $Family)
-    {
-
-        Request::validate([
-            'wife' => ['nullable', 'boolean'],
-            'husband' => ['nullable', 'boolean'],
-            'photo' => ['nullable', 'image'],
-            'elderlies_number' => ['nullable', 'numeric'],
-            'childrens_number' => ['nullable', 'numeric'],
-            'other_members_number' => ['nullable', 'numeric'],
-        ]);
-
-        $Family =  Auth::user()->account->Families()->update(
-            [
-                'caregiver_phone' => Request::get('caregiver_phone'),
-                'wife' => Request::get('wife'),
-                'husband' => Request::get('husband'),
-                'photo' => Request::get('photo'),
-                'elderlies_number' => Request::get('elderlies_number'),
-                'childrens_number' => Request::get('childrens_number'),
-                'other_members_number' => Request::get('other_members_number'),
-
-                'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
-
-            ]
-        );
-        if (Request::file('photo')) {
-            Request::file('photo')->move(public_path('uploads'), $Family->photo);
-        }
-
-        return redirect()->route('members.create', ['family' => $Family])->with('success', 'تم تحديث بيانات الأسرة. تابع العملية');
-    }
 
     public function store()
     {
         $Family =  Auth::user()->account->Families()->create(
             [
-                'caregiver_phone' =>null,// Request::get('caregiver_phone'),
+                'caregiver_phone' =>null,
                 'photo' =>null,
                 'wife' => true,
                 'husband' => true,
