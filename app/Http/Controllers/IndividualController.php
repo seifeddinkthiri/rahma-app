@@ -132,8 +132,8 @@ class IndividualController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
           ]);
 
 
@@ -222,13 +222,13 @@ class IndividualController extends Controller
     {
         Request::validate([
             'name' => ['required', 'max:100'],
-            'address' => ['nullable', 'max:100'],
+            'address' => ['required', 'max:100'],
             'photo' => ['nullable', 'image'],
             'gender' => ['nullable', 'max:100'],
             'cin' => ['required', 'numeric', 'digits:8'],
             'phone' => ['required', 'numeric', 'digits:8'],
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
+            'birth_date' => ['nullable', 'date'],
+            'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
             'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
@@ -268,13 +268,13 @@ class IndividualController extends Controller
     {
         Request::validate([
             'name' => ['required', 'max:100'],
-            'address' => ['nullable', 'max:100'],
+            'address' => ['required', 'max:100'],
             'photo' => ['nullable', 'image'],
             'gender' => ['nullable', 'max:100'],
             'cin' => ['required', 'numeric', 'digits:8'],
             'phone' => ['required', 'numeric', 'digits:8'],
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
+            'birth_date' => ['nullable', 'date'],
+            'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
             'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
@@ -283,8 +283,8 @@ class IndividualController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
         ]);
 
 
@@ -336,10 +336,10 @@ class IndividualController extends Controller
     {
         Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['required', 'boolean'],
+            'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
         ]);
 
         if (Request::get('good') == true) {

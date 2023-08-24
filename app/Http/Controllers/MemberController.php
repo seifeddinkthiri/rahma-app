@@ -30,15 +30,15 @@ class MemberController extends Controller
             'address' => ['required', 'max:100'],
             'cin' => 'required|numeric||digits:8|unique:' . Member::class,
             'phone' => 'required|numeric||digits:8|unique:' . Member::class,
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
-            'social_status' => ['required', 'max:100'],
+            'birth_date' => ['nullable', 'date'],
+            'birth_city' => ['nullable', 'max:100'],
+            'social_status' => ['nullable', 'max:100'],
             'monthly_income' => ['nullable', 'integer'],
-            'kinship' => ['required', 'max:100'],
+            'kinship' => ['nullable', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
-            'family_id' => ['required', 'integer'],
+            'family_id' => ['nullable', 'integer'],
 
         ]);
            // Create the health status
@@ -46,8 +46,8 @@ class MemberController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
         ]);
 
         $member = Auth::user()->account->members()->create([
@@ -197,10 +197,10 @@ class MemberController extends Controller
     {
         Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['required', 'boolean'],
+            'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],        ]);
+            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],        ]);
 
 
         if (Request::get('good') == true) {
@@ -235,15 +235,15 @@ class MemberController extends Controller
                 'address' => ['required', 'max:100'],
                 'cin' => ['required', 'integer', 'digits:8'],
                 'phone' => ['required', 'integer', 'digits:8'],
-                'birth_date' => ['required', 'date'],
-                'birth_city' => ['required', 'max:100'],
-                'social_status' => ['required', 'max:100'],
+                'birth_date' => ['nullable', 'date'],
+                'birth_city' => ['nullable', 'max:100'],
+                'social_status' => ['nullable', 'max:100'],
                 'monthly_income' => ['nullable', 'integer'],
-                'kinship' => ['required', 'max:100'],
+                'kinship' => ['nullable', 'max:100'],
                 'education_level' => ['nullable', 'max:100'],
                 'job' => ['nullable', 'max:100'],
                 'job_place' => ['nullable', 'max:100'],
-                'family_id' => ['required', 'integer'],
+                'family_id' => ['nullable', 'integer'],
 
             ])
         );
@@ -279,25 +279,25 @@ class MemberController extends Controller
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'nullable|integer||digits:8|unique:' . Member::class,
-            'phone' => 'nullable|integer||digits:8|unique:' . Member::class,
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
-            'social_status' => ['required', 'max:100'],
+            'cin' => 'required|integer||digits:8|unique:' . Member::class,
+            'phone' => 'required|integer||digits:8|unique:' . Member::class,
+            'birth_date' => ['nullable', 'date'],
+            'birth_city' => ['nullable', 'max:100'],
+            'social_status' => ['nullable', 'max:100'],
             'monthly_income' => ['nullable', 'integer'],
-            'kinship' => ['required', 'max:100'],
+            'kinship' => ['nullable', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
-            'family_id' => ['required', 'integer'],
+            'family_id' => ['nullable', 'integer'],
 
         ]);
         $H_S_Validation = Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['required', 'boolean'],
+            'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
         ]);
 
         $member = Auth::user()->account->members()->create($validatedData);

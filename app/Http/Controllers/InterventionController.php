@@ -58,7 +58,7 @@ class InterventionController extends Controller
         Request::validate([
             'type' => ['required', 'string', 'max:100'],
             'intervenor' => ['nullable', 'string', 'max:50'],
-            'intervenor_phone' => ['required', 'numeric', 'digits:8'],
+            'intervenor_phone' => ['nullable', 'numeric', 'digits:8'],
             'notes' => ['nullable'],
         ]);
         $intervention = Auth::user()->account->interventions()->create([
@@ -133,7 +133,7 @@ class InterventionController extends Controller
     {
         $intervention->update(
             Request::validate([
-                'type' => ['nullable', 'max:100'],
+                'type' => ['required', 'max:100'],
                 'intervenor' => ['nullable', 'max:50'],
                 'date' => ['nullable'],
                 'intervenor_phone' => ['nullable', 'max:50'],
