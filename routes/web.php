@@ -148,8 +148,8 @@ Route::put('healthStatus/{individual}', [IndividualController::class, 'update_he
 
 // individuel home and notes
 
-Route::get('individuals/{Individual}/Create_complet', [IndividualController::class, 'Create_complet'])
-    ->name('individuals.Create_complet')
+Route::get('individuals/{Individual}/Create_all', [IndividualController::class, 'Create_all'])
+    ->name('individuals.Create_all')
     ->middleware('auth');
 
 // families

@@ -169,12 +169,12 @@ class IndividualController extends Controller
 
 
 
-        return redirect()->route('individuals.Create_complet', ['Individual' => $Individual])->with('success', 'تم انشاء العضو.   ');
+        return redirect()->route('individuals.Create_all', ['Individual' => $Individual])->with('success', 'تم انشاء العضو.   ');
     }
 
-    public function Create_complet(Individual $Individual)
+    public function Create_all(Individual $Individual)
     {
-        return Inertia::render('Individuals/Create_complet', compact('Individual'));
+        return Inertia::render('Individuals/Create_all', compact('Individual'));
     }
     public function edit(Individual $individual)
     {
@@ -321,7 +321,7 @@ class IndividualController extends Controller
 
         $individual->healthStatus()->update($datahelth);
 
-        return redirect()->route('individuals.Create_complet', ['Individual' => $individual])->with('success','تم تحديث العضو');
+        return redirect()->route('individuals.Create_all', ['Individual' => $individual])->with('success','تم تحديث العضو');
 
     }
 
