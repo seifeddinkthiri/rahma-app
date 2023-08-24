@@ -261,7 +261,6 @@ export default {
         birth_date: null,
         birth_city: null,
         social_status: null,
-        monthly_income: null,
         health_insurance: false,
         kinship: null,
         caregiver: false,

@@ -121,15 +121,6 @@
               <option value="divorced">مطلق/مطلقة</option>
               <option value="widower">أرمل/أرملة</option>
             </select-input>
-            <text-input
-              v-model="form.monthly_income"
-              :error="form.errors.monthly_income"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الدخل الشهري"
-              placeholder="الدخل الشهري هنا"
-              :disabled="isFormDisabled"
-            />
-
 
             <select-input
               v-model="form.education_level"
@@ -139,8 +130,8 @@
             >
               <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
               <option value="primary">إعدادي</option>
-              <option value="secondary">ثاناوي </option>
-              <option value="university "> جامعي</option>
+              <option value="secondary">ثاناوي</option>
+              <option value="university ">جامعي</option>
             </select-input>
 
             <file-input
@@ -151,7 +142,39 @@
               accept="image/*"
               label="الصورة "
             />
+            <ToggleCheckbox
+              :id="'grant'"
+              :class="'lg:w-1/2'"
+              :isChecked="form.grant"
+              :label="'منحة إجتماعية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_grant"
+              :isDisabled="isFormDisabled"
+            />
 
+            <div v-if="form.grant" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="source"
+                  :error="form.errors.grant_source"
+                  v-model="form.grant_source"
+                  label="المصدر"
+                  placeholder="المصدر هنا"
+                  :disabled="isFormDisabled"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="value"
+                  v-model="form.grant_value"
+                  :error="form.errors.grant_value"
+                  label="القيمة"
+                  placeholder="القيمة بالدينار هنا"
+                  :disabled="isFormDisabled"
+                />
+              </div>
+            </div>
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
             <div class="flex flex-row flex-nowrap w-full">
               <ToggleCheckbox
@@ -252,6 +275,13 @@ export default {
   props: {
     Individual: Object,
   },
+  created() {
+    if (this.Individual.grant[0].source == null) {
+      this.form.grant = false;
+    } else {
+      this.form.grant = true;
+    }
+  },
   data() {
     return {
       active_step: 1,
@@ -265,7 +295,6 @@ export default {
         birth_date: this.Individual.birth_date,
         birth_city: this.Individual.birth_city,
         social_status: this.Individual.social_status,
-        monthly_income: this.Individual.monthly_income,
         education_level: this.Individual.education_level,
         job: this.Individual.job,
         job_place: this.Individual.job_place,
@@ -275,10 +304,17 @@ export default {
         disability: this.Individual.healthStatus.disability,
         disability_card_number: this.Individual.healthStatus.disability_card_number,
         Individual_id: this.Individual.id,
+        grant: false,
+        grant_source: this.Individual.grant[0].source,
+        grant_value: this.Individual.grant[0].value,
       }),
     };
   },
   methods: {
+    toggle_grant() {
+      this.form.grant = !this.form.grant;
+    },
+
     toggle_health_insurance() {
       this.form.health_insurance = !this.form.health_insurance;
     },

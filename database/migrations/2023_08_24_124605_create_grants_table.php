@@ -15,8 +15,8 @@ class CreateGrantsTable extends Migration
     {
         Schema::create('grants', function (Blueprint $table) {
             $table->id();
-            $table->integer('value');
-            $table->string('source');
+            $table->integer('value')->nullable();
+            $table->string('source')->nullable();
             $table->unsignedBigInteger('family_id')->nullable();
             $table->foreign('family_id')
                 ->references('id')

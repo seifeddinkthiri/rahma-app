@@ -25,7 +25,6 @@ class CreateIndividualsTable extends Migration
             $table->string('birth_city')->nullable();
             $table->string('social_status')->nullable();
             $table->date('birth_date')->nullable();
-            $table->integer('monthly_income')->nullable();
             $table->string('education_level')->nullable();
             $table->string('job')->nullable();
             $table->string('job_place')->nullable();

@@ -50,8 +50,10 @@ class IndividualController extends Controller
             $facility->reinitialise();
             $facility->save(); // Save the changes to the database if needed
         }
+
+
         Session::flash('success', 'تم حذف ما تم اضافته، يمكنك إعادة العملية ');
-        return Inertia::render('Individuals/create_B_C',[
+        return Inertia::render('Individuals/create_B_C', [
             'Individual' => [
                 'id' => $Individual->id,
                 'name' => $Individual->name,
@@ -63,12 +65,12 @@ class IndividualController extends Controller
                 'birth_date' => $Individual->birth_date,
                 'birth_city' => $Individual->birth_city,
                 'social_status' => $Individual->social_status,
-                'monthly_income' => $Individual->monthly_income,
                 'gender' => $Individual->gender,
                 'education_level' => $Individual->education_level,
                 'job' => $Individual->job,
                 'job_place' => $Individual->job_place,
-                'healthStatus' =>[
+                'grant' => $Individual->grant()->get(),
+                'healthStatus' => [
                     'health_insurance' => $Individual->healthStatus->health_insurance,
                     'good' => $Individual->healthStatus->good,
                     'disability' => $Individual->healthStatus->disability,
@@ -115,26 +117,31 @@ class IndividualController extends Controller
         Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'required|numeric||digits:8|unique:'.Individual::class,
-            'phone' => 'required|numeric||digits:8|unique:'.Individual::class,
+            'cin' => 'required|numeric||digits:8|unique:' . Individual::class,
+            'phone' => 'required|numeric||digits:8|unique:' . Individual::class,
             'photo' => ['nullable', 'image'],
             'gender' => ['nullable'],
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
         ]);
 
-          $H_S_Validation= Request::validate([
+        $Grant_Validation = Request::validate([
+            'grant_source' => ['nullable', 'required_with:grant_value',  'string', 'max:100'],
+            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
+        ]);
+
+
+        $H_S_Validation = Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['nullable', 'boolean'],
+            'good' => ['required', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
-          ]);
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+        ]);
 
 
         $Individual =  Auth::user()->account->Individuals()->create(
@@ -148,7 +155,6 @@ class IndividualController extends Controller
                 'birth_date' => Request::get('birth_date'),
                 'birth_city' => Request::get('birth_city'),
                 'social_status' => Request::get('social_status'),
-                'monthly_income' => Request::get('monthly_income'),
                 'education_level' => Request::get('education_level'),
                 'job' => Request::get('job'),
                 'job_place' => Request::get('job_place'),
@@ -163,11 +169,19 @@ class IndividualController extends Controller
 
         $Individual->healthStatus()->create(
 
-       $H_S_Validation
+            $H_S_Validation
 
         );
 
+        if (Request::get('grant') == true) {
+            $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
 
+            $Individual->grant()->create(
+
+                $Grant_Validation
+
+            );
+        }
 
         return redirect()->route('individuals.Create_all', ['Individual' => $Individual])->with('success', 'تم انشاء العضو.   ');
     }
@@ -203,7 +217,6 @@ class IndividualController extends Controller
                 'birth_date' => $individual->birth_date,
                 'birth_city' => $individual->birth_city,
                 'social_status' => $individual->social_status,
-                'monthly_income' => $individual->monthly_income,
                 'education_level' => $individual->education_level,
                 'job' => $individual->job,
                 'job_place' => $individual->job_place,
@@ -213,6 +226,7 @@ class IndividualController extends Controller
                 'facilities' =>  $individual->facilities()->get(),
                 'interventions' =>  $individual->interventions()->get(),
                 'home' => $individual->home()->get(),
+                'grant' => $individual->grant()->get(),
                 'notes' => $notes,
             ],
         ]);
@@ -230,11 +244,15 @@ class IndividualController extends Controller
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
         ]);
+        $Grant_Validation = Request::validate([
+            'grant_source' => ['nullable', 'required_with:grant_value',  'string', 'max:100'],
+            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
+        ]);
+
 
 
         $data = [
@@ -248,7 +266,6 @@ class IndividualController extends Controller
             'birth_date' => Request::get('birth_date'),
             'birth_city' => Request::get('birth_city'),
             'social_status' => Request::get('social_status'),
-            'monthly_income' => Request::get('monthly_income'),
             'education_level' => Request::get('education_level'),
             'job' => Request::get('job'),
             'job_place' => Request::get('job_place'),
@@ -260,8 +277,23 @@ class IndividualController extends Controller
         }
 
         $individual->update($data);
+        if (Request::get('grant') == true) {
+            $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
+            $individual->grant()->update(
 
-        return Redirect::back()->with('success','تم تحديث العضو');
+                $Grant_Validation
+
+            );
+        }
+        else {
+            $individual->grant()->update([
+                'source' => null,
+                'value' => null,
+            ]);
+
+
+        }
+        return Redirect::back()->with('success', 'تم تحديث العضو');
     }
 
     public function create_B_C_update(Individual $individual)
@@ -276,18 +308,20 @@ class IndividualController extends Controller
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
 
-
+        $Grant_Validation = Request::validate([
+            'grant_source' => ['nullable', 'required_with:grant_value',  'string', 'max:100'],
+            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
+        ]);
 
         $data = [
             'photo' => Request::get('photo'),
@@ -299,7 +333,6 @@ class IndividualController extends Controller
             'birth_date' => Request::get('birth_date'),
             'birth_city' => Request::get('birth_city'),
             'social_status' => Request::get('social_status'),
-            'monthly_income' => Request::get('monthly_income'),
             'education_level' => Request::get('education_level'),
             'job' => Request::get('job'),
             'job_place' => Request::get('job_place'),
@@ -320,9 +353,24 @@ class IndividualController extends Controller
         $individual->update($data);
 
         $individual->healthStatus()->update($datahelth);
+        if (Request::get('grant') == true) {
+            $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
+            $individual->grant()->update(
 
-        return redirect()->route('individuals.Create_all', ['Individual' => $individual])->with('success','تم تحديث العضو');
+                $Grant_Validation
 
+            );
+        }
+        else {
+            $individual->grant()->update([
+                'source' => null,
+                'value' => null,
+            ]);
+
+
+        }
+
+        return redirect()->route('individuals.Create_all', ['Individual' => $individual])->with('success', 'تم تحديث العضو');
     }
 
 
@@ -338,8 +386,8 @@ class IndividualController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
 
         if (Request::get('good') == true) {
@@ -371,7 +419,6 @@ class IndividualController extends Controller
 
 
 
-
     public function destroy(Individual $individual)
     {
         $individual->delete();
@@ -383,6 +430,6 @@ class IndividualController extends Controller
     {
         $Individual->restore();
 
-        return Redirect::back()->with('success','تم استعادة العضو');
+        return Redirect::back()->with('success', 'تم استعادة العضو');
     }
 }

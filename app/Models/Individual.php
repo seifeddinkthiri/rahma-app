@@ -24,7 +24,6 @@ class Individual extends Model
         'birth_date',
         'birth_city',
         'social_status',
-        'monthly_income',
         'education_level',
         'job',
         'job_place',
@@ -68,6 +67,10 @@ class Individual extends Model
         return $this->hasOne(HealthStatus::class);
     }
 
+    public function grant()
+    {
+        return $this->hasOne(Grant::class);
+    }
 
 
     public function home()
@@ -87,13 +90,18 @@ class Individual extends Model
     {
         parent::boot();
 
-        static::created(function ($family) {
-            $family->facilities()->create([
+        static::created(function ($individual) {
+            $individual->facilities()->create([
                 'Sanitation'=>false,
                 'electricity'=>false,
                 'ventilation'=>false,
                 'water'=>false,
 
+            ]);
+
+            $individual->grant()->create([
+                'source'=>null,
+                'value'=>null,
             ]);
         });
     }

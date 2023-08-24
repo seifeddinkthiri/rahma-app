@@ -131,13 +131,6 @@
               <option value="divorced">مطلق/مطلقة</option>
               <option value="widower">أرمل/أرملة</option>
             </select-input>
-            <text-input
-              v-model="form.monthly_income"
-              :error="form.errors.monthly_income"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الدخل الشهري"
-              placeholder="الدخل الشهري هنا"
-            />
 
             <select-input
               v-model="form.education_level"
@@ -159,9 +152,43 @@
               accept="image/*"
               label="الصورة "
             />
+
+            <ToggleCheckbox
+              :id="'grant'"
+              :class="'lg:w-1/2'"
+              :isChecked="form.grant"
+              :label="'منحة إجتماعية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_grant"
+              :isDisabled="isFormDisabled"
+            />
+
+            <div v-if="form.grant" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="source"
+                  :error="form.errors.grant_source"
+                  v-model="form.grant_source"
+                  label="المصدر"
+                  placeholder="المصدر هنا"
+                  :disabled="isFormDisabled"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="value"
+                  v-model="form.grant_value"
+                  :error="form.errors.grant_value"
+                  label="القيمة"
+                  placeholder="القيمة بالدينار هنا"
+                  :disabled="isFormDisabled"
+                />
+              </div>
+            </div>
           </div>
           <div
-            class="flex items-center pr-4 justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+            class="flex items-center justify-end pr-4 px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
             <!-- Add a spacer element to create space between the buttons -->
             <div class="w-4"></div>
@@ -181,7 +208,7 @@
     <br />
     <div ref="facilities" class="bg-white rounded shadow overflow-hidden">
       <br />
-      <div class="flex flex-row flex-nowrap w-full pl-2">
+      <div class="flex flex-row flex-nowrap pl-2 w-full">
         <ToggleCheckbox
           :id="'health_insurance'"
           :class="'lg:w-1/2'"
@@ -229,7 +256,7 @@
           />
         </div>
       </div>
-      <div class="pr-4 pb-4">
+      <div class="pb-4 pr-4">
         <loading-button
           :loading="health_status_form.processing"
           class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
@@ -441,7 +468,7 @@
       <div class="flex items-center pr-4">
         <button
           @click="show_intervention_modal = true"
-          class="inline-flex items-center justify-center px-4 py-2 my-4 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          class="inline-flex items-center justify-center my-4 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
         >
           أضف تدخل
         </button>
@@ -636,7 +663,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center pr-4 px-6 py-4 focus:text-blue-500"
+                class="focus:text-blue-500 flex items-center pr-4 px-6 py-4"
                 @click="edit_note(note.id)"
               >
                 {{ note.title }}
@@ -718,7 +745,7 @@
           >
             <td class="border-t">
               <button
-                class="flex items-center pr-4 px-6 py-4 focus:text-blue-500"
+                class="focus:text-blue-500 flex items-center pr-4 px-6 py-4"
                 @click="edit_home()"
               >
                 <p v-if="home.status == 'Ownership'">ملك</p>
@@ -734,7 +761,7 @@
             </td>
             <td class="border-t">
               <button
-                class="flex items-center pr-4 px-6 py-4 focus:text-blue-500"
+                class="focus:text-blue-500 flex items-center pr-4 px-6 py-4"
                 @click="edit_home()"
               >
                 <p v-if="home.status == 'lease'">{{ home.allocation_price }}</p>
@@ -1061,6 +1088,11 @@ export default {
       this.health_status_form.disability = element.disability;
       this.health_status_form.disability_card_number = element.disability_card_number;
     });
+    if (this.individual.grant[0].source == null) {
+      this.form.grant = false;
+    } else {
+      this.form.grant = true;
+    }
   },
 
   data() {
@@ -1084,6 +1116,11 @@ export default {
         disease: this.individual.healthStatus.disease,
         disability: this.individual.healthStatus.disability,
         disability_card_number: this.individual.healthStatus.disability_card_number,
+        individual_id: this.individual.id,
+      }),
+      grant_form: this.$inertia.form({
+        source: this.individual.grant.source,
+        value: this.individual.grant.value,
         individual_id: this.individual.id,
       }),
       files_form: this.$inertia.form({
@@ -1111,11 +1148,13 @@ export default {
         birth_date: this.individual.birth_date,
         birth_city: this.individual.birth_city,
         social_status: this.individual.social_status,
-        monthly_income: this.individual.monthly_income,
         education_level: this.individual.education_level,
         job: this.individual.job,
         job_place: this.individual.job_place,
         id: this.individual.id,
+        grant: false,
+        grant_source: this.individual.grant[0].source,
+        grant_value: this.individual.grant[0].value,
       }),
       notes_form: this.$inertia.form({
         title: null,
@@ -1146,6 +1185,9 @@ export default {
     };
   },
   methods: {
+    toggle_grant() {
+      this.form.grant = !this.form.grant;
+    },
     store_intervention() {
       this.intervention_form.post("/interventions", {
         preserveScroll: true,

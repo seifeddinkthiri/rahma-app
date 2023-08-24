@@ -46,8 +46,8 @@ class MemberController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
 
         $member = Auth::user()->account->members()->create([
@@ -199,8 +199,8 @@ class MemberController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],        ]);
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],        ]);
 
 
         if (Request::get('good') == true) {
@@ -296,8 +296,8 @@ class MemberController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'nullable_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'nullable_with:disability', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
 
         $member = Auth::user()->account->members()->create($validatedData);

@@ -163,7 +163,6 @@ return [
         'birth_date' => 'تاريخ الميلاد',
         'birth_city' => 'مدينة الميلاد',
         'social_status' => 'الوضع الاجتماعي',
-        'monthly_income' => 'الدخل الشهري',
         'health_insurance' => 'تأمين صحي',
         'kinship' => 'صلة القرابة',
         'caregiver' => 'مقدم الرعاية',
@@ -200,6 +199,9 @@ return [
         'allocation_price' => 'سعر الكراء',
         'desciption' => 'الوصف',
         'Individual_id' => 'رقم الفرد',
+        "grant_source"=>'مصدر المنحة',
+        "grant_value"=>'قيمة المنحة',
+
 
     ],
 
