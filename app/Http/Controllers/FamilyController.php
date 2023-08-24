@@ -47,12 +47,7 @@ class FamilyController extends Controller
     {
 
         Request::validate([
-            'caregiver_phone' => [
-                'required',
-                'numeric',
-                'digits:8',
-                Rule::unique('families')->ignore($Family->id),
-            ],            'wife' => ['nullable', 'boolean'],
+            'wife' => ['nullable', 'boolean'],
             'husband' => ['nullable', 'boolean'],
             'photo' => ['nullable', 'image'],
             'elderlies_number' => ['nullable', 'numeric'],

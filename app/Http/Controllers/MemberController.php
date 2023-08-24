@@ -41,6 +41,15 @@ class MemberController extends Controller
             'family_id' => ['required', 'integer'],
 
         ]);
+           // Create the health status
+           $H_S_Validation = Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
+            'good' => ['nullable', 'boolean'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+        ]);
+
         $member = Auth::user()->account->members()->create([
 
             'name' => Request::get('name'),
@@ -122,21 +131,13 @@ class MemberController extends Controller
             ]);
         }
 
-        // Create the health status
-        $validatedData = Request::validate([
-            'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['nullable', 'boolean'],
-            'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
-        ]);
 
         $healthStatus = new HealthStatus([
-            'health_insurance' => $validatedData['health_insurance'],
-            'good' => $validatedData['good'],
-            'disease' => $validatedData['disease'],
-            'disability' => $validatedData['disability'],
-            'disability_card_number' => $validatedData['disability_card_number'],
+            'health_insurance' => $H_S_Validation['health_insurance'],
+            'good' => $H_S_Validation['good'],
+            'disease' => $H_S_Validation['disease'],
+            'disability' => $H_S_Validation['disability'],
+            'disability_card_number' => $H_S_Validation['disability_card_number'],
         ]);
 
         $member->healthStatus()->save($healthStatus);
@@ -198,9 +199,8 @@ class MemberController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['required', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
-        ]);
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],        ]);
 
 
         if (Request::get('good') == true) {
@@ -292,6 +292,13 @@ class MemberController extends Controller
             'family_id' => ['required', 'integer'],
 
         ]);
+        $H_S_Validation = Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
+            'good' => ['required', 'boolean'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+        ]);
 
         $member = Auth::user()->account->members()->create($validatedData);
 
@@ -306,16 +313,8 @@ class MemberController extends Controller
         }
 
 
-        // Create the health status
-        $validate_HS_dData = Request::validate([
-            'health_insurance' => ['nullable', 'boolean'],
-            'good' => ['required', 'boolean'],
-            'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'integer', 'digits:8'],
-        ]);
 
-        $healthStatus = new HealthStatus($validate_HS_dData);
+        $healthStatus = new HealthStatus($H_S_Validation);
 
         $member->healthStatus()->save($healthStatus);
         $Family = $member->Family;

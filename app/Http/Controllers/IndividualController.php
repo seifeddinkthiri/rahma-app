@@ -112,22 +112,30 @@ class IndividualController extends Controller
     }
     public function store()
     {
-
         Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
+            'cin' => 'required|numeric||digits:8|unique:'.Individual::class,
+            'phone' => 'required|numeric||digits:8|unique:'.Individual::class,
             'photo' => ['nullable', 'image'],
-            'gender' => ['required'],
-            'cin' => 'nullable|numeric||digits:8|unique:'.Individual::class,
-            'phone' => 'nullable|numeric||digits:8|unique:'.Individual::class,
-            'birth_date' => ['required', 'date'],
-            'birth_city' => ['required', 'max:100'],
+            'gender' => ['nullable'],
+            'birth_date' => ['nullable', 'date'],
+            'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
             'monthly_income' => ['nullable', 'numeric'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
         ]);
+
+          $H_S_Validation= Request::validate([
+            'health_insurance' => ['nullable', 'boolean'],
+            'good' => ['nullable', 'boolean'],
+            'disease' => ['nullable', 'string', 'max:100'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+          ]);
+
 
         $Individual =  Auth::user()->account->Individuals()->create(
             [
@@ -154,14 +162,12 @@ class IndividualController extends Controller
 
 
         $Individual->healthStatus()->create(
-            Request::validate([
-                'health_insurance' => ['nullable', 'boolean'],
-                'good' => ['nullable', 'boolean'],
-                'disease' => ['nullable', 'string', 'max:100'],
-                'disability' => ['nullable', 'string', 'max:100'],
-                'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
-            ])
+
+       $H_S_Validation
+
         );
+
+
 
         return redirect()->route('individuals.Create_complet', ['Individual' => $Individual])->with('success', 'تم انشاء العضو.   ');
     }
@@ -277,9 +283,10 @@ class IndividualController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
+
 
 
         $data = [
@@ -331,8 +338,8 @@ class IndividualController extends Controller
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['required', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
-            'disability' => ['nullable', 'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'numeric', 'digits:8'],
+            'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
 
         if (Request::get('good') == true) {

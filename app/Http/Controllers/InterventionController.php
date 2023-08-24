@@ -44,10 +44,12 @@ class InterventionController extends Controller
 
     public function store()
     {
-        $family = Request::get('family');
-        $individual = Request::get('individual');
 
-       /* if (!$family && !$individual) {
+
+       /*
+         $family = Request::get('family');
+        $individual = Request::get('individual');
+       if (!$family && !$individual) {
             return Redirect::back()->with('error', 'يجب إختيار منتفع');
         } else {
 
