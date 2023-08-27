@@ -5,45 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Intervention extends Model
+
+class Project extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-
-
-
-
-
-
     protected $fillable = [
-        'type',
-        'value',
-        'intervenor',
-        'intervenor_phone',
-        'notes',
-        'date'
-
+        'name', 'description', 'date', 'deadline', 'status',
     ];
 
-    public function files()
-    {
-        return $this->hasMany(File::class);
-    }
 
-    public function project()
+    public function interventions()
     {
-        return $this->belongsTo(Project::class);
-    }
-
-
-    public function family()
-    {
-        return $this->belongsTo(Family::class);
-    }
-    public function individual()
-    {
-        return $this->belongsTo(Individual::class);
+        return $this->hasMany(Intervention::class);
     }
     public function resolveRouteBinding($value, $field = null)
     {
@@ -53,8 +28,9 @@ class Intervention extends Model
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where('intervenor', 'like', '%'.$search.'%')
-            ->orWhere('intervenor_phone', 'like', '%'.$search.'%')
+            $query->where('name', 'like', '%'.$search.'%')
+            ->orWhere('status', 'like', '%'.$search.'%')
+            ->orWhere('description', 'like', '%'.$search.'%')
             ;
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
             if ($trashed === 'with') {
@@ -64,4 +40,5 @@ class Intervention extends Model
             }
         });
     }
+
 }

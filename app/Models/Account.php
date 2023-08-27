@@ -24,10 +24,7 @@ class Account extends Model
     {
         return $this->hasMany(Family::class);
     }
-    public function individials()
-    {
-        return $this->hasMany(Individual::class);
-    }
+
     public function members()
     {
         return $this->hasMany(Member::class);
@@ -39,5 +36,9 @@ class Account extends Model
     public function individuals()
     {
         return $this->hasMany(Individual::class);
+    }
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 }

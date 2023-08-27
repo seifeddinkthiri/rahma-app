@@ -14,6 +14,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\InterventionController;
+use App\Http\Controllers\ProjectController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -353,3 +355,70 @@ Route::delete('interventions/{intervention}', [InterventionController::class, 'd
 Route::put('interventions/{intervention}/restore', [InterventionController::class, 'restore'])
 ->name('interventions.restore')
 ->middleware('auth');
+
+
+
+    // interventions
+
+Route::get('interventions', [InterventionController::class, 'index'])
+->name('interventions')
+->middleware('auth');
+
+Route::get('interventions/create', [InterventionController::class, 'create'])
+->name('interventions.create')
+->middleware('auth');
+
+Route::post('interventions', [InterventionController::class, 'store'])
+->name('interventions.store')
+->middleware('auth');
+
+Route::get('interventions/{intervention}/edit', [InterventionController::class, 'edit'])
+->name('interventions.edit')
+->middleware('auth');
+Route::get('interventions/{intervention}/show', [InterventionController::class, 'show'])
+->name('interventions.show')
+->middleware('auth');
+Route::post('interventions/{intervention}', [InterventionController::class, 'update'])
+->name('interventions.update')
+->middleware('auth');
+
+Route::delete('interventions/{intervention}', [InterventionController::class, 'destroy'])
+->name('interventions.destroy')
+->middleware('auth');
+
+Route::put('interventions/{intervention}/restore', [InterventionController::class, 'restore'])
+->name('interventions.restore')
+->middleware('auth');
+
+
+  // projects
+
+  Route::get('projects', [ProjectController::class, 'index'])
+  ->name('projects')
+  ->middleware('auth');
+
+  Route::get('projects/create', [ProjectController::class, 'create'])
+  ->name('projects.create')
+  ->middleware('auth');
+
+  Route::post('projects', [ProjectController::class, 'store'])
+  ->name('projects.store')
+  ->middleware('auth');
+
+  Route::get('projects/{project}/edit', [ProjectController::class, 'edit'])
+  ->name('projects.edit')
+  ->middleware('auth');
+  Route::get('projects/{project}/show', [ProjectController::class, 'show'])
+  ->name('projects.show')
+  ->middleware('auth');
+  Route::post('projects/{project}', [ProjectController::class, 'update'])
+  ->name('projects.update')
+  ->middleware('auth');
+
+  Route::delete('projects/{project}', [ProjectController::class, 'destroy'])
+  ->name('projects.destroy')
+  ->middleware('auth');
+
+  Route::put('projects/{project}/restore', [ProjectController::class, 'restore'])
+  ->name('projects.restore')
+  ->middleware('auth');
