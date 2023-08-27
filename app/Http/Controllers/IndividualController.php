@@ -106,6 +106,7 @@ class IndividualController extends Controller
                 'address' => $Individual->address,
                 'deleted_at' => $Individual->deleted_at,
                 'notes' => $notes,
+                'grant' => $Individual->grant()->get(),
                 'files' =>  $Individual->files()->get(),
                 'facilities' => $Individual->facilities()->get(),
                 'home' => $Individual->home()->get(),
@@ -146,7 +147,6 @@ class IndividualController extends Controller
 
         $Individual =  Auth::user()->account->Individuals()->create(
             [
-                'photo' => Request::get('photo'),
                 'phone' => Request::get('phone'),
                 'name' => Request::get('name'),
                 'address' => Request::get('address'),
@@ -176,7 +176,7 @@ class IndividualController extends Controller
         if (Request::get('grant') == true) {
             $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
 
-            $Individual->grant()->create(
+            $Individual->grant()->update(
 
                 $Grant_Validation
 

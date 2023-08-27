@@ -1,28 +1,22 @@
 <template>
   <div class="relative">
-    <ul class="absolute left-0 top-0 space-y-3">
-      <li>
+    <!-- individual Card -->
+    <div class="p-6 bg-white rounded-md shadow relative">
+      <Head :title="form.name" />
+      <div class="absolute left-0 top-0 space-y-3">
         <img
           v-if="individual.photo"
           :src="`/uploads/${individual.photo}`"
           alt="individual Image"
-          class="w-32 h-32 rounded"
+          class="w-32 h-32 rounded mt-4 ml-4"
         />
-      </li>
-      <li>
-        <button
+        <!-- <button
           @click="back"
           class="absolute left-0 mt-4 ml-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
         >
           عودة
-        </button>
-      </li>
-    </ul>
-
-    <!-- individual Card -->
-    <div class="p-6 bg-white rounded-md shadow relative">
-      <Head :title="form.name" />
-
+        </button>-->
+      </div>
       <div class="relative">
         <h1 class="pl-28 text-xl font-bold">
           <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
@@ -46,12 +40,13 @@
             </tr>
             <tr>
               <td class="px-4 py-2 border h-16">الحالة</td>
-              <td class="px-4 py-2 border h-16">{{ form.status }}</td>
+              <td class="px-4 py-2 border h-16">
+                <p v-if="form.status == 'active'">نشط</p>
+                <p v-if="form.status == 'inactive'">غير نشط</p>
+                <p v-if="form.status == 'disabled'">محضور</p>
+              </td>
             </tr>
-            <tr>
-              <td class="px-4 py-2 border h-16">الهاتف</td>
-              <td class="px-4 py-2 border h-16">{{ form.status }}</td>
-            </tr>
+
             <tr>
               <td class="px-4 py-2 border h-16">العنوان</td>
               <td class="px-4 py-2 border h-16">{{ form.address }}</td>
@@ -61,6 +56,15 @@
               <td class="px-4 py-2 border h-16">
                 <p v-if="individual.gender == 'male'">ذكر</p>
                 <p v-else>أنثى</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border h-16">منحة إجتماعية</td>
+              <td
+                class="px-4 py-2 border h-16"
+                v-if="individual.grant[0].source !== null"
+              >
+                <p>{{ individual.grant[0].source }} : {{ individual.grant[0].value }}</p>
               </td>
             </tr>
           </tbody>

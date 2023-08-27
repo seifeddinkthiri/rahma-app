@@ -118,14 +118,6 @@
               <option value="divorced">مطلق/مطلقة</option>
               <option value="widower">أرمل/أرملة</option>
             </select-input>
-            <text-input
-              v-model="form.monthly_income"
-              :error="form.errors.monthly_income"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الدخل الشهري"
-              placeholder="الدخل الشهري هنا"
-              :disabled="isFormDisabled"
-            />
 
             <select-input
               v-model="form.education_level"
@@ -162,6 +154,39 @@
               <option value="other_member">فرد آخر</option>
               <option value="single_mother">أم عزباء</option>
             </select-input>
+            <ToggleCheckbox
+              :id="'grant'"
+              :class="'lg:w-1/2'"
+              :isChecked="form.grant"
+              :label="'منحة إجتماعية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_grant"
+              :isDisabled="isFormDisabled"
+            />
+
+            <div v-if="form.grant" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="source"
+                  :error="form.errors.grant_source"
+                  v-model="form.grant_source"
+                  label="المصدر"
+                  placeholder="المصدر هنا"
+                  :disabled="isFormDisabled"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="value"
+                  v-model="form.grant_value"
+                  :error="form.errors.grant_value"
+                  label="القيمة"
+                  placeholder="القيمة بالدينار هنا"
+                  :disabled="isFormDisabled"
+                />
+              </div>
+            </div>
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
             <div class="flex flex-row flex-nowrap w-full">
               <ToggleCheckbox
@@ -272,7 +297,6 @@ export default {
         birth_date: null,
         birth_city: null,
         social_status: null,
-        monthly_income: null,
         health_insurance: false,
         kinship: null,
         caregiver: false,
@@ -283,10 +307,16 @@ export default {
         disease: null,
         disability: null,
         disability_card_number: null,
+        grant: false,
+        grant_source: null,
+        grant_value: null,
       }),
     };
   },
   methods: {
+    toggle_grant() {
+      this.form.grant = !this.form.grant;
+    },
     toggle_health_insurance() {
       this.form.health_insurance = !this.form.health_insurance;
     },
@@ -294,7 +324,6 @@ export default {
     toggle_health_Status() {
       this.form.good = !this.form.good;
     },
-
 
     store() {
       this.form

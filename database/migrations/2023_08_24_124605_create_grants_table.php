@@ -17,10 +17,10 @@ class CreateGrantsTable extends Migration
             $table->id();
             $table->integer('value')->nullable();
             $table->string('source')->nullable();
-            $table->unsignedBigInteger('family_id')->nullable();
-            $table->foreign('family_id')
+            $table->unsignedBigInteger('member_id')->nullable();
+            $table->foreign('member_id')
                 ->references('id')
-                ->on('families')
+                ->on('members')
                 ->onDelete('cascade');
             $table->unsignedBigInteger('individual_id')->nullable();
             $table->foreign('individual_id')

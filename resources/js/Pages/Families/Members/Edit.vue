@@ -92,12 +92,7 @@
               <option value="divorced">مطلق/مطلقة</option>
               <option value="widower">أرمل/أرملة</option>
             </select-input>
-            <text-input
-              v-model="form.monthly_income"
-              :error="form.errors.monthly_income"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الدخل الشهري"
-            />
+
             <text-input
               v-model="form.job"
               :error="form.errors.job"
@@ -119,8 +114,8 @@
             >
               <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
               <option value="primary">إعدادي</option>
-              <option value="secondary">ثاناوي </option>
-              <option value="university "> جامعي</option>
+              <option value="secondary">ثاناوي</option>
+              <option value="university ">جامعي</option>
             </select-input>
 
             <select-input
@@ -145,6 +140,40 @@
               accept="image/*"
               label="الصورة "
             />
+
+            <ToggleCheckbox
+              :id="'grant'"
+              :class="'lg:w-1/2'"
+              :isChecked="form.grant"
+              :label="'منحة إجتماعية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_grant"
+              :isDisabled="isFormDisabled"
+            />
+
+            <div v-if="form.grant" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="source"
+                  :error="form.errors.grant_source"
+                  v-model="form.grant_source"
+                  label="المصدر"
+                  placeholder="المصدر هنا"
+                  :disabled="isFormDisabled"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="value"
+                  v-model="form.grant_value"
+                  :error="form.errors.grant_value"
+                  label="القيمة"
+                  placeholder="القيمة بالدينار هنا"
+                  :disabled="isFormDisabled"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -274,6 +303,12 @@ export default {
       this.health_status_form.disability = element.disability;
       this.health_status_form.disability_card_number = element.disability_card_number;
     });
+
+    if (this.member.grant[0].source == null) {
+      this.form.grant = false;
+    } else {
+      this.form.grant = true;
+    }
   },
 
   data() {
@@ -296,16 +331,21 @@ export default {
         birth_date: this.member.birth_date,
         birth_city: this.member.birth_city,
         social_status: this.member.social_status,
-        monthly_income: this.member.monthly_income,
         kinship: this.member.kinship,
         education_level: this.member.education_level,
         job: this.member.job,
         job_place: this.member.job_place,
         family_id: this.member.family_id,
+        grant: false,
+        grant_source: this.member.grant[0].source,
+        grant_value: this.member.grant[0].value,
       }),
     };
   },
   methods: {
+    toggle_grant() {
+      this.form.grant = !this.form.grant;
+    },
     update_health_status() {
       this.health_status_form.put(`/healthStatusMemeber/${this.member.id}`);
     },

@@ -25,7 +25,7 @@
             v-model="form.status"
             :error="form.errors.status"
             class="pb-8 pr-6 w-full lg:w-1/2"
-            label=" الحالة "
+            label="الحالة"
           >
             <option hidden disabled :value="null">إختر الحالة</option>
             <option value="active">نشط</option>
@@ -542,7 +542,6 @@
 
                 <text-input
                   v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-
                   v-model="intervention_form.value"
                   :error="intervention_form.errors.value"
                   :id="

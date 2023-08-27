@@ -33,7 +33,6 @@ class MemberController extends Controller
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
             'kinship' => ['nullable', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
@@ -41,13 +40,17 @@ class MemberController extends Controller
             'family_id' => ['nullable', 'integer'],
 
         ]);
-           // Create the health status
-           $H_S_Validation = Request::validate([
+        // Create the health status
+        $H_S_Validation = Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
             'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+        ]);
+        $Grant_Validation = Request::validate([
+            'grant_source' => ['nullable', 'required_with:grant_value',  'string', 'max:100'],
+            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
         ]);
 
         $member = Auth::user()->account->members()->create([
@@ -59,7 +62,6 @@ class MemberController extends Controller
             'birth_date' => Request::get('birth_date'),
             'birth_city' => Request::get('birth_city'),
             'social_status' => Request::get('social_status'),
-            'monthly_income' => Request::get('monthly_income'),
             'kinship' => Request::get('kinship'),
             'education_level' => Request::get('education_level'),
             'job' => Request::get('job'),
@@ -70,6 +72,15 @@ class MemberController extends Controller
 
         if (Request::file('photo')) {
             Request::file('photo')->move(public_path('uploads'), $member->photo);
+        }
+        if (Request::get('grant') == true) {
+            $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
+
+            $member->grant()->update(
+
+                $Grant_Validation
+
+            );
         }
 
         $family = $member->family;
@@ -158,12 +169,12 @@ class MemberController extends Controller
                 'birth_date' => $Member->birth_date,
                 'birth_city' => $Member->birth_city,
                 'social_status' => $Member->social_status,
-                'monthly_income' => $Member->monthly_income,
                 'kinship' => $Member->kinship,
                 'education_level' => $Member->education_level,
                 'job' => $Member->job,
                 'job_place' => $Member->job_place,
                 'family_id' => $Member->family_id,
+                'grant' => $Member->grant()->get(),
                 'healthStatus' => $Member->healthStatus()->get(),
                 'deleted_at' => $Member->deleted_at,
             ],
@@ -181,12 +192,12 @@ class MemberController extends Controller
                 'birth_date' => $Member->birth_date,
                 'birth_city' => $Member->birth_city,
                 'social_status' => $Member->social_status,
-                'monthly_income' => $Member->monthly_income,
                 'kinship' => $Member->kinship,
                 'education_level' => $Member->education_level,
                 'job' => $Member->job,
                 'job_place' => $Member->job_place,
                 'family_id' => $Member->family_id,
+                'grant' => $Member->grant()->get(),
                 'healthStatus' => $Member->healthStatus()->get(),
                 'deleted_at' => $Member->deleted_at,
             ],
@@ -200,7 +211,8 @@ class MemberController extends Controller
             'good' => ['nullable', 'boolean'],
             'disease' => ['nullable', 'string', 'max:100'],
             'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
-            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],        ]);
+            'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
+        ]);
 
 
         if (Request::get('good') == true) {
@@ -238,7 +250,6 @@ class MemberController extends Controller
                 'birth_date' => ['nullable', 'date'],
                 'birth_city' => ['nullable', 'max:100'],
                 'social_status' => ['nullable', 'max:100'],
-                'monthly_income' => ['nullable', 'integer'],
                 'kinship' => ['nullable', 'max:100'],
                 'education_level' => ['nullable', 'max:100'],
                 'job' => ['nullable', 'max:100'],
@@ -247,6 +258,14 @@ class MemberController extends Controller
 
             ])
         );
+
+
+
+        $Grant_Validation = Request::validate([
+            'grant_source' => ['nullable', 'required_with:grant_value',  'string', 'max:100'],
+            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
+        ]);
+
 
         if (Request::file('photo')) {
             $Member->update(
@@ -265,7 +284,23 @@ class MemberController extends Controller
                 'address' => $Member->address,
             ]);
         }
+        if (Request::get('grant') == true) {
+            $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
 
+            $Member->grant()->update(
+
+                $Grant_Validation
+
+            );
+        }
+        else {
+            $Member->grant()->update([
+                'source' => null,
+                'value' => null,
+            ]);
+
+
+        }
         return redirect()->route('members.edit', ['member' => $Member])->with('success', 'تم تحديث العضو');
     }
 
@@ -284,7 +319,6 @@ class MemberController extends Controller
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
-            'monthly_income' => ['nullable', 'integer'],
             'kinship' => ['nullable', 'max:100'],
             'education_level' => ['nullable', 'max:100'],
             'job' => ['nullable', 'max:100'],
@@ -299,6 +333,10 @@ class MemberController extends Controller
             'disability' => ['nullable', 'required_with:disability_card_number',  'string', 'max:100'],
             'disability_card_number' => ['nullable', 'required_with:disability', 'numeric', 'digits:8'],
         ]);
+        $Grant_Validation = Request::validate([
+            'grant_source' => ['nullable', 'required_with:grant_value',  'string', 'max:100'],
+            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
+        ]);
 
         $member = Auth::user()->account->members()->create($validatedData);
 
@@ -312,7 +350,15 @@ class MemberController extends Controller
             Request::file('photo')->move(public_path('uploads'), $member->photo);
         }
 
+        if (Request::get('grant') == true) {
+            $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
 
+            $member->grant()->update(
+
+                $Grant_Validation
+
+            );
+        }
 
         $healthStatus = new HealthStatus($H_S_Validation);
 

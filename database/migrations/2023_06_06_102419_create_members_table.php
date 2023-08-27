@@ -30,7 +30,6 @@ class CreateMembersTable extends Migration
             $table->string('social_status')->nullable();
             $table->string('kinship')->nullable();
             $table->date('birth_date')->nullable();
-            $table->integer('monthly_income')->nullable();
             $table->string('education_level')->nullable();
             $table->string('education_place')->nullable();
             $table->string('job')->nullable();

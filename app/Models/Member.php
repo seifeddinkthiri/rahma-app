@@ -26,7 +26,6 @@ class Member extends Model
         'birth_date',
         'birth_city',
         'social_status',
-        'monthly_income',
         'kinship',
         'caregiver',
         'education_level',
@@ -39,8 +38,23 @@ class Member extends Model
 
 
     ];
+    public static function boot()
+    {
+        parent::boot();
 
+        static::created(function ($member) {
 
+            $member->grant()->create([
+                'source'=>null,
+                'value'=>null,
+            ]);
+        });
+    }
+
+    public function grant()
+    {
+        return $this->hasOne(Grant::class);
+    }
 
 
     public function resolveRouteBinding($value, $field = null)

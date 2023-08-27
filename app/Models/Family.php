@@ -92,6 +92,7 @@ class Family extends Model
                 'water' => false,
 
             ]);
+
         });
     }
 }

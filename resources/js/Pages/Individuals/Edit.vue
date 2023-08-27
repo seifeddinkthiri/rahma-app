@@ -190,8 +190,15 @@
           <div
             class="flex items-center justify-end pr-4 px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <!-- Add a spacer element to create space between the buttons -->
-            <div class="w-4"></div>
+            <button
+              v-if="!individual.deleted_at"
+              class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:ring-red-600 focus:ring-opacity-50"
+              tabindex="-1"
+              type="button"
+              @click="destroy"
+            >
+              حذف المنتفع
+            </button>
             <loading-button
               :loading="form.processing"
               class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
@@ -1197,6 +1204,13 @@ export default {
         },
       });
     },
+
+    destroy() {
+      if (confirm("هل أنت متأكد أنك تريد حذف  هذا المنتفع؟")) {
+        this.$inertia.delete(`/individuals/${this.individual.id}`);
+      }
+    },
+
     destroy_intervention(id) {
       if (confirm("هل أنت متأكد أنك تريد حذف هذا التدخل ")) {
         this.$inertia.delete(`/interventions/${id}`);

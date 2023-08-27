@@ -275,7 +275,6 @@ export default {
   data() {
     return {
       active_step: 1,
-
       form: this.$inertia.form({
         name: null,
         photo: null,

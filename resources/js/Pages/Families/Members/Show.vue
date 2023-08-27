@@ -78,10 +78,7 @@
                 <p v-if="member.social_status == 'married'">متزوج/متزوجة</p>
               </td>
             </tr>
-            <tr>
-              <td class="h-16 px-4 py-2 border">الدخل الشهري</td>
-              <td class="h-16 px-4 py-2 border">{{ member.monthly_income }}</td>
-            </tr>
+
             <tr>
               <td class="h-16 px-4 py-2 border">صلة القرابة</td>
               <td class="h-16 px-4 py-2 border">
@@ -105,7 +102,12 @@
               <td class="h-16 px-4 py-2 border">مكان العمل</td>
               <td class="h-16 px-4 py-2 border">{{ member.job_place }}</td>
             </tr>
-
+            <tr>
+              <td class="px-4 py-2 border h-16">منحة إجتماعية</td>
+              <td class="px-4 py-2 border h-16" v-if="member.grant[0].source !== null">
+                <p>{{ member.grant[0].source }} : {{ member.grant[0].value }}</p>
+              </td>
+            </tr>
             <tr v-if="health_status_form.disease">
               <td class="h-16 px-4 py-2 border">مرض مزمن</td>
               <td class="h-16 px-4 py-2 border">{{ health_status_form.disease }}</td>

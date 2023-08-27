@@ -20,9 +20,9 @@ class Grant extends Model
     ];
 
 
-    public function family()
+    public function member()
     {
-        return $this->belongsTo(Family::class);
+        return $this->belongsTo(Member::class);
     }
 
     public function individual()
