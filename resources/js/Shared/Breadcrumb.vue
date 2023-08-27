@@ -161,6 +161,16 @@
               الملفات
             </button>
           </li>
+          <li>
+            <div class="relative">
+              <button
+                @click="goBack"
+                class="mx-8 left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              >
+                عودة
+              </button>
+            </div>
+          </li>
         </ol>
       </nav>
     </div>
@@ -191,6 +201,9 @@ export default {
     return {};
   },
   methods: {
+    goBack() {
+      window.history.back();
+    },
     update_step(step, title) {
       this.$emit("update-active-step", step); // Emit the 'update-active-step' event with the new step value
       this.$emit("update-current-form-title", title); // Emit the 'update-current-form-title' event with the new title value

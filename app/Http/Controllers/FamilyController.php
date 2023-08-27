@@ -41,7 +41,47 @@ class FamilyController extends Controller
 
 
 
-
+    public function beneficials()
+    {
+        $emptyFamilies = Family::doesntHave('members')->get();
+        foreach ($emptyFamilies as $emptyFamily) {
+            $emptyFamily->forceDelete();
+        }
+                return Inertia::render('beneficials', [
+            'filters' => Request::all('search', 'trashed'),
+            'families' => Auth::user()->account->families()
+                ->orderBy('name')
+                ->filter(Request::only('search', 'trashed'))
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn ($Family) => [
+                    'id' => $Family->id,
+                    'name' => $Family->name,
+                    'phone' => $Family->caregiver_phone,
+                    'address' => $Family->address,
+                    'status' => $Family->status,
+                    'photo' => $Family->photo,
+                    'deleted_at' => $Family->deleted_at,
+                    'members' => $Family->members()->get(),
+                ]),
+                'individuals' => Auth::user()->account->individuals()
+                ->orderBy('name')
+                ->filter(Request::only('search', 'trashed'))
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn ($Individual) => [
+                    'id' => $Individual->id,
+                    'photo' => $Individual->photo,
+                    'name' => $Individual->name,
+                    'phone' => $Individual->phone,
+                    'status' => $Individual->status,
+                    'address' => $Individual->address,
+                    'cin' => $Individual->cin,
+                    'gender' => $Individual->gender,
+                    'deleted_at' => $Individual->deleted_at,
+                ]),
+        ]);
+    }
 
 
     public function store()

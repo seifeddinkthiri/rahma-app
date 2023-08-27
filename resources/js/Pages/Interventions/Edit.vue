@@ -5,7 +5,7 @@
       <Link class="text-blue-400 hover:text-blue-600" href="/interventions"
         >التدخلات
       </Link>
-      <span class="text-blue-400 font-medium">/</span>
+      <span class="text-blue-400 font-medium"> : </span>
       {{ form.intervenor }}
     </h1>
     <trashed-message v-if="intervention.deleted_at" class="mb-6" @restore="restore"

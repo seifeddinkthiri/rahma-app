@@ -16,7 +16,7 @@
         <Link class="text-indigo-400 hover:text-indigo-600" href="/users"
           >المستخدمون</Link
         >
-        <span class="text-indigo-400 font-medium">/</span>
+        <span class="text-indigo-400 font-medium"> : </span>
         {{ form.first_name }} {{ form.last_name }}
       </h1>
     </div>
@@ -40,7 +40,6 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="الاسم الأخير"
             placeholder="الإسم الأخير هنا"
-
           />
           <text-input
             v-model="form.email"
@@ -48,8 +47,6 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="البريد الإلكتروني"
             placeholder="البريد الإلكتروني هنا"
-
-
           />
           <text-input
             v-model="form.password"
@@ -59,9 +56,9 @@
             autocomplete="new-password"
             label="كلمة المرور"
             placeholder="كلمة المرور هنا"
-
           />
-          <select-input v-if="$page.props.auth.user.admin"
+          <select-input
+            v-if="$page.props.auth.user.admin"
             v-model="form.owner"
             :error="form.errors.owner"
             class="pb-8 pr-6 w-full lg:w-1/2"

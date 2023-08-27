@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <Breadcrumb
       :Family_id="Family.id"
@@ -369,7 +370,6 @@
                 />
               </div>
             </div>
-
 
             <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
             <div class="flex flex-row flex-nowrap w-full">

@@ -3,8 +3,8 @@
     <Head :title="form.name" />
 
     <h1 class="mb-8 text-xl font-bold">
-      <Link class="text-blue-400 hover:text-blue-600" href="/families">عائلة</Link>
-      <span class="text-blue-400 font-medium">/</span>
+      <Link class="text-blue-400 hover:text-blue-600" href="/families">العائلة</Link>
+      <span class="text-blue-400 font-medium"> : </span>
       {{ form.name }}
     </h1>
     <trashed-message v-if="family.deleted_at" class="mb-6" @restore="restore"

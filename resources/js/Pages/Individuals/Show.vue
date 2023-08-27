@@ -20,7 +20,7 @@
       <div class="relative">
         <h1 class="pl-28 text-xl font-bold">
           <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
-          <span class="text-blue-400 font-medium">/</span>
+          <span class="text-blue-400 font-medium"> : </span>
           {{ form.name }}
         </h1>
       </div>

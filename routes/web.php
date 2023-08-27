@@ -152,6 +152,14 @@ Route::get('individuals/{Individual}/Create_all', [IndividualController::class, 
     ->name('individuals.Create_all')
     ->middleware('auth');
 
+
+//beneficials
+
+Route::any('beneficials', [FamilyController::class, 'beneficials'])
+    ->name('beneficials')
+    ->middleware('auth');
+
+
 // families
 
 Route::get('families', [FamilyController::class, 'index'])

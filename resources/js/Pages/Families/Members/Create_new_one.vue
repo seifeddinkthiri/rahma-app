@@ -7,7 +7,7 @@
         :href="`/families/${Family.id}/edit`"
         >الأفراد</Link
       >
-      <span class="text-blue-400 font-medium">/</span> إنشاء
+      <span class="text-blue-400 font-medium"> : </span> إنشاء
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">

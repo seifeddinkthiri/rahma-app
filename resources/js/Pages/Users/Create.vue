@@ -3,7 +3,7 @@
     <Head title="Create User" />
     <h1 class="mb-8 text-xl font-bold">
       <Link class="text-blue-400 hover:text-blue-600" href="/users">المستخدمون</Link>
-      <span class="text-blue-400 font-medium">/</span> إنشاء
+      <span class="text-blue-400 font-medium"> : </span> إنشاء
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
@@ -21,7 +21,6 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="الاسم الأخير"
             placeholder="الإسم الأخير هنا"
-
           />
           <text-input
             v-model="form.email"
@@ -29,8 +28,6 @@
             class="pb-8 pr-6 w-full lg:w-1/2"
             label="البريد الإلكتروني"
             placeholder="البريد الإلكتروني هنا"
-
-
           />
           <text-input
             v-model="form.password"
@@ -40,7 +37,6 @@
             autocomplete="new-password"
             label="كلمة المرور"
             placeholder="كلمة المرور هنا"
-
           />
           <select-input
             v-model="form.owner"

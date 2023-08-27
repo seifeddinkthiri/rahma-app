@@ -5,7 +5,7 @@
       <Link class="text-blue-400 hover:text-blue-200" href="/interventions"
         >التدخلات
       </Link>
-      <span class="text-blue-400 font-medium">/</span> إنشاء
+      <span class="text-blue-400 font-medium"> : </span> إنشاء
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
