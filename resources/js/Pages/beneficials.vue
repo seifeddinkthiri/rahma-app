@@ -1,6 +1,40 @@
 <template>
   <div>
     <Head title="المنتفعين" />
+    <div
+      v-if="show_modal"
+      class="fixed inset-0 flex items-center justify-center z-50 rounded"
+    >
+      <div class="bg-gray-500 bg-opacity-75 fixed inset-0 transition-opacity"></div>
+      <div class="bg-white w-96 rounded shadow-xl z-10">
+        <div class="px-4 py-6 bg-gray-50">
+          <div class="flex justify-center flex-col items-center">
+            <Link
+              @click="show_modal = false"
+              href="/individuals/create"
+              type="button"
+              class="mb-3 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> فرد
+            </Link>
+            <button
+              @click="store_family"
+              type="button"
+              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="group" class="mr-2 w-4 h-4 ml-4" /> عائلة
+            </button>
+            <button
+              @click="show_modal = false"
+              type="button"
+              class="mt-3 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="close" class="mr-2 w-4 h-4 ml-4" /> إلغاء
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="flex items-center justify-end">
       <search-filter
         :onlySearch="false"
@@ -23,16 +57,21 @@
       </search-filter>
     </div>
     <div class="flex items-center justify-between mt-4 mb-4">
-      <h1 class="text-xl font-bold">العائلات</h1>
+      <h1 class="text-xl font-bold" v-if="families.data.length > 0">العائلات</h1>
+      <h1 class="text-xl font-bold" v-else></h1>
+
       <button
-        @click="store_family"
+        @click="show_modal = true"
         class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
       >
-        <span>إنشاء</span>
+        <span> إضافة منتفع</span>
       </button>
     </div>
 
-    <div class="bg-white rounded-md shadow overflow-x-auto">
+    <div
+      class="bg-white rounded-md shadow overflow-x-auto"
+      v-if="families.data.length > 0"
+    >
       <table class="w-full">
         <thead>
           <tr class="text-right font-bold">
@@ -186,15 +225,9 @@
 
     <pagination class="mt-6" :links="families.links" />
   </div>
-  <div>
+  <div v-if="individuals.data.length > 0">
     <div class="flex items-center justify-between mt-4 mb-4">
       <h1 class="text-xl font-bold">الأفراد</h1>
-      <Link
-        href="/individuals/create"
-        class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-      >
-        <span>إنشاء</span>
-      </Link>
     </div>
 
     <div class="bg-white rounded-md shadow overflow-x-auto">
@@ -359,6 +392,8 @@ export default {
 
   data() {
     return {
+      beneficial: null,
+      show_modal: false,
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
@@ -377,6 +412,7 @@ export default {
   methods: {
     store_family() {
       this.$inertia.post("/families");
+      show_modal = false;
     },
     delete_family(id) {
       if (confirm("هل أنت متأكد أنك تريد حذف هذه العائلة")) {
