@@ -12,28 +12,6 @@ use Illuminate\Support\Facades\Session;
 
 class IndividualController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Individuals/Index', [
-            'filters' => Request::all('search', 'trashed'),
-            'individuals' => Auth::user()->account->individuals()
-                ->orderBy('name')
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($Individual) => [
-                    'id' => $Individual->id,
-                    'photo' => $Individual->photo,
-                    'name' => $Individual->name,
-                    'phone' => $Individual->phone,
-                    'status' => $Individual->status,
-                    'address' => $Individual->address,
-                    'cin' => $Individual->cin,
-                    'gender' => $Individual->gender,
-                    'deleted_at' => $Individual->deleted_at,
-                ]),
-        ]);
-    }
 
     public function create()
     {

@@ -106,9 +106,6 @@ Route::get('wait_list/{user}/delete_demonde', [WaitingUsersController::class, 'd
 
 // individuals
 
-Route::get('individuals', [IndividualController::class, 'index'])
-    ->name('individuals')
-    ->middleware('auth');
 
 Route::get('individuals/create', [IndividualController::class, 'create'])
     ->name('individuals.create')
@@ -164,9 +161,6 @@ Route::any('beneficials', [FamilyController::class, 'beneficials'])
 
 // families
 
-Route::get('families', [FamilyController::class, 'index'])
-    ->name('families')
-    ->middleware('auth');
 
 Route::post('families', [FamilyController::class, 'store'])
     ->name('families.store')

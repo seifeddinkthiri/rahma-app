@@ -12,6 +12,7 @@
         <select v-model="form.type" class="form-select mt-1 w-full">
           <option value="family">عائلة</option>
           <option value="individual">فرد</option>
+          <option value="all">الكل</option>
         </select>
 
         <label class="block text-gray-700">تم الحذف</label>
@@ -361,7 +362,7 @@ export default {
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
-        type: null,
+        type: this.filters.type,
       },
     };
   },

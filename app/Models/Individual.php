@@ -42,6 +42,16 @@ class Individual extends Model
     {
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
     }
+    public function scopeWhereType($query, $type)
+    {
+        if ($type === 'individual' || $type === 'all') {
+            return $query;
+        } else {
+            return $query->whereRaw('1 = 0');
+        }
+    }
+
+
 
     public function scopeFilter($query, array $filters)
     {
@@ -58,6 +68,8 @@ class Individual extends Model
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
             }
+        })->when($filters['type'] ?? null, function ($query, $type) {
+            $query->whereType($type);
         });
     }
 

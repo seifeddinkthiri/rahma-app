@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Session;
 
 class FamilyController extends Controller
 {
-    public function index()
-    {
-        $emptyFamilies = Family::doesntHave('members')->get();
-        foreach ($emptyFamilies as $emptyFamily) {
-            $emptyFamily->forceDelete();
-        }
-                return Inertia::render('Families/Index', [
-            'filters' => Request::all('search', 'trashed'),
-            'families' => Auth::user()->account->families()
-                ->orderBy('name')
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($Family) => [
-                    'id' => $Family->id,
-                    'name' => $Family->name,
-                    'phone' => $Family->caregiver_phone,
-                    'address' => $Family->address,
-                    'status' => $Family->status,
-                    'photo' => $Family->photo,
-                    'deleted_at' => $Family->deleted_at,
-                    'members' => $Family->members()->get(),
-                ]),
-        ]);
-    }
 
 
 
@@ -48,10 +23,10 @@ class FamilyController extends Controller
             $emptyFamily->forceDelete();
         }
                 return Inertia::render('beneficials', [
-            'filters' => Request::all('search', 'trashed'),
+            'filters' => Request::all('search', 'type','trashed'),
             'families' => Auth::user()->account->families()
                 ->orderBy('name')
-                ->filter(Request::only('search', 'trashed'))
+                ->filter(Request::only('search', 'type','trashed'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($Family) => [
@@ -66,7 +41,7 @@ class FamilyController extends Controller
                 ]),
                 'individuals' => Auth::user()->account->individuals()
                 ->orderBy('name')
-                ->filter(Request::only('search', 'trashed'))
+                ->filter(Request::only('search', 'type','trashed'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($Individual) => [
