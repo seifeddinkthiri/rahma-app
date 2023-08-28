@@ -544,6 +544,15 @@
                   label="عنوان الملف"
                   placeholder="عنوان الملف هنا"
                 />
+                <text-input
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  type="date"
+                  id="date"
+                  v-model="intervention_form.date"
+                  :error="intervention_form.errors.date"
+                  label="تاريخ التدخل"
+                  placeholder=" تاريخ التدخل هنا"
+                />
               </div>
               <div
                 class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -1140,6 +1149,7 @@ export default {
       }),
       intervention_form: this.$inertia.form({
         type: null,
+        date: null,
         value: null,
         intervenor: null,
         intervenor_phone: null,

@@ -149,7 +149,6 @@
               :active_value="'نعم'"
               :inactive_value="'لا'"
               @toggle="toggle_grant"
-              :isDisabled="isFormDisabled"
             />
 
             <div v-if="form.grant" class="w-full">

@@ -50,8 +50,10 @@ class InterventionController extends Controller
             'intervenor_phone' => ['nullable', 'numeric', 'digits:8'],
             'notes' => ['nullable'],
             'file' => ['nullable'],
-            'title' => ['nullable', 'required_with:file','string', 'max:50']
+            'title' => ['nullable', 'required_with:file', 'string', 'max:50'],
+            'date' => ['nullable', 'date'],
         ]);
+
         $intervention = Auth::user()->account->interventions()->create([
             'type' => Request::get('type'),
             'value' => Request::get('value'),
