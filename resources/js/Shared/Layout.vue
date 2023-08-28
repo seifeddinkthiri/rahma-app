@@ -139,40 +139,29 @@
                 </Link>
               </div>
               <div class="mb-4">
-                <Drop_down_minu>
-                  <li>
-                    <Link
-                      class="group flex items-center py-3 relative w-full"
-                      href="/families"
-                    >
-                      <div
-                        :class="
-                          isUrl('families')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                        "
-                      >
-                        العائلات
-                      </div>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      class="group flex items-center py-3 relative w-full"
-                      href="/individuals"
-                    >
-                      <div
-                        :class="
-                          isUrl('individuals')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                        "
-                      >
-                        الأفراد
-                      </div>
-                    </Link>
-                  </li>
-                </Drop_down_minu>
+                <Link
+                  class="group flex items-center py-3 relative w-full"
+                  href="/beneficials"
+                >
+                  <icon
+                    name="beneficials"
+                    class="mr-2 w-4 h-4 ml-4"
+                    :class="
+                      isUrl('beneficials')
+                        ? 'fill-white'
+                        : 'fill-indigo-400 group-hover:fill-white'
+                    "
+                  />
+                  <div
+                    :class="
+                      isUrl('beneficials')
+                        ? 'text-white'
+                        : 'text-indigo-300 group-hover:text-white'
+                    "
+                  >
+                    المنتفعين
+                  </div>
+                </Link>
               </div>
 
               <div class="mb-4" v-if="auth.user.admin || auth.user.owner">
@@ -228,7 +217,6 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Icon from "@/Shared/Icon";
 import Logo from "@/Shared/Logo";
 import Dropdown from "@/Shared/Dropdown";
-import Drop_down_minu from "@/Shared/Drop_down_minu";
 import Drop_down_minu_members from "@/Shared/Drop_down_minu_members";
 import FlashMessages from "@/Shared/FlashMessages";
 
@@ -239,7 +227,6 @@ export default {
     Icon,
     Link,
     Logo,
-    Drop_down_minu,
     Drop_down_minu_members,
   },
   props: {

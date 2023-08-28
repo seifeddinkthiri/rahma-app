@@ -8,6 +8,12 @@
         class="mr-4 w-full max-w-md"
         @reset="reset"
       >
+        <label class="block text-gray-700"> نوع المنتفع</label>
+        <select v-model="form.type" class="form-select mt-1 w-full">
+          <option value="family">عائلة</option>
+          <option value="individual">فرد</option>
+        </select>
+
         <label class="block text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option value="with">مع المحذوف</option>
@@ -355,6 +361,7 @@ export default {
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
+        type: null,
       },
     };
   },
