@@ -84,6 +84,7 @@ class IndividualController extends Controller
                 'address' => $Individual->address,
                 'deleted_at' => $Individual->deleted_at,
                 'notes' => $notes,
+                'healthStatus' => $Individual->healthStatus()->get(),
                 'grant' => $Individual->grant()->get(),
                 'files' =>  $Individual->files()->get(),
                 'facilities' => $Individual->facilities()->get(),
@@ -217,8 +218,8 @@ class IndividualController extends Controller
             'address' => ['required', 'max:100'],
             'photo' => ['nullable', 'image'],
             'gender' => ['nullable', 'max:100'],
-            'cin' => ['required', 'numeric', 'digits:8'],
-            'phone' => ['required', 'numeric', 'digits:8'],
+            'cin' => 'required|numeric|digits:8|unique:individuals,cin,' . $individual->id,
+            'phone' => 'required|numeric|digits:8|unique:individuals,phone,' . $individual->id,
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
@@ -247,14 +248,21 @@ class IndividualController extends Controller
             'education_level' => Request::get('education_level'),
             'job' => Request::get('job'),
             'job_place' => Request::get('job_place'),
-            'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
         ];
 
+
+
+        $individual->update($data);
+
         if (Request::file('photo')) {
+            $individual->update(
+                [
+                    'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+                ]
+            );
             Request::file('photo')->move(public_path('uploads'), $individual->photo);
         }
 
-        $individual->update($data);
         if (Request::get('grant') == true) {
             $Grant_Validation = array_combine(['source', 'value'], array_values($Grant_Validation));
             $individual->grant()->update(

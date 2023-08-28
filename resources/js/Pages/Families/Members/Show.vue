@@ -117,6 +117,12 @@
               <td class="h-16 px-4 py-2 border">إعاقة</td>
               <td class="h-16 px-4 py-2 border">{{ health_status_form.disability }}</td>
             </tr>
+            <tr v-if="health_status_form.disability">
+              <td class="h-16 px-4 py-2 border">رقم بطاقة الإعاقة</td>
+              <td class="h-16 px-4 py-2 border">
+                {{ health_status_form.disability_card_number }}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

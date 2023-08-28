@@ -159,7 +159,6 @@
               :active_value="'نعم'"
               :inactive_value="'لا'"
               @toggle="toggle_grant"
-              :isDisabled="isFormDisabled"
             />
 
             <div v-if="form.grant" class="w-full">
@@ -1247,10 +1246,10 @@ export default {
         .health_insurance;
     },
     update() {
-      this.form.put(`/individuals/${this.individual.id}`);
+      this.form.post(`/individuals/${this.individual.id}`);
     },
     update_health_status() {
-      this.health_status_form.put(`/healthStatus/${this.individual.id}`);
+      this.health_status_form.post(`/healthStatus/${this.individual.id}`);
     },
     destroy() {
       if (confirm("هل أنت متأكد أنك تريد حذف هذا الفرد ؟")) {

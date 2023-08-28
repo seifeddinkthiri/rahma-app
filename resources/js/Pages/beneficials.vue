@@ -5,10 +5,12 @@
       v-if="show_modal"
       class="fixed inset-0 flex items-center justify-center z-50 rounded"
     >
-      <div class="bg-gray-500 bg-opacity-75 fixed inset-0 transition-opacity"></div>
+      <div
+        class="bg-gray-500 bg-opacity-75 fixed inset-0 transition-opacity rounded"
+      ></div>
       <div class="bg-white w-96 rounded shadow-xl z-10">
-        <div class="px-4 py-6 bg-gray-50">
-          <div class="flex justify-center flex-col items-center">
+        <div class="px-4 py-6 bg-gray-50 rounded">
+          <div class="flex justify-center flex-col items-center rounded">
             <Link
               @click="show_modal = false"
               href="/individuals/create"
@@ -42,14 +44,14 @@
         class="mr-4 w-full max-w-md"
         @reset="reset"
       >
-        <label class="block text-gray-700"> نوع المنتفع</label>
+        <label class="block text-gray-700 mt-2 mb-2"> نوع المنتفع</label>
         <select v-model="form.type" class="form-select mt-1 w-full">
           <option value="family">عائلة</option>
           <option value="individual">فرد</option>
           <option value="all">الكل</option>
         </select>
 
-        <label class="block text-gray-700">تم الحذف</label>
+        <label class="block text-gray-700 mt-2 mb-2">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option value="with">مع المحذوف</option>
           <option value="only">فقط المحذوف</option>

@@ -39,10 +39,9 @@
               >
                 <button
                   :loading="form.processing"
-                  class="btn-indigo bg-green-600 flex flex-row"
+                  class="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
                 >
                   قبول
-                  <icon name="accepet" class="mr-2 w-4 h-4 fill-white" />
                 </button>
               </Link>
             </td>
@@ -54,10 +53,9 @@
               >
                 <button
                   :loading="form.processing"
-                  class="btn-indigo bg-red-600 flex flex-row"
+                  class="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
                 >
                   حذف
-                  <icon name="delete" class="mr-2 w-4 h-4 fill-white" />
                 </button>
               </Link>
             </td>
@@ -106,10 +104,9 @@
               >
                 <button
                   :loading="form.processing"
-                  class="btn-indigo bg-red-600 flex flex-row"
+                  class="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
                 >
                   حظر
-                  <icon name="block" class="mr-2 w-4 h-4 fill-white" />
                 </button>
               </Link>
             </td>

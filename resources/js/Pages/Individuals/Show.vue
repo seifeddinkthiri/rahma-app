@@ -3,20 +3,26 @@
     <!-- individual Card -->
     <div class="p-6 bg-white rounded-md shadow relative">
       <Head :title="form.name" />
-      <div class="absolute left-0 top-0 space-y-3">
-        <img
-          v-if="individual.photo"
-          :src="`/uploads/${individual.photo}`"
-          alt="individual Image"
-          class="w-32 h-32 rounded mt-4 ml-4"
-        />
-        <!-- <button
-          @click="back"
-          class="absolute left-0 mt-4 ml-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-        >
-          عودة
-        </button>-->
-      </div>
+      <ul class="absolute left-0 top-0 space-y-3 pt-4 pl-4">
+        <li>
+          <img
+            v-if="individual.photo"
+            :src="`/uploads/${individual.photo}`"
+            alt="individual Image"
+            class="w-32 h-32 rounded"
+          />
+        </li>
+        <li>
+          <button
+            @click="goBack"
+            class="absolute mx-8 left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          >
+            عودة
+          </button>
+        </li>
+      </ul>
+      <br />
+      <br /><br /><br />
       <div class="relative">
         <h1 class="pl-28 text-xl font-bold">
           <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
@@ -25,7 +31,6 @@
         </h1>
       </div>
 
-      <h2 class="mt-12 text-2xl font-bold">الفرد</h2>
       <br /><br /><br />
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <table class="w-full">
@@ -65,6 +70,21 @@
                 v-if="individual.grant[0].source !== null"
               >
                 <p>{{ individual.grant[0].source }} : {{ individual.grant[0].value }}</p>
+              </td>
+            </tr>
+            <tr v-if="health_status_form.disease">
+              <td class="h-16 px-4 py-2 border">مرض مزمن</td>
+              <td class="h-16 px-4 py-2 border">{{ health_status_form.disease }}</td>
+            </tr>
+
+            <tr v-if="health_status_form.disability">
+              <td class="h-16 px-4 py-2 border">إعاقة</td>
+              <td class="h-16 px-4 py-2 border">{{ health_status_form.disability }}</td>
+            </tr>
+            <tr v-if="health_status_form.disability">
+              <td class="h-16 px-4 py-2 border">رقم بطاقة الإعاقة</td>
+              <td class="h-16 px-4 py-2 border">
+                {{ health_status_form.disability_card_number }}
               </td>
             </tr>
           </tbody>
@@ -193,11 +213,27 @@ export default {
     individual: Object,
   },
   remember: "form",
-
+  created() {
+    this.individual.healthStatus.forEach((element) => {
+      this.health_status_form.health_insurance = element.health_insurance;
+      this.health_status_form.good = element.good;
+      this.health_status_form.disease = element.disease;
+      this.health_status_form.disability = element.disability;
+      this.health_status_form.disability_card_number = element.disability_card_number;
+    });
+  },
   data() {
     return {
       note_id: null,
       toggledNoteIds: [],
+      health_status_form: this.$inertia.form({
+        good: this.individual.healthStatus.good,
+        health_insurance: this.individual.healthStatus.health_insurance,
+        disease: this.individual.healthStatus.disease,
+        disability: this.individual.healthStatus.disability,
+        disability_card_number: this.individual.healthStatus.disability_card_number,
+        individual_id: this.individual.id,
+      }),
       form: this.$inertia.form({
         name: this.individual.name,
         phone: this.individual.phone,

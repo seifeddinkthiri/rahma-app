@@ -149,7 +149,7 @@
               :active_value="'نعم'"
               :inactive_value="'لا'"
               @toggle="toggle_grant"
-              :isDisabled="isFormDisabled"
+
             />
 
             <div v-if="form.grant" class="w-full">
@@ -184,7 +184,7 @@
                 :active_value="'نعم'"
                 :inactive_value="'لا'"
                 @toggle="toggle_health_insurance"
-                :isDisabled="isFormDisabled"
+
               />
               <ToggleCheckbox
                 :id="'good'"
@@ -194,7 +194,7 @@
                 :active_value="'جيدة'"
                 :inactive_value="'عليلة '"
                 @toggle="toggle_health_Status"
-                :isDisabled="isFormDisabled"
+
               />
             </div>
             <div v-if="form.good == false" class="w-full">

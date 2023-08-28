@@ -8,7 +8,6 @@
         class="hidden"
         :checked="isChecked"
         @change="toggleHandle"
-        :disabled="isDisabled"
       />
 
       <label :for="inputId" class="flex items-center cursor-pointer">
@@ -41,7 +40,6 @@ export default {
     label: String,
     active_value: String,
     inactive_value: String,
-    isDisabled: Boolean,
   },
   computed: {
     inputId() {

@@ -128,7 +128,7 @@ Route::get('individuals/{individual}/edit', [IndividualController::class, 'edit'
     ->name('individuals.edit')
     ->middleware('auth');
 
-Route::put('individuals/{individual}', [IndividualController::class, 'update'])
+Route::post('individuals/{individual}', [IndividualController::class, 'update'])
     ->name('individuals.update')
     ->middleware('auth');
 
@@ -141,7 +141,7 @@ Route::put('individuals/{individual}/restore', [IndividualController::class, 're
 
 //Individual health status
 
-Route::put('healthStatus/{individual}', [IndividualController::class, 'update_health_status'])
+Route::post('healthStatus/{individual}', [IndividualController::class, 'update_health_status'])
 ->name('health.update')
 ->middleware('auth');
 

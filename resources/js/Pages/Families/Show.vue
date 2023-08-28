@@ -30,8 +30,6 @@
         {{ form.name }}
       </h1>
 
-      <h2 class="mt-12 text-2xl font-bold">العائلة</h2>
-
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <br />
         <br />

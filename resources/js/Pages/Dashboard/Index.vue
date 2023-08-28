@@ -8,54 +8,61 @@
       </div>
     </div>
 
-    <div v-if="$page.props.auth.user.wait == false"
+    <div
+      v-if="$page.props.auth.user.wait == false"
       class="container mx-auto mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
     >
+      <!-- projects Card -->
+      <div class="bg-white rounded-lg shadow-lg p-4">
+        <Link class="text-blue-400 hover:text-blue-600" href="/projects">
+          <h2 class="text-xl font-semibold mb-2">إدارة المشاريع</h2>
+          <p class="text-gray-600">ادارة المشاريع مع إمكانية ربطها بالتدخلات</p></Link
+        >
+      </div>
+
       <!-- Users Card -->
-      <div class="bg-white rounded-lg shadow-lg p-4" v-if="$page.props.auth.user.admin || $page.props.auth.user.owner">
+      <div
+        class="bg-white rounded-lg shadow-lg p-4"
+        v-if="$page.props.auth.user.admin || $page.props.auth.user.owner"
+      >
         <Link class="text-blue-400 hover:text-blue-600" href="/users">
-          <h2 class="text-xl font-semibold mb-2 hover:underline">إدارة المستخدمين</h2>
+          <h2 class="text-xl font-semibold mb-2">إدارة المستخدمين</h2>
           <p class="text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            قبول أو حضر المستخدم مع منح صلاحية إدارة بقية المستخدمين
           </p></Link
         >
       </div>
       <!-- Beneficials Card -->
       <div class="bg-white rounded-lg shadow-lg p-4">
         <Link class="text-blue-400 hover:text-blue-600" href="/interventions">
-          <h2 class="text-xl font-semibold mb-2 hover:underline">إدارة التدخلات</h2>
+          <h2 class="text-xl font-semibold mb-2">إدارة التدخلات</h2>
 
           <p class="text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            إدارة التدخلات التي يقدمها الأشخاص أو المؤسسات لفائدة المنتفعين الأفراد أو
+            العائلات أو لفائدة المشاريع
           </p></Link
         >
       </div>
       <!-- Interventions Card -->
-      <div class="bg-white rounded-lg shadow-lg p-4">
+      <Link href="beneficials" class="bg-white rounded-lg shadow-lg p-4">
         <h2 class="text-xl font-semibold mb-2">إدارة المنتفعين</h2>
         <ul>
           <li class="flex items-center mb-2">
             <icon name="li" class="h-5 w-5" />
 
-            <Link
-              class="text-blue-400 hover:text-blue-600 hover:underline"
-              href="/families"
-            >
+            <button class="text-blue-400 hover:text-blue-600">
               <p class="text-gray-600">المنتفعين العائلات</p>
-            </Link>
+            </button>
           </li>
           <li class="flex items-center">
             <icon name="li" />
 
-            <Link
-              class="text-blue-400 hover:text-blue-600 hover:underline"
-              href="/individuals"
-            >
+            <button class="text-blue-400 hover:text-blue-600">
               <p class="text-gray-600">المنتفعين الأفراد</p>
-            </Link>
+            </button>
           </li>
         </ul>
-      </div>
+      </Link>
     </div>
 
     <!-- Add any other creative elements or sections here, like statistics, charts, etc. -->

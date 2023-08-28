@@ -14,10 +14,7 @@
     </div>
 
     <div class="absolute left-0">
-      <icon
-        class="w-5 h-5 fill-indigo-300 group-hover:fill-white focus:fill-indigo-600"
-        name="cheveron-left"
-      />
+
     </div>
   </button>
   <ul class="pr-10 mr-15 border_menu_side">
