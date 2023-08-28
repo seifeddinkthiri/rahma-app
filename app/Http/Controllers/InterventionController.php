@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use App\Models\Intervention;
 use App\Models\Family;
 use App\Models\Individual;
-
+use App\Models\Project;
 class InterventionController extends Controller
 {
     public function index()
@@ -38,28 +38,19 @@ class InterventionController extends Controller
     {
         $families = Family::select('id', 'name', 'caregiver_phone')->get();
         $individuals = Individual::select('id', 'name', 'phone')->get();
-
-        return Inertia::render('Interventions/Create', compact('families', 'individuals'));
+        $projects = Project::select('id', 'name')->get();
+        return Inertia::render('Interventions/Create', compact('families', 'individuals','projects'));
     }
 
     public function store()
     {
-
-
-       /*
-         $family = Request::get('family');
-        $individual = Request::get('individual');
-       if (!$family && !$individual) {
-            return Redirect::back()->with('error', 'يجب إختيار منتفع');
-        } else {
-
-
-        }*/
         Request::validate([
             'type' => ['required', 'string', 'max:100'],
             'intervenor' => ['nullable', 'string', 'max:50'],
             'intervenor_phone' => ['nullable', 'numeric', 'digits:8'],
             'notes' => ['nullable'],
+            'file' => ['nullable'],
+            'title' => ['nullable', 'required_with:file','string', 'max:50']
         ]);
         $intervention = Auth::user()->account->interventions()->create([
             'type' => Request::get('type'),
@@ -67,13 +58,12 @@ class InterventionController extends Controller
             'date' => Request::get('date'),
             'family_id' => Request::get('family'),
             'individual_id' => Request::get('individual'),
+            'project_id' => Request::get('project'),
             'intervenor' => Request::get('intervenor'),
             'intervenor_phone' => Request::get('intervenor_phone'),
             'notes' => Request::get('notes'),
 
         ]);
-
-
         if (Request::file('file')) {
             $file = $intervention->files()->create([
                 'title' => Request::input('title'),
@@ -89,24 +79,26 @@ class InterventionController extends Controller
     {
         $families = Family::select('id', 'name', 'caregiver_phone')->get();
         $individuals = Individual::select('id', 'name', 'phone')->get();
+        $projects = Project::select('id', 'name')->get();
 
         return Inertia::render('Interventions/Edit', [
             'intervention' => [
                 'id' => $intervention->id,
                 'family_id' => $intervention->family_id,
                 'individual_id' => $intervention->individual_id,
+                'project_id' => $intervention->project_id,
                 'type' => $intervention->type,
                 'value' => $intervention->value,
                 'date' => $intervention->date,
                 'intervenor' => $intervention->intervenor,
                 'intervenor_phone' => $intervention->intervenor_phone,
                 'notes' => $intervention->notes,
-                'notes' => $intervention->notes,
-
                 'deleted_at' => $intervention->deleted_at,
             ],
             'families' => $families,
             'individuals' => $individuals,
+            'projects' => $projects,
+
         ]);
     }
 
@@ -117,6 +109,7 @@ class InterventionController extends Controller
                 'id' => $intervention->id,
                 'family' => $intervention->family()->get(),
                 'individual' => $intervention->individual()->get(),
+                'project' => $intervention->project()->get(),
                 'type' => $intervention->type,
                 'value' => $intervention->value,
                 'date' => $intervention->date,
@@ -131,16 +124,26 @@ class InterventionController extends Controller
 
     public function update(Intervention $intervention)
     {
-        $intervention->update(
-            Request::validate([
-                'type' => ['required', 'max:100'],
-                'intervenor' => ['nullable', 'max:50'],
-                'date' => ['nullable'],
-                'intervenor_phone' => ['nullable', 'max:50'],
-                'notes' => ['nullable'],
-            ])
+        Request::validate([
+            'type' => ['required', 'string', 'max:100'],
+            'intervenor' => ['nullable', 'string', 'max:50'],
+            'intervenor_phone' => ['nullable', 'numeric', 'digits:8'],
+            'notes' => ['nullable'],
+            'file' => ['nullable'],
+            'title' => ['nullable', 'required_with:file','string', 'max:50']
+        ]);
+        $intervention = Auth::user()->account->interventions()->update([
+            'type' => Request::get('type'),
+            'value' => Request::get('value'),
+            'date' => Request::get('date'),
+            'family_id' => Request::get('family'),
+            'individual_id' => Request::get('individual'),
+            'project_id' => Request::get('project'),
+            'intervenor' => Request::get('intervenor'),
+            'intervenor_phone' => Request::get('intervenor_phone'),
+            'notes' => Request::get('notes'),
 
-        );
+        ]);
         if (Request::file('file')) {
             $file = $intervention->files()->create([
                 'title' => Request::input('title'),

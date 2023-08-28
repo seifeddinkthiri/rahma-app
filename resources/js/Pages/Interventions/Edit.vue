@@ -16,6 +16,7 @@
         <div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
+              @change="reinitialiseBeneficial"
               v-model="form.beneficial"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="نوع المنتفع"
@@ -24,6 +25,7 @@
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة</option>
               <option value="individual">فرد</option>
+              <option value="project">مشروع</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"
@@ -53,6 +55,20 @@
               </option>
               <option :value="null" v-if="individuals.length == 0">قائمة فارغة</option>
             </select-input>
+            <select-input
+              v-if="form.beneficial == 'project'"
+              v-model="form.project"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المشروع"
+            >
+              <option hidden disabled :value="null">إختر المشروع</option>
+
+              <option v-for="project in projects" :value="project.id">
+                {{ project.name }}
+              </option>
+              <option :value="null" v-if="projects.length == 0">قائمة فارغة</option>
+            </select-input>
+
             <select-input
               v-model="form.type"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -133,11 +149,11 @@
           </div>
         </div>
         <div
-          class="flex items-center space-x-3 px-8 py-4 bg-gray-50 border-t border-gray-100"
+          class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 space-x-3"
         >
           <button
             v-if="!intervention.deleted_at"
-            class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
+            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-red-500 hover:bg-red-600 rounded focus:outline-none focus:ring-red-600 focus:ring-opacity-50"
             tabindex="-1"
             type="button"
             @click="destroy"
@@ -147,7 +163,7 @@
 
           <loading-button
             :loading="form.processing"
-            class="ml-auto inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            class="inline-flex items-center justify-center ml-auto px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
             type="submit"
           >
             تعديل التدخل
@@ -186,6 +202,7 @@ export default {
     intervention: Object,
     families: Object,
     individuals: Object,
+    projects: Object,
   },
   remember: "form",
   created() {
@@ -193,6 +210,8 @@ export default {
       this.form.beneficial = "family";
     } else if (this.intervention.individual_id !== null) {
       this.form.beneficial = "individual";
+    } else if (this.intervention.project_id !== null) {
+      this.form.beneficial = "project";
     }
   },
   data() {
@@ -200,6 +219,7 @@ export default {
       form: this.$inertia.form({
         beneficial: null,
         family: this.intervention.family_id,
+        project: this.intervention.project_id,
         individual: this.intervention.individual_id,
         type: this.intervention.type,
         date: this.intervention.date,
@@ -222,6 +242,20 @@ export default {
     },
   },
   methods: {
+    reinitialiseBeneficial() {
+      if (this.form.beneficial == "family") {
+        this.form.individual = null;
+        this.form.project = null;
+      }
+      if (this.form.beneficial == "project") {
+        this.form.individual = null;
+        this.form.family = null;
+      }
+      if (this.form.beneficial == "individual") {
+        this.form.family = null;
+        this.form.project = null;
+      }
+    },
     update() {
       this.form.post(`/interventions/${this.intervention.id}`);
     },

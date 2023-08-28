@@ -14,12 +14,13 @@
             <select-input
               v-model="form.beneficial"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="نوع المنتفع"
+              label="تدخل لفائدة "
               :error="form.errors.beneficial"
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة</option>
               <option value="individual">فرد</option>
+              <option value="project">مشروع</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"
@@ -48,6 +49,19 @@
                 {{ indiv.phone }} - {{ indiv.name }}
               </option>
               <option :value="null" v-if="individuals.length == 0">قائمة فارغة</option>
+            </select-input>
+            <select-input
+              v-if="form.beneficial == 'project'"
+              v-model="form.project"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المشروع"
+            >
+              <option hidden disabled :value="null">إختر المشروع</option>
+
+              <option v-for="project in projects" :value="project.id">
+                {{ project.name }}
+              </option>
+              <option :value="null" v-if="projects.length == 0">قائمة فارغة</option>
             </select-input>
             <select-input
               v-model="form.type"
@@ -116,6 +130,7 @@
               placeholder="اكتب ملاحظاتك هنا"
               label="ملاحظات"
             />
+
             <file-input
               v-model="form.file"
               :error="form.errors.file"
@@ -170,6 +185,7 @@ export default {
   props: {
     families: Object,
     individuals: Object,
+    projects: Object,
   },
   remember: "form",
   data() {
@@ -186,6 +202,7 @@ export default {
         notes: null,
         family: null,
         individual: null,
+        project: null,
       }),
     };
   },

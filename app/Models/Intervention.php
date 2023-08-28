@@ -35,8 +35,6 @@ class Intervention extends Model
     {
         return $this->belongsTo(Project::class);
     }
-
-
     public function family()
     {
         return $this->belongsTo(Family::class);

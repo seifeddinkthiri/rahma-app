@@ -11,16 +11,11 @@
           عودة
         </button>
       </div>
-
       <h2 class="mt-12 text-2xl font-bold">المشروع / {{ project.name }}</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <table class="w-full">
           <tbody>
-            <tr>
-              <td class="px-4 py-2 h-16 border">تفاصيل المشروع</td>
-              <td class="px-4 py-2 h-16 border">{{ project.description }}</td>
-            </tr>
             <tr>
               <td class="px-4 py-2 h-16 border">تاريخ المشروع</td>
               <td class="px-4 py-2 h-16 border">{{ project.date }}</td>
@@ -35,7 +30,15 @@
                 {{ project.status ? "مكتمل" : "قيد التنفيذ" }}
               </td>
             </tr>
-
+            <tr>
+              <td class="px-4 py-2 h-16 border">تفاصيل المشروع</td>
+              <td
+                class="px-4 py-2 h-16 border"
+                style="white-space: pre-line; word-wrap: break-word"
+              >
+                {{ project.description }}
+              </td>
+            </tr>
             <tr>
               <td class="px-4 py-2 h-16 border">التدخلات</td>
               <td class="px-4 py-2 h-16 border">
@@ -53,8 +56,8 @@
                         :href="`/interventions/${intervention.id}/show`"
                         class="text-blue-600"
                       >
-                        {{ intervention.intervenor }}</Link
-                      >
+                        {{ intervention.intervenor }}
+                      </Link>
                     </div>
                   </div>
                   <div v-if="project.interventions.length === 0">
@@ -63,7 +66,6 @@
                 </div>
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>
@@ -97,10 +99,6 @@ export default {
   methods: {
     goBack() {
       window.history.back();
-    },
-    getFileUrl(fileName) {
-      const baseUrl = "http://127.0.0.1:8000";
-      return `${baseUrl}/${fileName}`;
     },
   },
 };

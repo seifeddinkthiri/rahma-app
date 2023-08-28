@@ -2,7 +2,7 @@
   <div>
     <!-- Intervention Card -->
     <div class="p-6 bg-white rounded-md shadow">
-      <Head :title="intervention.type" />
+      <Head :title="intervention.intervenor" />
       <div class="relative">
         <button
           @click="goBack"
@@ -12,7 +12,7 @@
         </button>
       </div>
 
-      <h2 class="mt-12 text-2xl font-bold">تفاصيل التدخل / {{ intervention.type }}</h2>
+      <h2 class="mt-12 text-2xl font-bold">تفاصيل تدخل {{ intervention.intervenor }}</h2>
 
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <table class="w-full">
@@ -22,7 +22,9 @@
               class="hover:bg-gray-100 focus-within:bg-gray-100"
             >
               <td class="px-4 py-2 h-16 border">
-                <Link :href="`/families/${intervention.family[0].id}/show`">العائلة</Link>
+                <Link :href="`/families/${intervention.family[0].id}/show`"
+                  >لفائدة العائلة</Link
+                >
               </td>
               <td class="px-4 py-2 h-16 border">
                 <Link :href="`/families/${intervention.family[0].id}/show`">{{
@@ -36,12 +38,27 @@
             >
               <td class="px-4 py-2 h-16 border">
                 <Link :href="`/individuals/${intervention.individual[0].id}/show`"
-                  >الفرد</Link
-                >
+                  >لفائدة الفرد
+                </Link>
               </td>
               <td class="px-4 py-2 h-16 border">
                 <Link :href="`/individuals/${intervention.individual[0].id}/show`">{{
                   intervention.individual[0].name
+                }}</Link>
+              </td>
+            </tr>
+            <tr
+              v-if="intervention.project[0]"
+              class="hover:bg-gray-100 focus-within:bg-gray-100"
+            >
+              <td class="px-4 py-2 h-16 border">
+                <Link :href="`/projects/${intervention.project[0].id}/show`"
+                  >لفائدة المشروع</Link
+                >
+              </td>
+              <td class="px-4 py-2 h-16 border">
+                <Link :href="`/projects/${intervention.project[0].id}/show`">{{
+                  intervention.project[0].name
                 }}</Link>
               </td>
             </tr>

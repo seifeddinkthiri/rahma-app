@@ -583,6 +583,13 @@
                   type="file"
                   label="أضف ملف"
                 />
+                <text-input
+                  v-model="intervention_form.title"
+                  :error="intervention_form.errors.title"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  label="عنوان الملف"
+                  placeholder="عنوان الملف هنا"
+                />
               </div>
               <div
                 class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
@@ -930,6 +937,7 @@ export default {
         intervenor: null,
         intervenor_phone: null,
         file: null,
+        title: null,
         notes: null,
         family: this.family.id,
         individual: null,
