@@ -16,10 +16,35 @@
       <div class="bg-white rounded-lg shadow-lg p-4">
         <Link class="text-blue-400 hover:text-blue-600" href="/projects">
           <h2 class="text-xl font-semibold mb-2">إدارة المشاريع</h2>
-          <p class="text-gray-600">ادارة المشاريع مع إمكانية ربطها بالتدخلات</p></Link
+          <p class="text-gray-600">
+            ادارة المشاريع ، يحتوي المشروع على مجموعة من التدخلات
+          </p></Link
+        >
+      </div>
+   <!-- Beneficials Card -->
+   <div class="bg-white rounded-lg shadow-lg p-4">
+        <Link class="text-blue-400 hover:text-blue-600" href="/interventions">
+          <h2 class="text-xl font-semibold mb-2">إدارة التدخلات</h2>
+
+          <p class="text-gray-600">
+            إدارة التدخلات المقدمة لفائدة المنتفععين مع إمكانية انتماء التدخل لمشروع معين
+          </p></Link
         >
       </div>
 
+       <!-- Interventions Card -->
+       <Link href="beneficials" class="bg-white rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-semibold mb-2">إدارة المنتفعين</h2>
+        <ul>
+          <li class="flex items-center">
+            <button class="text-blue-400 hover:text-blue-600">
+              <p class="text-gray-600">
+                إدارة المنتفعين مع خدمة البحث و الفلترة حسب الحالة المدنية للمنتفع
+              </p>
+            </button>
+          </li>
+        </ul>
+      </Link>
       <!-- Users Card -->
       <div
         class="bg-white rounded-lg shadow-lg p-4"
@@ -32,31 +57,8 @@
           </p></Link
         >
       </div>
-      <!-- Beneficials Card -->
-      <div class="bg-white rounded-lg shadow-lg p-4">
-        <Link class="text-blue-400 hover:text-blue-600" href="/interventions">
-          <h2 class="text-xl font-semibold mb-2">إدارة التدخلات</h2>
 
-          <p class="text-gray-600">
-            إدارة التدخلات المقدمة لفائدة العائلات أو الأفراد أو المشاريع
-          </p></Link
-        >
-      </div>
-      <!-- Interventions Card -->
-      <Link href="beneficials" class="bg-white rounded-lg shadow-lg p-4">
-        <h2 class="text-xl font-semibold mb-2">إدارة المنتفعين</h2>
-        <ul>
 
-          <li class="flex items-center">
-
-            <button class="text-blue-400 hover:text-blue-600">
-              <p class="text-gray-600">
-                إدارة المنتفعين مع خدمة البحث و الفلترة حسب الحالة المدنية للمنتفع
-              </p>
-            </button>
-          </li>
-        </ul>
-      </Link>
     </div>
 
     <!-- Add any other creative elements or sections here, like statistics, charts, etc. -->

@@ -69,7 +69,7 @@
       >
         <label class="block text-gray-700 mt-2 mb-2">حالة المنتفع</label>
         <select v-model="form.social_status" class="form-select mt-1 w-full">
-          <option value="family">عائلة</option>
+          <option value="family">عائلة معوزة</option>
           <option value="elderly">مسن</option>
           <option value="widow">أرملة</option>
           <option value="single_mother">أم عزباء</option>
@@ -306,7 +306,7 @@ export default {
       show_modal = false;
     },
     delete_family(id) {
-      if (confirm("هل أنت متأكد أنك تريد حذف هذه العائلة")) {
+      if (confirm("هل أنت متأكد أنك تريد حذف  هذا المنتفع")) {
         this.$inertia.delete(`/families/${id}`);
       }
     },

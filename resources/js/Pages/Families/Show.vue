@@ -73,7 +73,7 @@
         <br />
         <div class="flex flex-row items-center justify-around w-full">
           <p v-if="form.name == null" class="px-6 text-red-600">
-            يجب تعيين معيل أسرة لهذه العائلة
+            يجب تعيين معيل أسرة لهذه الأسرة
           </p>
         </div>
         <div class="mt-6 bg-white rounded shadow overflow-x-auto">

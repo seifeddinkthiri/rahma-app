@@ -23,7 +23,7 @@
               :error="form.errors.beneficial"
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
-              <option value="family">عائلة</option>
+              <option value="family">عائلة معوزة</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"

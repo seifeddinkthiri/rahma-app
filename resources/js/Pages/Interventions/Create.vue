@@ -18,7 +18,7 @@
               :error="form.errors.beneficial"
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
-              <option value="family">عائلة</option>
+              <option value="family">عائلة معوزة</option>
               <option value="elderly">مسن</option>
               <option value="divorced">مطلقة</option>
               <option value="widow">أرملة</option>
