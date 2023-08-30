@@ -17,8 +17,5 @@ class Note extends Model
     {
         return $this->belongsTo(Family::class);
     }
-    public function individual()
-    {
-        return $this->belongsTo(Individual::class);
-    }
+
 }

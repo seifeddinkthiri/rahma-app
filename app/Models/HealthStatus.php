@@ -26,8 +26,5 @@ class HealthStatus extends Model
         return $this->belongsTo(Member::class);
     }
 
-    public function individual()
-    {
-        return $this->belongsTo(Individual::class);
-    }
+
 }

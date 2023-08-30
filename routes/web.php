@@ -8,7 +8,6 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SpecificController;
@@ -105,55 +104,6 @@ Route::get('wait_list/{user}/delete_demonde', [WaitingUsersController::class, 'd
 
 
 
-// individuals
-
-
-Route::get('individuals/create', [IndividualController::class, 'create'])
-    ->name('individuals.create')
-    ->middleware('auth');
-    Route::get('individuals/{Individual}/show', [IndividualController::class, 'show'])
-    ->name('individuals.show')
-    ->middleware('auth');
-    Route::get('individuals/{Individual}/create_B_C', [IndividualController::class, 'create_B_C'])
-    ->name('individuals.create_B_C')
-    ->middleware('auth');
-    Route::post('individuals/{individual}/create_B_C_update', [IndividualController::class, 'create_B_C_update'])
-    ->name('individuals.create_B_C_update')
-    ->middleware('auth');
-
-Route::post('individuals', [IndividualController::class, 'store'])
-    ->name('individuals.store')
-    ->middleware('auth');
-
-Route::get('individuals/{individual}/edit', [IndividualController::class, 'edit'])
-    ->name('individuals.edit')
-    ->middleware('auth');
-
-Route::post('individuals/{individual}', [IndividualController::class, 'update'])
-    ->name('individuals.update')
-    ->middleware('auth');
-
-Route::delete('individuals/{individual}/', [IndividualController::class, 'destroy'])
-    ->name('individuals.destroy')
-    ->middleware('auth');
-
-Route::put('individuals/{individual}/restore', [IndividualController::class, 'restore']);
-
-
-//Individual health status
-
-Route::post('healthStatus/{individual}', [IndividualController::class, 'update_health_status'])
-->name('individual.health.update')
-->middleware('auth');
-
-// individuel home and notes
-
-Route::get('individuals/{Individual}/Create_all', [IndividualController::class, 'Create_all'])
-    ->name('individuals.Create_all')
-    ->middleware('auth');
-
-
-//beneficials
 
 Route::any('beneficials', [FamilyController::class, 'beneficials'])
     ->name('beneficials')
@@ -249,11 +199,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::delete('files/{file}', [FileController::class, 'destroy'])
     ->name('files.destroy')
     ->middleware('auth');
-    //files_individuals
 
-    Route::post('files_individual/{individual}', [FileController::class, 'store_for_Individual'])
-    ->name('files.individuals.store')
-    ->middleware('auth');
     Route::delete('files/{file}', [FileController::class, 'destroy'])
     ->name('files.destroy')
     ->middleware('auth');
@@ -261,10 +207,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::post('notes/{family}', [NoteController::class, 'store'])
     ->name('notes.store')
     ->middleware('auth');
-    //indev_notes
-    Route::put('notes/{Individual}/IndividualStoreNote', [NoteController::class, 'IndividualStoreNote'])
-    ->name('notes.IndividualStoreNote')
-    ->middleware('auth');
+
 
     Route::put('notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update')
@@ -281,10 +224,6 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
  //Home
  Route::post('home/{family}', [HomeController::class, 'store'])
  ->name('home.store')
- ->middleware('auth');
-//indev_homer
- Route::put('home/{Individual}/IndividualsStore', [HomeController::class, 'IndividualsStore'])
- ->name('home.IndividualsStore')
  ->middleware('auth');
 
 
@@ -303,10 +242,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     Route::put('facilities/{family}', [FacilityController::class, 'update'])
     ->name('facilities.update')
     ->middleware('auth');
-    //facilities indiv
-    Route::put('facilities/{Individual}/Individualsupdate', [FacilityController::class, 'Individualsupdate'])
-    ->name('facilities.Individualsupdate')
-    ->middleware('auth');
+
 
     Route::delete('facilities/{family}', [FacilityController::class, 'destroy'])
     ->name('facilities.destroy')

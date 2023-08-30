@@ -20,11 +20,7 @@ class CreateHomesTable extends Migration
                 ->references('id')
                 ->on('families')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('individual_id')->nullable();
-            $table->foreign('individual_id')
-                ->references('id')
-                ->on('individuals')
-                ->onDelete('cascade');
+
             $table->string('status')->nullable();
             $table->integer('allocation_price')->nullable();
             $table->text('desciption')->nullable();

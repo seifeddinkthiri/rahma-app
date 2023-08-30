@@ -312,7 +312,6 @@ export default {
         title: null,
         notes: null,
         family: null,
-        individual: null,
         project: this.project.id,
       }),
       form: this.$inertia.form({

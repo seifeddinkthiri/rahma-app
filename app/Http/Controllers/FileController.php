@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Family;
 use App\Models\File;
-use App\Models\Individual;
 use App\Models\Intervention;
 
 use Illuminate\Support\Facades\Redirect;
@@ -61,24 +60,6 @@ class FileController extends Controller
 
 
 
-public function store_for_Individual( Individual $individual)
-{
-   Request::validate([
-        'title' => 'required|string|max:255',
-        'file' => 'required|file|max:2048',
-    ]);
-
-    $file = $individual->files()->create([
-        'title' =>Request::input('title'),
-        'file' =>Request::file('file') ?Request::file('file')->store('uploads/files') : null,
-    ]);
-
-    if (Request::file('file')) {
-       Request::file('file')->move(public_path('uploads/files'), $file->file);
-    }
-
-    return Redirect::back()->with('success', 'تمت إضافة الملف');
-}
 
 
 

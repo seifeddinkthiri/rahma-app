@@ -13,7 +13,6 @@ class Grant extends Model
         'value',
         'source',
         'family_id',
-        'individual_id',
 
 
 
@@ -25,8 +24,5 @@ class Grant extends Model
         return $this->belongsTo(Member::class);
     }
 
-    public function individual()
-    {
-        return $this->belongsTo(Individual::class);
-    }
+
 }

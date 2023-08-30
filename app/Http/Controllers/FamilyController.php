@@ -42,22 +42,7 @@ class FamilyController extends Controller
                     'deleted_at' => $Family->deleted_at,
                     'members' => $Family->members()->get(),
                 ]),
-            'individuals' => Auth::user()->account->individuals()
-                ->orderBy('name')
-                ->filter(Request::only('search', 'social_status', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($Individual) => [
-                    'id' => $Individual->id,
-                    'photo' => $Individual->photo,
-                    'name' => $Individual->name,
-                    'phone' => $Individual->phone,
-                    'status' => $Individual->status,
-                    'address' => $Individual->address,
-                    'cin' => $Individual->cin,
-                    'gender' => $Individual->gender,
-                    'deleted_at' => $Individual->deleted_at,
-                ]),
+
         ]);
     }
 

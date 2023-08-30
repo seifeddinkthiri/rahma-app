@@ -10,7 +10,7 @@ class Facility extends Model
     use HasFactory;
 
 
-    protected $fillable = ['individual_id','Sanitation','electricity','water','ventilation'];
+    protected $fillable = ['Sanitation','electricity','water','ventilation'];
 
 
     public function family()
@@ -18,10 +18,7 @@ class Facility extends Model
         return $this->belongsTo(Family::class);
     }
 
-    public function individual()
-    {
-        return $this->belongsTo(Individual::class);
-    }
+
 
     public function reinitialise()
     {

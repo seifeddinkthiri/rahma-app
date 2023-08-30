@@ -46,18 +46,13 @@
       <Link href="beneficials" class="bg-white rounded-lg shadow-lg p-4">
         <h2 class="text-xl font-semibold mb-2">إدارة المنتفعين</h2>
         <ul>
-          <li class="flex items-center mb-2">
-            <icon name="li" class="h-5 w-5" />
 
-            <button class="text-blue-400 hover:text-blue-600">
-              <p class="text-gray-600">المنتفعين العائلات</p>
-            </button>
-          </li>
           <li class="flex items-center">
-            <icon name="li" />
 
             <button class="text-blue-400 hover:text-blue-600">
-              <p class="text-gray-600">المنتفعين الأفراد</p>
+              <p class="text-gray-600">
+                إدارة المنتفعين مع خدمة البحث و الفلترة حسب الحالة المدنية للمنتفع
+              </p>
             </button>
           </li>
         </ul>

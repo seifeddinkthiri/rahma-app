@@ -156,7 +156,6 @@ return [
     */
     'attributes' => [
         'name' => 'الاسم',
-        'Individual_id' => 'رقم الفرد',
         'address' => 'العنوان',
         'cin' => 'رقم البطاقة الوطنية',
         'phone' => 'رقم الهاتف',
@@ -183,7 +182,6 @@ return [
         'title' => 'العنوان',
         'notes' => 'الملاحظات',
         'family' => 'العائلة',
-        'individual' => 'الفرد',
         'status'=>'الحالة',
         'photo'=>'الصورة',
         'first_name' => 'الاسم الأول',
@@ -198,7 +196,6 @@ return [
         'status' => 'الحالة',
         'allocation_price' => 'سعر الكراء',
         'desciption' => 'الوصف',
-        'Individual_id' => 'رقم الفرد',
         "grant_source"=>'مصدر المنحة',
         "grant_value"=>'قيمة المنحة',
 
