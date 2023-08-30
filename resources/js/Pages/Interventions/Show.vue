@@ -23,7 +23,7 @@
             >
               <td class="px-4 py-2 h-16 border">
                 <Link :href="`/families/${intervention.family[0].id}/show`"
-                  >لفائدة العائلة</Link
+                  >لفائدة المنتفع</Link
                 >
               </td>
               <td class="px-4 py-2 h-16 border">
@@ -32,21 +32,7 @@
                 }}</Link>
               </td>
             </tr>
-            <tr
-              v-if="intervention.individual[0]"
-              class="hover:bg-gray-100 focus-within:bg-gray-100"
-            >
-              <td class="px-4 py-2 h-16 border">
-                <Link :href="`/individuals/${intervention.individual[0].id}/show`"
-                  >لفائدة الفرد
-                </Link>
-              </td>
-              <td class="px-4 py-2 h-16 border">
-                <Link :href="`/individuals/${intervention.individual[0].id}/show`">{{
-                  intervention.individual[0].name
-                }}</Link>
-              </td>
-            </tr>
+
             <tr
               v-if="intervention.project[0]"
               class="hover:bg-gray-100 focus-within:bg-gray-100"

@@ -19,7 +19,10 @@
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة</option>
-              <option value="individual">فرد</option>
+              <option value="elderly">مسن</option>
+              <option value="divorced">مطلقة</option>
+              <option value="widow">أرملة</option>
+              <option value="single_mother">أم عزباء</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"
@@ -37,18 +40,59 @@
               </option>
             </select-input>
             <select-input
-              v-if="form.beneficial == 'individual'"
-              v-model="form.individual"
+              v-if="form.beneficial == 'elderly'"
+              v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الفرد"
+              label="المسن"
             >
-              <option hidden disabled :value="null">إختر المنتفع</option>
+              <option hidden disabled :value="null">إختر المسن</option>
 
-              <option v-for="indiv in individuals" :value="indiv.id">
-                {{ indiv.phone }} - {{ indiv.name }}
+              <option v-for="elderly in elderlies" :value="elderly.id">
+                {{ elderly.caregiver_phone }} - {{ elderly.name }}
               </option>
-              <option :value="null" v-if="individuals.length == 0">قائمة فارغة</option>
+              <option :value="null" v-if="elderlies.length == 0">قائمة فارغة</option>
             </select-input>
+            <select-input
+              v-if="form.beneficial == 'divorced'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المطلقة"
+            >
+              <option hidden disabled :value="null">إختر المطلقة</option>
+
+              <option v-for="divorced in divorceds" :value="divorced.id">
+                {{ divorced.caregiver_phone }} - {{ divorced.name }}
+              </option>
+              <option :value="null" v-if="divorceds.length == 0">قائمة فارغة</option>
+            </select-input>
+            <select-input
+              v-if="form.beneficial == 'single_mother'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الأم العزباء"
+            >
+              <option hidden disabled :value="null">إختر الأم العزباء</option>
+
+              <option v-for="singleMother in singleMothers" :value="singleMother.id">
+                {{ singleMother.caregiver_phone }} - {{ singleMother.name }}
+              </option>
+              <option :value="null" v-if="singleMothers.length == 0">قائمة فارغة</option>
+            </select-input>
+
+            <select-input
+              v-if="form.beneficial == 'widow'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الأرملة"
+            >
+              <option hidden disabled :value="null">إختر الأرملة</option>
+
+              <option v-for="widow in widows" :value="widow.id">
+                {{ widow.caregiver_phone }} - {{ widow.name }}
+              </option>
+              <option :value="null" v-if="widows.length == 0">قائمة فارغة</option>
+            </select-input>
+
             <select-input
               v-model="form.project"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -182,7 +226,10 @@ export default {
   layout: Layout,
   props: {
     families: Object,
-    individuals: Object,
+    elderlies: Object,
+    divorceds: Object,
+    singleMothers: Object,
+    widows: Object,
     projects: Object,
   },
   remember: "form",
@@ -199,7 +246,6 @@ export default {
         file: null,
         title: null,
         family: null,
-        individual: null,
         project: null,
       }),
     };

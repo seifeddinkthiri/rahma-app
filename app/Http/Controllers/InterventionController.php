@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Intervention;
 use App\Models\Family;
-use App\Models\Individual;
 use App\Models\Project;
 class InterventionController extends Controller
 {
@@ -36,10 +35,16 @@ class InterventionController extends Controller
 
     public function create()
     {
-        $families = Family::select('id', 'name', 'caregiver_phone')->get();
-        $individuals = Individual::select('id', 'name', 'phone')->get();
+        $families = Family::select('id', 'name', 'caregiver_phone')->where('is_family',true)->get();
+        $elderlies = Family::where('social_status','elderly')->get();
+        $divorceds = Family::where('social_status','divorced')->get();
+        $singleMothers = Family::where('social_status','single_mother')->get();
+        $widows = Family::where('social_status','widow')->get();
+
+
+
         $projects = Project::select('id', 'name')->get();
-        return Inertia::render('Interventions/Create', compact('families', 'individuals','projects'));
+        return Inertia::render('Interventions/Create', compact('families','elderlies','divorceds','widows','singleMothers','projects'));
     }
 
     public function store()
@@ -59,7 +64,6 @@ class InterventionController extends Controller
             'value' => Request::get('value'),
             'date' => Request::get('date'),
             'family_id' => Request::get('family'),
-            'individual_id' => Request::get('individual'),
             'project_id' => Request::get('project'),
             'intervenor' => Request::get('intervenor'),
             'intervenor_phone' => Request::get('intervenor_phone'),
@@ -80,14 +84,12 @@ class InterventionController extends Controller
     public function edit(Intervention $intervention)
     {
         $families = Family::select('id', 'name', 'caregiver_phone')->get();
-        $individuals = Individual::select('id', 'name', 'phone')->get();
         $projects = Project::select('id', 'name')->get();
 
         return Inertia::render('Interventions/Edit', [
             'intervention' => [
                 'id' => $intervention->id,
                 'family_id' => $intervention->family_id,
-                'individual_id' => $intervention->individual_id,
                 'project_id' => $intervention->project_id,
                 'type' => $intervention->type,
                 'value' => $intervention->value,
@@ -98,7 +100,6 @@ class InterventionController extends Controller
                 'deleted_at' => $intervention->deleted_at,
             ],
             'families' => $families,
-            'individuals' => $individuals,
             'projects' => $projects,
 
         ]);
@@ -110,7 +111,6 @@ class InterventionController extends Controller
             'intervention' => [
                 'id' => $intervention->id,
                 'family' => $intervention->family()->get(),
-                'individual' => $intervention->individual()->get(),
                 'project' => $intervention->project()->get(),
                 'type' => $intervention->type,
                 'value' => $intervention->value,
@@ -139,7 +139,6 @@ class InterventionController extends Controller
             'value' => Request::get('value'),
             'date' => Request::get('date'),
             'family_id' => Request::get('family'),
-            'individual_id' => Request::get('individual'),
             'project_id' => Request::get('project'),
             'intervenor' => Request::get('intervenor'),
             'intervenor_phone' => Request::get('intervenor_phone'),

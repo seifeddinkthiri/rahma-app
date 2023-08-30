@@ -53,7 +53,9 @@
             </tr>
             <tr>
               <td class="px-4 py-2 border h-16">الحالة المدنية</td>
-              <td class="px-4 py-2 border h-16">{{ form.social_status }}</td>
+              <td class="px-4 py-2 border h-16">
+                {{ translate_social_status(form.social_status) }}
+              </td>
             </tr>
             <tr>
               <td class="px-4 py-2 border h-16">العنوان</td>
@@ -289,6 +291,17 @@ export default {
   },
 
   methods: {
+    translate_social_status(status) {
+      if (status === "widow") {
+        return "الأرملة";
+      } else if (status === "elderly") {
+        return "المسن";
+      } else if (status === "single_mother") {
+        return "الأم العزباء";
+      } else if (status === "divorced") {
+        return "المطلقة";
+      }
+    },
     back() {
       window.history.back();
     },

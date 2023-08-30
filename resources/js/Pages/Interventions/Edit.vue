@@ -24,7 +24,6 @@
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة</option>
-              <option value="individual">فرد</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"
@@ -41,19 +40,7 @@
                 قائمة فارغة
               </option>
             </select-input>
-            <select-input
-              v-if="form.beneficial == 'individual'"
-              v-model="form.individual"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الفرد"
-            >
-              <option hidden disabled :value="null">إختر المنتفع</option>
 
-              <option v-for="indiv in individuals" :value="indiv.id">
-                {{ indiv.phone }} - {{ indiv.name }}
-              </option>
-              <option :value="null" v-if="individuals.length == 0">قائمة فارغة</option>
-            </select-input>
             <select-input
               v-model="form.project"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -199,17 +186,12 @@ export default {
   props: {
     intervention: Object,
     families: Object,
-    individuals: Object,
     projects: Object,
   },
   remember: "form",
   created() {
     if (this.intervention.family_id !== null) {
       this.form.beneficial = "family";
-    } else if (this.intervention.individual_id !== null) {
-      this.form.beneficial = "individual";
-    } else if (this.intervention.project_id !== null) {
-      this.form.beneficial = "project";
     }
   },
   data() {
@@ -218,7 +200,6 @@ export default {
         beneficial: null,
         family: this.intervention.family_id,
         project: this.intervention.project_id,
-        individual: this.intervention.individual_id,
         type: this.intervention.type,
         date: this.intervention.date,
         value: this.intervention.value,
@@ -242,16 +223,10 @@ export default {
   methods: {
     reinitialiseBeneficial() {
       if (this.form.beneficial == "family") {
-        this.form.individual = null;
         this.form.project = null;
       }
       if (this.form.beneficial == "project") {
-        this.form.individual = null;
         this.form.family = null;
-      }
-      if (this.form.beneficial == "individual") {
-        this.form.family = null;
-        this.form.project = null;
       }
     },
     update() {

@@ -72,7 +72,7 @@
           <option value="family">عائلة</option>
           <option value="elderly">مسن</option>
           <option value="widow">أرملة</option>
-          <option value="single_mother">أم متفردة</option>
+          <option value="single_mother">أم عزباء</option>
           <option value="divorced">مطلقة</option>
         </select>
 
@@ -177,7 +177,7 @@
               >
                 <p v-if="family.social_status == 'widow'">أرملة</p>
                 <p v-if="family.social_status == 'divorced'">مطلقة</p>
-                <p v-if="family.social_status == 'single_mother'">أم متفردة</p>
+                <p v-if="family.social_status == 'single_mother'">أم عزباء</p>
                 <p v-if="family.social_status == 'elderly'">مسن</p>
                 <p v-if="family.social_status == null"></p>
 
