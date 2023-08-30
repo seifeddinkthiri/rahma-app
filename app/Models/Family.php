@@ -19,12 +19,8 @@ class Family extends Model
         'name',
         'caregiver_phone',
         'address',
-        'wife',
-        'husband',
         'status',
-        'elderlies_number',
-        "childrens_number",
-        "other_members_number"];
+        ];
 
     public function resolveRouteBinding($value, $field = null)
     {

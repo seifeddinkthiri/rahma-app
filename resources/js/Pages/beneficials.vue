@@ -11,27 +11,50 @@
       <div class="bg-white w-96 rounded shadow-xl z-10">
         <div class="px-4 py-6 bg-gray-50 rounded">
           <div class="flex justify-center flex-col items-center rounded">
-            <Link
-              @click="show_modal = false"
-              href="/individuals/create"
-              type="button"
-              class="mb-3 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-            >
-              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> فرد
-            </Link>
             <button
-              @click="store_family"
+              @click="store_family('elderly')"
               type="button"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
             >
-              <icon name="group" class="mr-2 w-4 h-4 ml-4" /> عائلة
+              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> مسن
+            </button>
+            <button
+              @click="store_family('widow')"
+              type="button"
+              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> أرملة
+            </button>
+
+            <button
+              @click="store_family('divorced')"
+              type="button"
+              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> مطلقة
+            </button>
+
+            <button
+              @click="store_family('single_mother')"
+              type="button"
+              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> أم عزباء
+            </button>
+
+            <button
+              @click="store_family('family')"
+              type="button"
+              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            >
+              <icon name="group" class="mr-2 w-4 h-4 ml-4" /> عائلة معوزة
             </button>
             <button
               @click="show_modal = false"
               type="button"
               class="mt-3 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
             >
-              <icon name="close" class="mr-2 w-4 h-4 ml-4" /> إلغاء
+              إلغاء
             </button>
           </div>
         </div>
@@ -412,8 +435,9 @@ export default {
     },
   },
   methods: {
-    store_family() {
-      this.$inertia.post("/families");
+    store_family(type) {
+      this.$inertia.post(`/families/${type}`);
+
       show_modal = false;
     },
     delete_family(id) {

@@ -153,8 +153,11 @@ class MemberController extends Controller
 
         $member->healthStatus()->save($healthStatus);
 
-        return redirect()->route('members.create', ['family' => $member->family])->with('success', 'تم إنشاء العضو');
+
+        return redirect()->back()->with('success', 'تم إنشاء العضو');
     }
+
+
 
     public function show(Member $Member)
     {

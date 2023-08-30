@@ -89,7 +89,7 @@
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
         <p v-if="form.name == null" class="px-6 text-red-600">
-          يجب تعيين معيل أسرة لهذه العائلة
+          يجب تعيين معيل أسرة لهذا المنتفع
         </p>
       </div>
       <div class="mt-6 bg-white rounded shadow overflow-x-auto">

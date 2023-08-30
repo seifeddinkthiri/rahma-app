@@ -59,24 +59,29 @@ class FamilyController extends Controller
     }
 
 
-    public function store()
+    public function store($type)
     {
         $Family =  Auth::user()->account->Families()->create(
             [
                 'caregiver_phone' =>null,
+                'name' =>null,
+                'status' =>null,
+                'address' =>null,
+                'caregiver_phone' =>null,
                 'photo' =>null,
-                'wife' => true,
-                'husband' => true,
-                'elderlies_number' => 0,
-                'childrens_number' => 0,
-                'other_members_number' => 0,
 
 
             ]
         );
-        return redirect()->route('members.create', ['family' => $Family])->with('success', 'تم انشاء أسرة. الرجاء إضافة أعضاء');
+        if ($type !== 'family') {
+            $redirectUrl = route('specifics.create', ['Family' => $Family, 'type' => $type]);
+
+            return Redirect::to($redirectUrl);
+        }
+        return redirect()->route('members.create', ['Family' =>$Family])->with('success', '   الرجاء إضافة معطيات الأسرة');
 
     }
+
 
     public function edit(Family $family)
     {
@@ -200,14 +205,14 @@ class FamilyController extends Controller
 
         $family->update($data);
 
-        return Redirect::back()->with('success', 'تم تحديث العائلة');
+        return Redirect::back()->with('success', 'تم تحديث المنتفع');
     }
 
     public function destroy(Family $Family)
     {
         $Family->delete();
 
-        return Redirect::back()->with('success', 'تم حذف العائلة.');
+        return Redirect::back()->with('success', 'تم حذف المنتفع.');
     }
 
     public function restore(Family $Family)

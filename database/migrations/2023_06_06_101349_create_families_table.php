@@ -21,11 +21,6 @@ class CreateFamiliesTable extends Migration
             $table->string('address')->nullable();
             $table->string('caregiver_phone')->nullable();
             $table->string('photo', 100)->nullable();
-            $table->boolean('wife')->nullable();
-            $table->boolean('husband')->nullable();
-            $table->integer('elderlies_number')->nullable();
-            $table->integer('childrens_number')->nullable();
-            $table->integer('other_members_number')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

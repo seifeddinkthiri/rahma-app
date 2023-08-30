@@ -1,12 +1,11 @@
 <template>
   <div>
     <Breadcrumb
+      :HorW="null"
+      :beneficial_type="beneficial"
       :Family_id="Family.id"
-      :beneficial_type="null"
       :current_form_title="current_form_title"
       :active_step="active_step"
-      :HorW="HorW"
-      @update-H-or-W="updateHorW"
       @update-active-step="updateActiveStep"
       @update-current-form-title="updateCurrentFormTitle"
     />
@@ -195,7 +194,7 @@
     </div>
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
-        <div v-if="active_step == 'part1'">
+        <div v-if="active_step == 'beneficial' || active_step == 'childrens'">
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
               v-model="form.name"
@@ -203,7 +202,6 @@
               placeholder=" الإسم هنا"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الإسم"
-              :disabled="isFormDisabled"
             />
 
             <text-input
@@ -212,7 +210,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العنوان"
               placeholder=" العنوان هنا"
-              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.cin"
@@ -220,7 +217,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="بطاقة التعريف الوطنية"
               placeholder=" بطاقة التعريف الوطنية هنا"
-              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.phone"
@@ -228,14 +224,12 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الهاتف"
               placeholder="الهاتف هنا"
-              :disabled="isFormDisabled"
             />
             <select-input
               v-model="form.birth_city"
               :error="form.errors.birth_city"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مدينة الولادة"
-              :disabled="isFormDisabled"
             >
               <option :value="null" disabled hidden>إختر المدينة</option>
               <option value="مدنين">مدنين</option>
@@ -267,7 +261,6 @@
               :error="form.errors.birth_date"
               label="تاريخ الولادة"
               placeholder=" تاريخ الولادة هنا"
-              :disabled="isFormDisabled"
             />
 
             <text-input
@@ -276,7 +269,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="مكان العمل "
               placeholder="  مكان العمل هنا"
-              :disabled="isFormDisabled"
             />
             <text-input
               v-model="form.job"
@@ -284,16 +276,15 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العمل"
               placeholder="   العمل هنا"
-              :disabled="isFormDisabled"
             />
           </div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
+              v-if="active_step == 'childrens'"
               v-model="form.social_status"
               :error="form.errors.social_status"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الحالة المدنية "
-              :disabled="isFormDisabled"
             >
               <option disabled hidden :value="null">إختر الحالة</option>
               <option value="single">أعزب/عزباء</option>
@@ -321,21 +312,6 @@
               accept="image/*"
               label="الصورة "
             />
-            <select-input
-              v-if="HorW !== 'husband' && HorW !== 'wife'"
-              v-model="form.kinship"
-              :error="form.errors.kinship"
-              class="pb-8 pr-6 w-full lg:w-1/2"
-              label="الفرد"
-              :disabled="isFormDisabled"
-            >
-              <option :value="null" disabled hidden>إختر نوع الفرد</option>
-
-              <option value="child">إبن</option>
-              <option value="elderly">مسن</option>
-              <option value="other_member">فرد آخر</option>
-              <option value="single_mother">أم عزباء</option>
-            </select-input>
 
             <ToggleCheckbox
               :id="'grant'"
@@ -356,7 +332,6 @@
                   v-model="form.grant_source"
                   label="المصدر"
                   placeholder="المصدر هنا"
-                  :disabled="isFormDisabled"
                 />
                 <text-input
                   class="pb-8 pr-6 w-full"
@@ -365,7 +340,6 @@
                   :error="form.errors.grant_value"
                   label="القيمة"
                   placeholder="القيمة بالدينار هنا"
-                  :disabled="isFormDisabled"
                 />
               </div>
             </div>
@@ -401,7 +375,6 @@
                   v-model="form.disease"
                   label="مرض مزمن"
                   placeholder="  المرض المزمن هنا"
-                  :disabled="isFormDisabled"
                 />
                 <text-input
                   class="pb-8 pr-6 w-full"
@@ -410,7 +383,6 @@
                   :error="form.errors.disability"
                   label=" إعاقة"
                   placeholder="الإعاقة هنا"
-                  :disabled="isFormDisabled"
                 />
 
                 <text-input
@@ -419,7 +391,6 @@
                   class="pb-8 pr-6 w-full lg:w-1/2"
                   label="رقم بطاقة الإعاقة"
                   placeholder="الرقم هنا"
-                  :disabled="isFormDisabled"
                 />
               </div>
             </div>
@@ -470,14 +441,29 @@ export default {
   remember: "form",
   props: {
     Family: Object,
+    type: String,
+  },
+  mounted() {
+    if (this.type === "widow") {
+      this.translated_type = "الأرملة";
+    } else if (this.type === "elderly") {
+      this.translated_type = "المسن";
+    } else if (this.type === "single_mother") {
+      this.translated_type = "الأم العزباء";
+    } else if (this.type === "divorced") {
+      this.translated_type = "المطلقة";
+    } else {
+      this.translated_type = "";
+    }
+
+    this.current_form_title = " أضف بيانات " + this.translated_type;
   },
   data() {
     return {
-      isFormDisabled: false,
-      HorW: "husband",
-      active_step: "part1",
-      current_form_title: "أضف بيانات الزوج",
-      current_form: "childrens",
+      translated_type: null,
+      beneficial: this.type,
+      active_step: "beneficial",
+      current_form_title: "",
       notes_form: this.$inertia.form({
         title: null,
         value: null,
@@ -499,8 +485,10 @@ export default {
         desciption: null,
       }),
       form: this.$inertia.form({
+        caregiver: false,
+        type: this.type,
         name: null,
-        family_id: this.Family.id,
+        family_id: this.Family,
         address: null,
         cin: null,
         phone: null,
@@ -510,7 +498,6 @@ export default {
         health_insurance: false,
         photo: null,
         kinship: null,
-        caregiver: false,
         education_level: null,
         job: null,
         job_place: null,
@@ -526,6 +513,47 @@ export default {
   },
 
   methods: {
+    resetForm() {
+      this.form.name = null;
+      this.form.address = null;
+      this.form.cin = null;
+      this.form.phone = null;
+      this.form.health_insurance = false;
+      this.form.photo = null;
+      this.form.education_level = null;
+      this.form.job = null;
+      this.form.job_place = null;
+      this.form.good = true;
+      this.form.disease = null;
+      this.form.disability = null;
+      this.form.disability_card_number = null;
+    },
+    store() {
+      if (this.active_step == "beneficial") {
+        this.form.social_status = this.beneficial;
+        this.form.caregiver = true;
+        this.form.post("/specifics", {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.resetForm();
+            this.active_step = "childrens";
+            this.current_form_title = "أضف بيانات الأبناء";
+            this.form.social_status = null;
+          },
+        });
+      }
+      if (this.active_step == "childrens") {
+        this.form.caregiver = false;
+        this.form.post("/specifics", {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.resetForm();
+            this.active_step = "childrens";
+            this.current_form_title = "اضف إبن آخر";
+          },
+        });
+      }
+    },
     toggle_grant() {
       this.form.grant = !this.form.grant;
     },
@@ -533,9 +561,7 @@ export default {
     updateActiveStep(step) {
       this.active_step = step; // Update the active_step prop in the parent component
     },
-    updateHorW(HorW) {
-      this.HorW = HorW;
-    },
+
     updateCurrentFormTitle(title) {
       this.current_form_title = title; // Update the current_form_title prop in the parent component
     },
@@ -551,6 +577,17 @@ export default {
     },
     toggle_ventilation() {
       this.facilities_form.ventilation = !this.facilities_form.ventilation;
+    },
+    updateFormTitle() {
+      if (this.type === "widow") {
+        this.current_form_title = "أضف بيانات الأرملة";
+      } else if (this.type === "elderly") {
+        this.current_form_title = "أضف بيانات المسن";
+      } else if (this.type === "single_mother") {
+        this.current_form_title = "أضف بيانات الأم العزباء";
+      } else if (this.type === "divorced") {
+        this.current_form_title = "أضف بيانات المطلقة";
+      }
     },
 
     edit_facilities() {
@@ -604,58 +641,6 @@ export default {
 
     toggle_health_Status() {
       this.form.good = !this.form.good;
-    },
-    resetForm() {
-      this.form.name = null;
-      this.form.address = null;
-      this.form.cin = null;
-      this.form.phone = null;
-      this.form.health_insurance = false;
-      this.form.photo = null;
-      this.form.education_level = null;
-      this.form.job = null;
-      this.form.job_place = null;
-      this.form.good = true;
-      this.form.disease = null;
-      this.form.disability = null;
-      this.form.disability_card_number = null;
-    },
-    store() {
-      if (this.HorW == "husband") {
-        this.form.kinship = "husband";
-        this.form.post("/members", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.resetForm();
-
-            this.active_step = "part1";
-            this.HorW = "wife";
-            this.current_form_title = "أضف بيانات الزوجة";
-          },
-        });
-      } else if (this.HorW == "wife") {
-        this.form.kinship = "wife";
-        this.form.post("/members", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.resetForm();
-
-            this.active_step = "part1";
-            this.HorW = "";
-            this.current_form_title = "أضف بيانات الأفراد";
-          },
-        });
-      } else {
-        this.form.post("/members", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.resetForm();
-
-            this.active_step = "part1";
-            this.current_form_title = "إضافة فرد آخر";
-          },
-        });
-      }
     },
   },
 };

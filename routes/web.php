@@ -11,6 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SpecificController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\InterventionController;
@@ -142,7 +143,7 @@ Route::put('individuals/{individual}/restore', [IndividualController::class, 're
 //Individual health status
 
 Route::post('healthStatus/{individual}', [IndividualController::class, 'update_health_status'])
-->name('health.update')
+->name('individual.health.update')
 ->middleware('auth');
 
 // individuel home and notes
@@ -157,12 +158,16 @@ Route::get('individuals/{Individual}/Create_all', [IndividualController::class, 
 Route::any('beneficials', [FamilyController::class, 'beneficials'])
     ->name('beneficials')
     ->middleware('auth');
+    Route::post('specifics', [SpecificController::class, 'store'])
+    ->name('specifics.store')
+    ->middleware('auth');
+    Route::get('/families/members/specific/{Family}/{type}', [SpecificController::class, 'create'])  ->name('specifics.create');
 
 
 // families
 
 
-Route::post('families', [FamilyController::class, 'store'])
+Route::post('families/{type}', [FamilyController::class, 'store'])
     ->name('families.store')
     ->middleware('auth');
 
@@ -190,9 +195,13 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('members.create_new_one')
     ->middleware('auth');
 
-    Route::get('members/{family}/create', [MemberController::class, 'create'])
+    Route::get('members/{Family}/create', [MemberController::class, 'create'])
     ->name('members.create')
     ->middleware('auth');
+
+
+
+
     Route::get('members/{member}/show', [MemberController::class, 'show'])
     ->name('members.show')
     ->middleware('auth');
@@ -230,7 +239,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     //Member Health Status
 
     Route::put('healthStatusMemeber/{member}', [MemberController::class, 'update_health_status'])
-    ->name('health.update')
+    ->name('member.health.update')
     ->middleware('auth');
 
     //files

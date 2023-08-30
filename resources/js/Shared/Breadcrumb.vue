@@ -5,7 +5,7 @@
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-4">
           <li></li>
-          <li>
+          <li v-if="HorW">
             <button
               @click="updateHorW('husband')"
               class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
@@ -14,7 +14,7 @@
               الزوج
             </button>
           </li>
-          <li>
+          <li v-if="HorW">
             <svg
               class="w-6 h-6 text-gray-500"
               fill="none"
@@ -29,7 +29,7 @@
               ></path>
             </svg>
           </li>
-          <li>
+          <li v-if="HorW">
             <button
               @click="updateHorW('wife')"
               class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
@@ -38,7 +38,17 @@
               الزوجة
             </button>
           </li>
-          <li>
+
+          <li v-if="beneficial">
+            <button
+              @click="update_step('beneficial', ' أضف بيانات ' + beneficial)"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-black-800 transition-colors"
+              :class="{ 'text-gray-900 font-bold': active_step == 'beneficial' }"
+            >
+              {{ beneficial }}
+            </button>
+          </li>
+          <li v-if="beneficial">
             <svg
               class="w-6 h-6 text-gray-500"
               fill="none"
@@ -55,11 +65,11 @@
           </li>
           <li>
             <button
-              @click="update_step('part1', 'أضف بيانات الأفراد')"
+              @click="update_step('childrens', 'أضف بيانات الأبناء')"
               class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
-              :class="{ 'text-gray-900 font-bold': active_step === 'part1' && !HorW }"
+              :class="{ 'text-gray-900 font-bold': active_step === 'childrens' }"
             >
-              الأفراد
+              الأبناء
             </button>
           </li>
           <li>
@@ -190,6 +200,7 @@ export default {
   },
   props: {
     current_form_title: String,
+    beneficial_type: String,
     HorW: String,
     Family_id: Number,
     active_step: {
@@ -197,10 +208,26 @@ export default {
       default: "",
     },
   },
+  created() {
+    if (this.beneficial_type) {
+      this.translate_beneficial();
+    }
+  },
   data() {
-    return {};
+    return { beneficial: null };
   },
   methods: {
+    translate_beneficial() {
+      if (this.beneficial_type === "widow") {
+        this.beneficial = "الأرملة";
+      } else if (this.beneficial_type === "elderly") {
+        this.beneficial = "المسن";
+      } else if (this.beneficial_type === "single_mother") {
+        this.beneficial = "الأم العزباء";
+      } else if (this.beneficial_type === "divorced") {
+        this.beneficial = "المطلقة";
+      }
+    },
     goBack() {
       window.history.back();
     },
