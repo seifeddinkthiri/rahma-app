@@ -183,13 +183,7 @@
           >
             إضافة
           </button>
-          <button
-            @click="back"
-            type="button"
-            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          >
-            عودة
-          </button>
+
         </div>
       </form>
     </div>
@@ -580,9 +574,7 @@ export default {
         },
       });
     },
-    back() {
-      this.$inertia.get("/families");
-    },
+
     define_facilities() {
       this.facilities_form.put(`/facilities/${this.Family.id}`);
       this.active_step = "home";
@@ -641,8 +633,8 @@ export default {
             this.resetForm();
 
             this.active_step = "part1";
-            this.HorW = "";
             this.current_form_title = "أضف بيانات الأفراد";
+            this.HorW = "none";
           },
         });
       } else {

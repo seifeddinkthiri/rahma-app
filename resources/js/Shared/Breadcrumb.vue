@@ -38,7 +38,32 @@
               الزوجة
             </button>
           </li>
-
+          <li v-if="HorW">
+            <svg
+              class="w-6 h-6 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </li>
+          <li v-if="HorW">
+            <button
+              @click="update_step('part1', 'أضف بيانات الأفراد')"
+              class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
+              :class="{
+                'text-gray-900 font-bold': active_step === 'part1' && HorW == 'none',
+              }"
+            >
+              الأفراد
+            </button>
+          </li>
           <li v-if="beneficial">
             <button
               @click="update_step('beneficial', ' أضف بيانات ' + beneficial)"
@@ -63,7 +88,7 @@
               ></path>
             </svg>
           </li>
-          <li>
+          <li v-if="beneficial">
             <button
               @click="update_step('childrens', 'أضف بيانات الأبناء')"
               class="border-blue-500 border rounded-lg px-3 py-1 text-gray-500 hover:text-gray-900 transition-colors"
@@ -234,7 +259,7 @@ export default {
     update_step(step, title) {
       this.$emit("update-active-step", step); // Emit the 'update-active-step' event with the new step value
       this.$emit("update-current-form-title", title); // Emit the 'update-current-form-title' event with the new title value
-      this.$emit("update-H-or-W", "");
+      this.$emit("update-H-or-W", "none");
     },
     updateHorW(HorW) {
       if (HorW == "husband") {
