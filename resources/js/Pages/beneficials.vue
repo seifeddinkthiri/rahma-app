@@ -85,7 +85,7 @@
     </div>
     <div class="flex items-center justify-between mt-4 mb-4">
       <h1 class="text-xl font-bold" v-if="families.data.length > 0">قائمة المنتفعين</h1>
-      <h1 class="text-xl font-bold" v-else></h1>
+      <h1 class="text-xl font-bold" v-else>قائمة فارغة</h1>
 
       <button
         @click="show_modal = true"
@@ -242,9 +242,6 @@
                 <icon name="eye" />
               </Link>
             </td>
-          </tr>
-          <tr v-if="families.data.length === 0">
-            <td class="px-6 py-4 border-t" colspan="3">قائمة فارغة</td>
           </tr>
         </tbody>
       </table>
