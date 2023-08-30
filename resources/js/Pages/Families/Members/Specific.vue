@@ -516,6 +516,8 @@ export default {
     resetForm() {
       this.form.name = null;
       this.form.address = null;
+      this.form.birth_city = null;
+      this.form.birth_date = null;
       this.form.cin = null;
       this.form.phone = null;
       this.form.health_insurance = false;
@@ -590,16 +592,8 @@ export default {
       }
     },
 
-    edit_facilities() {
-      this.Family.facilities.forEach((element) => {
-        this.facilities_form.Sanitation = element.Sanitation;
-        this.facilities_form.ventilation = element.ventilation;
-        this.facilities_form.water = element.water;
-        this.facilities_form.electricity = element.electricity;
-      });
-    },
     save_note() {
-      this.notes_form.post(`/notes/${this.Family.id}`, {
+      this.notes_form.post(`/notes/${this.Family}`, {
         preserveScroll: true,
         onSuccess: () => {
           this.active_step = "files";
@@ -609,7 +603,7 @@ export default {
       });
     },
     save_files() {
-      this.files_form.post(`/files/${this.Family.id}`, {
+      this.files_form.post(`/files/${this.Family}`, {
         preserveScroll: true,
         onSuccess: () => {
           this.active_step = "files";
@@ -621,13 +615,13 @@ export default {
       this.$inertia.get("/families");
     },
     define_facilities() {
-      this.facilities_form.put(`/facilities/${this.Family.id}`);
+      this.facilities_form.put(`/facilities/${this.Family}`);
       this.active_step = "home";
       this.current_form_title = "بيانات المسكن";
     },
 
     save_home() {
-      this.home_form.post(`/home/${this.Family.id}`, {
+      this.home_form.post(`/home/${this.Family}`, {
         preserveScroll: true,
         onSuccess: () => {
           this.active_step = "notes";
