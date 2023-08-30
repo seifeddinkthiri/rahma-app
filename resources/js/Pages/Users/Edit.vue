@@ -5,7 +5,7 @@
       <div>
         <img
           v-if="user.photo"
-          class="w-18 h-18 rounded absolute top-0 left-0 border border-indigo-600"
+          class="w-18 h-18 rounded absolute top-0 left-0 border border-indigo-600 block"
           :src="user.photo"
         />
       </div>

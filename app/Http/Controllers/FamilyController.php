@@ -57,6 +57,8 @@ class FamilyController extends Controller
                 'address' => null,
                 'caregiver_phone' => null,
                 'photo' => null,
+                'status' => 'active',
+
 
 
             ]

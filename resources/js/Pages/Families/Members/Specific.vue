@@ -328,16 +328,16 @@
                 <text-input
                   class="pb-8 pr-6 w-full"
                   id="source"
-                  :error="form.errors.grant_source"
-                  v-model="form.grant_source"
+                  :error="form.errors.source"
+                  v-model="form.source"
                   label="المصدر"
                   placeholder="المصدر هنا"
                 />
                 <text-input
                   class="pb-8 pr-6 w-full"
                   id="value"
-                  v-model="form.grant_value"
-                  :error="form.errors.grant_value"
+                  v-model="form.value"
+                  :error="form.errors.value"
                   label="القيمة"
                   placeholder="القيمة بالدينار هنا"
                 />
@@ -506,8 +506,8 @@ export default {
         disability: null,
         disability_card_number: null,
         grant: false,
-        grant_source: null,
-        grant_value: null,
+        source: null,
+        value: null,
       }),
     };
   },
@@ -529,6 +529,9 @@ export default {
       this.form.disease = null;
       this.form.disability = null;
       this.form.disability_card_number = null;
+      this.form.grant = false;
+      this.form.source = null;
+      this.form.value = null;
     },
     store() {
       if (this.active_step == "beneficial") {

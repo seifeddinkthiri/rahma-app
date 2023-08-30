@@ -9,7 +9,7 @@
             v-if="member.photo"
             :src="`/uploads/${member.photo}`"
             alt="member Image"
-            class="w-32 h-32 rounded"
+            class="w-32 h-32 rounded block"
           />
         </li>
         <li>

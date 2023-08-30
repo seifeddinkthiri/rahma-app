@@ -9,7 +9,7 @@
               v-if="family.photo"
               :src="`/uploads/${family.photo}`"
               alt="family Image"
-              class="w-32 h-32 rounded"
+              class="w-32 h-32 rounded block"
             />
           </li>
           <li>

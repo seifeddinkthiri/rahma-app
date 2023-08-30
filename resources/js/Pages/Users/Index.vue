@@ -44,7 +44,7 @@
           <td class="border-t">
             <img
               v-if="user.photo"
-              class="w-8 h-8 rounded-full flex items-center justify-center transform -translate-x-16"
+              class="w-8 h-8 rounded-full flex items-center justify-center transform -translate-x-16 block"
               :src="user.photo"
             />
           </td>

@@ -108,6 +108,7 @@
             <th class="pb-4 pt-6 px-6">الحالة</th>
             <th class="pb-4 pt-6 px-6">الحالة المدنية</th>
             <th class="pb-4 pl-3 pt-6">الصورة</th>
+            <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
           </tr>
         </thead>
         <tbody class="text-right">
@@ -122,11 +123,6 @@
                 :href="`/families/${family.id}/edit`"
               >
                 {{ family.name }}
-                <icon
-                  v-if="family.deleted_at"
-                  name="trash"
-                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-                />
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -135,11 +131,6 @@
                 :href="`/families/${family.id}/edit`"
               >
                 {{ family.address }}
-                <icon
-                  v-if="family.deleted_at"
-                  name="trash"
-                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-                />
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -148,11 +139,6 @@
                 :href="`/families/${family.id}/edit`"
               >
                 {{ family.phone }}
-                <icon
-                  v-if="family.deleted_at"
-                  name="trash"
-                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-                />
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -163,11 +149,6 @@
                 <p v-if="family.status == 'active'">نشط</p>
                 <p v-if="family.status == 'inactive'">غير نشط</p>
                 <p v-if="family.status == 'disabled'">محضور</p>
-                <icon
-                  v-if="family.deleted_at"
-                  name="trash"
-                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-                />
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -180,12 +161,6 @@
                 <p v-if="family.social_status == 'single_mother'">أم عزباء</p>
                 <p v-if="family.social_status == 'elderly'">مسن</p>
                 <p v-if="family.social_status == null"></p>
-
-                <icon
-                  v-if="family.deleted_at"
-                  name="trash"
-                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-                />
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -196,14 +171,8 @@
               >
                 <img
                   v-if="family.photo"
-                  class="h-110 block -my-2 mr-2 w-10 rounded"
+                  class="h-10 w-10 block -my-2 mr-2 rounded"
                   :src="'uploads/' + family.photo"
-                />
-
-                <icon
-                  v-if="family.deleted_at"
-                  name="trash"
-                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
                 />
               </Link>
             </td>

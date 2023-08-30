@@ -23,7 +23,7 @@ class SpecificController extends Controller
 
     public function store()
     {
-        $memberValidation =Request::validate([
+            Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
             'cin' => 'required|numeric|digits:8|unique:members',
@@ -36,7 +36,9 @@ class SpecificController extends Controller
             'job' => ['nullable', 'max:100'],
             'job_place' => ['nullable', 'max:100'],
             'family_id' => ['nullable', 'integer'],
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
 
         $healthStatusValidation =Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
@@ -47,17 +49,28 @@ class SpecificController extends Controller
         ]);
 
         $grantValidation =Request::validate([
-            'grant_source' => ['nullable', 'required_with:grant_value', 'string', 'max:100'],
-            'grant_value' => ['nullable', 'required_with:grant_source', 'integer'],
+            'source' => ['nullable', 'required_with:value', 'string', 'max:100'],
+            'value' => ['nullable', 'required_with:source', 'integer'],
         ]);
 
-        $user = Auth::user();
-        $account = $user->account;
-
-        $member = $account->members()->create($memberValidation);
-
+        $member = Auth::user()->account->members()->create([
+            'name' => Request::get('name'),
+            'address' => Request::get('address'),
+            'cin' => Request::get('cin'),
+            'phone' => Request::get('phone'),
+            'birth_date' => Request::get('birth_date'),
+            'birth_city' => Request::get('birth_city'),
+            'social_status' => Request::get('social_status'),
+            'kinship' => Request::get('kinship'),
+            'education_level' => Request::get('education_level'),
+            'job' => Request::get('job'),
+            'job_place' => Request::get('job_place'),
+            'family_id' => Request::get('family_id'),
+            'photo' => Request::file('photo') ? Request::file('photo')->store('') : null,
+        ]);
         if (Request::file('photo')) {
-            $photoPath = Request::file('photo')->move(public_path('uploads'), $member->photo);
+            $photoPath = 'uploads/' . $member->photo;
+            Request::file('photo')->move(public_path('uploads'), $member->photo);
         }
 
         if (Request::get('grant')) {
@@ -71,7 +84,6 @@ class SpecificController extends Controller
         } else {
             $FamilyCaregiver = null;
         }
-
         if ($FamilyCaregiver) {
             $FamilyCaregiver->update([
                 'caregiver' => true,
