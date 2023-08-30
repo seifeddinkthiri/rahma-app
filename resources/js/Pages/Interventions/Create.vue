@@ -20,7 +20,6 @@
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة</option>
               <option value="individual">فرد</option>
-              <option value="project">مشروع</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"
@@ -51,10 +50,9 @@
               <option :value="null" v-if="individuals.length == 0">قائمة فارغة</option>
             </select-input>
             <select-input
-              v-if="form.beneficial == 'project'"
               v-model="form.project"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="المشروع"
+              label="في إطار مشروع"
             >
               <option hidden disabled :value="null">إختر المشروع</option>
 

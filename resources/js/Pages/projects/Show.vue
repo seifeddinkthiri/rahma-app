@@ -56,7 +56,9 @@
                         :href="`/interventions/${intervention.id}/show`"
                         class="text-blue-600"
                       >
-                        {{ intervention.intervenor }}
+                        <p>
+                          {{ getLabel(intervention.intervenor, intervention.family) }}
+                        </p>
                       </Link>
                     </div>
                   </div>
@@ -97,6 +99,17 @@ export default {
     return {};
   },
   methods: {
+    getLabel(intervenor, family) {
+      if (intervenor && family.name) {
+        return `تدخل من طرف ${intervenor} لفائدة المنتفع ${family.name}`;
+      } else if (intervenor) {
+        return `تدخل من طرف ${intervenor}`;
+      } else if (family.name) {
+        return `تدخل لفائدة المنتفع ${family.name}`;
+      } else {
+        return "أطراف التدخل غير محددة";
+      }
+    },
     goBack() {
       window.history.back();
     },

@@ -53,7 +53,7 @@
             >
               <td class="px-4 py-2 h-16 border">
                 <Link :href="`/projects/${intervention.project[0].id}/show`"
-                  >لفائدة المشروع</Link
+                  >في إطار المشروع</Link
                 >
               </td>
               <td class="px-4 py-2 h-16 border">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Family;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -74,9 +75,10 @@ class projectController extends Controller
             ],
         ]);
     }
-
-    public function show(project $project)
+    public function show(Project $project)
     {
+        $interventions = $project->interventions()->with('family')->get();
+
         return Inertia::render('projects/Show', [
             'project' => [
                 'id' => $project->id,
@@ -85,11 +87,20 @@ class projectController extends Controller
                 'date' => $project->date,
                 'deadline' => $project->deadline,
                 'status' => $project->status,
-                'interventions' => $project->interventions()->get(),
+                'interventions' => $interventions->map(function ($intervention) {
+                    return [
+                        'id' => $intervention->id,
+                        'intervenor' => $intervention->intervenor??null,
+                        'family' => [
+                            'name' => $intervention->family->name ??null,
+                        ],
+                    ];
+                }),
                 'deleted_at' => $project->deleted_at,
             ],
         ]);
     }
+
 
     public function update(project $project)
     {//dd(Request::get('status'));
