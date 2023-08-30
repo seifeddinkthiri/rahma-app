@@ -20,6 +20,8 @@ class Family extends Model
         'caregiver_phone',
         'address',
         'status',
+        'is_family',
+        'social_status'
         ];
 
     public function resolveRouteBinding($value, $field = null)
@@ -28,15 +30,6 @@ class Family extends Model
     }
 
 
-
-    public function scopeWhereType($query, $type)
-    {
-        if ($type === 'family' || $type === 'all') {
-            return $query;
-        }else {
-            return $query->whereRaw('1 = 0');
-        }
-    }
 
 
 
@@ -53,9 +46,30 @@ class Family extends Model
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
             }
-        })->when($filters['type'] ?? null, function ($query, $type) {
-            $query->whereType($type);
+        })->when($filters['social_status'] ?? null, function ($query, $socialStatus) {
+
+            if ($socialStatus === 'family') {
+                $query->where('is_family', true);
+            }
+            else {
+                $query->where(function ($subQuery) use ($socialStatus) {
+                    $subQuery->whereHas('members', function ($innerSubQuery) use ($socialStatus) {
+                        $innerSubQuery->where('social_status', $socialStatus)->where('caregiver', true);
+                    });
+                });            }
+
         });
+    }
+
+
+
+     public function scopeWhereType($query, $type)
+    {
+        if ($type === 'family' || $type === 'all') {
+            return $query;
+        }else {
+            return $query->whereRaw('1 = 0');
+        }
     }
 
     public function interventions()

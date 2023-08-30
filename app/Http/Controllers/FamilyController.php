@@ -22,11 +22,12 @@ class FamilyController extends Controller
         foreach ($emptyFamilies as $emptyFamily) {
             $emptyFamily->forceDelete();
         }
-                return Inertia::render('beneficials', [
-            'filters' => Request::all('search', 'type','trashed'),
+
+        return Inertia::render('beneficials', [
+            'filters' => Request::all('search', 'social_status', 'trashed'),
             'families' => Auth::user()->account->families()
                 ->orderBy('name')
-                ->filter(Request::only('search', 'type','trashed'))
+                ->filter(Request::only('search', 'social_status', 'trashed'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($Family) => [
@@ -35,13 +36,15 @@ class FamilyController extends Controller
                     'phone' => $Family->caregiver_phone,
                     'address' => $Family->address,
                     'status' => $Family->status,
+                    'is_family' => $Family->is_family,
+                    'social_status' => $Family->social_status,
                     'photo' => $Family->photo,
                     'deleted_at' => $Family->deleted_at,
                     'members' => $Family->members()->get(),
                 ]),
-                'individuals' => Auth::user()->account->individuals()
+            'individuals' => Auth::user()->account->individuals()
                 ->orderBy('name')
-                ->filter(Request::only('search', 'type','trashed'))
+                ->filter(Request::only('search', 'social_status', 'trashed'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($Individual) => [
@@ -63,23 +66,28 @@ class FamilyController extends Controller
     {
         $Family =  Auth::user()->account->Families()->create(
             [
-                'caregiver_phone' =>null,
-                'name' =>null,
-                'status' =>null,
-                'address' =>null,
-                'caregiver_phone' =>null,
-                'photo' =>null,
+                'caregiver_phone' => null,
+                'name' => null,
+                'status' => null,
+                'address' => null,
+                'caregiver_phone' => null,
+                'photo' => null,
 
 
             ]
         );
         if ($type !== 'family') {
+            $Family->update([
+                'social_status' => $type ,
+            ]);
             $redirectUrl = route('specifics.create', ['Family' => $Family, 'type' => $type]);
-
             return Redirect::to($redirectUrl);
+        } else {
+            $Family->update([
+                'is_family' => true,
+            ]);
+            return redirect()->route('members.create', ['Family' => $Family])->with('success', '   الرجاء إضافة معطيات الأسرة');
         }
-        return redirect()->route('members.create', ['Family' =>$Family])->with('success', '   الرجاء إضافة معطيات الأسرة');
-
     }
 
 
@@ -170,6 +178,7 @@ class FamilyController extends Controller
                 'phone' => $family->caregiver_phone,
                 'address' => $family->address,
                 'status' => $family->status,
+                'social_status' => $family->social_status,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,

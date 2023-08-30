@@ -67,11 +67,13 @@
         class="mr-4 w-full max-w-md"
         @reset="reset"
       >
-        <label class="block text-gray-700 mt-2 mb-2"> نوع المنتفع</label>
-        <select v-model="form.type" class="form-select mt-1 w-full">
+        <label class="block text-gray-700 mt-2 mb-2">حالة المنتفع</label>
+        <select v-model="form.social_status" class="form-select mt-1 w-full">
           <option value="family">عائلة</option>
-          <option value="individual">فرد</option>
-          <option value="all">الكل</option>
+          <option value="elderly">مسن</option>
+          <option value="widow">أرملة</option>
+          <option value="single_mother">أم متفردة</option>
+          <option value="divorced">مطلقة</option>
         </select>
 
         <label class="block text-gray-700 mt-2 mb-2">تم الحذف</label>
@@ -82,7 +84,7 @@
       </search-filter>
     </div>
     <div class="flex items-center justify-between mt-4 mb-4">
-      <h1 class="text-xl font-bold" v-if="families.data.length > 0">العائلات</h1>
+      <h1 class="text-xl font-bold" v-if="families.data.length > 0">قائمة المنتفعين</h1>
       <h1 class="text-xl font-bold" v-else></h1>
 
       <button
@@ -104,7 +106,8 @@
             <th class="pb-4 pt-6 px-6">العنوان</th>
             <th class="pb-4 pt-6 px-6">الهاتف</th>
             <th class="pb-4 pt-6 px-6">الحالة</th>
-            <th class="pb-4 pl-3 pt-6" colspan="2">الصورة</th>
+            <th class="pb-4 pt-6 px-6">الحالة المدنية</th>
+            <th class="pb-4 pl-3 pt-6">الصورة</th>
           </tr>
         </thead>
         <tbody class="text-right">
@@ -169,6 +172,24 @@
             </td>
             <td class="border-t" v-if="family.name">
               <Link
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                :href="`/families/${family.id}/edit`"
+              >
+                <p v-if="family.social_status == 'widow'">أرملة</p>
+                <p v-if="family.social_status == 'divorced'">مطلقة</p>
+                <p v-if="family.social_status == 'single_mother'">أم متفردة</p>
+                <p v-if="family.social_status == 'elderly'">مسن</p>
+                <p v-if="family.social_status == null"></p>
+
+                <icon
+                  v-if="family.deleted_at"
+                  name="trash"
+                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
+                />
+              </Link>
+            </td>
+            <td class="border-t" v-if="family.name">
+              <Link
                 class="flex items-center mr-8 py-4"
                 :href="`/families/${family.id}/edit`"
                 tabindex="-1"
@@ -186,7 +207,24 @@
                 />
               </Link>
             </td>
-            <td class="w-px border-t" v-if="family.name && family.members.length > 1">
+            <td class="w-px border-t" v-if="family.name">
+              <Link
+                class="flex items-center px-4"
+                :href="`/members/${family.id}/create_new_one`"
+                tabindex="-1"
+              >
+                <div
+                  v-if="family.is_family && family.members.length < 2 && family.name"
+                  class="flex items-center justify-between px-4 sm:px-20"
+                >
+                  <p class="flex-grow px-3 py-2 text-red-600 whitespace-nowrap">
+                    تحتوي العائلة فردين على الأقل
+                  </p>
+                </div>
+              </Link>
+            </td>
+
+            <td class="w-px border-t" v-if="family.name">
               <Link
                 class="flex items-center px-4"
                 :href="`/families/${family.id}/edit`"
@@ -195,7 +233,7 @@
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
               </Link>
             </td>
-            <td class="w-px border-t" v-if="family.name && family.members.length > 1">
+            <td class="w-px border-t" v-if="family.name">
               <Link
                 class="flex items-center px-4"
                 :href="`/families/${family.id}/show`"
@@ -203,42 +241,6 @@
               >
                 <icon name="eye" />
               </Link>
-            </td>
-            <td
-              class="relative border-t"
-              colspan="5"
-              v-if="family.members.length < 2 && family.name"
-            >
-              <div class="flex items-center justify-between px-4 sm:px-20">
-                <p class="flex-grow px-3 py-2 text-red-600 whitespace-nowrap">
-                  تحتوي العائلة فردين على الأقل
-                </p>
-                <div class="flex items-center">
-                  <div>
-                    <Link
-                      class="underline"
-                      :href="`/members/${family.id}/create_new_one`"
-                      type="button"
-                    >
-                      إضافة
-                    </Link>
-                  </div>
-                  <div class="ml-4 mr-4">
-                    <Link class="underline" :href="`/families/${family.id}/edit`">
-                      تعديل
-                    </Link>
-                  </div>
-                  <div>
-                    <button
-                      class="underline"
-                      type="button"
-                      @click="delete_family(family.id)"
-                    >
-                      حذف
-                    </button>
-                  </div>
-                </div>
-              </div>
             </td>
           </tr>
           <tr v-if="families.data.length === 0">
@@ -422,7 +424,7 @@ export default {
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
-        type: this.filters.type,
+        social_status: this.filters.social_status,
       },
     };
   },

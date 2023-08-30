@@ -19,6 +19,8 @@ class CreateFamiliesTable extends Migration
             $table->string('name')->nullable();
             $table->string('status')->nullable()->default('active');
             $table->string('address')->nullable();
+            $table->boolean('is_family')->default(false);
+            $table->string('social_status')->default('');
             $table->string('caregiver_phone')->nullable();
             $table->string('photo', 100)->nullable();
             $table->softDeletes();
