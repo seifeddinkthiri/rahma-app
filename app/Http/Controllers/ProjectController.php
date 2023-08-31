@@ -93,6 +93,7 @@ class projectController extends Controller
     public function show(Project $project)
     {
         $interventions = $project->interventions()->with('family')->get();
+        $beneficials = $project->families()->get();
 
         return Inertia::render('projects/Show', [
             'project' => [
@@ -102,6 +103,13 @@ class projectController extends Controller
                 'date' => $project->date,
                 'deadline' => $project->deadline,
                 'status' => $project->status,
+                'families' => $beneficials->map(function ($beneficial) {
+                    return [
+                        'id' => $beneficial->id,
+                        'name' => $beneficial->name ?? null,
+                        'caregiver_phone' => $beneficial->caregiver_phone ?? null,
+                    ];
+                }),
                 'interventions' => $interventions->map(function ($intervention) {
                     return [
                         'id' => $intervention->id,
@@ -111,6 +119,7 @@ class projectController extends Controller
                         ],
                     ];
                 }),
+
                 'deleted_at' => $project->deleted_at,
             ],
         ]);

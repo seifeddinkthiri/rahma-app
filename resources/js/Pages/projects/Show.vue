@@ -68,6 +68,33 @@
                 </div>
               </td>
             </tr>
+            <tr>
+              <td class="px-4 py-2 h-16 border">المنتفعين</td>
+              <td class="px-4 py-2 h-16 border">
+                <!-- beneficials -->
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div
+                    v-for="beneficial in project.families"
+                    :key="beneficial.id"
+                    class="relative"
+                  >
+                    <div
+                      class="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition-all"
+                    >
+                      <Link
+                        :href="`/families/${beneficial.id}/show`"
+                        class="text-blue-600"
+                      >
+                        <p>{{ beneficial.name }} - {{ beneficial.caregiver_phone }}</p>
+                      </Link>
+                    </div>
+                  </div>
+                  <div v-if="project.families.length === 0">
+                    <p class="text-center">لا يوجد منتفعين</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
