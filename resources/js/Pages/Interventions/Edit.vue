@@ -16,7 +16,6 @@
         <div>
           <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <select-input
-              @change="reinitialiseBeneficial"
               v-model="form.beneficial"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="نوع المنتفع"
@@ -24,6 +23,10 @@
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة معوزة</option>
+              <option value="elderly">مسن</option>
+              <option value="divorced">مطلقة</option>
+              <option value="widow">أرملة</option>
+              <option value="single_mother">أم عزباء</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'family'"
@@ -40,7 +43,59 @@
                 قائمة فارغة
               </option>
             </select-input>
+            <select-input
+              v-if="form.beneficial == 'elderly'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المسن"
+            >
+              <option hidden disabled :value="null">إختر المسن</option>
 
+              <option v-for="elderly in elderlies" :value="elderly.id">
+                {{ elderly.caregiver_phone }} - {{ elderly.name }}
+              </option>
+              <option :value="null" v-if="elderlies.length == 0">قائمة فارغة</option>
+            </select-input>
+            <select-input
+              v-if="form.beneficial == 'divorced'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="المطلقة"
+            >
+              <option hidden disabled :value="null">إختر المطلقة</option>
+
+              <option v-for="divorced in divorceds" :value="divorced.id">
+                {{ divorced.caregiver_phone }} - {{ divorced.name }}
+              </option>
+              <option :value="null" v-if="divorceds.length == 0">قائمة فارغة</option>
+            </select-input>
+            <select-input
+              v-if="form.beneficial == 'single_mother'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الأم العزباء"
+            >
+              <option hidden disabled :value="null">إختر الأم العزباء</option>
+
+              <option v-for="singleMother in singleMothers" :value="singleMother.id">
+                {{ singleMother.caregiver_phone }} - {{ singleMother.name }}
+              </option>
+              <option :value="null" v-if="singleMothers.length == 0">قائمة فارغة</option>
+            </select-input>
+
+            <select-input
+              v-if="form.beneficial == 'widow'"
+              v-model="form.family"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الأرملة"
+            >
+              <option hidden disabled :value="null">إختر الأرملة</option>
+
+              <option v-for="widow in widows" :value="widow.id">
+                {{ widow.caregiver_phone }} - {{ widow.name }}
+              </option>
+              <option :value="null" v-if="widows.length == 0">قائمة فارغة</option>
+            </select-input>
             <select-input
               v-model="form.project"
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -185,19 +240,20 @@ export default {
   layout: Layout,
   props: {
     intervention: Object,
+    elderlies: Object,
+    divorceds: Object,
+    singleMothers: Object,
+    widows: Object,
     families: Object,
     projects: Object,
+    beneficial: String,
   },
   remember: "form",
-  created() {
-    if (this.intervention.family_id !== null) {
-      this.form.beneficial = "family";
-    }
-  },
+
   data() {
     return {
       form: this.$inertia.form({
-        beneficial: null,
+        beneficial: this.beneficial,
         family: this.intervention.family_id,
         project: this.intervention.project_id,
         type: this.intervention.type,
@@ -221,14 +277,6 @@ export default {
     },
   },
   methods: {
-    reinitialiseBeneficial() {
-      if (this.form.beneficial == "family") {
-        this.form.project = null;
-      }
-      if (this.form.beneficial == "project") {
-        this.form.family = null;
-      }
-    },
     update() {
       this.form.post(`/interventions/${this.intervention.id}`);
     },

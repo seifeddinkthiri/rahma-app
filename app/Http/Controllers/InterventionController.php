@@ -83,8 +83,14 @@ class InterventionController extends Controller
 
     public function edit(Intervention $intervention)
     {
-        $families = Family::select('id', 'name', 'caregiver_phone')->get();
         $projects = Project::select('id', 'name')->get();
+        $families = Family::select('id', 'name', 'caregiver_phone')->where('is_family',true)->get();
+        $elderlies = Family::where('social_status','elderly')->get();
+        $divorceds = Family::where('social_status','divorced')->get();
+        $singleMothers = Family::where('social_status','single_mother')->get();
+        $widows = Family::where('social_status','widow')->get();
+        $family = $intervention->family ?? null;
+        $beneficial = $family ? $family->social_status : null;
 
         return Inertia::render('Interventions/Edit', [
             'intervention' => [
@@ -100,7 +106,12 @@ class InterventionController extends Controller
                 'deleted_at' => $intervention->deleted_at,
             ],
             'families' => $families,
+            'elderlies' => $elderlies,
+            'divorceds' => $divorceds,
+            'singleMothers' => $singleMothers,
+            'widows' => $widows,
             'projects' => $projects,
+            'beneficial' => $beneficial,
 
         ]);
     }
