@@ -353,6 +353,9 @@ Route::put('interventions/{intervention}/restore', [InterventionController::clas
   Route::post('projects/{project}', [ProjectController::class, 'update'])
   ->name('projects.update')
   ->middleware('auth');
+  Route::post('link_beneficial/{project}', [ProjectController::class, 'link_beneficial'])
+  ->name('link_beneficial')
+  ->middleware('auth');
 
   Route::delete('projects/{project}', [ProjectController::class, 'destroy'])
   ->name('projects.destroy')

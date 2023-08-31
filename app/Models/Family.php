@@ -72,6 +72,11 @@ class Family extends Model
         }
     }
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     public function interventions()
     {
         return $this->hasMany(Intervention::class);

@@ -14,7 +14,10 @@ class Project extends Model
     protected $fillable = [
         'name', 'description', 'date', 'deadline', 'status',
     ];
-
+    public function families()
+    {
+        return $this->hasMany(Family::class);
+    }
 
     public function interventions()
     {
