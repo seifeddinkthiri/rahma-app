@@ -62,14 +62,6 @@ class projectController extends Controller
 
     public function edit(project $project)
     {
-
-        $families = Family::select('id', 'name', 'caregiver_phone')->where('is_family', true)->get();
-        $elderlies = Family::where('social_status', 'elderly')->get();
-        $divorceds = Family::where('social_status', 'divorced')->get();
-        $singleMothers = Family::where('social_status', 'single_mother')->get();
-        $widows = Family::where('social_status', 'widow')->get();
-        $beneficials = Family::where('project_id', $project->id)->get();
-
         return Inertia::render('projects/Edit', [
             'project' => [
                 'id' => $project->id,
@@ -81,19 +73,11 @@ class projectController extends Controller
                 'interventions' => $project->interventions()->get(),
                 'deleted_at' => $project->deleted_at,
             ],
-            'families' => $families,
-            'elderlies' => $elderlies,
-            'divorceds' => $divorceds,
-            'singleMothers' => $singleMothers,
-            'widows' => $widows,
-            'beneficials' => $beneficials,
-
         ]);
     }
     public function show(Project $project)
     {
         $interventions = $project->interventions()->with('family')->get();
-        $beneficials = $project->families()->get();
 
         return Inertia::render('projects/Show', [
             'project' => [
@@ -103,13 +87,6 @@ class projectController extends Controller
                 'date' => $project->date,
                 'deadline' => $project->deadline,
                 'status' => $project->status,
-                'families' => $beneficials->map(function ($beneficial) {
-                    return [
-                        'id' => $beneficial->id,
-                        'name' => $beneficial->name ?? null,
-                        'caregiver_phone' => $beneficial->caregiver_phone ?? null,
-                    ];
-                }),
                 'interventions' => $interventions->map(function ($intervention) {
                     return [
                         'id' => $intervention->id,
@@ -143,22 +120,7 @@ class projectController extends Controller
     }
 
 
-    public function link_beneficial(project $project)
-    {
-        Request::validate([
-            'type' => ['required', 'string', 'max:255'],
-            'family' => ['required','numeric','exists:families,id'],
 
-        ]);
-        $id = Request::get('family');
-        $family = Family::findOrFail($id);
-
-        $family->update([
-            'project_id' => $project->id,
-        ]);
-
-        return Redirect::back()->with('success', 'تم ربط المنتفع');
-    }
     public function destroy(project $project)
     {
         $project->delete();
