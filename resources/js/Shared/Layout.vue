@@ -8,7 +8,7 @@
             class="flex items-center justify-between px-6 py-4 bg-indigo-900 md:flex-shrink-0 md:justify-center md:w-56"
           >
             <Link class="mt-1" href="/">
-              <logo class="fill-white h-16 w-16" width="120" height="28" />
+              <logo class="fill-white" width="120" height="28" />
             </Link>
             <dropdown class="md:hidden" placement="bottom-end">
               <template #default>
@@ -33,6 +33,11 @@
             <div v-if="auth.user.admin" class="mr-4 mt-1">مسؤل</div>
             <div v-else-if="auth.user.owner" class="mr-4 mt-1">مستخدم متميز</div>
             <div v-else="auth.user.admin" class="mr-4 mt-1">مستخدم</div>
+          </div>
+          <div
+            class="md:text-md flex items-center justify-between p-4 w-full text-sm bg-white border-b md:px-12 md:py-0"
+          >
+            <div class="mr-4 mt-1"></div>
             <dropdown class="mt-1" placement="bottom-end">
               <template #default>
                 <div class="group flex items-center cursor-pointer select-none">
@@ -68,141 +73,10 @@
           </div>
         </div>
         <div class="md:flex md:flex-grow md:overflow-hidden">
-          <div
-            v-if="auth.user.wait == false"
-            class="hidden flex-shrink-0 py-12 px-2 w-56 bg-indigo-800 overflow-y-auto md:block"
-          >
-            <div>
-              <div class="mb-4">
-                <Link class="group flex items-center py-3 relative w-full" href="/">
-                  <icon
-                    name="home"
-                    class="mr-2 w-4 h-4 ml-4"
-                    :class="
-                      isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('') ? 'text-white' : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    لوحة التحكم
-                  </div>
-                </Link>
-              </div>
-              <div class="mb-4">
-                <Link
-                  class="group flex items-center py-3 relative w-full"
-                  href="/projects"
-                >
-                  <icon
-                    name="dashboard"
-                    class="mr-2 w-4 h-4 ml-4"
-                    :class="
-                      isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('') ? 'text-white' : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    المشاريع
-                  </div>
-                </Link>
-              </div>
-
-              <div class="mb-4">
-                <Link
-                  class="group flex items-center py-3 relative w-full"
-                  href="/interventions"
-                >
-                  <icon
-                    name="interventions"
-                    class="mr-2 w-4 h-4 ml-4"
-                    :class="
-                      isUrl('interventions')
-                        ? 'fill-white'
-                        : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('interventions')
-                        ? 'text-white'
-                        : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    التدخلات
-                  </div>
-                </Link>
-              </div>
-              <div class="mb-4">
-                <Link
-                  class="group flex items-center py-3 relative w-full"
-                  href="/beneficials"
-                >
-                  <icon
-                    name="beneficials"
-                    class="mr-2 w-4 h-4 ml-4"
-                    :class="
-                      isUrl('beneficials')
-                        ? 'fill-white'
-                        : 'fill-indigo-400 group-hover:fill-white'
-                    "
-                  />
-                  <div
-                    :class="
-                      isUrl('beneficials')
-                        ? 'text-white'
-                        : 'text-indigo-300 group-hover:text-white'
-                    "
-                  >
-                    المنتفعين
-                  </div>
-                </Link>
-              </div>
-
-              <div class="mb-4" v-if="auth.user.admin || auth.user.owner">
-                <Drop_down_minu_members>
-                  <li>
-                    <Link
-                      class="group flex items-center py-3 relative w-full"
-                      href="/users"
-                    >
-                      <div
-                        :class="
-                          isUrl('users')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                        "
-                      >
-                        ادارة المستخدمين
-                      </div>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      class="group flex items-center py-3 relative w-full"
-                      href="/wait_list"
-                    >
-                      <div
-                        :class="
-                          isUrl('wait_list')
-                            ? 'text-white'
-                            : 'text-indigo-300 group-hover:text-white'
-                        "
-                      >
-                        قائمة الانتظار
-                      </div>
-                    </Link>
-                  </li>
-                </Drop_down_minu_members>
-              </div>
-            </div>
-          </div>
-          <div class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto">
+          <main-menu
+            class="hidden flex-shrink-0 p-12 w-56 bg-indigo-800 overflow-y-auto md:block"
+          />
+          <div class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto" scroll-region>
             <flash-messages />
             <slot />
           </div>
@@ -217,7 +91,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Icon from "@/Shared/Icon";
 import Logo from "@/Shared/Logo";
 import Dropdown from "@/Shared/Dropdown";
-import Drop_down_minu_members from "@/Shared/Drop_down_minu_members";
+import MainMenu from "@/Shared/MainMenu";
 import FlashMessages from "@/Shared/FlashMessages";
 
 export default {
@@ -227,19 +101,10 @@ export default {
     Icon,
     Link,
     Logo,
-    Drop_down_minu_members,
+    MainMenu,
   },
   props: {
     auth: Object,
-  },
-  methods: {
-    isUrl(...urls) {
-      let currentUrl = this.$page.url.substr(1);
-      if (urls[0] === "") {
-        return currentUrl === "";
-      }
-      return urls.filter((url) => currentUrl.startsWith(url)).length;
-    },
   },
 };
 </script>
