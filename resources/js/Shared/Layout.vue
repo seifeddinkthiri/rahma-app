@@ -30,9 +30,24 @@
           <div
             class="md:text-md flex items-center justify-between p-4 w-full text-sm bg-white border-b md:px-12 md:py-0"
           >
-            <div v-if="auth.user.admin" class="mr-4 mt-1">مسؤل</div>
-            <div v-else-if="auth.user.owner" class="mr-4 mt-1">مستخدم متميز</div>
-            <div v-else="auth.user.admin" class="mr-4 mt-1">مستخدم</div>
+            <div
+              v-if="$page.props.auth.user && $page.props.auth.user.admin"
+              class="mr-4 mt-1"
+            >
+              مسؤل
+            </div>
+            <div
+              v-else-if="$page.props.auth.user && $page.props.auth.user.owner"
+              class="mr-4 mt-1"
+            >
+              مستخدم متميز
+            </div>
+            <div
+              v-else="$page.props.auth.user && $page.props.auth.user.admin"
+              class="mr-4 mt-1"
+            >
+              مستخدم
+            </div>
           </div>
           <div
             class="md:text-md flex items-center justify-between p-4 w-full text-sm bg-white border-b md:px-12 md:py-0"
@@ -44,8 +59,14 @@
                   <div
                     class="mr-1 text-gray-700 group-hover:text-indigo-600 focus:text-indigo-600 whitespace-nowrap"
                   >
-                    <span>{{ auth.user.first_name }}</span>
-                    <span class="hidden md:inline">&nbsp;{{ auth.user.last_name }}</span>
+                    <span>{{
+                      $page.props.auth.user && $page.props.auth.user.first_name
+                    }}</span>
+                    <span class="hidden md:inline"
+                      >&nbsp;{{
+                        $page.props.auth.user && $page.props.auth.user.last_name
+                      }}</span
+                    >
                   </div>
                   <icon
                     class="w-5 h-5 fill-gray-700 group-hover:fill-indigo-600 focus:fill-indigo-600"
@@ -57,7 +78,9 @@
                 <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
                   <Link
                     class="block px-6 py-2 hover:text-white hover:bg-indigo-500"
-                    :href="`/users/${auth.user.id}/edit`"
+                    :href="`/users/${
+                      $page.props.auth.user && $page.props.auth.user.id
+                    }/edit`"
                     >ملفي</Link
                   >
                   <Link

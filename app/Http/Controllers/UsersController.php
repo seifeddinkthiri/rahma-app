@@ -15,11 +15,13 @@ class UsersController extends Controller
 {
     public function index()
     {
+        $currentUser = Auth::user();
         return Inertia::render('Users/Index', [
             'filters' => Request::all('search', 'role', 'trashed'),
             'users' => Auth::user()->account->users()
                 ->orderByName()
                 ->filter(Request::only('search', 'role', 'trashed'))
+                ->where('id', '!=', $currentUser->id) // Exclude the current user
                 ->get()
                 ->transform(fn ($user) => [
                     'id' => $user->id,
@@ -66,28 +68,31 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        return Inertia::render('Users/Edit', [
-            'user' => [
-                'id' => $user->id,
-                'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
-                'email' => $user->email,
-                'owner' => $user->owner,
-                'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
-                'deleted_at' => $user->deleted_at,
-                'user_page_owner' => Auth::user()->owner,
-                'user_page_admin' => Auth::user()->admin,
-            ],
-        ]);
+        $currentUserId = Auth::user()->id;
+
+        if (!$user -> admin ||  $currentUserId == $user->id  ) {
+            return Inertia::render('Users/Edit', [
+                'user' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'owner' => $user->owner,
+                    'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
+                    'deleted_at' => $user->deleted_at,
+
+                ],
+            ]);
+        }
+
     }
 
     public function update(User $user)
     {
-        if (App::environment('demo') && $user->isDemoUser()) {
-            return Redirect::back()->with('error', 'لا يسمح بتحديث المستخدم التجريبي.');
-        }
 
-        Request::validate([
+        $currentUserId = Auth::user()->id;
+        if (!$user -> admin ||  $currentUserId == $user->id  ) {
+            Request::validate([
             'first_name' => ['required', 'max:50'],
             'last_name' => ['required', 'max:50'],
             'email' => ['required', 'max:50', 'email', Rule::unique('users')->ignore($user->id)],
@@ -107,17 +112,19 @@ class UsersController extends Controller
         }
 
         return Redirect::back()->with('success', 'تم تحديث العضو');
+      }
     }
 
     public function destroy(User $user)
     {
-        if (App::environment('demo') && $user->isDemoUser()) {
-            return Redirect::back()->with('error', 'حذف المستخدم التجريبي غير مسموح به.');
+        $currentUserId = Auth::user()->id;
+        if (!$user -> admin && $user->id !== $currentUserId ) {
+            $user->delete();
+
+            return Redirect::back()->with('success', 'تم حذف العضو');
+
         }
 
-        $user->delete();
-
-        return Redirect::back()->with('success', 'تم حذف العضو');
     }
 
     public function restore(User $user)

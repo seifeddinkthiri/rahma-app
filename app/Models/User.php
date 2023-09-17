@@ -65,10 +65,6 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::needsRehash($password) ? Hash::make($password) : $password;
     }
 
-    public function isDemoUser()
-    {
-        return $this->email === 'johndoe@example.com';
-    }
 
     public function scopeOrderByName($query)
     {

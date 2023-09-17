@@ -132,8 +132,7 @@ export default {
         password: "",
         owner: this.user.owner,
         photo: null,
-        user_page_owner: this.user.user_page_owner,
-        user_page_admin: this.user.user_page_admin,
+
       }),
     };
   },

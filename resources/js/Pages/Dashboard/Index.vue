@@ -9,7 +9,7 @@
     </div>
 
     <div
-      v-if="$page.props.auth.user.wait == false"
+      v-if="$page.props.auth.user && $page.props.auth.user.wait == false"
       class="container mx-auto mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
     >
       <!-- projects Card -->
@@ -21,8 +21,8 @@
           </p></Link
         >
       </div>
-   <!-- Beneficials Card -->
-   <div class="bg-white rounded-lg shadow-lg p-4">
+      <!-- Beneficials Card -->
+      <div class="bg-white rounded-lg shadow-lg p-4">
         <Link class="text-blue-400 hover:text-blue-600" href="/interventions">
           <h2 class="text-xl font-semibold mb-2">إدارة التدخلات</h2>
 
@@ -32,8 +32,8 @@
         >
       </div>
 
-       <!-- Interventions Card -->
-       <Link href="beneficials" class="bg-white rounded-lg shadow-lg p-4">
+      <!-- Interventions Card -->
+      <Link href="beneficials" class="bg-white rounded-lg shadow-lg p-4">
         <h2 class="text-xl font-semibold mb-2">إدارة المنتفعين</h2>
         <ul>
           <li class="flex items-center">
@@ -57,8 +57,6 @@
           </p></Link
         >
       </div>
-
-
     </div>
 
     <!-- Add any other creative elements or sections here, like statistics, charts, etc. -->

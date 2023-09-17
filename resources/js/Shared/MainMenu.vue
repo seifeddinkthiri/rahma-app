@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$page.props.auth.user.wait == false">
+  <div v-if="$page.props.auth.user && $page.props.auth.user.wait == false">
     <div class="mb-4">
       <Link class="group flex items-center py-3 relative w-full" href="/">
         <icon
@@ -88,7 +88,13 @@
         </div>
       </Link>
     </div>
-    <div class="mb-4" v-if="$page.props.auth.user.admin || $page.props.auth.user.owner">
+    <div
+      class="mb-4"
+      v-if="
+        ($page.props.auth.user && $page.props.auth.user.admin) ||
+        ($page.props.auth.user && $page.props.auth.user.owner)
+      "
+    >
       <Link class="group flex items-center py-3 relative w-full" href="/wait_list">
         <icon
           name="users"
