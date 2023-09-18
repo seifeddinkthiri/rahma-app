@@ -326,6 +326,11 @@ export default {
   },
 
   methods: {
+    destroy_intervention(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا التدخل ")) {
+        this.$inertia.delete(`/interventions/${id}`);
+      }
+    },
     store_intervention() {
       this.intervention_form.post("/interventions", {
         preserveScroll: true,
