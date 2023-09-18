@@ -43,30 +43,87 @@
               <td class="px-4 py-2 h-16 border">التدخلات</td>
               <td class="px-4 py-2 h-16 border">
                 <!-- interventions -->
-                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  <div
-                    v-for="intervention in project.interventions"
-                    :key="intervention.id"
-                    class="relative"
-                  >
-                    <div
-                      class="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition-all"
-                    >
-                      <Link
-                        :href="`/interventions/${intervention.id}/show`"
-                        class="text-blue-600"
-                      >
-                        <p>
-                          {{ getLabel(intervention.intervenor, intervention.family) }}
-                        </p>
-                      </Link>
-                    </div>
-                  </div>
-                  <div v-if="project.interventions.length === 0">
-                    <p class="text-center">لا يوجد تدخلات</p>
-                  </div>
-                </div>
+                {{ project.interventions.length }}
               </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
+
+      <div class="mt-8 p-4 bg-white rounded-md shadow">
+        <table class="w-full whitespace-nowrap">
+          <thead>
+            <tr class="text-right font-bold">
+              <th class="pb-4 pt-6 px-6">النوع</th>
+              <th class="pb-4 pt-6 px-6">القيمة</th>
+              <th class="pb-4 pt-6 px-6">التاريخ</th>
+              <th class="pb-4 pt-6 px-6">المسؤل</th>
+              <th class="pb-4 pt-6 px-6">هاتف المسؤل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="intervention in project.interventions"
+              :key="intervention.id"
+              class="hover:bg-gray-100 focus-within:bg-gray-100"
+            >
+              <td class="border-t">
+                <Link
+                  class="flex items-center px-6 py-4"
+                  :href="`/interventions/${intervention.id}/show`"
+                  tabindex="-1"
+                >
+                  {{ intervention.type }}
+                </Link>
+              </td>
+              <td class="border-t">
+                <Link
+                  class="flex items-center px-6 py-4"
+                  :href="`/interventions/${intervention.id}/show`"
+                  tabindex="-1"
+                >
+                  {{ intervention.value }}
+                </Link>
+              </td>
+              <td class="border-t">
+                <Link
+                  class="flex items-center px-6 py-4"
+                  :href="`/interventions/${intervention.id}/show`"
+                  tabindex="-1"
+                >
+                  {{ intervention.date }}
+                </Link>
+              </td>
+              <td class="border-t">
+                <Link
+                  class="flex items-center px-6 py-4 focus:text-blue-500"
+                  :href="`/interventions/${intervention.id}/show`"
+                >
+                  {{ intervention.intervenor }}
+                  <icon
+                    v-if="intervention.deleted_at"
+                    name="trash"
+                    class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
+                  />
+                </Link>
+              </td>
+              <td class="border-t">
+                <Link
+                  class="flex items-center px-6 py-4"
+                  :href="`/interventions/${intervention.id}/show`"
+                  tabindex="-1"
+                >
+                  {{ intervention.intervenor_phone }}
+                </Link>
+              </td>
+
+
+
+            </tr>
+            <tr v-if="project.interventions.length === 0">
+              <td class="px-6 py-4 border-t" colspan="4">قائمة فارغة</td>
             </tr>
           </tbody>
         </table>

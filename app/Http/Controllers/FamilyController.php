@@ -113,6 +113,7 @@ class FamilyController extends Controller
                 'phone' => $family->caregiver_phone,
                 'address' => $family->address,
                 'status' => $family->status,
+                'social_status' => $family->social_status,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
                 'notes' => $notes,
@@ -190,6 +191,8 @@ class FamilyController extends Controller
             'caregiver_phone' => Request::input('phone'),
             'address' => Request::input('address'),
             'status' => Request::input('status'),
+            'social_status' => Request::input('social_status'),
+
 
         ];
 

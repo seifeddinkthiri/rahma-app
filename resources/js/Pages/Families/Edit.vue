@@ -32,6 +32,19 @@
             <option value="disabled">محضور</option>
             <option value="inactive">غير نشط</option>
           </select-input>
+          <select-input
+            v-model="form.social_status"
+            :error="form.errors.social_status"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            label=" حالة المنتفع "
+          >
+            <option value="family">عائلة معوزة</option>
+            <option value="elderly">مسن</option>
+            <option value="widow">أرملة</option>
+            <option value="single_mother">أم عزباء</option>
+            <option value="divorced">مطلقة</option>
+          </select-input>
+
           <text-input
             v-model="form.phone"
             :error="form.errors.phone"
@@ -956,6 +969,7 @@ export default {
         name: this.family.name,
         phone: this.family.phone,
         status: this.family.status,
+        social_status: this.family.social_status,
         address: this.family.address,
         photo: null,
         id: this.family.id,

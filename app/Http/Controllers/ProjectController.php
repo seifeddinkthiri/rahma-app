@@ -87,16 +87,7 @@ class projectController extends Controller
                 'date' => $project->date,
                 'deadline' => $project->deadline,
                 'status' => $project->status,
-                'interventions' => $interventions->map(function ($intervention) {
-                    return [
-                        'id' => $intervention->id,
-                        'intervenor' => $intervention->intervenor ?? null,
-                        'family' => [
-                            'name' => $intervention->family->name ?? null,
-                        ],
-                    ];
-                }),
-
+                'interventions' => $interventions,
                 'deleted_at' => $project->deleted_at,
             ],
         ]);

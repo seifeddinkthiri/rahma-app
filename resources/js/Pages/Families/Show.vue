@@ -166,6 +166,104 @@
         </tbody>
       </table>
     </div>
+
+    <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
+    <br />
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div v-for="home in family.home" :key="home.id">
+        <div class="p-4 bg-white rounded-md shadow">
+          <h3 class="mb-2 text-xl">
+            <span v-if="home.status == 'Ownership'">ملك</span>
+            <span v-else-if="home.status == 'without compensation'">بدون مقابل</span>
+            <span v-else-if="home.status == 'inherited'">ورثة</span>
+            <span v-else-if="home.status == 'lease'">إيجار</span>
+          </h3>
+          <p class="mb-2 text-gray-700" v-if="home.status == 'lease'">
+            سعر الكراء: {{ home.allocation_price }}
+          </p>
+          <p class="text-gray-700 truncate">{{ home.desciption }}</p>
+        </div>
+      </div>
+      <div v-if="family.home.length === 0">
+        <p class="text-center text-xl">لا يوجد مساكن</p>
+      </div>
+    </div>
+    <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
+
+    <div class="mt-8 p-4 bg-white rounded-md shadow">
+      <table class="w-full whitespace-nowrap">
+        <thead>
+          <tr class="text-right font-bold">
+            <th class="pb-4 pt-6 px-6">النوع</th>
+            <th class="pb-4 pt-6 px-6">القيمة</th>
+            <th class="pb-4 pt-6 px-6">التاريخ</th>
+            <th class="pb-4 pt-6 px-6">المسؤل</th>
+            <th class="pb-4 pt-6 px-6">هاتف المسؤل</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="intervention in family.interventions"
+            :key="intervention.id"
+            class="hover:bg-gray-100 focus-within:bg-gray-100"
+          >
+            <td class="border-t">
+              <Link
+                class="flex items-center px-6 py-4"
+                :href="`/interventions/${intervention.id}/show`"
+                tabindex="-1"
+              >
+                {{ intervention.type }}
+              </Link>
+            </td>
+            <td class="border-t">
+              <Link
+                class="flex items-center px-6 py-4"
+                :href="`/interventions/${intervention.id}/show`"
+                tabindex="-1"
+              >
+                {{ intervention.value }}
+              </Link>
+            </td>
+            <td class="border-t">
+              <Link
+                class="flex items-center px-6 py-4"
+                :href="`/interventions/${intervention.id}/show`"
+                tabindex="-1"
+              >
+                {{ intervention.date }}
+              </Link>
+            </td>
+            <td class="border-t">
+              <Link
+                class="flex items-center px-6 py-4 focus:text-blue-500"
+                :href="`/interventions/${intervention.id}/show`"
+              >
+                {{ intervention.intervenor }}
+                <icon
+                  v-if="intervention.deleted_at"
+                  name="trash"
+                  class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
+                />
+              </Link>
+            </td>
+            <td class="border-t">
+              <Link
+                class="flex items-center px-6 py-4"
+                :href="`/interventions/${intervention.id}/show`"
+                tabindex="-1"
+              >
+                {{ intervention.intervenor_phone }}
+              </Link>
+            </td>
+          </tr>
+          <tr v-if="family.interventions.length === 0">
+            <td class="px-6 py-4 border-t" colspan="4">قائمة فارغة</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <!-- Notes -->
     <div>
       <h2 class="mt-12 text-2xl font-bold">الملاحظات</h2>
@@ -192,7 +290,7 @@
           </div>
         </div>
         <div v-if="family.notes.data.length === 0">
-          <p class="text-center text-xl font-bold">لا يوجد ملاحظات</p>
+          <p class="text-center text-xl">لا يوجد ملاحظات</p>
         </div>
       </div>
     </div>
@@ -208,50 +306,6 @@
       </div>
       <div v-if="family.files.length === 0">
         <p class="text-center text-xl">لا يوجد ملفات</p>
-      </div>
-    </div>
-
-    <!-- Interventions -->
-    <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
-    <br />
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="intervention in family.interventions" :key="intervention.id">
-        <div class="p-4 bg-white rounded-md shadow">
-          <Link :href="`/interventions/${intervention.id}/show`">
-            <h3 class="mb-2 text-xl">
-              <p v-if="intervention.type == 'cash'">النوع: نقدي</p>
-              <p v-if="intervention.type == 'shipments'">النوع :عيني</p>
-              <p v-if="intervention.type == 'other'">النوع :آخر</p>
-            </h3>
-            <h3 class="mb-2 text-xl">القيمة : {{ intervention.value }}</h3>
-            <h3 class="mb-2 text-xl">المتدخل :{{ intervention.intervenor }}</h3>
-          </Link>
-        </div>
-      </div>
-      <div v-if="family.interventions.length === 0">
-        <p class="text-center text-xl">لا يوجد تدخلات</p>
-      </div>
-    </div>
-
-    <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
-    <br />
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="home in family.home" :key="home.id">
-        <div class="p-4 bg-white rounded-md shadow">
-          <h3 class="mb-2 text-xl">
-            <span v-if="home.status == 'Ownership'">ملك</span>
-            <span v-else-if="home.status == 'without compensation'">بدون مقابل</span>
-            <span v-else-if="home.status == 'inherited'">ورثة</span>
-            <span v-else-if="home.status == 'lease'">إيجار</span>
-          </h3>
-          <p class="mb-2 text-gray-700" v-if="home.status == 'lease'">
-            سعر الكراء: {{ home.allocation_price }}
-          </p>
-          <p class="text-gray-700 truncate">{{ home.desciption }}</p>
-        </div>
-      </div>
-      <div v-if="family.home.length === 0">
-        <p class="text-center text-xl">لا يوجد مساكن</p>
       </div>
     </div>
   </div>
