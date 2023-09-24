@@ -516,7 +516,6 @@ export default {
     resetForm() {
       this.form.name = null;
       this.form.address = null;
-      this.form.birth_city = null;
       this.form.birth_date = null;
       this.form.cin = null;
       this.form.phone = null;

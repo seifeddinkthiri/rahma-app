@@ -183,7 +183,6 @@
           >
             إضافة
           </button>
-
         </div>
       </form>
     </div>
@@ -611,6 +610,7 @@ export default {
       this.form.disease = null;
       this.form.disability = null;
       this.form.disability_card_number = null;
+      this.form.birth_date = null;
     },
     store() {
       if (this.HorW == "husband") {
