@@ -38,42 +38,45 @@
         <tbody>
           <tr v-for="intervention in interventions.data" :key="intervention.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
   <td class="border-t">
-    <Link class="flex items-center px-6 py-4" :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
+    <Link class="flex items-center px-6 py-4"  :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
       <p v-if="intervention.type == 'shipments'" class="h-4">عيني</p>
       <p v-else-if="intervention.type == 'cash'" class="h-4">نقدي</p>
       <p v-else-if="intervention.type == 'other'" class="h-4">آخر</p>
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
       <p class="h-4">{{ intervention.value }}</p>
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
       <p class="h-4">{{ intervention.date }}</p>
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="focus:text-blue-500 flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`">
+    <Link  class="focus:text-blue-500 flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`">
       <p class="h-4">{{ intervention.intervenor }}</p>
       <icon v-if="intervention.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
       <p class="h-4">{{ intervention.intervenor_phone }}</p>
     </Link>
   </td>
   <td class="w-px border-t">
     <div class="flex items-center">
-      <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="flex items-center px-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
+      <Link  class="flex items-center px-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
         <icon name="cheveron-right" class="block w-5 h-4 fill-gray-400" />
       </Link>
-      <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="flex items-center px-4" :href="`/interventions/${intervention.id}/show`" tabindex="-1">
+      <Link  class="flex items-center px-4" :href="`/interventions/${intervention.id}/show`" tabindex="-1">
         <icon name="eye" />
       </Link>
-      <button :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': intervention.deleted_at }" class="flex items-center px-4" tabindex="-1" @click="destroy(intervention.id)">
+      <button v-if="intervention.deleted_at" class="flex items-center px-4" tabindex="-1" @click="restore(intervention.id)">
+        <icon name="restore" />
+      </button>
+      <button  v-else class="flex items-center px-4" tabindex="-1" @click="destroy(intervention.id)">
         <icon name="delete" />
       </button>
     </div>

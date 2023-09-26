@@ -37,12 +37,12 @@
         <tbody>
           <tr v-for="project in projects.data" :key="project?.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
   <td class="border-t">
-    <Link class="flex items-center px-6 py-4" :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" :href="`/projects/${project.id}/edit`" tabindex="-1">
+    <Link class="flex items-center px-6 py-4"  :href="`/projects/${project.id}/edit`" tabindex="-1">
       <p class="h-4">{{ project.name }}</p>
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
       <div class="... w-80 overflow-x-auto">
         <p class="truncate h-4">
           {{ project.description }}
@@ -51,32 +51,32 @@
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
       <p class="h-4">{{ project.date }}</p>
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
       <p class="h-4">{{ project.deadline }}</p>
     </Link>
   </td>
   <td class="border-t">
-    <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
+    <Link  class="flex items-center px-6 py-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
       <p class="h-4">{{ project.status ? 'مكتمل' : 'قيد التنفيذ' }}</p>
     </Link>
   </td>
   <td class="w-px border-t">
     <div class="flex items-center">
-      <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
+      <Link  class="flex items-center px-4" :href="`/projects/${project.id}/edit`" tabindex="-1">
         <icon name="cheveron-right" class="block w-5 h-4 fill-gray-400" />
       </Link>
-      <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-4" :href="`/projects/${project.id}/show`" tabindex="-1">
+      <Link  class="flex items-center px-4" :href="`/projects/${project.id}/show`" tabindex="-1">
         <icon name="eye" />
       </Link>
-      <button v-if="!project.deleted_at" :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-4" tabindex="-1" @click="destroy(project.id)">
+      <button v-if="!project.deleted_at"  class="flex items-center px-4" tabindex="-1" @click="destroy(project.id)">
         <icon name="delete" />
       </button>
-      <button v-else :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': project.deleted_at }" class="flex items-center px-4" tabindex="-1" @click="restore(project.id)">
+      <button v-else  class="flex items-center px-4" tabindex="-1" @click="restore(project.id)">
         <icon name="restore" />
       </button>
     </div>
