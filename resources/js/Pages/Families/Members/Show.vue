@@ -91,7 +91,7 @@
             </tr>
 
             <tr>
-              <td class="h-16 px-4 py-2 border">المستوى التعليمي</td>
+              <td class="h-16 px-4 py-2 border">المستوى الدراسي </td>
               <td class="h-16 px-4 py-2 border">{{ member.education_level }}</td>
             </tr>
             <tr>

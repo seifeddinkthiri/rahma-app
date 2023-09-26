@@ -302,6 +302,7 @@
               label=" المستوى الدراسي "
             >
               <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="illiterate ">أمي</option>
               <option value="primary">إعدادي</option>
               <option value="secondary">ثاناوي</option>
               <option value="university ">جامعي</option>
