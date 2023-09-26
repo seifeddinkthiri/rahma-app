@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
-use App\Models\project;
+use App\Models\Project;
 
 class projectController extends Controller
 {

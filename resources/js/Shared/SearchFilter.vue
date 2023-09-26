@@ -4,7 +4,7 @@
       <dropdown
         v-if="!onlySearch"
         :auto-close="false"
-        class="focus:z-10 px-4 hover:bg-gray-100 border-r focus:border-white rounded-l focus:ring md:px-6"
+        class="px-4 border-r rounded-l focus:z-10 hover:bg-gray-100 focus:border-white focus:ring md:px-6"
         placement="bottom-end"
       >
         <template #default>
@@ -23,7 +23,7 @@
         </template>
         <template #dropdown>
           <div
-            class="mt-2 px-4 py-6 w-screen bg-white rounded shadow-xl"
+            class="w-screen px-4 py-6 mt-2 bg-white rounded shadow-xl"
             :style="{ maxWidth: `${maxWidth}px` }"
           >
             <slot />
@@ -31,7 +31,7 @@
         </template>
       </dropdown>
       <input
-        class="relative px-6 py-3 w-full rounded focus:shadow-outline"
+        class="w-full px-6 py-3 rounded  focus:shadow-outline"
         autocomplete="off"
         type="text"
         name="search"
@@ -43,7 +43,7 @@
     <div class="mr-3">
       <button
         v-if="!onlySearch"
-        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
         type="button"
         @click="$emit('reset')"
       >

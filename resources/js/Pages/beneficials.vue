@@ -3,56 +3,61 @@
     <Head title="المنتفعين" />
     <div
       v-if="show_modal"
-      class="fixed inset-0 flex items-center justify-center z-50 rounded"
+      class="fixed inset-0 z-50 flex items-center justify-center rounded"
     >
       <div
-        class="bg-gray-500 bg-opacity-75 fixed inset-0 transition-opacity rounded"
+        class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 rounded"
       ></div>
-      <div class="bg-white w-96 rounded shadow-xl z-10">
-        <div class="px-4 py-6 bg-gray-50 rounded">
-          <div class="flex justify-center flex-col items-center rounded">
+      <div class="z-10 max-h-screen overflow-auto bg-white rounded shadow-xl w-96">
+        <div class="px-4 py-6 rounded bg-gray-50">
+          <div class="grid grid-cols-2 gap-4 rounded">
             <button
               @click="store_family('elderly')"
               type="button"
-              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="inline-flex flex-col items-center justify-center px-12 py-10 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
             >
-              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> مسن
+               <img src="/svg-icons/aged.svg" width="140" height="35">
+              <p class="mt-4 text-base">مسن</p>
             </button>
             <button
               @click="store_family('widow')"
               type="button"
-              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="inline-flex flex-col items-center justify-center px-12 py-10 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
             >
-              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> أرملة
+              <img src="/svg-icons/mother.svg" width="140" height="35" >
+              <p class="mt-4 text-base">أرملة</p>
             </button>
 
             <button
               @click="store_family('divorced')"
               type="button"
-              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="inline-flex flex-col items-center justify-center px-12 py-10 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
             >
-              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> مطلقة
+              <img src="/svg-icons/woman.svg" width="140" height="35" alt="" class="logo_normal">
+              <p class="mt-4 text-base">مطلقة</p>
             </button>
 
             <button
               @click="store_family('single_mother')"
               type="button"
-              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="inline-flex flex-col items-center justify-center px-12 py-10 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
             >
-              <icon name="indiv" class="mr-2 w-4 h-4 ml-4" /> أم عزباء
+            <img src="/svg-icons/single_mother.svg" width="140" height="35">
+              <p class="mt-4 text-base">أم عزباء</p>
             </button>
 
             <button
               @click="store_family('family')"
               type="button"
-              class="my-2 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="inline-flex flex-col items-center justify-center px-12 py-10 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
             >
-              <icon name="group" class="mr-2 w-4 h-4 ml-4" /> عائلة معوزة
+              <img src="/svg-icons/family.svg" width="140" height="35" alt="" class="logo_normal">
+              <p class="mt-4 text-md">عائلة معوزة</p>
             </button>
             <button
               @click="show_modal = false"
               type="button"
-              class="mt-3 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="inline-flex flex-col items-center justify-center px-12 py-10 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
             >
               إلغاء
             </button>
@@ -64,11 +69,11 @@
       <search-filter
         :onlySearch="false"
         v-model="form.search"
-        class="mr-4 w-full max-w-md"
+        class="w-full max-w-md mr-4"
         @reset="reset"
       >
-        <label class="block text-gray-700 mt-2 mb-2">حالة المنتفع</label>
-        <select v-model="form.social_status" class="form-select mt-1 w-full">
+        <label class="block mt-2 mb-2 text-gray-700">حالة المنتفع</label>
+        <select v-model="form.social_status" class="w-full mt-1 form-select">
           <option value="family">عائلة معوزة</option>
           <option value="elderly">مسن</option>
           <option value="widow">أرملة</option>
@@ -76,8 +81,8 @@
           <option value="divorced">مطلقة</option>
         </select>
 
-        <label class="block text-gray-700 mt-2 mb-2">تم الحذف</label>
-        <select v-model="form.trashed" class="form-select mt-1 w-full">
+        <label class="block mt-2 mb-2 text-gray-700">تم الحذف</label>
+        <select v-model="form.trashed" class="w-full mt-1 form-select">
           <option value="with">مع المحذوف</option>
           <option value="only">فقط المحذوف</option>
         </select>
@@ -89,26 +94,26 @@
 
       <button
         @click="show_modal = true"
-        class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
       >
         <span> إضافة منتفع</span>
       </button>
     </div>
 
     <div
-      class="bg-white rounded-md shadow overflow-x-auto"
+      class="overflow-x-auto bg-white rounded-md shadow"
       v-if="families.data.length > 0"
     >
       <table class="w-full">
         <thead>
-          <tr class="text-right font-bold">
-            <th class="pb-4 pt-6 px-6">المعيل</th>
-            <th class="pb-4 pt-6 px-6">العنوان</th>
-            <th class="pb-4 pt-6 px-6">الهاتف</th>
-            <th class="pb-4 pt-6 px-6">الحالة</th>
-            <th class="pb-4 pt-6 px-6">الحالة المدنية</th>
-            <th class="pb-4 pl-3 pt-6">الصورة</th>
-            <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
+          <tr class="font-bold text-right">
+            <th class="px-6 pt-6 pb-4">المعيل</th>
+            <th class="px-6 pt-6 pb-4">العنوان</th>
+            <th class="px-6 pt-6 pb-4">الهاتف</th>
+            <th class="px-6 pt-6 pb-4">الحالة</th>
+            <th class="px-6 pt-6 pb-4">الحالة المدنية</th>
+            <th class="pt-6 pb-4 pl-3">الصورة</th>
+            <th class="pt-6 pb-4 pl-3" colspan="3">إجراءات</th>
           </tr>
         </thead>
         <tbody class="text-right">
@@ -165,13 +170,13 @@
             </td>
             <td class="border-t" v-if="family.name">
               <Link
-                class="flex items-center mr-8 py-4"
+                class="flex items-center py-4 mr-8"
                 :href="`/families/${family.id}/edit`"
                 tabindex="-1"
               >
                 <img
                   v-if="family.photo"
-                  class="h-10 w-10 block -my-2 mr-2 rounded"
+                  class="block w-10 h-10 mr-2 -my-2 rounded"
                   :src="'uploads/' + family.photo"
                 />
               </Link>

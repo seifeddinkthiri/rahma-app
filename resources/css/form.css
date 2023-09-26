@@ -5,7 +5,7 @@
 .form-input,
 .form-textarea,
 .form-select {
-  @apply p-2 leading-normal block w-full border text-gray-700 bg-white font-sans rounded text-left appearance-none relative focus:border-indigo-400 focus:ring;
+  @apply p-2 leading-normal block w-full border text-gray-700 font-tajawal bg-white rounded text-left appearance-none relative focus:border-indigo-400 focus:ring;
 
   &::placeholder {
     @apply text-gray-500 opacity-100;
@@ -37,8 +37,8 @@
 /* buttons login display */
 .formButtom{
   display: flex;
-  flex-direction: row; 
-  justify-content: space-between ; 
+  flex-direction: row;
+  justify-content: space-between ;
   align-items: center;
   padding: 0 35px 5px;
 }

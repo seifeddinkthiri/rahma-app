@@ -54,8 +54,18 @@
           </div>
         </div>
         <div
-          class="flex items-center space-x-3 px-8 py-4 bg-gray-50 border-t border-gray-100"
+          class="text-right px-8 py-4 bg-gray-50 border-t border-gray-100"
         >
+
+
+          <loading-button
+            :loading="form.processing"
+            class="ml-3 inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+            type="submit"
+          >
+            تعديل المشروع
+          </loading-button>
+
           <button
             v-if="!project.deleted_at"
             class="bg-red-500 text-white hover:bg-red-600 focus:ring-red-600 focus:ring-opacity-50 ml-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded focus:outline-none"
@@ -65,28 +75,26 @@
           >
             حذف المشروع
           </button>
-
-          <loading-button
-            :loading="form.processing"
-            class="ml-auto inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-            type="submit"
-          >
-            تعديل المشروع
-          </loading-button>
         </div>
 
-        <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
-        <br />
+
+      </form>
+    </div>
+
+    <div class="flex justify-between items-center mt-12">
+      <h2 class=" text-2xl font-bold">التدخلات</h2>
+      <button
+        class="btn-indigo"
+        href="/projects/create"
+        @click="show_intervention_modal = true"
+      > أضف تدخل </button>
+    </div>
+
+
+    <div class="bg-white rounded-md shadow overflow-hidden mt-6">
 
         <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-          <div class="flex items-center pr-4">
-            <button
-              @click="show_intervention_modal = true"
-              class="inline-flex items-center justify-center my-4 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-            >
-              أضف تدخل
-            </button>
-          </div>
+
           <div ref="intervention_modal" v-if="show_intervention_modal">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
             <div class="fixed inset-0 flex items-center justify-center">
@@ -156,17 +164,17 @@
                     />
                   </div>
                   <div
-                    class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+                    class="text-right flex items-center justify-start px-8 py-4 bg-gray-50 border-t border-gray-100"
                   >
                     <button
-                      class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                      class="btn-indigo ml-3"
                       type="submit"
                     >
                       إضافة
                     </button>
                     <button
                       @click="show_intervention_modal = false"
-                      class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                      class="btn-gray"
                       type="button"
                     >
                       عودة
@@ -177,6 +185,7 @@
             </div>
           </div>
         </div>
+
         <div ref="members" class="bg-white rounded shadow overflow-hidden">
           <table class="table-auto w-full text-right">
             <thead class="text-right">
@@ -260,8 +269,9 @@
             </tbody>
           </table>
         </div>
-      </form>
     </div>
+
+
   </div>
 </template>
 

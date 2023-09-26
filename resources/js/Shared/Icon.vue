@@ -66,7 +66,7 @@
   </svg>
 
   <svg
-    v-else-if="name === 'cheveron-left'"
+    v-else-if="name === 'cheveron-right'"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 120 120"
   >
@@ -75,7 +75,7 @@
     />
   </svg>
   <svg
-    v-else-if="name === 'cheveron-right'"
+    v-else-if="name === 'cheveron-left'"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
   >
@@ -167,16 +167,7 @@
     />
   </svg>
 
-  <svg
-    v-else-if="name === 'close'"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-    stroke="currentColor"
-  >
-    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-  </svg>
+
 
   <svg
     v-else-if="name === 'users'"
@@ -229,15 +220,7 @@
       </g>
     </g>
   </svg>
-  <svg
-    v-else-if="name === 'delete'"
-    viewBox="0 0 448 512"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M53.21 467c1.562 24.84 23.02 45 47.9 45h245.8c24.88 0 46.33-20.16 47.9-45L416 128H32L53.21 467zM432 32H320l-11.58-23.16c-2.709-5.42-8.25-8.844-14.31-8.844H153.9c-6.061 0-11.6 3.424-14.31 8.844L128 32H16c-8.836 0-16 7.162-16 16V80c0 8.836 7.164 16 16 16h416c8.838 0 16-7.164 16-16V48C448 39.16 440.8 32 432 32z"
-    />
-  </svg>
+
   <svg
     v-else-if="name === 'accepet'"
     height="512"

@@ -40,6 +40,7 @@ module.exports = {
       }),
       fontFamily: {
         sans: ['Cerebri Sans', ...defaultTheme.fontFamily.sans],
+        tajawal: ['Tajawal', ...defaultTheme.fontFamily.sans]
       },
       boxShadow: theme => ({
         outline: '0 0 0 2px ' + theme('colors.indigo.500'),

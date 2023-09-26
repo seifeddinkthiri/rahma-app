@@ -6,7 +6,7 @@
     @submit.prevent="login"
   >
     <div class="px-10 py-12">
-      <h1 class="text-center text-3xl font-bold">مرحبًا بعودتك!</h1>
+      <h1 class="text-center text-3xl font-bold ">مرحبًا بعودتك!</h1>
       <div class="mt-6 mx-auto w-24 border-b-2" />
       <text-input
         v-model="form.email"
@@ -25,7 +25,7 @@
         type="password"
       />
       <label class="flex items-center mt-6 select-none" for="remember">
-        <input id="remember" v-model="form.remember" class="mr-1" type="checkbox" />
+        <input id="remember" v-model="form.remember" class="ml-1" type="checkbox" />
         <span class="text-sm">تذكرنى</span>
       </label>
     </div>
@@ -56,8 +56,8 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        email: "admin@gmail.com",
-        password: "admin",
+        email: "",
+        password: "",
         remember: false,
       }),
     };
