@@ -33,42 +33,45 @@
         </tr>
         <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
-            <Link  v-if="user.photo"  :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+            <Link  v-if="user.photo"   class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
                 <img class="block -my-2 mr-2 w-10 h-8 rounded" :src=" user.photo" />
 
               </Link>
-              <Link v-else :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/families/${user.id}/edit`"> لا يوجد </Link>
+              <Link v-else  class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/families/${user.id}/edit`"> لا يوجد </Link>
 
           </td>
           <td class="border-t">
-            <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+            <Link  class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
               {{ user.name }}
               <icon v-if="user.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t">
-            <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4" :href="`/users/${user.id}/edit`" tabindex="-1">
+            <Link  class="flex items-center px-6 py-4" :href="`/users/${user.id}/edit`" tabindex="-1">
               <p class="h-4">
                 {{ user.email }}
               </p>
             </Link>
           </td>
           <td class="border-t">
-            <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 transform -translate-x-6" :href="`/users/${user.id}/edit`" tabindex="-1">
+            <Link  class="flex items-center px-6 py-4 transform -translate-x-6" :href="`/users/${user.id}/edit`" tabindex="-1">
               {{ user.owner ? 'مالك ' : 'مستخدم ' }}
             </Link>
           </td>
           <td class="w-px border-t">
             <div class="flex items-center">
-              <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-4" :href="`/users/${user.id}/edit`" tabindex="-1">
+              <Link  class="flex items-center px-4" :href="`/users/${user.id}/edit`" tabindex="-1">
                 <icon name="cheveron-right" class="block w-6 h-4 fill-gray-400" />
               </Link>
-              <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-4" :href="`/users/${user.id}/show`" tabindex="-1">
+              <Link  class="flex items-center px-4" :href="`/users/${user.id}/show`" tabindex="-1">
                 <icon name="eye" />
               </Link>
-              <button :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-4" tabindex="-1" @click="destroy(user.id)">
-                <icon name="delete" />
-              </button>
+              <button v-if="user.deleted_at" class="flex items-center px-4" tabindex="-1" @click="restore(user.id)">
+        <icon name="restore" />
+      </button>
+      <button  v-else class="flex items-center px-4" tabindex="-1" @click="destroy(user.id)">
+        <icon name="delete" />
+      </button>
             </div>
           </td>
         </tr>
