@@ -91,20 +91,8 @@ class InterventionController extends Controller
         $widows = Family::where('social_status','widow')->get();
         $family = $intervention->family ?? null;
         $beneficial = $family ? $family->social_status : null;
-
         return Inertia::render('Interventions/Edit', [
-            'intervention' => [
-                'id' => $intervention->id,
-                'family_id' => $intervention->family_id,
-                'project_id' => $intervention->project_id,
-                'type' => $intervention->type,
-                'value' => $intervention->value,
-                'date' => $intervention->date,
-                'intervenor' => $intervention->intervenor,
-                'intervenor_phone' => $intervention->intervenor_phone,
-                'notes' => $intervention->notes,
-                'deleted_at' => $intervention->deleted_at,
-            ],
+            'intervention' => $intervention,
             'families' => $families,
             'elderlies' => $elderlies,
             'divorceds' => $divorceds,
@@ -170,8 +158,7 @@ class InterventionController extends Controller
     public function destroy(Intervention $intervention)
     {
         $intervention->delete();
-
-        return Redirect::back()->with('success', 'تم حذف التدخل.');
+        return Redirect::back();
     }
 
     public function restore(Intervention $intervention)

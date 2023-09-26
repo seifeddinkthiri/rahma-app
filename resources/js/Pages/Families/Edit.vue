@@ -1,15 +1,15 @@
 <template>
   <div>
     <Head :title="form.name" />
-
+    <trashed-message v-if="family.deleted_at" class="mb-6" @restore="restore"
+      >تم حذف هذا المنتفع .
+    </trashed-message>
     <h1 class="mb-8 text-xl font-bold">
       <Link class="text-blue-400 hover:text-blue-600" href="/families">المنتفع</Link>
       <span class="text-blue-400 font-medium"> : </span>
       {{ form.name }}
     </h1>
-    <trashed-message v-if="family.deleted_at" class="mb-6" @restore="restore"
-      >تم حذف هذا المنتفع .
-    </trashed-message>
+
     <!--  -->
     <div class="bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">

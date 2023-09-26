@@ -1,6 +1,12 @@
 <template>
   <div>
     <Head title="Interventions" />
+    <trashed-message
+      v-if="deleted_project_id"
+      class="mb-6"
+      @restore="restore(deleted_project_id)"
+      >تم حذف هذا المشروع .
+    </trashed-message>
     <h1 class="mb-8 text-xl font-bold">المشاريع</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
@@ -104,6 +110,13 @@
                 >
                   <icon name="eye" />
                 </Link>
+                <button
+                  class="flex items-center px-4"
+                  tabindex="-1"
+                  @click="destroy(project.id)"
+                >
+                  <icon name="delete" />
+                </button>
               </div>
             </td>
           </tr>
@@ -126,6 +139,7 @@ import throttle from "lodash/throttle";
 import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
 import SearchFilter from "@/Shared/SearchFilter";
+import TrashedMessage from "@/Shared/TrashedMessage";
 
 export default {
   components: {
@@ -134,6 +148,7 @@ export default {
     Link,
     Pagination,
     SearchFilter,
+    TrashedMessage,
   },
   layout: Layout,
   props: {
@@ -142,6 +157,7 @@ export default {
   },
   data() {
     return {
+      deleted_project_id: null,
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
@@ -157,6 +173,18 @@ export default {
     },
   },
   methods: {
+    destroy(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا المشروع ؟")) {
+        this.$inertia.delete(`/projects/${id}`);
+        this.deleted_project_id = id;
+      }
+    },
+    restore(id) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا المشروع ؟")) {
+        this.$inertia.put(`/projects/${id}/restore`);
+        this.deleted_project_id = null;
+      }
+    },
     reset() {
       this.form = mapValues(this.form, () => null);
     },

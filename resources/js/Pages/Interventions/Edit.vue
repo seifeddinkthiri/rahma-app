@@ -8,7 +8,7 @@
       <span class="text-blue-400 font-medium"> : </span>
       {{ form.intervenor }}
     </h1>
-    <trashed-message v-if="intervention.deleted_at" class="mb-6" @restore="restore"
+    <trashed-message v-if="display_restore_button" class="mb-6" @restore="restore"
       >تم حذف هذا التدخل .
     </trashed-message>
     <div class="bg-white rounded-md shadow overflow-hidden">
@@ -252,6 +252,7 @@ export default {
 
   data() {
     return {
+      display_restore_button: false,
       form: this.$inertia.form({
         beneficial: this.beneficial,
         family: this.intervention.family_id,
@@ -283,11 +284,13 @@ export default {
     destroy() {
       if (confirm("هل أنت متأكد أنك تريد حذف هذا التدخل ؟")) {
         this.$inertia.delete(`/interventions/${this.intervention.id}`);
+        this.display_restore_button = true;
       }
     },
     restore() {
       if (confirm("هل أنت متأكد أنك تريد استعادة هذا التدخل ؟")) {
         this.$inertia.put(`/interventions/${this.intervention.id}/restore`);
+        this.display_restore_button = false;
       }
     },
   },

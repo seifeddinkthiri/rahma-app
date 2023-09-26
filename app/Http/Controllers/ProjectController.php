@@ -116,7 +116,7 @@ class projectController extends Controller
     {
         $project->delete();
 
-        return Redirect::back()->with('success', 'تم حذف المشروع.');
+        return Redirect::back();
     }
 
     public function restore(project $project)
