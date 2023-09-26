@@ -45,6 +45,15 @@ class Intervention extends Model
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
     }
 
+    public function scopeWhereType($query, $type)
+    {
+            return  $query->where('type', $type);
+
+    }
+
+
+
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
@@ -57,6 +66,9 @@ class Intervention extends Model
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
             }
-        });
+        })->when($filters['type'] ?? null, function ($query, $type) {
+
+                $query->where('type', $type);
+                });
     }
 }

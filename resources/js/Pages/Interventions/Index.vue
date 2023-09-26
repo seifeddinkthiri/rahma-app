@@ -15,6 +15,21 @@
         class="mr-4 w-full max-w-md"
         @reset="reset"
       >
+
+
+
+
+      <label class="block text-gray-700 mt-2 mb-2"> نوع التدخل </label>
+<select v-model="form.type" class="form-select mt-1 w-full">
+  <option value="shipments">عيني  </option>
+   <option value="cash"> نقدي</option>
+   <option value="other">آخر</option>
+
+
+</select>
+
+
+
         <label class="block text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option value="with">مع المحذوف</option>
@@ -53,7 +68,10 @@
                 :href="`/interventions/${intervention.id}/edit`"
                 tabindex="-1"
               >
-                {{ intervention.type }}
+                   <p v-if=" intervention.type == 'shipments'">عيني</p>
+                   <p v-else-if=" intervention.type == 'cash'">نقدي</p>
+                   <p v-else-if=" intervention.type == 'other'">آخر </p>
+
               </Link>
             </td>
             <td class="border-t">
@@ -164,6 +182,8 @@ export default {
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
+        type: this.filters.type,
+
       },
     };
   },

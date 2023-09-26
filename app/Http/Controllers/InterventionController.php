@@ -14,10 +14,10 @@ class InterventionController extends Controller
     public function index()
     {
         return Inertia::render('Interventions/Index', [
-            'filters' => Request::all('search', 'trashed'),
+            'filters' => Request::all('search', 'trashed','type'),
             'interventions' => Auth::user()->account->interventions()
                 ->orderBy('id')
-                ->filter(Request::only('search', 'trashed'))
+                ->filter(Request::only('search', 'trashed','type'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($intervention) => [
@@ -133,7 +133,7 @@ class InterventionController extends Controller
             'file' => ['nullable'],
             'title' => ['nullable', 'required_with:file','string', 'max:50']
         ]);
-        $intervention = Auth::user()->account->interventions()->update([
+        $intervention->update([
             'type' => Request::get('type'),
             'value' => Request::get('value'),
             'date' => Request::get('date'),
