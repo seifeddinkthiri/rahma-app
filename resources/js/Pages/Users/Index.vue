@@ -1,21 +1,11 @@
 <template>
   <div>
     <Head title="Users" />
-    <trashed-message
-      v-if="deleted_user_id"
-      class="mb-6"
-      @restore="restore(deleted_user_id)"
-      >تم حذف هذا المستخدم .
-    </trashed-message>
+    <trashed-message v-if="deleted_user_id" class="mb-6" @restore="restore(deleted_user_id)">تم حذف هذا المستخدم . </trashed-message>
 
     <h1 class="mb-8 text-xl font-bold">المستخدمون</h1>
     <div class="flex items-center justify-between mb-6">
-      <search-filter
-        :onlySearch="false"
-        v-model="form.search"
-        class="mr-4 w-full max-w-md"
-        @reset="reset"
-      >
+      <search-filter :onlySearch="false" v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">الدور</label>
         <select v-model="form.role" class="form-select mt-1 w-full">
           <option value="user">مستخدم</option>
@@ -27,10 +17,7 @@
           <option value="only">فقط المحذوف</option>
         </select>
       </search-filter>
-      <Link
-        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-        href="/users/create"
-      >
+      <Link class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none" href="/users/create">
         <span>إنشاء</span>
         <span class="hidden md:inline">&nbsp;المستخدم</span>
       </Link>
@@ -44,70 +31,42 @@
           <th class="pb-4 pt-6 px-6">الدور</th>
           <th class="pb-4 pt-6 px-6">إجراءات</th>
         </tr>
-        <tr
-          v-for="user in users"
-          :key="user.id"
-          class="hover:bg-gray-100 focus-within:bg-gray-100"
-        >
+        <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
-            <img
-              v-if="user.photo"
-              class="w-8 h-8 rounded-full flex items-center justify-center transform -translate-x-16 block"
-              :src="user.photo"
-            />
+            <Link  v-if="user.photo"  :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+                <img class="block -my-2 mr-2 w-10 h-8 rounded" :src=" user.photo" />
+
+              </Link>
+              <Link v-else :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/families/${user.id}/edit`"> لا يوجد </Link>
+
           </td>
           <td class="border-t">
-            <Link
-              class="flex items-center px-6 py-4 focus:text-indigo-500"
-              :href="`/users/${user.id}/edit`"
-            >
+            <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
               {{ user.name }}
-              <icon
-                v-if="user.deleted_at"
-                name="trash"
-                class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400"
-              />
+              <icon v-if="user.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t">
-            <Link
-              class="flex items-center px-6 py-4"
-              :href="`/users/${user.id}/edit`"
-              tabindex="-1"
-            >
-              {{ user.email }}
+            <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4" :href="`/users/${user.id}/edit`" tabindex="-1">
+              <p class="h-4">
+                {{ user.email }}
+              </p>
             </Link>
           </td>
           <td class="border-t">
-            <Link
-              class="flex items-center px-6 py-4 transform -translate-x-6"
-              :href="`/users/${user.id}/edit`"
-              tabindex="-1"
-            >
-              {{ user.owner ? "مالك " : "مستخدم " }}
+            <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-6 py-4 transform -translate-x-6" :href="`/users/${user.id}/edit`" tabindex="-1">
+              {{ user.owner ? 'مالك ' : 'مستخدم ' }}
             </Link>
           </td>
           <td class="w-px border-t">
             <div class="flex items-center">
-              <Link
-                class="flex items-center px-4"
-                :href="`/users/${user.id}/edit`"
-                tabindex="-1"
-              >
-                <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+              <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-4" :href="`/users/${user.id}/edit`" tabindex="-1">
+                <icon name="cheveron-right" class="block w-6 h-4 fill-gray-400" />
               </Link>
-              <Link
-                class="flex items-center px-4"
-                :href="`/users/${user.id}/show`"
-                tabindex="-1"
-              >
+              <Link :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-4" :href="`/users/${user.id}/show`" tabindex="-1">
                 <icon name="eye" />
               </Link>
-              <button
-                class="flex items-center px-4"
-                tabindex="-1"
-                @click="destroy(user.id)"
-              >
+              <button :class="{ 'flex items-center justify-between p-4 max-w-xl bg-yellow-400 rounded': user.deleted_at }" class="flex items-center px-4" tabindex="-1" @click="destroy(user.id)">
                 <icon name="delete" />
               </button>
             </div>
@@ -122,14 +81,14 @@
 </template>
 
 <script>
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import Icon from "@/Shared/Icon";
-import pickBy from "lodash/pickBy";
-import Layout from "@/Shared/Layout";
-import throttle from "lodash/throttle";
-import mapValues from "lodash/mapValues";
-import SearchFilter from "@/Shared/SearchFilter";
-import TrashedMessage from "@/Shared/TrashedMessage";
+import { Head, Link } from '@inertiajs/inertia-vue3'
+import Icon from '@/Shared/Icon'
+import pickBy from 'lodash/pickBy'
+import Layout from '@/Shared/Layout'
+import throttle from 'lodash/throttle'
+import mapValues from 'lodash/mapValues'
+import SearchFilter from '@/Shared/SearchFilter'
+import TrashedMessage from '@/Shared/TrashedMessage'
 
 export default {
   components: {
@@ -137,7 +96,7 @@ export default {
     Icon,
     Link,
     SearchFilter,
-    TrashedMessage
+    TrashedMessage,
   },
   layout: Layout,
   props: {
@@ -152,32 +111,32 @@ export default {
         role: this.filters.role,
         trashed: this.filters.trashed,
       },
-    };
+    }
   },
   watch: {
     form: {
       deep: true,
       handler: throttle(function () {
-        this.$inertia.get("/users", pickBy(this.form), { preserveState: true });
+        this.$inertia.get('/users', pickBy(this.form), { preserveState: true })
       }, 150),
     },
   },
   methods: {
     reset() {
-      this.form = mapValues(this.form, () => null);
+      this.form = mapValues(this.form, () => null)
     },
     destroy(id) {
-      if (confirm("هل أنت متأكد أنك تريد حذف هذا المستخدم ؟")) {
-        this.$inertia.delete(`/users/${id}`);
-        this.deleted_user_id = id;
+      if (confirm('هل أنت متأكد أنك تريد حذف هذا المستخدم ؟')) {
+        this.$inertia.delete(`/users/${id}`)
+        this.deleted_user_id = id
       }
     },
     restore(id) {
-      if (confirm("هل أنت متأكد أنك تريد استعادة هذا المستخدم ؟")) {
-        this.$inertia.put(`/users/${id}/restore`);
-        this.deleted_user_id = null;
+      if (confirm('هل أنت متأكد أنك تريد استعادة هذا المستخدم ؟')) {
+        this.$inertia.put(`/users/${id}/restore`)
+        this.deleted_user_id = null
       }
     },
   },
-};
+}
 </script>
