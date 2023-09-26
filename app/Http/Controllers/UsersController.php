@@ -87,6 +87,25 @@ class UsersController extends Controller
 
     }
 
+
+    public function show(User $user)
+    {
+
+        return Inertia::render('Users/Show', [
+            'user' => [
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+                'owner' => $user->owner,
+                'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
+                'deleted_at' => $user->deleted_at,
+
+            ],        ]);
+    }
+
+
+
     public function update(User $user)
     {
 
@@ -121,7 +140,7 @@ class UsersController extends Controller
         if (!$user -> admin && $user->id !== $currentUserId ) {
             $user->delete();
 
-            return Redirect::back()->with('success', 'تم حذف العضو');
+            return Redirect::back();
 
         }
 

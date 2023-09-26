@@ -1,6 +1,12 @@
 <template>
   <div>
     <Head title="المنتفعين" />
+    <trashed-message
+      v-if="deleted_family_id"
+      class="mb-6"
+      @restore="restore(deleted_family_id)"
+      >تم حذف هذا المنتفع .
+    </trashed-message>
     <div
       v-if="show_modal"
       class="fixed inset-0 z-50 flex items-center justify-center rounded"
@@ -199,22 +205,29 @@
             </td>
 
             <td class="w-px border-t" v-if="family.name">
-              <Link
-                class="flex items-center px-4"
-                :href="`/families/${family.id}/edit`"
-                tabindex="-1"
-              >
-                <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-              </Link>
-            </td>
-            <td class="w-px border-t" v-if="family.name">
-              <Link
-                class="flex items-center px-4"
-                :href="`/families/${family.id}/show`"
-                tabindex="-1"
-              >
-                <icon name="eye" />
-              </Link>
+              <div class="flex items-center">
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/families/${family.id}/edit`"
+                  tabindex="-1"
+                >
+                  <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+                </Link>
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/families/${family.id}/show`"
+                  tabindex="-1"
+                >
+                  <icon name="eye" />
+                </Link>
+                <button
+                  class="flex items-center px-4"
+                  tabindex="-1"
+                  @click="delete_family(family.id)"
+                >
+                  <icon name="delete" />
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -235,6 +248,7 @@ import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
 import SearchFilter from "@/Shared/SearchFilter";
 import SelectInput from "@/Shared/SelectInput";
+import TrashedMessage from "@/Shared/TrashedMessage";
 
 export default {
   components: {
@@ -244,6 +258,7 @@ export default {
     Pagination,
     SearchFilter,
     SelectInput,
+    TrashedMessage,
   },
   layout: Layout,
   props: {
@@ -253,6 +268,7 @@ export default {
 
   data() {
     return {
+      deleted_family_id: null,
       beneficial: null,
       show_modal: false,
       form: {
@@ -279,9 +295,16 @@ export default {
     delete_family(id) {
       if (confirm("هل أنت متأكد أنك تريد حذف  هذا المنتفع")) {
         this.$inertia.delete(`/families/${id}`);
+        this.deleted_family_id = id;
       }
     },
 
+    restore(id) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا المنتفع ؟")) {
+        this.$inertia.put(`/families/${id}/restore`);
+        this.deleted_family_id = null;
+      }
+    },
     reset() {
       this.form = mapValues(this.form, () => null);
     },

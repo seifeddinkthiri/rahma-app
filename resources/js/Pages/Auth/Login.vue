@@ -1,13 +1,13 @@
 <template>
   <Head title="Login" />
-  <logo class="block mx-auto h-32 w-32 max-w-xs fill-white" height="50" />
+  <logo class="block w-32 h-32 max-w-xs mx-auto fill-white" height="50" />
   <form
-    class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden"
+    class="mt-8 overflow-hidden bg-white rounded-lg shadow-xl"
     @submit.prevent="login"
   >
     <div class="px-10 py-12">
-      <h1 class="text-center text-3xl font-bold ">مرحبًا بعودتك!</h1>
-      <div class="mt-6 mx-auto w-24 border-b-2" />
+      <h1 class="text-3xl font-bold text-center ">مرحبًا بعودتك!</h1>
+      <div class="w-24 mx-auto mt-6 border-b-2" />
       <text-input
         v-model="form.email"
         :error="form.errors.email"

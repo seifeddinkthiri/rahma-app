@@ -83,6 +83,9 @@ Route::get('users/{user}/edit', [UsersController::class, 'edit'])
 
 
 
+        Route::get('users/{user}/show', [UsersController::class, 'show'])
+        ->name('users.show')
+            ->middleware(['auth', 'can:accepted']);
 
 Route::put('users/{user}', [UsersController::class, 'update'])
     ->name('users.update')

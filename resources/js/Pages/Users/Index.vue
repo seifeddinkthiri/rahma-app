@@ -1,6 +1,13 @@
 <template>
   <div>
     <Head title="Users" />
+    <trashed-message
+      v-if="deleted_user_id"
+      class="mb-6"
+      @restore="restore(deleted_user_id)"
+      >تم حذف هذا المستخدم .
+    </trashed-message>
+
     <h1 class="mb-8 text-xl font-bold">المستخدمون</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
@@ -34,7 +41,8 @@
           <th class="pb-4 pt-6 px-6">الصورة</th>
           <th class="pb-4 pt-6 px-6">الاسم</th>
           <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
-          <th class="pb-4 pt-6 px-6" colspan="2">الدور</th>
+          <th class="pb-4 pt-6 px-6">الدور</th>
+          <th class="pb-4 pt-6 px-6">إجراءات</th>
         </tr>
         <tr
           v-for="user in users"
@@ -76,17 +84,33 @@
               :href="`/users/${user.id}/edit`"
               tabindex="-1"
             >
-              {{ user.owner ? "Owner" : "User" }}
+              {{ user.owner ? "مالك " : "مستخدم " }}
             </Link>
           </td>
           <td class="w-px border-t">
-            <Link
-              class="flex items-center px-4"
-              :href="`/users/${user.id}/edit`"
-              tabindex="-1"
-            >
-              <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-            </Link>
+            <div class="flex items-center">
+              <Link
+                class="flex items-center px-4"
+                :href="`/users/${user.id}/edit`"
+                tabindex="-1"
+              >
+                <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+              </Link>
+              <Link
+                class="flex items-center px-4"
+                :href="`/users/${user.id}/show`"
+                tabindex="-1"
+              >
+                <icon name="eye" />
+              </Link>
+              <button
+                class="flex items-center px-4"
+                tabindex="-1"
+                @click="destroy(user.id)"
+              >
+                <icon name="delete" />
+              </button>
+            </div>
           </td>
         </tr>
         <tr v-if="users.length === 0">
@@ -105,6 +129,7 @@ import Layout from "@/Shared/Layout";
 import throttle from "lodash/throttle";
 import mapValues from "lodash/mapValues";
 import SearchFilter from "@/Shared/SearchFilter";
+import TrashedMessage from "@/Shared/TrashedMessage";
 
 export default {
   components: {
@@ -112,6 +137,7 @@ export default {
     Icon,
     Link,
     SearchFilter,
+    TrashedMessage
   },
   layout: Layout,
   props: {
@@ -120,6 +146,7 @@ export default {
   },
   data() {
     return {
+      deleted_user_id: null,
       form: {
         search: this.filters.search,
         role: this.filters.role,
@@ -138,6 +165,18 @@ export default {
   methods: {
     reset() {
       this.form = mapValues(this.form, () => null);
+    },
+    destroy(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا المستخدم ؟")) {
+        this.$inertia.delete(`/users/${id}`);
+        this.deleted_user_id = id;
+      }
+    },
+    restore(id) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا المستخدم ؟")) {
+        this.$inertia.put(`/users/${id}/restore`);
+        this.deleted_user_id = null;
+      }
     },
   },
 };

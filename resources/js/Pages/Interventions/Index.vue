@@ -1,6 +1,12 @@
 <template>
   <div>
     <Head title="Interventions" />
+    <trashed-message
+      v-if="deleted_intervention_id"
+      class="mb-6"
+      @restore="restore(deleted_intervention_id)"
+      >تم حذف هذا التدخل .
+    </trashed-message>
     <h1 class="mb-8 text-xl font-bold">التدخلات</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter
@@ -32,6 +38,7 @@
             <th class="pb-4 pt-6 px-6">التاريخ</th>
             <th class="pb-4 pt-6 px-6">المسؤل</th>
             <th class="pb-4 pt-6 px-6">هاتف المسؤل</th>
+            <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
           </tr>
         </thead>
         <tbody>
@@ -91,22 +98,29 @@
             </td>
 
             <td class="w-px border-t">
-              <Link
-                class="flex items-center px-4"
-                :href="`/interventions/${intervention.id}/edit`"
-                tabindex="-1"
-              >
-                <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-              </Link>
-            </td>
-            <td class="w-px border-t">
-              <Link
-                class="flex items-center px-4"
-                :href="`/interventions/${intervention.id}/show`"
-                tabindex="-1"
-              >
-                <icon name="eye" class="block w-6 h-6" />
-              </Link>
+              <div class="flex items-center">
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/interventions/${intervention.id}/edit`"
+                  tabindex="-1"
+                >
+                  <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+                </Link>
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/interventions/${intervention.id}/show`"
+                  tabindex="-1"
+                >
+                  <icon name="eye" />
+                </Link>
+                <button
+                  class="flex items-center px-4"
+                  tabindex="-1"
+                  @click="destroy(intervention.id)"
+                >
+                  <icon name="delete" />
+                </button>
+              </div>
             </td>
           </tr>
           <tr v-if="interventions.data.length === 0">
@@ -128,6 +142,7 @@ import throttle from "lodash/throttle";
 import mapValues from "lodash/mapValues";
 import Pagination from "@/Shared/Pagination";
 import SearchFilter from "@/Shared/SearchFilter";
+import TrashedMessage from "@/Shared/TrashedMessage";
 
 export default {
   components: {
@@ -136,6 +151,7 @@ export default {
     Link,
     Pagination,
     SearchFilter,
+    TrashedMessage,
   },
   layout: Layout,
   props: {
@@ -144,6 +160,7 @@ export default {
   },
   data() {
     return {
+      deleted_intervention_id: null,
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
@@ -161,6 +178,18 @@ export default {
   methods: {
     reset() {
       this.form = mapValues(this.form, () => null);
+    },
+    destroy(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا التدخل ؟")) {
+        this.$inertia.delete(`/interventions/${id}`);
+        this.deleted_intervention_id = id;
+      }
+    },
+    restore(id) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا التدخل ؟")) {
+        this.$inertia.put(`/interventions/${id}/restore`);
+        this.deleted_intervention_id = null;
+      }
     },
   },
 };

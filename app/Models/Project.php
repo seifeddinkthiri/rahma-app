@@ -25,11 +25,28 @@ class Project extends Model
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
     }
 
+
+
+
+
+
+    public function scopeWhereStatus($query, $status)
+    {
+        if ($status == 'completed') {
+            return  $query->where('status', true);
+        } else if ($status == 'ongoing') {
+            return  $query->where('status', false);
+        }
+
+    }
+
+
+
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%'.$search.'%')
-            ->orWhere('status', 'like', '%'.$search.'%')
             ->orWhere('description', 'like', '%'.$search.'%')
             ;
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
@@ -38,7 +55,12 @@ class Project extends Model
             } elseif ($trashed === 'only') {
                 $query->onlyTrashed();
             }
-        });
+        })->when($filters['status'] ?? null, function ($query, $status) {
+            if ($status == 'completed') {
+                $query->where('status', true); // قيد التنفيذ
+            } else if ($status == 'ongoing') {
+                $query->where('status', false); // مكتمل
+            }         });
     }
 
 }

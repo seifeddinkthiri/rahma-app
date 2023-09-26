@@ -211,13 +211,13 @@ class FamilyController extends Controller
     {
         $Family->delete();
 
-        return Redirect::back()->with('success', 'تم حذف المنتفع.');
+        return Redirect::back();
     }
 
     public function restore(Family $Family)
     {
         $Family->restore();
 
-        return Redirect::back()->with('success', 'تم استعادة الأسرة.');
+        return Redirect::back()->with('success', 'تم استعادة المنتفع.');
     }
 }
