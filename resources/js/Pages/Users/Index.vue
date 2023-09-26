@@ -17,7 +17,8 @@
           <option value="only">فقط المحذوف</option>
         </select>
       </search-filter>
-      <Link class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none" href="/users/create">
+      <Link             class="btn-indigo"
+                     href="/users/create">
         <span>إنشاء</span>
         <span class="hidden md:inline">&nbsp;المستخدم</span>
       </Link>
@@ -37,7 +38,7 @@
                 <img class="block -my-2 mr-2 w-10 h-8 rounded" :src=" user.photo" />
 
               </Link>
-              <Link v-else  class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/families/${user.id}/edit`"> لا يوجد </Link>
+              <Link v-else  class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`"> لا يوجد </Link>
 
           </td>
           <td class="border-t">

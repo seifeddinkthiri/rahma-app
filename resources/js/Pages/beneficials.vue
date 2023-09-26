@@ -57,7 +57,7 @@
       <h1 class="text-xl font-bold" v-if="families.data.length > 0">قائمة المنتفعين</h1>
       <h1 class="text-xl font-bold" v-else>قائمة فارغة</h1>
 
-      <button @click="show_modal = true" class="px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">
+      <button @click="show_modal = true" class="btn-indigo">
         <span> إضافة منتفع</span>
       </button>
     </div>

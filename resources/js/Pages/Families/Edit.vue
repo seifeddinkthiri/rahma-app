@@ -96,7 +96,7 @@
       <div class="flex flex-row items-center justify-around pr-4 w-full">
         <Link
           :href="`/members/${family.id}/create_new_one`"
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          class="btn-indigo"
         >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
@@ -317,8 +317,7 @@
       <div class="flex items-center pr-4">
         <button
           v-if="family.home.length == 0"
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          @click="openHomeModal"
+          class="btn-indigo"          @click="openHomeModal"
         >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;المسكن</span>
@@ -452,8 +451,7 @@
       <br />
       <div class="flex items-center pr-4">
         <button
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          @click="edit_facilities"
+        class="btn-indigo"          @click="edit_facilities"
         >
           <span>تعديل</span>
           <span class="hidden md:inline">&nbsp;المرافق</span>
@@ -528,12 +526,12 @@
     <br />
 
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-      <div class="flex items-center pr-4">
+      <div class="flex items-center pr-4 mt-4">
+
         <button
           @click="show_intervention_modal = true"
-          class="inline-flex items-center justify-center px-4 py-2 my-4 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-        >
-          أضف تدخل
+          class="btn-indigo"        >
+        إنشاء تدخل
         </button>
       </div>
       <div ref="intervention_modal" v-if="show_intervention_modal">
@@ -725,8 +723,7 @@
       <br />
       <div class="flex items-center pr-4">
         <button
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          @click="openNoteModal"
+        class="btn-indigo"          @click="openNoteModal"
         >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;ملاحظة</span>
@@ -848,8 +845,7 @@
       <br />
       <div class="flex items-center pr-4">
         <button
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          @click="show_file_modal = true"
+        class="btn-indigo"          @click="show_file_modal = true"
         >
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;ملف</span>
