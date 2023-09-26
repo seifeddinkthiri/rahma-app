@@ -14,21 +14,22 @@ class projectController extends Controller
     public function index()
     {
         return Inertia::render('projects/Index', [
-            'filters' => Request::all('search', 'trashed'),
+            'filters' => Request::all('search', 'trashed','status'),
             'projects' => Auth::user()->account->projects()
-                ->orderBy('id')
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($project) => [
-                    'id' => $project->id,
-                    'name' => $project->name,
-                    'description' => $project->description,
-                    'status' => $project->status,
-                    'date' => $project->date,
-                    'deadline' => $project->deadline,
-                    'deleted_at' => $project->deleted_at,
-                ]),
+            ->orderBy('id')
+            ->filter(Request::only('search', 'trashed', 'status'))
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn ($project) => [
+                'id' => $project->id,
+                'name' => $project->name,
+                'description' => $project->description,
+                'status' => $project->status,
+                'date' => $project->date,
+                'deadline' => $project->deadline,
+                'deleted_at' => $project->deleted_at,
+            ]),
+
         ]);
     }
 

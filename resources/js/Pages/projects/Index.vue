@@ -15,6 +15,18 @@
         class="mr-4 w-full max-w-md"
         @reset="reset"
       >
+
+
+      <label class="block text-gray-700 mt-2 mb-2">حالة المشروع</label>
+<select v-model="form.status" class="form-select mt-1 w-full">
+  <option value="completed">مكتمل</option>
+   <option value="ongoing">قيد التنفيذ</option>
+
+</select>
+
+
+
+
         <label class="block text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option value="with">مع المحذوف</option>
@@ -161,6 +173,8 @@ export default {
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
+        status: this.filters.status,
+
       },
     };
   },
