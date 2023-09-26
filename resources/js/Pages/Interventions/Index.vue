@@ -31,6 +31,7 @@
             <th class="pb-4 pt-6 px-6">النوع</th>
             <th class="pb-4 pt-6 px-6">القيمة</th>
             <th class="pb-4 pt-6 px-6">التاريخ</th>
+            <th class="pb-4 pt-6 px-6">المنتفع </th>
             <th class="pb-4 pt-6 px-6">المسؤل</th>
             <th class="pb-4 pt-6 px-6">هاتف المسؤل</th>
             <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
@@ -53,6 +54,11 @@
   <td class="border-t">
     <Link  class="flex items-center px-6 py-4" :href="`/interventions/${intervention.id}/edit`" tabindex="-1">
       <p class="h-4">{{ intervention.date }}</p>
+    </Link>
+  </td>
+  <td class="border-t">
+    <Link v-if=" intervention.family" class="flex items-center px-6 py-4" :href="`/families/${intervention.family.id}/edit`" tabindex="-1">
+      <p class="h-4">{{ intervention.family.name }}</p>
     </Link>
   </td>
   <td class="border-t">

@@ -26,6 +26,7 @@ class InterventionController extends Controller
                     'value' => $intervention->value,
                     'date' => $intervention->date,
                     'intervenor' => $intervention->intervenor,
+                    'family' => $intervention->family,
                     'intervenor_phone' => $intervention->intervenor_phone,
                     'notes' => $intervention->notes,
                     'deleted_at' => $intervention->deleted_at,
