@@ -20,7 +20,7 @@
           <TextareaInput v-model="home_form.desciption" :error="home_form.errors.desciption" id="homeDescription" name="homeDescription" rows="5" placeholder="اكتب وصف المسكن" class="w-full"></TextareaInput>
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">تسجيل</button>
+          <button type="submit" class="btn-indigo">تسجيل</button>
         </div>
       </form>
     </div>
@@ -33,7 +33,7 @@
           <ToggleCheckbox :id="'ventilation'" :active_value="'نعم'" :inactive_value="'لا'" :label="'التهوئة'" :isChecked="facilities_form.ventilation" @toggle="toggle_ventilation" />
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">تسجيل</button>
+          <button type="submit"  class="btn-indigo">تسجيل</button>
         </div>
       </form>
     </div>
@@ -47,7 +47,7 @@
           <TextareaInput v-model="notes_form.value" :error="notes_form.errors.value" id="message" name="message" rows="5" placeholder="اكتب تفاصيل الملاحظة" class="w-full"></TextareaInput>
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">تسجيل</button>
+          <button type="submit"  class="btn-indigo">تسجيل</button>
         </div>
       </form>
     </div>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button type="submit" class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none">إضافة</button>
+          <button type="submit"  class="btn-indigo">إضافة</button>
           <button @click="back" type="button" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none">عودة</button>
         </div>
       </form>
@@ -147,7 +147,7 @@
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
             <!-- Add a spacer element to create space between the buttons -->
             <div class="w-4"></div>
-            <loading-button :loading="husband_form.processing" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none" type="submit"> إضافة </loading-button>
+            <loading-button :loading="husband_form.processing" class="btn-indigo" type="submit"> إضافة </loading-button>
           </div>
         </div>
       </form>
@@ -233,7 +233,7 @@
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
             <!-- Add a spacer element to create space between the buttons -->
             <div class="w-4"></div>
-            <loading-button :loading="wife_form.processing" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none" type="submit"> إضافة </loading-button>
+            <loading-button :loading="wife_form.processing" class="btn-indigo"  type="submit"> التالي  </loading-button>
           </div>
         </div>
       </form>
@@ -328,7 +328,7 @@
           <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
             <!-- Add a spacer element to create space between the buttons -->
             <div class="w-4"></div>
-            <loading-button :loading="member_form.processing" class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none" type="submit"> إضافة </loading-button>
+            <loading-button :loading="member_form.processing"   class="btn-indigo"   type="submit"> التالي  </loading-button>
           </div>
         </div>
       </form>
