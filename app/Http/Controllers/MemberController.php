@@ -28,7 +28,7 @@ class MemberController extends Controller
         Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'required|numeric||digits:8|unique:' . Member::class,
+            'cin' => 'nullable|numeric||digits:8|unique:' . Member::class,
             'phone' => 'nullable|numeric||digits:8|unique:' . Member::class,
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],

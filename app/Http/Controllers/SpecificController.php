@@ -23,11 +23,16 @@ class SpecificController extends Controller
 
     public function store()
     {
-            Request::validate([
+
+        $messages = [
+            'cin.required_if' => 'هوية المنتفع  مطلوبة ',
+            'phone.required_if' => 'هاتف المنتفع  مطلوب',
+        ];
+        Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'required|numeric|digits:8|unique:members',
-            'phone' => 'required|numeric|digits:8|unique:members',
+            'cin' => 'required_if:caregiver,true|nullable|numeric|digits:8|unique:members',
+            'phone' => 'required_if:caregiver,true|nullable|numeric|digits:8|unique:members',
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
@@ -37,8 +42,7 @@ class SpecificController extends Controller
             'job_place' => ['nullable', 'max:100'],
             'family_id' => ['nullable', 'integer'],
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
+        ], $messages);
 
         $healthStatusValidation =Request::validate([
             'health_insurance' => ['nullable', 'boolean'],

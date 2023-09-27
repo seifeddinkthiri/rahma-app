@@ -215,7 +215,7 @@ export default {
     store_family(type) {
       this.$inertia.post(`/families/${type}`)
 
-      show_modal = false
+      this.show_modal = false
     },
     delete_family(id) {
       if (confirm('هل أنت متأكد أنك تريد حذف  هذا المنتفع')) {
