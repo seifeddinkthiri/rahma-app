@@ -166,6 +166,7 @@ class FamilyController extends Controller
                 'phone' => $family->caregiver_phone,
                 'address' => $family->address,
                 'status' => $family->status,
+                'is_family' => $family->is_family,
                 'social_status' => $family->social_status,
                 'deleted_at' => $family->deleted_at,
                 'members' => $members,
