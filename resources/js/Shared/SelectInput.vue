@@ -42,6 +42,9 @@ export default {
     select() {
       this.$refs.input.select()
     },
+    clearSelection() {
+      this.selected = null;
+    },
   },
 }
 </script>

@@ -60,8 +60,7 @@
         <div class="flex justify-end px-4 py-3 bg-gray-50">
           <button
             type="submit"
-            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-          >
+             class="btn-indigo"          >
             تسجيل
           </button>
         </div>
@@ -109,8 +108,7 @@
         <div class="flex justify-end px-4 py-3 bg-gray-50">
           <button
             type="submit"
-            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-          >
+            class="btn-indigo"          >
             تسجيل
           </button>
         </div>
@@ -146,8 +144,7 @@
         <div class="flex justify-end px-4 py-3 bg-gray-50">
           <button
             type="submit"
-            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-          >
+             class="btn-indigo"          >
             تسجيل
           </button>
         </div>
@@ -178,7 +175,7 @@
         <div class="flex justify-end px-4 py-3 bg-gray-50">
           <button
             type="submit"
-            class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
+            class="btn-indigo"
           >
             إضافة
           </button>
@@ -391,8 +388,7 @@
       <!-- Add a spacer element to create space between the buttons -->
       <div class="w-4"></div>
       <loading-button
-        :loading="beneficial_form.processing"
-        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        :loading="beneficial_form.processing" class="btn-indigo"
         type="submit"
       >
         إضافة
@@ -438,6 +434,8 @@
           :error="children_form.errors.birth_city"
           class="pb-8 pr-6 w-full lg:w-1/2"
           label="مدينة الولادة"
+          ref="childBirthCity"
+
         >
           <option :value="null" disabled hidden>إختر المدينة</option>
           <option value="مدنين">مدنين</option>
@@ -492,6 +490,7 @@
           :error="children_form.errors.social_status"
           class="pb-8 pr-6 w-full lg:w-1/2"
           label="الحالة المدنية "
+          ref="childSocialStatus"
         >
           <option disabled hidden :value="null">إختر الحالة</option>
           <option value="single">أعزب/عزباء</option>
@@ -505,6 +504,7 @@
           :error="children_form.errors.education_level"
           class="pb-8 pr-6 w-full lg:w-1/2"
           label=" المستوى الدراسي "
+          ref="childEducation"
         >
           <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
           <option value="illiterate ">أمي</option>
@@ -609,10 +609,9 @@
         <div class="w-4"></div>
         <loading-button
           :loading="children_form.processing"
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          type="submit"
+          type="submit" class="btn-indigo"
         >
-          إضافة
+        التالي
         </loading-button>
       </div>
     </div>
@@ -748,25 +747,12 @@ export default {
 
   methods: {
     resetChildrenForm() {
-  this.children_form.education_level = null;
-  this.children_form.birth_city = null;
-  this.children_form.social_status = null;
-  this.children_form.name = null;
-  this.children_form.address = null;
-  this.children_form.birth_date = null;
-  this.children_form.cin = null;
-  this.children_form.phone = null;
-  this.children_form.health_insurance = false;
-  this.children_form.photo = null;
-  this.children_form.job = null;
-  this.children_form.job_place = null;
-  this.children_form.good = true;
-  this.children_form.disease = null;
-  this.children_form.disability = null;
-  this.children_form.disability_card_number = null;
-  this.children_form.grant = false;
-  this.children_form.source = null;
-  this.children_form.value = null;
+  this.children_form.reset();
+  this.$refs.childEducation.clearSelection();
+  this.$refs.childBirthCity.clearSelection();
+  this.$refs.childSocialStatus.clearSelection();
+
+
 },
     //store beneficial
     storeBeneficial() {
@@ -847,7 +833,7 @@ export default {
       });
     },
     back() {
-      this.$inertia.get("/families");
+      this.$inertia.get("/beneficials");
     },
     define_facilities() {
       this.facilities_form.put(`/facilities/${this.Family}`);
