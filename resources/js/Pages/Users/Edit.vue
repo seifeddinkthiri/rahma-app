@@ -62,7 +62,7 @@
             v-model="form.owner"
             :error="form.errors.owner"
             class="pb-8 pr-6 w-full lg:w-1/2"
-            label="المالك"
+            label="أدمن"
           >
             <option :value="true">نعم</option>
             <option :value="false">لا</option>
@@ -132,7 +132,6 @@ export default {
         password: "",
         owner: this.user.owner,
         photo: null,
-
       }),
     };
   },

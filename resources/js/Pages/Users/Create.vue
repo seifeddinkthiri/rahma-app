@@ -42,7 +42,7 @@
             v-model="form.owner"
             :error="form.errors.owner"
             class="pb-8 pr-6 w-full lg:w-1/2"
-            label="المالك"
+            label="أدمن"
           >
             <option :value="true">نعم</option>
             <option :value="false">لا</option>
@@ -59,10 +59,7 @@
         <div
           class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
         >
-          <loading-button
-            :loading="form.processing"
-            class="btn-indigo"
-            type="submit"
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit"
             >إنشاء مستخدم</loading-button
           >
         </div>

@@ -95,7 +95,7 @@
                 :href="`/users/${user.id}/edit`"
                 tabindex="-1"
               >
-                {{ user.owner ? "مالك " : "مستخدم " }}
+                {{ user.owner ? "أدمن " : "مستخدم " }}
               </Link>
             </td>
             <td class="w-px border-t">
