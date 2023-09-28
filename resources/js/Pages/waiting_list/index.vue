@@ -4,13 +4,16 @@
     <div>
       <h1 class="mb-8 text-xl font-bold">قائمة الانتظار</h1>
       <div class="bg-white rounded-md shadow overflow-x-auto">
-        <table class="w-full whitespace-nowrap">
-          <tr class="text-left font-bold">
+      <table class="w-full whitespace-nowrap">
+        <thead>
+          <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">الاسم</th>
             <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
             <th class="pb-4 pt-6 px-6" colspan="2"></th>
           </tr>
-          <tr
+          </thead>
+          <tbody class="text-right">
+            <tr
             v-for="user in users"
             :key="user.id"
             class="hover:bg-gray-100 focus-within:bg-gray-100"
@@ -60,22 +63,28 @@
               </Link>
             </td>
           </tr>
-          <tr v-if="users.length === 0">
+          <tr v-if="users.length === 0"             class="hover:bg-gray-100 focus-within:bg-gray-100"
+>
             <td class="px-6 py-4 border-t" colspan="4">لا يوجد مستخدمين</td>
           </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
     <div>
       <h1 class="mb-8 mt-8 text-xl font-bold">قائمة المقبولين</h1>
       <div class="bg-white rounded-md shadow overflow-x-auto">
-        <table class="w-full whitespace-nowrap">
-          <tr class="text-left font-bold">
+      <table class="w-full whitespace-nowrap">
+        <thead>
+          <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">الاسم</th>
             <th class="pb-4 pt-6 px-6">البريد الإلكتروني</th>
             <th class="pb-4 pt-6 px-6" colspan="2"></th>
           </tr>
-          <tr
+          </thead>
+          <tbody class="text-right">
+            <tr
             v-for="user in users"
             :key="user.id"
             class="hover:bg-gray-100 focus-within:bg-gray-100"
@@ -111,9 +120,12 @@
               </Link>
             </td>
           </tr>
-          <tr v-if="users.length === 0">
+          <tr v-if="users.length === 0"             class="hover:bg-gray-100 focus-within:bg-gray-100"
+>
             <td class="px-6 py-4 border-t" colspan="4">لا يوجد مستخدمين</td>
           </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
