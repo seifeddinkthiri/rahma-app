@@ -148,6 +148,9 @@
                   <p v-if="member.kinship == 'child'">إبن</p>
                   <p v-if="member.kinship == 'elderly'">مسن</p>
                   <p v-if="member.kinship == 'other_member'">فرد إضافي</p>
+                  <p v-if="member.kinship == 'single_mother'">أم عزباء
+ </p>
+
                 </Link>
               </td>
               <td class="border-t">

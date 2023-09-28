@@ -90,14 +90,14 @@
             </thead>
             <tbody>
               <tr
-                v-for="member in family.members.data"
+                v-for="member in filteredMembers"
                 :key="member.id"
                 class="hover:bg-gray-100 focus-within:bg-gray-100"
               >
                 <td class="border-t">
                   <Link
                     class="flex items-center px-6 py-4 focus:text-indigo-500"
-                    :to="`/members/${member.id}/edit`"
+                    :href="`/members/${member.id}/show`"
                   >
                     {{ member.name }}
                     <icon
@@ -110,7 +110,7 @@
                 <td class="border-t">
                   <Link
                     class="flex items-center px-6 py-4"
-                    :to="`/members/${member.id}/edit`"
+                    :href="`/members/${member.id}/show`"
                     tabindex="-1"
                   >
                     <p v-if="member.kinship == 'husband'">زوج</p>
@@ -118,13 +118,13 @@
                     <p v-if="member.kinship == 'child'">إبن</p>
                     <p v-if="member.kinship == 'elderly'">مسن</p>
                     <p v-if="member.kinship == 'other_member'">فرد إضافي</p>
+                    <p v-if="member.kinship == 'single_mother'"> أم عزباء</p>
+
                   </Link>
                 </td>
-                <td class="border-t">
-                  <p v-if="member.caregiver">معيل الأسرة</p>
-                </td>
+
               </tr>
-              <tr v-if="family.members.data.length === 0">
+              <tr v-if="filteredMembers.length === 0">
                 <td class="px-6 py-4 border-t" colspan="4">لا يوجد أفراد</td>
               </tr>
             </tbody>
@@ -347,7 +347,11 @@ export default {
       }),
     };
   },
-
+  computed: {
+  filteredMembers() {
+    return this.family.members.data.filter(member => !member.caregiver);
+  }
+},
   methods: {
     translate_social_status(status) {
       if (status === "widow") {
