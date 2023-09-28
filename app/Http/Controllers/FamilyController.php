@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Family;
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -80,6 +81,8 @@ class FamilyController extends Controller
 
     public function edit(Family $family)
     {
+        $projects = Project::select('id', 'name')->get();
+
         $members = $family->members()
             ->orderBy('id')
             ->paginate(10)
@@ -122,6 +125,7 @@ class FamilyController extends Controller
                 'interventions' => $family->interventions()->get(),
                 'home' => $family->home()->get(),
             ],
+            'projects' => $projects,
         ]);
     }
     public function show(Family $family)

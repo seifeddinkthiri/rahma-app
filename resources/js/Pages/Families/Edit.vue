@@ -516,7 +516,19 @@
                   <option value="cash">نقدي</option>
                   <option value="other">آخر</option>
                 </select-input>
+                <select-input
+                  v-model="intervention_form.project"
+                  :error="intervention_form.errors.project"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  ref="projectSelect"
+                >
+                  <option hidden selected disabled :value="null">إختر المشروع</option>
 
+                  <option v-for="project in projects" :value="project.id">
+                    {{ project.name }}
+                  </option>
+                  <option :value="null" v-if="projects.length == 0">قائمة فارغة</option>
+                </select-input>
                 <text-input
                   v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
                   v-model="intervention_form.value"
@@ -888,6 +900,7 @@ export default {
   layout: Layout,
   props: {
     family: Object,
+    projects: Object,
   },
   remember: "form",
 
@@ -906,6 +919,7 @@ export default {
         type: null,
         value: null,
         date: null,
+        project: null,
         intervenor: null,
         intervenor_phone: null,
         file: null,
