@@ -47,7 +47,7 @@
             class="btn-indigo"
               type="submit"
             >
-              إضافة المشروع
+              إضافة
             </loading-button>
           </div>
         </div>

@@ -53,7 +53,7 @@
               label="مدينة الولادة"
               :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر المدينة</option>
+              <option selected disabled hidden :value="null">إختر المدينة</option>
               <option value="مدنين">مدنين</option>
               <option value="باجة">باجة</option>
               <option value="تونس">تونس</option>
@@ -111,7 +111,7 @@
               label="الحالة المدنية "
               :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر الحالة</option>
+              <option selected disabled hidden :value="null">إختر الحالة</option>
 
               <option value="single">أعزب/عزباء</option>
               <option value="married">متزوج/متزوجة</option>
@@ -148,7 +148,7 @@
               label="الفرد"
               :disabled="isFormDisabled"
             >
-              <option disabled hidden>إختر نوع الفرد</option>
+              <option selected disabled hidden :value="null">إختر نوع الفرد</option>
               <option value="child">إبن</option>
               <option value="elderly">مسن</option>
               <option value="other_member">فرد آخر</option>
@@ -248,8 +248,7 @@
             <div class="w-4"></div>
             <loading-button
               :loading="form.processing"
-              class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-              type="submit"
+            class="btn-indigo"              type="submit"
             >
               إضافة
             </loading-button>

@@ -245,8 +245,7 @@
               </button>
               <button
                 type="submit"
-                class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-              >
+           class="btn-indigo"              >
                 تسجيل
               </button>
             </div>
@@ -300,8 +299,7 @@
               </button>
               <button
                 type="submit"
-                class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-              >
+class="btn-indigo"              >
                 تسجيل التعديلات
               </button>
             </div>
@@ -436,8 +434,7 @@
               </button>
               <button
                 type="submit"
-                class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-              >
+              class="btn-indigo"              >
                 تسجيل
               </button>
             </div>
@@ -511,8 +508,7 @@
                 </button>
                 <button
                   type="submit"
-                  class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-                >
+                 class="btn-indigo"                >
                   تسجيل التعديلات
                 </button>
               </div>
@@ -831,8 +827,7 @@
               </button>
               <button
                 type="submit"
-                class="inline-flex items-center justify-center ml-3 px-4 py-2 text-white text-sm font-medium bg-green-500 hover:bg-green-600 focus:bg-green-600 rounded focus:outline-none"
-              >
+class="btn-indigo"              >
                 إضافة
               </button>
             </div>
