@@ -1,5 +1,12 @@
 <template>
   <div>
+    <trashed-message
+      v-if="deleted_intervention_id"
+      class="mb-6"
+      @restore="restore(deleted_intervention_id)"
+      >تم حذف هذا التدخل .
+    </trashed-message>
+
     <!-- Family Card -->
     <div class="p-6 bg-white rounded-md shadow">
       <div class="relative">
@@ -9,13 +16,13 @@
               v-if="family.photo"
               :src="`/uploads/${family.photo}`"
               alt="family Image"
-              class="w-32 h-32 rounded block"
+              class="block w-32 h-32 rounded"
             />
           </li>
           <li>
             <button
               @click="back"
-              class="absolute left-0 mt-4 ml-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+              class="absolute left-0 ml-4 mt-4 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
             >
               عودة
             </button>
@@ -40,30 +47,30 @@
         <table class="w-full">
           <tbody>
             <tr>
-              <td class="px-4 py-2 border h-16">الاسم</td>
-              <td class="px-4 py-2 border h-16">{{ form.name }}</td>
+              <td class="px-4 py-2 h-16 border">الاسم</td>
+              <td class="px-4 py-2 h-16 border">{{ form.name }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border h-16">الهاتف</td>
-              <td class="px-4 py-2 border h-16">{{ form.phone }}</td>
+              <td class="px-4 py-2 h-16 border">الهاتف</td>
+              <td class="px-4 py-2 h-16 border">{{ form.phone }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border h-16">الحالة</td>
-              <td class="px-4 py-2 border h-16">
-                <p v-if="form.status === 'active'"> نشط</p>
-    <p v-else-if="form.status === 'disabled'"> محضور</p>
-    <p v-else-if="form.status === 'inactive'"> غير نشط</p>
+              <td class="px-4 py-2 h-16 border">الحالة</td>
+              <td class="px-4 py-2 h-16 border">
+                <p v-if="form.status === 'active'">نشط</p>
+                <p v-else-if="form.status === 'disabled'">محضور</p>
+                <p v-else-if="form.status === 'inactive'">غير نشط</p>
               </td>
             </tr>
             <tr v-if="!family.is_family">
-              <td class="px-4 py-2 border h-16">الحالة المدنية</td>
-              <td class="px-4 py-2 border h-16">
+              <td class="px-4 py-2 h-16 border">الحالة المدنية</td>
+              <td class="px-4 py-2 h-16 border">
                 {{ translate_social_status(form.social_status) }}
               </td>
             </tr>
             <tr>
-              <td class="px-4 py-2 border h-16">العنوان</td>
-              <td class="px-4 py-2 border h-16">{{ form.address }}</td>
+              <td class="px-4 py-2 h-16 border">العنوان</td>
+              <td class="px-4 py-2 h-16 border">{{ form.address }}</td>
             </tr>
           </tbody>
         </table>
@@ -118,11 +125,9 @@
                     <p v-if="member.kinship == 'child'">إبن</p>
                     <p v-if="member.kinship == 'elderly'">مسن</p>
                     <p v-if="member.kinship == 'other_member'">فرد إضافي</p>
-                    <p v-if="member.kinship == 'single_mother'"> أم عزباء</p>
-
+                    <p v-if="member.kinship == 'single_mother'">أم عزباء</p>
                   </Link>
                 </td>
-
               </tr>
               <tr v-if="filteredMembers.length === 0">
                 <td class="px-6 py-4 border-t" colspan="4">لا يوجد أفراد</td>
@@ -195,6 +200,105 @@
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
 
     <div class="mt-8 p-4 bg-white rounded-md shadow">
+      <div class="flex items-center mt-4 pr-4">
+        <button @click="show_intervention_modal = true" class="btn-indigo">
+          إنشاء تدخل
+        </button>
+      </div>
+      <div ref="intervention_modal" v-if="show_intervention_modal">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 flex items-center justify-center">
+          <form @submit.prevent="store_intervention">
+            <div class="w-96 h-auto bg-white rounded shadow-xl">
+              <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+                <select-input
+                  v-model="intervention_form.type"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  :error="intervention_form.errors.type"
+                >
+                  <option hidden disabled :value="null">نوع التدخل</option>
+                  <option value="shipments">عيني</option>
+                  <option value="cash">نقدي</option>
+                  <option value="other">آخر</option>
+                </select-input>
+
+                <text-input
+                  v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                  v-model="intervention_form.value"
+                  :error="intervention_form.errors.value"
+                  :id="
+                    intervention_form.type === 'shipments'
+                      ? 'shipments'
+                      : intervention_form.type === 'cash'
+                      ? 'cash'
+                      : 'other'
+                  "
+                  :placeholder="
+                    intervention_form.type === null
+                      ? 'القيمة'
+                      : intervention_form.type === 'shipments'
+                      ? 'الكمية'
+                      : intervention_form.type === 'cash'
+                      ? 'المبلغ'
+                      : 'القيمة الأخرى'
+                  "
+                />
+
+                <text-input
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  id="intervenor"
+                  v-model="intervention_form.intervenor"
+                  :error="intervention_form.errors.intervenor"
+                  placeholder="إسم المسؤل هنا"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  id="intervenor"
+                  v-model="intervention_form.intervenor_phone"
+                  :error="intervention_form.errors.intervenor_phone"
+                  placeholder="هاتف المسؤل هنا"
+                />
+                <file-input
+                  v-model="intervention_form.file"
+                  :error="intervention_form.errors.file"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  type="file"
+                  label="أضف ملف"
+                />
+                <text-input
+                  v-model="intervention_form.title"
+                  :error="intervention_form.errors.title"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  label="عنوان الملف"
+                  placeholder="عنوان الملف هنا"
+                />
+
+                <text-input
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  type="date"
+                  id="date"
+                  v-model="intervention_form.date"
+                  :error="intervention_form.errors.date"
+                  label="تاريخ التدخل"
+                  placeholder=" تاريخ التدخل هنا"
+                />
+              </div>
+              <div
+                class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+              >
+                <button class="btn-indigo" type="submit">إضافة</button>
+                <button
+                  @click="show_intervention_modal = false"
+                  class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none h-10"
+                  type="button"
+                >
+                  عودة
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
       <table class="w-full whitespace-nowrap">
         <thead>
           <tr class="text-right font-bold">
@@ -240,7 +344,7 @@
             </td>
             <td class="border-t">
               <Link
-                class="flex items-center px-6 py-4 focus:text-blue-500"
+                class="focus:text-blue-500 flex items-center px-6 py-4"
                 :href="`/interventions/${intervention.id}/show`"
               >
                 {{ intervention.intervenor }}
@@ -260,6 +364,40 @@
                 {{ intervention.intervenor_phone }}
               </Link>
             </td>
+            <td class="w-px border-t">
+              <div class="flex items-center">
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/interventions/${intervention.id}/edit`"
+                  tabindex="-1"
+                >
+                  <icon name="cheveron-right" class="block w-4 h-4 fill-gray-400" />
+                </Link>
+                <Link
+                  class="flex items-center px-4"
+                  :href="`/interventions/${intervention.id}/show`"
+                  tabindex="-1"
+                >
+                  <icon name="eye" />
+                </Link>
+                <button
+                  v-if="!intervention.deleted_at"
+                  class="flex items-center px-4"
+                  tabindex="-1"
+                  @click="delete_intervention(intervention.id)"
+                >
+                  <icon name="delete" />
+                </button>
+                <button
+                  v-else
+                  class="flex items-center px-4"
+                  tabindex="-1"
+                  @click="restore(intervention.id)"
+                >
+                  <icon name="restore" />
+                </button>
+              </div>
+            </td>
           </tr>
           <tr v-if="family.interventions.length === 0">
             <td class="px-6 py-4 border-t" colspan="4">قائمة فارغة</td>
@@ -274,7 +412,7 @@
       <br />
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <div v-for="note in family.notes.data" :key="note.id">
-          <div class="p-4 bg-white rounded-md shadow text-center">
+          <div class="p-4 text-center bg-white rounded-md shadow">
             <h3 class="mb-2 text-xl font-bold">{{ note.title }}</h3>
             <div v-if="toggledNoteIds.includes(note.id)">
               <p class="text-gray-700">{{ note.value }}</p>
@@ -286,10 +424,10 @@
               v-if="!toggledNoteIds.includes(note.id)"
               @click="toggleNoteVisibility(note.id)"
             >
-              <icon name="cheveron-down" class="h-4 w-4" />
+              <icon name="cheveron-down" class="w-4 h-4" />
             </button>
             <button v-else @click="toggleNoteVisibility(note.id)">
-              <icon name="cheveron-up" class="h-4 w-4" />
+              <icon name="cheveron-up" class="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -319,12 +457,21 @@
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Icon from "@/Shared/Icon";
 import Layout from "@/Shared/Layout";
-
+import TrashedMessage from "@/Shared/TrashedMessage";
+import FileInput from "@/Shared/FileInput";
+import SelectInput from "@/Shared/SelectInput";
+import TextareaInput from "@/Shared/TextareaInput.vue";
+import TextInput from "@/Shared/TextInput";
 export default {
   components: {
     Head,
     Icon,
     Link,
+    TrashedMessage,
+    FileInput,
+    SelectInput,
+    TextareaInput,
+    TextInput,
   },
   layout: Layout,
   props: {
@@ -334,8 +481,21 @@ export default {
 
   data() {
     return {
+      show_intervention_modal: false,
+      deleted_intervention_id: null,
       toggledNoteIds: [],
       note_id: null,
+      intervention_form: this.$inertia.form({
+        type: null,
+        value: null,
+        date: null,
+        intervenor: null,
+        intervenor_phone: null,
+        file: null,
+        title: null,
+        notes: null,
+        family: this.family.id,
+      }),
       form: this.$inertia.form({
         name: this.family.name,
         phone: this.family.phone,
@@ -348,10 +508,10 @@ export default {
     };
   },
   computed: {
-  filteredMembers() {
-    return this.family.members.data.filter(member => !member.caregiver);
-  }
-},
+    filteredMembers() {
+      return this.family.members.data.filter((member) => !member.caregiver);
+    },
+  },
   methods: {
     translate_social_status(status) {
       if (status === "widow") {
@@ -377,6 +537,28 @@ export default {
         this.toggledNoteIds.splice(index, 1); // Remove the noteId from the array
       } else {
         this.toggledNoteIds.push(noteId); // Add the noteId to the array
+      }
+    },
+    store_intervention() {
+      this.intervention_form.post("/interventions", {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.intervention_form.reset();
+          this.show_intervention_modal = false;
+        },
+      });
+    },
+    delete_intervention(id) {
+      if (confirm("هل أنت متأكد أنك تريد حذف  هذا التدخل ")) {
+        this.$inertia.delete(`/interventions/${id}`);
+        this.deleted_intervention_id = id;
+      }
+    },
+
+    restore(id) {
+      if (confirm("هل أنت متأكد أنك تريد استعادة هذا التدخل  ؟")) {
+        this.$inertia.put(`/interventions/${id}/restore`);
+        this.deleted_intervention_id = null;
       }
     },
   },

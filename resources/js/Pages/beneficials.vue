@@ -70,7 +70,7 @@
             <th class="pb-4 pt-6 px-6">العنوان</th>
             <th class="pb-4 pt-6 px-6">الهاتف</th>
             <th class="pb-4 pt-6 px-6">الحالة</th>
-            <th class="pb-4 pt-6 px-6">الحالة المدنية</th>
+            <th class="pb-4 pt-6 px-6">نوع المنتفع  </th>
             <th class="pb-4 pl-3 pt-6">الصورة</th>
             <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
           </tr>

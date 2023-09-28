@@ -94,10 +94,7 @@
     <div ref="members" class="bg-white rounded-md shadow overflow-hidden">
       <br />
       <div class="flex flex-row items-center justify-around pr-4 w-full">
-        <Link
-          :href="`/members/${family.id}/create_new_one`"
-          class="btn-indigo"
-        >
+        <Link :href="`/members/${family.id}/create_new_one`" class="btn-indigo">
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;الفرد</span>
         </Link>
@@ -148,9 +145,7 @@
                   <p v-if="member.kinship == 'child'">إبن</p>
                   <p v-if="member.kinship == 'elderly'">مسن</p>
                   <p v-if="member.kinship == 'other_member'">فرد إضافي</p>
-                  <p v-if="member.kinship == 'single_mother'">أم عزباء
- </p>
-
+                  <p v-if="member.kinship == 'single_mother'">أم عزباء</p>
                 </Link>
               </td>
               <td class="border-t">
@@ -246,11 +241,7 @@
               >
                 إلغاء
               </button>
-              <button
-                type="submit"
-           class="btn-indigo"              >
-                تسجيل
-              </button>
+              <button type="submit" class="btn-indigo">تسجيل</button>
             </div>
           </div>
         </form>
@@ -300,11 +291,7 @@
               >
                 إلغاء
               </button>
-              <button
-                type="submit"
-class="btn-indigo"              >
-                تسجيل التعديلات
-              </button>
+              <button type="submit" class="btn-indigo">تسجيل التعديلات</button>
             </div>
           </div>
         </form>
@@ -316,18 +303,11 @@ class="btn-indigo"              >
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center pr-4">
-        <button
-          v-if="family.home.length == 0"
-          class="btn-indigo"          @click="openHomeModal"
-        >
+        <button v-if="family.home.length == 0" class="btn-indigo" @click="openHomeModal">
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;المسكن</span>
         </button>
-        <button
-          v-else
-          class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-          @click="edit_home"
-        >
+        <button v-else class="btn-indigo" @click="edit_home">
           <span>تعديل</span>
           <span class="hidden md:inline">&nbsp;المسكن</span>
         </button>
@@ -435,11 +415,7 @@ class="btn-indigo"              >
               >
                 إلغاء
               </button>
-              <button
-                type="submit"
-              class="btn-indigo"              >
-                تسجيل
-              </button>
+              <button type="submit" class="btn-indigo">تسجيل</button>
             </div>
           </div>
         </form>
@@ -450,9 +426,7 @@ class="btn-indigo"              >
     <div ref="facilities" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center pr-4">
-        <button
-        class="btn-indigo"          @click="edit_facilities"
-        >
+        <button class="btn-indigo" @click="edit_facilities">
           <span>تعديل</span>
           <span class="hidden md:inline">&nbsp;المرافق</span>
         </button>
@@ -509,11 +483,7 @@ class="btn-indigo"              >
                 >
                   إلغاء
                 </button>
-                <button
-                  type="submit"
-                 class="btn-indigo"                >
-                  تسجيل التعديلات
-                </button>
+                <button type="submit" class="btn-indigo">تسجيل التعديلات</button>
               </div>
             </div>
           </form>
@@ -526,11 +496,8 @@ class="btn-indigo"              >
 
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
       <div class="flex items-center pr-4 mt-4">
-
-        <button
-          @click="show_intervention_modal = true"
-          class="btn-indigo"        >
-        إنشاء تدخل
+        <button @click="show_intervention_modal = true" class="btn-indigo">
+          إنشاء تدخل
         </button>
       </div>
       <div ref="intervention_modal" v-if="show_intervention_modal">
@@ -614,15 +581,10 @@ class="btn-indigo"              >
               <div
                 class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
               >
-                <button
-                  class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-                  type="submit"
-                >
-                  إضافة
-                </button>
+                <button class="btn-indigo" type="submit">إضافة</button>
                 <button
                   @click="show_intervention_modal = false"
-                  class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+                  class="inline-flex items-center h-10 justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
                   type="button"
                 >
                   عودة
@@ -721,9 +683,7 @@ class="btn-indigo"              >
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center pr-4">
-        <button
-        class="btn-indigo"          @click="openNoteModal"
-        >
+        <button class="btn-indigo" @click="openNoteModal">
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;ملاحظة</span>
         </button>
@@ -828,11 +788,7 @@ class="btn-indigo"              >
               >
                 إلغاء
               </button>
-              <button
-                type="submit"
-class="btn-indigo"              >
-                إضافة
-              </button>
+              <button type="submit" class="btn-indigo">إضافة</button>
             </div>
           </div>
         </form>
@@ -842,9 +798,7 @@ class="btn-indigo"              >
     <div ref="files" class="bg-white rounded shadow overflow-hidden">
       <br />
       <div class="flex items-center pr-4">
-        <button
-        class="btn-indigo"          @click="show_file_modal = true"
-        >
+        <button class="btn-indigo" @click="show_file_modal = true">
           <span>إنشاء</span>
           <span class="hidden md:inline">&nbsp;ملف</span>
         </button>

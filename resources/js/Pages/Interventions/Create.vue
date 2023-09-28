@@ -16,6 +16,7 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="تدخل لفائدة "
               :error="form.errors.beneficial"
+              ref="beneficialSelect"
             >
               <option :value="null" selected disabled hidden>إختر نوع المنتفع</option>
               <option value="family">عائلة معوزة</option>
@@ -29,6 +30,8 @@
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العائلة"
+              ref="familySelect"
+
             >
               <option hidden disabled :value="null">إختر العائلة</option>
 
@@ -44,6 +47,8 @@
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المسن"
+              ref="familySelect"
+
             >
               <option hidden disabled :value="null">إختر المسن</option>
 
@@ -57,6 +62,8 @@
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المطلقة"
+              ref="familySelect"
+
             >
               <option hidden disabled :value="null">إختر المطلقة</option>
 
@@ -70,6 +77,8 @@
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الأم العزباء"
+              ref="familySelect"
+
             >
               <option hidden disabled :value="null">إختر الأم العزباء</option>
 
@@ -84,6 +93,8 @@
               v-model="form.family"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الأرملة"
+              ref="familySelect"
+
             >
               <option hidden disabled :value="null">إختر الأرملة</option>
 
@@ -97,6 +108,8 @@
               v-model="form.project"
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="في إطار مشروع"
+              ref="projectSelect"
+
             >
               <option hidden disabled :value="null">إختر المشروع</option>
 
@@ -110,6 +123,8 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="نوع التدخل"
               :error="form.errors.type"
+              ref="typeSelect"
+
             >
               <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
               <option value="shipments">عيني</option>
@@ -261,6 +276,11 @@ export default {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();
+          this.$refs.beneficialSelect.clearSelection();
+          this.$refs.projectSelect.clearSelection();
+          this.$refs.typeSelect.clearSelection();
+          this.$refs.familySelect.clearSelection();
+
         },
       });
     },
