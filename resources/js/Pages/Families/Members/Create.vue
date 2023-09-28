@@ -427,7 +427,7 @@ export default {
         health_insurance: false,
         photo: null,
         kinship: null,
-        caregiver: false,
+        caregiver: true,
         education_level: null,
         job: null,
         job_place: null,

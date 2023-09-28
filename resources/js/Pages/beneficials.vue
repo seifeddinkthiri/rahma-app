@@ -142,7 +142,7 @@
         </tbody>
       </table>
     </div>
-    <div class="bg-white rounded-md shadow overflow-x-auto" v-else>
+    <div class="bg-white rounded-md shadow overflow-x-auto" v-if="families.data.length === 0">
       <table class="w-full">
         <tr class="text-right font-bold">
             <th class="pb-4 pt-6 px-6">المعيل</th>
@@ -153,7 +153,7 @@
             <th class="pb-4 pl-3 pt-6">الصورة</th>
             <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
           </tr>
-        <tr v-if="families.data.length === 0">
+        <tr >
             <td class="px-6 py-4 border-t" colspan="6">قائمة فارغة</td>
           </tr>
       </table>

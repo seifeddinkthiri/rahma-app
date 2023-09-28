@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule;
 
 class MemberController extends Controller
 {
@@ -25,11 +26,15 @@ class MemberController extends Controller
 
     public function store()
     {
+        $messages = [
+            'cin.required_if' => 'هوية المعيل  مطلوبة ',
+            'phone.required_if' => 'هاتف المعيل  مطلوب',
+        ];
         Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'nullable|numeric||digits:8|unique:' . Member::class,
-            'phone' => 'nullable|numeric||digits:8|unique:' . Member::class,
+            'cin' => 'required_if:caregiver,true|nullable|numeric|digits:8|unique:members',
+            'phone' => 'required_if:caregiver,true|nullable|numeric|digits:8|unique:members',
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
@@ -39,7 +44,7 @@ class MemberController extends Controller
             'job_place' => ['nullable', 'max:100'],
             'family_id' => ['nullable', 'integer'],
 
-        ]);
+        ],$messages);
         // Create the health status
         $H_S_Validation = Request::validate([
             'health_insurance' => ['nullable', 'boolean'],
@@ -158,7 +163,6 @@ class MemberController extends Controller
     }
 
 
-
     public function show(Member $Member)
     {
         return Inertia::render('Families/Members/Show', [
@@ -244,12 +248,22 @@ class MemberController extends Controller
 
     public function update(Member $Member)
     {
+           if ($Member->caregiver) {
+            $messages = [
+                'cin.required' => 'هوية المعيل  مطلوبة ',
+                'phone.required' => 'هاتف المعيل  مطلوب',
+            ];
+            Request::validate([
+                'cin' => ['required', 'integer', 'digits:8'],
+                'phone' => ['required', 'integer', 'digits:8']],$messages);
+
+            }
         $Member->update(
             Request::validate([
                 'name' => ['required', 'max:100'],
                 'address' => ['required', 'max:100'],
-                'cin' => ['required', 'integer', 'digits:8'],
-                'phone' => ['nullable', 'integer', 'digits:8'],
+                'cin' => ['nullable','integer', 'digits:8',Rule::unique('members')->ignore($Member->id)],
+                'phone' => ['nullable','integer', 'digits:8',Rule::unique('members')->ignore($Member->id)],
                 'birth_date' => ['nullable', 'date'],
                 'birth_city' => ['nullable', 'max:100'],
                 'social_status' => ['nullable', 'max:100'],
@@ -314,11 +328,12 @@ class MemberController extends Controller
 
     public function newMembers()
     {
+
         $validatedData = Request::validate([
             'name' => ['required', 'max:100'],
             'address' => ['required', 'max:100'],
-            'cin' => 'required|integer||digits:8|unique:' . Member::class,
-            'phone' => 'required|integer||digits:8|unique:' . Member::class,
+            'cin' => 'nullable|integer||digits:8|unique:' . Member::class,
+            'phone' => 'nullable|integer||digits:8|unique:' . Member::class,
             'birth_date' => ['nullable', 'date'],
             'birth_city' => ['nullable', 'max:100'],
             'social_status' => ['nullable', 'max:100'],
