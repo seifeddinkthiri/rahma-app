@@ -49,7 +49,11 @@
             </tr>
             <tr>
               <td class="px-4 py-2 border h-16">الحالة</td>
-              <td class="px-4 py-2 border h-16">{{ form.status }}</td>
+              <td class="px-4 py-2 border h-16">
+                <p v-if="form.status === 'active'"> نشط</p>
+    <p v-else-if="form.status === 'disabled'"> محضور</p>
+    <p v-else-if="form.status === 'inactive'"> غير نشط</p>
+              </td>
             </tr>
             <tr v-if="!family.is_family">
               <td class="px-4 py-2 border h-16">الحالة المدنية</td>

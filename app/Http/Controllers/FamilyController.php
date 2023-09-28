@@ -184,6 +184,7 @@ class FamilyController extends Controller
             'name' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
+            'social_status' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -204,7 +205,10 @@ class FamilyController extends Controller
         }
 
         $family->update($data);
-
+        if (Request::input('social_status')!=='family') {
+            $family->update([
+                'is_family' => false,
+            ]);         }
         return Redirect::back()->with('success', 'تم تحديث المنتفع');
     }
 
