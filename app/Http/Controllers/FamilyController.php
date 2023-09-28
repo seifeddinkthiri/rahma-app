@@ -122,7 +122,7 @@ class FamilyController extends Controller
                 'notes' => $notes,
                 'files' =>  $family->files()->get(),
                 'facilities' =>  $family->facilities()->get(),
-                'interventions' => $family->interventions()->get(),
+                'interventions' =>$family->interventions()->with('project')->get(),
                 'home' => $family->home()->get(),
             ],
             'projects' => $projects,

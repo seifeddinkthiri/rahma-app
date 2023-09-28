@@ -614,6 +614,7 @@
             <th class="pr-4">النوع</th>
             <th class="pr-4">القيمة</th>
             <th class="pr-4">المتدخل</th>
+            <th class="pr-4">المشروع</th>
           </tr>
         </thead>
         <tbody>
@@ -649,6 +650,16 @@
                 tabindex="-1"
               >
                 <p class="whitespace-nowrap">{{ intervention.intervenor }}</p>
+              </Link>
+            </td>
+            <td class="px-6 py-4 border-t">
+              <Link
+                v-if="intervention.project"
+                class="flex items-center"
+                :href="`/interventions/${intervention.id}/edit`"
+                tabindex="-1"
+              >
+                <p class="whitespace-nowrap">{{ intervention.project.name }}</p>
               </Link>
             </td>
             <td class="w-px border-t">
