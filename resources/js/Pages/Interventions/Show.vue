@@ -77,9 +77,13 @@
                     <div
                       class="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition-all"
                     >
-                      <a :href="getFileUrl(file.file)" class="text-blue-600">{{
-                        file.title
-                      }}</a>
+                      <a
+                        :href="getFileUrl(file.id)"
+                        target="_blank"
+                        class="text-blue-600"
+                      >
+                        {{ file.title }}
+                      </a>
                       <button
                         @click="deleteFile(file.id)"
                         type="button"
@@ -142,9 +146,9 @@ export default {
     goBack() {
       window.history.back();
     },
-    getFileUrl(fileName) {
-      const baseUrl = "http://127.0.0.1:8000";
-      return `${baseUrl}/${fileName}`;
+    getFileUrl(id) {
+      const fileUrl = `/openFile/${id}`;
+      return fileUrl;
     },
   },
 };

@@ -235,6 +235,7 @@ Route::put('families/{family}/restore', [FamilyController::class, 'restore'])
     ->name('files.destroy')
         ->middleware(['auth', 'can:accepted']);
 
+  Route::get('/openFile/{file}', [FileController::class, 'show'])->middleware(['auth', 'can:accepted']);
 
     Route::delete('files/{file}', [FileController::class, 'destroy'])
     ->name('files.destroy')

@@ -9,6 +9,8 @@ use Inertia\Inertia;
 use App\Models\Intervention;
 use App\Models\Family;
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
+
 class InterventionController extends Controller
 {
     public function index()
@@ -74,9 +76,12 @@ class InterventionController extends Controller
         if (Request::file('file')) {
             $file = $intervention->files()->create([
                 'title' => Request::input('title'),
-                'file' => Request::file('file') ? Request::file('file')->store('uploads/files') : null,
+                'file' => Request::file('file') ? Request::file('file')->store('') : null,
             ]);
-            Request::file('file')->move(public_path('uploads/files'), $file->file);
+            Storage::put('uploads/files',   Request::file('file'));
+
+
+           // Request::file('file')->move(public_path('uploads/files'), $file->file);
         }
 
         return Redirect::back()->with('success', 'تم إنشاء التدخل.');
@@ -148,9 +153,10 @@ class InterventionController extends Controller
         if (Request::file('file')) {
             $file = $intervention->files()->create([
                 'title' => Request::input('title'),
-                'file' => Request::file('file') ? Request::file('file')->store('uploads/files') : null,
+                'file' => Request::file('file') ? Request::file('file')->store('') : null,
             ]);
-            Request::file('file')->move(public_path('uploads/files'), $file->file);
+            Storage::put('uploads/files',   Request::file('file'));
+
         }
 
         return Redirect::back()->with('success', 'تم تحديث التدخل.');

@@ -8,6 +8,7 @@ use App\Models\Intervention;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -46,13 +47,13 @@ class FileController extends Controller
 
     $file = $family->files()->create([
         'title' =>Request::input('title'),
-        'file' =>Request::file('file') ?Request::file('file')->store('uploads/files') : null,
+        'file' =>Request::file('file') ?Request::file('file')->store('') : null,
     ]);
 
     if (Request::file('file')) {
-       Request::file('file')->move(public_path('uploads/files'), $file->file);
-    }
+       Storage::put('uploads/files',   Request::file('file'));
 
+    }
     return Redirect::back()->with('success', 'تمت إضافة الملف');
 }
 
@@ -72,7 +73,12 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        //
+
+         $file=File::findorFail($id);
+         $file_name= $file->file ;
+         $path = storage_path("app/uploads/files/{$file_name}");
+
+        return response()->file($path);
     }
 
     /**

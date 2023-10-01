@@ -839,7 +839,9 @@
                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                 @click="edit_file(file.id)"
               >
-                <a :href="getFileUrl(file.file)">{{ file.title }}</a>
+                <a :href="getFileUrl(file.id)" target="_blank" class="text-blue-600">
+                  {{ file.title }}
+                </a>
                 <icon
                   v-if="file.deleted_at"
                   name="trash"
@@ -990,9 +992,9 @@ export default {
         this.$inertia.delete(`/notes/${id}`);
       }
     },
-    getFileUrl(fileName) {
-      const baseUrl = "http://127.0.0.1:8000";
-      return `${baseUrl}/${fileName}`;
+    getFileUrl(id) {
+      const fileUrl = `/openFile/${id}`;
+      return fileUrl;
     },
     destroy_file(id) {
       if (confirm("هل أنت متأكد أنك تريد حذف هذا الملف ")) {

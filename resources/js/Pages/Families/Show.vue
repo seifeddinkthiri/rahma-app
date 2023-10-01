@@ -443,7 +443,9 @@
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="file in family.files" :key="file.id">
         <div class="p-4 bg-white rounded-md shadow">
-          <a :href="getFileUrl(file.file)">{{ file.title }}</a>
+          <a :href="getFileUrl(file.id)" target="_blank" class="text-blue-600">
+            {{ file.title }}
+          </a>
         </div>
       </div>
       <div v-if="family.files.length === 0">
@@ -527,9 +529,9 @@ export default {
     back() {
       window.history.back();
     },
-    getFileUrl(fileName) {
-      const baseUrl = "http://127.0.0.1:8000";
-      return `${baseUrl}/${fileName}`;
+    getFileUrl(id) {
+      const fileUrl = `/openFile/${id}`;
+      return fileUrl;
     },
     toggleNoteVisibility(noteId) {
       const index = this.toggledNoteIds.indexOf(noteId);
