@@ -127,7 +127,6 @@
             <th class="pb-4 pt-6 px-6">الهاتف</th>
             <th class="pb-4 pt-6 px-6">الحالة</th>
             <th class="pb-4 pt-6 px-6">نوع المنتفع</th>
-            <th class="pb-4 pl-3 pt-6">الصورة</th>
             <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
           </tr>
         </thead>
@@ -140,9 +139,15 @@
             <td class="border-t" v-if="family.name">
               <Link
                 class="flex items-center px-6 py-4 focus:text-indigo-500"
-                :href="`/families/${family.id}/edit`"
+                :href="`/members/${family.id}/create_new_one`"
+                tabindex="-1"
               >
-                <p class="h-4">{{ family.name }}</p>
+                <div v-if="family.is_family && family.members.length < 2 && family.name">
+                  <p class="text-red-600">
+                    <span class="text-indigo-500"> {{ family.name }} : </span>
+                    تحتوي العائلة فردين على الأقل
+                  </p>
+                </div>
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -183,75 +188,44 @@
                 <p class="h-4" v-if="family.social_status == null"></p>
               </Link>
             </td>
-            <td class="border-t" v-if="family.name">
-              <Link
-                v-if="family.photo"
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
-                :href="`/families/${family.id}/edit`"
-              >
-                <img
-                  class="block -my-2 mr-2 w-10 h-8 rounded"
-                  :src="'uploads/' + family.photo"
-                />
-              </Link>
-              <Link
-                v-else
-                class="flex items-center px-6 py-4 focus:text-indigo-500"
-                :href="`/families/${family.id}/edit`"
-              >
-                لا يوجد
-              </Link>
-            </td>
+
             <td class="w-px border-t" v-if="family.name">
               <Link
                 class="flex items-center px-4"
-                :href="`/members/${family.id}/create_new_one`"
+                :href="`/families/${family.id}/show`"
                 tabindex="-1"
               >
-                <div
-                  v-if="family.is_family && family.members.length < 2 && family.name"
-                  class="flex items-center justify-between px-4 sm:px-20"
-                >
-                  <p class="flex-grow px-3 py-2 text-red-600 whitespace-nowrap">
-                    تحتوي العائلة فردين على الأقل
-                  </p>
-                </div>
+                <icon name="eye" />
               </Link>
             </td>
 
             <td class="w-px border-t" v-if="family.name">
-              <div class="flex items-center">
-                <Link
-                  class="flex items-center px-4"
-                  :href="`/families/${family.id}/edit`"
-                  tabindex="-1"
-                >
-                  <icon name="cheveron-right" class="block w-4 h-4 fill-gray-400" />
-                </Link>
-                <Link
-                  class="flex items-center px-4"
-                  :href="`/families/${family.id}/show`"
-                  tabindex="-1"
-                >
-                  <icon name="eye" />
-                </Link>
-                <button
-                  v-if="!family.deleted_at"
-                  class="flex items-center px-4"
-                  tabindex="-1"
-                  @click="delete_family(family.id)"
-                >
-                  <icon name="delete" />
-                </button>
-                <button
-                  v-else
-                  class="flex items-center px-4"
-                  tabindex="-1"
-                  @click="restore(family.id)"
-                >
-                  <icon name="restore" />
-                </button>
-              </div>
+              <Link
+                class="flex items-center px-4"
+                :href="`/families/${family.id}/edit`"
+                tabindex="-1"
+              >
+                <icon name="cheveron-right" class="block w-4 h-4 fill-gray-400" />
+              </Link>
+            </td>
+
+            <td class="w-px border-t" v-if="family.name">
+              <button
+                v-if="!family.deleted_at"
+                class="flex items-center px-4"
+                tabindex="-1"
+                @click="delete_family(family.id)"
+              >
+                <icon name="delete" />
+              </button>
+              <button
+                v-else
+                class="flex items-center px-4"
+                tabindex="-1"
+                @click="restore(family.id)"
+              >
+                <icon name="restore" />
+              </button>
             </td>
           </tr>
         </tbody>
@@ -268,7 +242,6 @@
           <th class="pb-4 pt-6 px-6">الهاتف</th>
           <th class="pb-4 pt-6 px-6">الحالة</th>
           <th class="pb-4 pt-6 px-6">الحالة المدنية</th>
-          <th class="pb-4 pl-3 pt-6">الصورة</th>
           <th class="pb-4 pl-3 pt-6" colspan="3">إجراءات</th>
         </tr>
         <tr>
