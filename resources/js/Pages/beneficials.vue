@@ -90,7 +90,14 @@
         class="mr-4 w-full max-w-md"
         @reset="reset"
       >
-        <label class="block mb-2 mt-2 text-gray-700">حالة المنتفع</label>
+        <label class="block mb-2 mt-2 text-gray-700"> حالة المنتفع </label>
+        <select v-model="form.status" class="form-select mt-1 w-full">
+          <option value="active">نشط</option>
+          <option value="disabled">محضور</option>
+          <option value="inactive">غير نشط</option>
+        </select>
+
+        <label class="block mb-2 mt-2 text-gray-700"> نوع المنتفع </label>
         <select v-model="form.social_status" class="form-select mt-1 w-full">
           <option value="family">عائلة معوزة</option>
           <option value="elderly">مسن</option>
@@ -138,16 +145,26 @@
           >
             <td class="border-t" v-if="family.name">
               <Link
+                v-if="family.is_family && family.members.length < 2 && family.name"
                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                 :href="`/members/${family.id}/create_new_one`"
                 tabindex="-1"
               >
-                <div v-if="family.is_family && family.members.length < 2 && family.name">
+                <div>
                   <p class="text-red-600">
-                    <span class="text-indigo-500"> {{ family.name }} : </span>
+                    <span class="text-gray-500"> {{ family.name }} : </span>
                     تحتوي العائلة فردين على الأقل
                   </p>
                 </div>
+              </Link>
+
+              <Link
+                v-else
+                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                :href="`/families/${family.id}/edit`"
+                tabindex="-1"
+              >
+                {{ family.name }}
               </Link>
             </td>
             <td class="border-t" v-if="family.name">
@@ -291,6 +308,7 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed,
         social_status: this.filters.social_status,
+        status: this.filters.status,
       },
     };
   },

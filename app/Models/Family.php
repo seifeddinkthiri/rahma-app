@@ -58,7 +58,11 @@ class Family extends Model
                     });
                 });            }
 
+        })->when($filters['status'] ?? null, function ($query, $status) {
+                $query->where('status',$status);
         });
+
+        ;
     }
 
 

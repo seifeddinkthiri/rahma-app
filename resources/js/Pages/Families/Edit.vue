@@ -942,6 +942,7 @@ export default {
       }),
       form: this.$inertia.form({
         name: this.family.name,
+        is_family: this.family.is_family,
         phone: this.family.phone,
         status: this.family.status,
         social_status: this.family.social_status,

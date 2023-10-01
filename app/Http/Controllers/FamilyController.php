@@ -25,10 +25,10 @@ class FamilyController extends Controller
         }
 
         return Inertia::render('beneficials', [
-            'filters' => Request::all('search', 'social_status', 'trashed'),
+            'filters' => Request::all('search', 'social_status','status', 'trashed'),
             'families' => Auth::user()->account->families()
                 ->orderBy('name')
-                ->filter(Request::only('search', 'social_status', 'trashed'))
+                ->filter(Request::only('search', 'social_status', 'status','trashed'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($Family) => [
@@ -73,6 +73,8 @@ class FamilyController extends Controller
         } else {
             $Family->update([
                 'is_family' => true,
+                'social_status' => 'family',
+
             ]);
             return redirect()->route('members.create', ['Family' => $Family])->with('success', '   الرجاء إضافة معطيات الأسرة');
         }
@@ -115,6 +117,7 @@ class FamilyController extends Controller
                 'photo' => $family->photo,
                 'phone' => $family->caregiver_phone,
                 'address' => $family->address,
+                'is_family' => $family->is_family,
                 'status' => $family->status,
                 'social_status' => $family->social_status,
                 'deleted_at' => $family->deleted_at,
@@ -188,7 +191,7 @@ class FamilyController extends Controller
             'name' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
-            'social_status' => 'required',
+            'social_status' => 'required_if:isFamily,false|nullable',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
