@@ -16,10 +16,10 @@ class InterventionController extends Controller
     public function index()
     {
         return Inertia::render('Interventions/Index', [
-            'filters' => Request::all('search', 'trashed','type'),
+            'filters' => Request::all('search', 'trashed','type','isSolitary'),
             'interventions' => Auth::user()->account->interventions()
                 ->orderBy('id')
-                ->filter(Request::only('search', 'trashed','type'))
+                ->filter(Request::only('search', 'trashed','type','isSolitary'))
                 ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($intervention) => [
@@ -28,8 +28,14 @@ class InterventionController extends Controller
                     'value' => $intervention->value,
                     'date' => $intervention->date,
                     'intervenor' => $intervention->intervenor,
+                    'isSolitary' => $intervention->isSolitary,
                     'family' => $intervention->family,
                     'intervenor_phone' => $intervention->intervenor_phone,
+                    'beneficial_address' => $intervention->beneficial_address,
+                    'beneficial_name' => $intervention->beneficial_name,
+                    'beneficial_cin' => $intervention->beneficial_cin,
+                    'beneficial_phone' => $intervention->beneficial_phone,
+
                     'notes' => $intervention->notes,
                     'deleted_at' => $intervention->deleted_at,
                 ]),
@@ -46,9 +52,17 @@ class InterventionController extends Controller
 
 
 
-        $projects = Project::select('id', 'name')->get();
+        $projects = Project::select('id', 'name')->where('isSolitary',false)->get();
         return Inertia::render('Interventions/Create', compact('families','elderlies','divorceds','widows','singleMothers','projects'));
     }
+
+    public function createSolitary()
+    {
+        $projects = Project::select('id', 'name')->where('isSolitary',true)->get();
+        return Inertia::render('Interventions/CreateSolitary', compact('projects'));
+    }
+
+
 
     public function store()
     {
@@ -87,6 +101,63 @@ class InterventionController extends Controller
         return Redirect::back()->with('success', 'تم إنشاء التدخل.');
     }
 
+
+
+    public function solitaryStore()
+    {
+        Request::validate([
+            'type' => ['required', 'string', 'max:100'],
+            'intervenor' => ['nullable', 'string', 'max:50'],
+            'intervenor_phone' => ['nullable', 'numeric', 'digits:8'],
+            'notes' => ['nullable'],
+            'file' => ['nullable'],
+            'title' => ['nullable', 'required_with:file', 'string', 'max:50'],
+            'date' => ['nullable', 'date'],
+        ]);
+
+        $intervention = Auth::user()->account->interventions()->create([
+            'isSolitary' => true,
+            'type' => Request::get('type'),
+            'value' => Request::get('value'),
+            'date' => Request::get('date'),
+            'project_id' => Request::get('project'),
+            'intervenor' => Request::get('intervenor'),
+            'intervenor_phone' => Request::get('intervenor_phone'),
+            'notes' => Request::get('notes'),
+            'beneficial_name' => Request::get('beneficial_name'),
+            'beneficial_phone' => Request::get('beneficial_phone'),
+            'beneficial_cin' => Request::get('beneficial_cin'),
+            'beneficial_address' => Request::get('beneficial_address'),
+
+
+        ]);
+        if (Request::file('file')) {
+            $file = $intervention->files()->create([
+                'title' => Request::input('title'),
+                'file' => Request::file('file') ? Request::file('file')->store('') : null,
+            ]);
+            Storage::put('uploads/files',   Request::file('file'));
+
+
+           // Request::file('file')->move(public_path('uploads/files'), $file->file);
+        }
+
+        return Redirect::back()->with('success', 'تم إنشاء التدخل.');
+    }
+
+
+    public function solitaryEdit(Intervention $intervention)
+    {
+        $projects = Project::select('id', 'name')->where('isSolitary',true)->get();
+
+        return Inertia::render('Interventions/solitaryEdit', [
+            'intervention' => $intervention,
+            'projects' => $projects,
+
+        ]);
+    }
+
+
     public function edit(Intervention $intervention)
     {
         $projects = Project::select('id', 'name')->get();
@@ -121,7 +192,12 @@ class InterventionController extends Controller
                 'value' => $intervention->value,
                 'date' => $intervention->date,
                 'intervenor' => $intervention->intervenor,
+                'isSolitary' => $intervention->isSolitary,
                 'intervenor_phone' => $intervention->intervenor_phone,
+                'beneficial_address' => $intervention->beneficial_address,
+                'beneficial_name' => $intervention->beneficial_name,
+                'beneficial_cin' => $intervention->beneficial_cin,
+                'beneficial_phone' => $intervention->beneficial_phone,
                 'notes' => $intervention->notes,
                 'files' =>  $intervention->files()->get(),
                 'deleted_at' => $intervention->deleted_at,
@@ -147,6 +223,11 @@ class InterventionController extends Controller
             'project_id' => Request::get('project'),
             'intervenor' => Request::get('intervenor'),
             'intervenor_phone' => Request::get('intervenor_phone'),
+            'beneficial_address' => Request::get('beneficial_address'),
+            'beneficial_name' => Request::get('beneficial_name'),
+            'beneficial_phone' => Request::get('beneficial_phone'),
+            'beneficial_cin' => Request::get('beneficial_cin'),
+
             'notes' => Request::get('notes'),
 
         ]);

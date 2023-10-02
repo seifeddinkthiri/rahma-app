@@ -39,16 +39,17 @@
               label="تاريخ الإنتهاء المتوقع"
               placeholder="تاريخ الإنتهاء المتوقع هنا"
             />
+            <ToggleCheckbox
+              :id="'isSolitary'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              :label="'مشروع عرضي'"
+              :isChecked="form.isSolitary"
+              @toggle="toggle_solitary"
+            />
           </div>
-          <div
-            class=" px-8 py-4 bg-gray-50 border-t border-gray-100 text-right"
-          >
-            <loading-button
-            class="btn-indigo"
-              type="submit"
-            >
-              إضافة
-            </loading-button>
+          <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 text-right">
+            <loading-button class="btn-indigo" type="submit"> إضافة </loading-button>
           </div>
         </div>
       </form>
@@ -64,6 +65,7 @@ import SelectInput from "@/Shared/SelectInput";
 import LoadingButton from "@/Shared/LoadingButton";
 import FileInput from "@/Shared/FileInput";
 import TextAreaInput from "@/Shared/TextareaInput";
+import ToggleCheckbox from "../../Shared/ToggleCheckbox.vue";
 
 export default {
   components: {
@@ -74,6 +76,7 @@ export default {
     SelectInput,
     TextInput,
     FileInput,
+    ToggleCheckbox,
   },
   layout: Layout,
   remember: "form",
@@ -85,11 +88,15 @@ export default {
         date: null,
         deadline: null,
         status: false,
+        isSolitary: false,
       }),
     };
   },
 
   methods: {
+    toggle_solitary() {
+      this.form.isSolitary = !this.form.isSolitary;
+    },
     store() {
       this.form.post("/projects", {
         preserveScroll: true,

@@ -58,11 +58,7 @@
           ></TextareaInput>
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button
-            type="submit"
-             class="btn-indigo"          >
-            تسجيل
-          </button>
+          <button type="submit" class="btn-indigo">تسجيل</button>
         </div>
       </form>
     </div>
@@ -100,17 +96,13 @@
             :id="'ventilation'"
             :active_value="'نعم'"
             :inactive_value="'لا'"
-            :label="'التهوئة'"
+            :label="'التكييف '"
             :isChecked="facilities_form.ventilation"
             @toggle="toggle_ventilation"
           />
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button
-            type="submit"
-            class="btn-indigo"          >
-            تسجيل
-          </button>
+          <button type="submit" class="btn-indigo">تسجيل</button>
         </div>
       </form>
     </div>
@@ -142,11 +134,7 @@
           ></TextareaInput>
         </div>
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button
-            type="submit"
-             class="btn-indigo"          >
-            تسجيل
-          </button>
+          <button type="submit" class="btn-indigo">تسجيل</button>
         </div>
       </form>
     </div>
@@ -173,12 +161,7 @@
         </div>
 
         <div class="flex justify-end px-4 py-3 bg-gray-50">
-          <button
-            type="submit"
-            class="btn-indigo"
-          >
-            إضافة
-          </button>
+          <button type="submit" class="btn-indigo">إضافة</button>
           <button
             @click="back"
             type="button"
@@ -190,434 +173,431 @@
       </form>
     </div>
     <div class="bg-white rounded-md shadow overflow-hidden">
-   <!--beneficial form  -->
- <form v-if="active_step == 'beneficial' " @submit.prevent="storeBeneficial">
-  <div >
-    <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-      <text-input
-        v-model="beneficial_form.name"
-        :error="beneficial_form.errors.name"
-        placeholder=" الإسم هنا"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="الإسم"
-      />
-
-      <text-input
-        v-model="beneficial_form.address"
-        :error="beneficial_form.errors.address"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="العنوان"
-        placeholder=" العنوان هنا"
-      />
-      <text-input
-        v-model="beneficial_form.cin"
-        :error="beneficial_form.errors.cin"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="بطاقة التعريف الوطنية"
-        placeholder=" بطاقة التعريف الوطنية هنا"
-      />
-      <text-input
-        v-model="beneficial_form.phone"
-        :error="beneficial_form.errors.phone"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="الهاتف"
-        placeholder="الهاتف هنا"
-      />
-      <select-input
-        v-model="beneficial_form.birth_city"
-        :error="beneficial_form.errors.birth_city"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="مدينة الولادة"
-      >
-        <option :value="null" disabled hidden>إختر المدينة</option>
-        <option value="مدنين">مدنين</option>
-        <option value="باجة">باجة</option>
-        <option value="تونس">تونس</option>
-        <option value="صفاقس">صفاقس</option>
-        <option value="سوسة">سوسة</option>
-        <option value="أريانة">أريانة</option>
-        <option value="بن عروس">بن عروس</option>
-        <option value="القصرين">القصرين</option>
-        <option value="الكاف">الكاف</option>
-        <option value="المهدية">المهدية</option>
-        <option value="منوبة">منوبة</option>
-        <option value="المنستير">المنستير</option>
-        <option value="نابل">نابل</option>
-        <option value="سيدي بوزيد">سيدي بوزيد</option>
-        <option value="سليانة">سليانة</option>
-        <option value="قابس">قابس</option>
-        <option value="جندوبة">جندوبة</option>
-        <option value="تطاوين">تطاوين</option>
-        <option value="توزر">توزر</option>
-        <option value="زغوان">زغوان</option>
-      </select-input>
-      <text-input
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        type="date"
-        id="birth_date"
-        v-model="beneficial_form.birth_date"
-        :error="beneficial_form.errors.birth_date"
-        label="تاريخ الولادة"
-        placeholder=" تاريخ الولادة هنا"
-      />
-
-      <text-input
-        v-model="beneficial_form.job_place"
-        :error="beneficial_form.errors.job_place"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="مكان العمل "
-        placeholder="  مكان العمل هنا"
-      />
-      <text-input
-        v-model="beneficial_form.job"
-        :error="beneficial_form.errors.job"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label="العمل"
-        placeholder="   العمل هنا"
-      />
-    </div>
-    <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-
-
-      <select-input
-        v-model="beneficial_form.education_level"
-        :error="beneficial_form.errors.education_level"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        label=" المستوى الدراسي "
-      >
-        <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
-        <option value="illiterate ">أمي</option>
-        <option value="primary">إعدادي</option>
-        <option value="secondary">ثاناوي</option>
-        <option value="university ">جامعي</option>
-      </select-input>
-      <file-input
-        v-model="beneficial_form.photo"
-        :error="beneficial_form.errors.photo"
-        class="pb-8 pr-6 w-full lg:w-1/2"
-        type="file"
-        accept="image/*"
-        label="الصورة "
-      />
-
-      <ToggleCheckbox
-        :id="'grant'"
-        :class="'lg:w-1/2'"
-        :isChecked="beneficial_form.grant"
-        :label="'منحة إجتماعية'"
-        :active_value="'نعم'"
-        :inactive_value="'لا'"
-        @toggle="toggle_beneficial_grant"
-      />
-
-      <div v-if="beneficial_form.grant" class="w-full">
-        <div class="flex flex-row flex-nowrap w-full">
-          <text-input
-            class="pb-8 pr-6 w-full"
-            id="source"
-            :error="beneficial_form.errors.source"
-            v-model="beneficial_form.source"
-            label="المصدر"
-            placeholder="المصدر هنا"
-          />
-          <text-input
-            class="pb-8 pr-6 w-full"
-            id="value"
-            v-model="beneficial_form.value"
-            :error="beneficial_form.errors.value"
-            label="القيمة"
-            placeholder="القيمة بالدينار هنا"
-          />
-        </div>
-      </div>
-
-      <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
-      <div class="flex flex-row flex-nowrap w-full">
-        <ToggleCheckbox
-          :id="'health_insurance'"
-          :class="'lg:w-1/2'"
-          :isChecked="beneficial_form.health_insurance"
-          :label="'التغطية الصحية'"
-          :active_value="'نعم'"
-          :inactive_value="'لا'"
-          @toggle="toggle_beneficial_health_insurance"
-        />
-
-        <ToggleCheckbox
-          :id="'good'"
-          :class="'lg:w-1/2'"
-          :isChecked="beneficial_form.good"
-          :label="'الحالة الصحية'"
-          :active_value="'جيدة'"
-          :inactive_value="'عليلة '"
-          @toggle="toggle_beneficial_health_Status"
-        />
-      </div>
-      <div v-if="beneficial_form.good == false" class="w-full">
-        <div class="flex flex-row flex-nowrap w-full">
-          <text-input
-            class="pb-8 pr-6 w-full"
-            id="disease"
-            :error="beneficial_form.errors.disease"
-            v-model="beneficial_form.disease"
-            label="مرض مزمن"
-            placeholder="  المرض المزمن هنا"
-          />
-          <text-input
-            class="pb-8 pr-6 w-full"
-            id="disability"
-            v-model="beneficial_form.disability"
-            :error="beneficial_form.errors.disability"
-            label=" إعاقة"
-            placeholder="الإعاقة هنا"
-          />
-
-          <text-input
-            v-model="beneficial_form.disability_card_number"
-            :error="beneficial_form.errors.disability_card_number"
-            class="pb-8 pr-6 w-full lg:w-1/2"
-            label="رقم بطاقة الإعاقة"
-            placeholder="الرقم هنا"
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-    >
-      <!-- Add a spacer element to create space between the buttons -->
-      <div class="w-4"></div>
-      <loading-button
-        :loading="beneficial_form.processing" class="btn-indigo"
-        type="submit"
-      >
-        إضافة
-      </loading-button>
-    </div>
-  </div>
-</form>
-   <!--childrens form  -->
-   <form  v-if="active_step == 'childrens'"  @submit.prevent="storeChildrens">
-    <div >
-      <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-        <text-input
-          v-model="children_form.name"
-          :error="children_form.errors.name"
-          placeholder=" الإسم هنا"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="الإسم"
-        />
-
-        <text-input
-          v-model="children_form.address"
-          :error="children_form.errors.address"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="العنوان"
-          placeholder=" العنوان هنا"
-        />
-        <text-input
-          v-model="children_form.cin"
-          :error="children_form.errors.cin"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="بطاقة التعريف الوطنية"
-          placeholder=" بطاقة التعريف الوطنية هنا"
-        />
-        <text-input
-          v-model="children_form.phone"
-          :error="children_form.errors.phone"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="الهاتف"
-          placeholder="الهاتف هنا"
-        />
-        <select-input
-          v-model="children_form.birth_city"
-          :error="children_form.errors.birth_city"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="مدينة الولادة"
-          ref="childBirthCity"
-
-        >
-          <option :value="null" disabled hidden>إختر المدينة</option>
-          <option value="مدنين">مدنين</option>
-          <option value="باجة">باجة</option>
-          <option value="تونس">تونس</option>
-          <option value="صفاقس">صفاقس</option>
-          <option value="سوسة">سوسة</option>
-          <option value="أريانة">أريانة</option>
-          <option value="بن عروس">بن عروس</option>
-          <option value="القصرين">القصرين</option>
-          <option value="الكاف">الكاف</option>
-          <option value="المهدية">المهدية</option>
-          <option value="منوبة">منوبة</option>
-          <option value="المنستير">المنستير</option>
-          <option value="نابل">نابل</option>
-          <option value="سيدي بوزيد">سيدي بوزيد</option>
-          <option value="سليانة">سليانة</option>
-          <option value="قابس">قابس</option>
-          <option value="جندوبة">جندوبة</option>
-          <option value="تطاوين">تطاوين</option>
-          <option value="توزر">توزر</option>
-          <option value="زغوان">زغوان</option>
-        </select-input>
-        <text-input
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          type="date"
-          id="birth_date"
-          v-model="children_form.birth_date"
-          :error="children_form.errors.birth_date"
-          label="تاريخ الولادة"
-          placeholder=" تاريخ الولادة هنا"
-        />
-
-        <text-input
-          v-model="children_form.job_place"
-          :error="children_form.errors.job_place"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="مكان العمل "
-          placeholder="  مكان العمل هنا"
-        />
-        <text-input
-          v-model="children_form.job"
-          :error="children_form.errors.job"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="العمل"
-          placeholder="   العمل هنا"
-        />
-      </div>
-      <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-        <select-input
-          v-model="children_form.social_status"
-          :error="children_form.errors.social_status"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label="الحالة المدنية "
-          ref="childSocialStatus"
-        >
-          <option disabled hidden :value="null">إختر الحالة</option>
-          <option value="single">أعزب/عزباء</option>
-          <option value="married">متزوج/متزوجة</option>
-          <option value="divorced">مطلق/مطلقة</option>
-          <option value="widower">أرمل/أرملة</option>
-        </select-input>
-
-        <select-input
-          v-model="children_form.education_level"
-          :error="children_form.errors.education_level"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          label=" المستوى الدراسي "
-          ref="childEducation"
-        >
-          <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
-          <option value="illiterate ">أمي</option>
-          <option value="primary">إعدادي</option>
-          <option value="secondary">ثاناوي</option>
-          <option value="university ">جامعي</option>
-        </select-input>
-        <file-input
-          v-model="children_form.photo"
-          :error="children_form.errors.photo"
-          class="pb-8 pr-6 w-full lg:w-1/2"
-          type="file"
-          accept="image/*"
-          label="الصورة "
-        />
-
-        <ToggleCheckbox
-          :id="'grant'"
-          :class="'lg:w-1/2'"
-          :isChecked="children_form.grant"
-          :label="'منحة إجتماعية'"
-          :active_value="'نعم'"
-          :inactive_value="'لا'"
-          @toggle="toggle_children_grant"
-        />
-
-        <div v-if="children_form.grant" class="w-full">
-          <div class="flex flex-row flex-nowrap w-full">
+      <!--beneficial form  -->
+      <form v-if="active_step == 'beneficial'" @submit.prevent="storeBeneficial">
+        <div>
+          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
             <text-input
-              class="pb-8 pr-6 w-full"
-              id="source"
-              :error="children_form.errors.source"
-              v-model="children_form.source"
-              label="المصدر"
-              placeholder="المصدر هنا"
-            />
-            <text-input
-              class="pb-8 pr-6 w-full"
-              id="value"
-              v-model="children_form.value"
-              :error="children_form.errors.value"
-              label="القيمة"
-              placeholder="القيمة بالدينار هنا"
-            />
-          </div>
-        </div>
-
-        <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
-        <div class="flex flex-row flex-nowrap w-full">
-          <ToggleCheckbox
-            :id="'health_insurance'"
-            :class="'lg:w-1/2'"
-            :isChecked="children_form.health_insurance"
-            :label="'التغطية الصحية'"
-            :active_value="'نعم'"
-            :inactive_value="'لا'"
-            @toggle="toggle_children_health_insurance"
-          />
-
-          <ToggleCheckbox
-            :id="'good'"
-            :class="'lg:w-1/2'"
-            :isChecked="children_form.good"
-            :label="'الحالة الصحية'"
-            :active_value="'جيدة'"
-            :inactive_value="'عليلة '"
-            @toggle="toggle_children_health_Status"
-          />
-        </div>
-        <div v-if="children_form.good == false" class="w-full">
-          <div class="flex flex-row flex-nowrap w-full">
-            <text-input
-              class="pb-8 pr-6 w-full"
-              id="disease"
-              :error="children_form.errors.disease"
-              v-model="children_form.disease"
-              label="مرض مزمن"
-              placeholder="  المرض المزمن هنا"
-            />
-            <text-input
-              class="pb-8 pr-6 w-full"
-              id="disability"
-              v-model="children_form.disability"
-              :error="children_form.errors.disability"
-              label=" إعاقة"
-              placeholder="الإعاقة هنا"
-            />
-
-            <text-input
-              v-model="children_form.disability_card_number"
-              :error="children_form.errors.disability_card_number"
+              v-model="beneficial_form.name"
+              :error="beneficial_form.errors.name"
+              placeholder=" الإسم هنا"
               class="pb-8 pr-6 w-full lg:w-1/2"
-              label="رقم بطاقة الإعاقة"
-              placeholder="الرقم هنا"
+              label="الإسم"
+            />
+
+            <text-input
+              v-model="beneficial_form.address"
+              :error="beneficial_form.errors.address"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العنوان"
+              placeholder=" العنوان هنا"
+            />
+            <text-input
+              v-model="beneficial_form.cin"
+              :error="beneficial_form.errors.cin"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="بطاقة التعريف الوطنية"
+              placeholder=" بطاقة التعريف الوطنية هنا"
+            />
+            <text-input
+              v-model="beneficial_form.phone"
+              :error="beneficial_form.errors.phone"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الهاتف"
+              placeholder="الهاتف هنا"
+            />
+            <select-input
+              v-model="beneficial_form.birth_city"
+              :error="beneficial_form.errors.birth_city"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مدينة الولادة"
+            >
+              <option :value="null" disabled hidden>إختر المدينة</option>
+              <option value="مدنين">مدنين</option>
+              <option value="باجة">باجة</option>
+              <option value="تونس">تونس</option>
+              <option value="صفاقس">صفاقس</option>
+              <option value="سوسة">سوسة</option>
+              <option value="أريانة">أريانة</option>
+              <option value="بن عروس">بن عروس</option>
+              <option value="القصرين">القصرين</option>
+              <option value="الكاف">الكاف</option>
+              <option value="المهدية">المهدية</option>
+              <option value="منوبة">منوبة</option>
+              <option value="المنستير">المنستير</option>
+              <option value="نابل">نابل</option>
+              <option value="سيدي بوزيد">سيدي بوزيد</option>
+              <option value="سليانة">سليانة</option>
+              <option value="قابس">قابس</option>
+              <option value="جندوبة">جندوبة</option>
+              <option value="تطاوين">تطاوين</option>
+              <option value="توزر">توزر</option>
+              <option value="زغوان">زغوان</option>
+            </select-input>
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="birth_date"
+              v-model="beneficial_form.birth_date"
+              :error="beneficial_form.errors.birth_date"
+              label="تاريخ الولادة"
+              placeholder=" تاريخ الولادة هنا"
+            />
+
+            <text-input
+              v-model="beneficial_form.job_place"
+              :error="beneficial_form.errors.job_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان العمل "
+              placeholder="  مكان العمل هنا"
+            />
+            <text-input
+              v-model="beneficial_form.job"
+              :error="beneficial_form.errors.job"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العمل"
+              placeholder="   العمل هنا"
             />
           </div>
+          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+            <select-input
+              v-model="beneficial_form.education_level"
+              :error="beneficial_form.errors.education_level"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label=" المستوى الدراسي "
+            >
+              <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="illiterate ">أمي</option>
+              <option value="primary">إعدادي</option>
+              <option value="secondary">ثاناوي</option>
+              <option value="university ">جامعي</option>
+            </select-input>
+            <file-input
+              v-model="beneficial_form.photo"
+              :error="beneficial_form.errors.photo"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="file"
+              accept="image/*"
+              label="الصورة "
+            />
+
+            <ToggleCheckbox
+              :id="'grant'"
+              :class="'lg:w-1/2'"
+              :isChecked="beneficial_form.grant"
+              :label="'منحة إجتماعية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_beneficial_grant"
+            />
+
+            <div v-if="beneficial_form.grant" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="source"
+                  :error="beneficial_form.errors.source"
+                  v-model="beneficial_form.source"
+                  label="المصدر"
+                  placeholder="المصدر هنا"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="value"
+                  v-model="beneficial_form.value"
+                  :error="beneficial_form.errors.value"
+                  label="القيمة"
+                  placeholder="القيمة بالدينار هنا"
+                />
+              </div>
+            </div>
+
+            <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
+            <div class="flex flex-row flex-nowrap w-full">
+              <ToggleCheckbox
+                :id="'health_insurance'"
+                :class="'lg:w-1/2'"
+                :isChecked="beneficial_form.health_insurance"
+                :label="'التغطية الصحية'"
+                :active_value="'نعم'"
+                :inactive_value="'لا'"
+                @toggle="toggle_beneficial_health_insurance"
+              />
+
+              <ToggleCheckbox
+                :id="'good'"
+                :class="'lg:w-1/2'"
+                :isChecked="beneficial_form.good"
+                :label="'الحالة الصحية'"
+                :active_value="'جيدة'"
+                :inactive_value="'عليلة '"
+                @toggle="toggle_beneficial_health_Status"
+              />
+            </div>
+            <div v-if="beneficial_form.good == false" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="disease"
+                  :error="beneficial_form.errors.disease"
+                  v-model="beneficial_form.disease"
+                  label="مرض مزمن"
+                  placeholder="  المرض المزمن هنا"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="disability"
+                  v-model="beneficial_form.disability"
+                  :error="beneficial_form.errors.disability"
+                  label=" إعاقة"
+                  placeholder="الإعاقة هنا"
+                />
+
+                <text-input
+                  v-model="beneficial_form.disability_card_number"
+                  :error="beneficial_form.errors.disability_card_number"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  label="رقم بطاقة الإعاقة"
+                  placeholder="الرقم هنا"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+          >
+            <!-- Add a spacer element to create space between the buttons -->
+            <div class="w-4"></div>
+            <loading-button
+              :loading="beneficial_form.processing"
+              class="btn-indigo"
+              type="submit"
+            >
+              إضافة
+            </loading-button>
+          </div>
         </div>
-      </div>
-      <div
-        class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-      >
-        <div class="w-4"></div>
-        <loading-button
-          :loading="children_form.processing"
-          type="submit" class="btn-indigo"
-        >
-        التالي
-        </loading-button>
-      </div>
-    </div>
-  </form>
+      </form>
+      <!--childrens form  -->
+      <form v-if="active_step == 'childrens'" @submit.prevent="storeChildrens">
+        <div>
+          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+            <text-input
+              v-model="children_form.name"
+              :error="children_form.errors.name"
+              placeholder=" الإسم هنا"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الإسم"
+            />
 
+            <text-input
+              v-model="children_form.address"
+              :error="children_form.errors.address"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العنوان"
+              placeholder=" العنوان هنا"
+            />
+            <text-input
+              v-model="children_form.cin"
+              :error="children_form.errors.cin"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="بطاقة التعريف الوطنية"
+              placeholder=" بطاقة التعريف الوطنية هنا"
+            />
+            <text-input
+              v-model="children_form.phone"
+              :error="children_form.errors.phone"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الهاتف"
+              placeholder="الهاتف هنا"
+            />
+            <select-input
+              v-model="children_form.birth_city"
+              :error="children_form.errors.birth_city"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مدينة الولادة"
+              ref="childBirthCity"
+            >
+              <option :value="null" disabled hidden>إختر المدينة</option>
+              <option value="مدنين">مدنين</option>
+              <option value="باجة">باجة</option>
+              <option value="تونس">تونس</option>
+              <option value="صفاقس">صفاقس</option>
+              <option value="سوسة">سوسة</option>
+              <option value="أريانة">أريانة</option>
+              <option value="بن عروس">بن عروس</option>
+              <option value="القصرين">القصرين</option>
+              <option value="الكاف">الكاف</option>
+              <option value="المهدية">المهدية</option>
+              <option value="منوبة">منوبة</option>
+              <option value="المنستير">المنستير</option>
+              <option value="نابل">نابل</option>
+              <option value="سيدي بوزيد">سيدي بوزيد</option>
+              <option value="سليانة">سليانة</option>
+              <option value="قابس">قابس</option>
+              <option value="جندوبة">جندوبة</option>
+              <option value="تطاوين">تطاوين</option>
+              <option value="توزر">توزر</option>
+              <option value="زغوان">زغوان</option>
+            </select-input>
+            <text-input
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="date"
+              id="birth_date"
+              v-model="children_form.birth_date"
+              :error="children_form.errors.birth_date"
+              label="تاريخ الولادة"
+              placeholder=" تاريخ الولادة هنا"
+            />
 
+            <text-input
+              v-model="children_form.job_place"
+              :error="children_form.errors.job_place"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="مكان العمل "
+              placeholder="  مكان العمل هنا"
+            />
+            <text-input
+              v-model="children_form.job"
+              :error="children_form.errors.job"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="العمل"
+              placeholder="   العمل هنا"
+            />
+          </div>
+          <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+            <select-input
+              v-model="children_form.social_status"
+              :error="children_form.errors.social_status"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label="الحالة المدنية "
+              ref="childSocialStatus"
+            >
+              <option disabled hidden :value="null">إختر الحالة</option>
+              <option value="single">أعزب/عزباء</option>
+              <option value="married">متزوج/متزوجة</option>
+              <option value="divorced">مطلق/مطلقة</option>
+              <option value="widower">أرمل/أرملة</option>
+            </select-input>
+
+            <select-input
+              v-model="children_form.education_level"
+              :error="children_form.errors.education_level"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              label=" المستوى الدراسي "
+              ref="childEducation"
+            >
+              <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
+              <option value="illiterate ">أمي</option>
+              <option value="primary">إعدادي</option>
+              <option value="secondary">ثاناوي</option>
+              <option value="university ">جامعي</option>
+            </select-input>
+            <file-input
+              v-model="children_form.photo"
+              :error="children_form.errors.photo"
+              class="pb-8 pr-6 w-full lg:w-1/2"
+              type="file"
+              accept="image/*"
+              label="الصورة "
+            />
+
+            <ToggleCheckbox
+              :id="'grant'"
+              :class="'lg:w-1/2'"
+              :isChecked="children_form.grant"
+              :label="'منحة إجتماعية'"
+              :active_value="'نعم'"
+              :inactive_value="'لا'"
+              @toggle="toggle_children_grant"
+            />
+
+            <div v-if="children_form.grant" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="source"
+                  :error="children_form.errors.source"
+                  v-model="children_form.source"
+                  label="المصدر"
+                  placeholder="المصدر هنا"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="value"
+                  v-model="children_form.value"
+                  :error="children_form.errors.value"
+                  label="القيمة"
+                  placeholder="القيمة بالدينار هنا"
+                />
+              </div>
+            </div>
+
+            <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
+            <div class="flex flex-row flex-nowrap w-full">
+              <ToggleCheckbox
+                :id="'health_insurance'"
+                :class="'lg:w-1/2'"
+                :isChecked="children_form.health_insurance"
+                :label="'التغطية الصحية'"
+                :active_value="'نعم'"
+                :inactive_value="'لا'"
+                @toggle="toggle_children_health_insurance"
+              />
+
+              <ToggleCheckbox
+                :id="'good'"
+                :class="'lg:w-1/2'"
+                :isChecked="children_form.good"
+                :label="'الحالة الصحية'"
+                :active_value="'جيدة'"
+                :inactive_value="'عليلة '"
+                @toggle="toggle_children_health_Status"
+              />
+            </div>
+            <div v-if="children_form.good == false" class="w-full">
+              <div class="flex flex-row flex-nowrap w-full">
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="disease"
+                  :error="children_form.errors.disease"
+                  v-model="children_form.disease"
+                  label="مرض مزمن"
+                  placeholder="  المرض المزمن هنا"
+                />
+                <text-input
+                  class="pb-8 pr-6 w-full"
+                  id="disability"
+                  v-model="children_form.disability"
+                  :error="children_form.errors.disability"
+                  label=" إعاقة"
+                  placeholder="الإعاقة هنا"
+                />
+
+                <text-input
+                  v-model="children_form.disability_card_number"
+                  :error="children_form.errors.disability_card_number"
+                  class="pb-8 pr-6 w-full lg:w-1/2"
+                  label="رقم بطاقة الإعاقة"
+                  placeholder="الرقم هنا"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
+          >
+            <div class="w-4"></div>
+            <loading-button
+              :loading="children_form.processing"
+              type="submit"
+              class="btn-indigo"
+            >
+              التالي
+            </loading-button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -705,7 +685,7 @@ export default {
         social_status: null,
         health_insurance: false,
         photo: null,
-        kinship:  this.type,
+        kinship: this.type,
         education_level: null,
         job: null,
         job_place: null,
@@ -747,39 +727,35 @@ export default {
 
   methods: {
     resetChildrenForm() {
-  this.children_form.reset();
-  this.$refs.childEducation.clearSelection();
-  this.$refs.childBirthCity.clearSelection();
-  this.$refs.childSocialStatus.clearSelection();
-
-
-},
+      this.children_form.reset();
+      this.$refs.childEducation.clearSelection();
+      this.$refs.childBirthCity.clearSelection();
+      this.$refs.childSocialStatus.clearSelection();
+    },
     //store beneficial
     storeBeneficial() {
-        this.beneficial_form.social_status = this.beneficial;
-        this.beneficial_form.caregiver = true;
-        this.beneficial_form.post("/specifics", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.active_step = "childrens";
-            this.current_form_title = "أضف بيانات الأبناء";
-          },
-        });
+      this.beneficial_form.social_status = this.beneficial;
+      this.beneficial_form.caregiver = true;
+      this.beneficial_form.post("/specifics", {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.active_step = "childrens";
+          this.current_form_title = "أضف بيانات الأبناء";
+        },
+      });
     },
     //store childrens
-    storeChildrens(){
-        this.children_form.caregiver = false;
-        this.children_form.post("/specifics", {
-          preserveScroll: true,
-          onSuccess: () => {
-            this.resetChildrenForm();
-            this.active_step = "childrens";
-            this.current_form_title = "اضف إبن آخر";
-          },
-        });
-
+    storeChildrens() {
+      this.children_form.caregiver = false;
+      this.children_form.post("/specifics", {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.resetChildrenForm();
+          this.active_step = "childrens";
+          this.current_form_title = "اضف إبن آخر";
+        },
+      });
     },
-
 
     updateActiveStep(step) {
       this.active_step = step; // Update the active_step prop in the parent component

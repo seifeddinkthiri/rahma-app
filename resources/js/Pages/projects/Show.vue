@@ -25,6 +25,12 @@
               <td class="px-4 py-2 h-16 border">{{ project.deadline }}</td>
             </tr>
             <tr>
+              <td class="px-4 py-2 h-16 border">مشروع عرضي</td>
+              <td class="px-4 py-2 h-16 border">
+                {{ project.isSolitary ? "نعم " : " لا " }}
+              </td>
+            </tr>
+            <tr>
               <td class="px-4 py-2 h-16 border">الحالة</td>
               <td class="px-4 py-2 h-16 border">
                 {{ project.status ? "مكتمل" : "قيد التنفيذ" }}
@@ -118,9 +124,6 @@
                   {{ intervention.intervenor_phone }}
                 </Link>
               </td>
-
-
-
             </tr>
             <tr v-if="project.interventions.length === 0">
               <td class="px-6 py-4 border-t" colspan="4">قائمة فارغة</td>

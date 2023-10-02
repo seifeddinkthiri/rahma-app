@@ -166,7 +166,7 @@
             <td class="px-4 py-2 border" v-else><icon name="minus" /></td>
           </tr>
           <tr>
-            <td class="px-4 py-2 border">التهوئة</td>
+            <td class="px-4 py-2 border">التكييف</td>
             <td class="px-4 py-2 border" v-if="facility.ventilation">
               <icon name="check" />
             </td>

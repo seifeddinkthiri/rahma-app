@@ -26,6 +26,7 @@ class projectController extends Controller
                 'description' => $project->description,
                 'status' => $project->status,
                 'date' => $project->date,
+                'isSolitary' => $project->isSolitary,
                 'deadline' => $project->deadline,
                 'deleted_at' => $project->deleted_at,
             ]),
@@ -46,6 +47,8 @@ class projectController extends Controller
             'date' => ['required', 'date'],
             'deadline' => ['required', 'date'],
             'status' => ['required', 'boolean'],
+            'isSolitary' => ['required', 'boolean'],
+
         ]);
         Auth::user()->account->projects()->create([
             'name' => Request::get('name'),
@@ -53,6 +56,7 @@ class projectController extends Controller
             'date' => Request::get('date'),
             'deadline' => Request::get('deadline'),
             'status' => Request::get('status'),
+            'isSolitary' => Request::get('isSolitary'),
 
         ]);
 
@@ -88,6 +92,7 @@ class projectController extends Controller
                 'date' => $project->date,
                 'deadline' => $project->deadline,
                 'status' => $project->status,
+                'isSolitary' => $project->isSolitary,
                 'interventions' => $interventions,
                 'deleted_at' => $project->deleted_at,
             ],
@@ -104,6 +109,7 @@ class projectController extends Controller
                 'date' => ['required', 'date'],
                 'deadline' => ['required', 'date'],
                 'status' => ['required', 'boolean'],
+
             ])
 
         );

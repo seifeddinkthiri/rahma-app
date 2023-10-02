@@ -152,7 +152,7 @@
               >
                 <div>
                   <p class="text-red-600">
-                    <span class="text-gray-500"> {{ family.name }} : </span>
+                    <span> {{ family.name }} : </span>
                     تحتوي العائلة فردين على الأقل
                   </p>
                 </div>

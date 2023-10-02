@@ -39,6 +39,9 @@ class Family extends Model
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('caregiver_phone', 'like', '%' . $search . '%')
+                ->orWhereHas('members', function ($memberQuery) use ($search) {
+                    $memberQuery->where('cin', 'like', '%' . $search . '%');
+                })
                 ->orWhere('address', 'like', '%' . $search . '%');
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
             if ($trashed === 'with') {

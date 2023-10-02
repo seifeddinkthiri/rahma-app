@@ -17,10 +17,41 @@
       <div class="mt-8 p-4 bg-white rounded-md shadow">
         <table class="w-full">
           <tbody>
-            <tr
-              v-if="intervention.family[0]"
-              class="hover:bg-gray-100 focus-within:bg-gray-100"
-            >
+
+            <tr v-if="intervention.isSolitary">
+              <td class="px-4 py-2 h-16 border">
+                <p>لفائدة المنتفع</p>
+              </td>
+              <td class="px-4 py-2 h-16 border">
+                <p>{{ intervention.beneficial_name }}</p>
+              </td>
+            </tr>
+            <tr v-if="intervention.isSolitary">
+              <td class="px-4 py-2 h-16 border">
+                <p>عنوان المنتفع</p>
+              </td>
+              <td class="px-4 py-2 h-16 border">
+                <p>{{ intervention.beneficial_address }}</p>
+              </td>
+            </tr>
+            <tr v-if="intervention.isSolitary">
+              <td class="px-4 py-2 h-16 border">
+                <p>بطاقة تعريف المنتفع</p>
+              </td>
+              <td class="px-4 py-2 h-16 border">
+                <p>{{ intervention.beneficial_cin }}</p>
+              </td>
+            </tr>
+            <tr v-if="intervention.isSolitary">
+              <td class="px-4 py-2 h-16 border">
+                <p>هاتف المنتفع</p>
+              </td>
+              <td class="px-4 py-2 h-16 border">
+                <p>{{ intervention.beneficial_phone }}</p>
+              </td>
+            </tr>
+
+            <tr v-if="intervention.family && intervention.family[0]">
               <td class="px-4 py-2 h-16 border">
                 <Link :href="`/families/${intervention.family[0].id}/show`"
                   >لفائدة المنتفع</Link
@@ -34,7 +65,7 @@
             </tr>
 
             <tr
-              v-if="intervention.project[0]"
+              v-if="intervention.project && intervention.project[0]"
               class="hover:bg-gray-100 focus-within:bg-gray-100"
             >
               <td class="px-4 py-2 h-16 border">
@@ -50,7 +81,11 @@
             </tr>
             <tr>
               <td class="px-4 py-2 h-16 border">نوع التدخل</td>
-              <td class="px-4 py-2 h-16 border">{{ intervention.type }}</td>
+              <td class="px-4 py-2 h-16 border">
+                <p v-if="intervention.type == 'shipments'">عيني</p>
+                <p v-if="intervention.type == 'cash'">نقدي</p>
+                <p v-if="intervention.type == 'other'">آخر</p>
+              </td>
             </tr>
             <tr>
               <td class="px-4 py-2 h-16 border">قيمة التدخل</td>

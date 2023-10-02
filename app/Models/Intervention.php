@@ -69,6 +69,15 @@ class Intervention extends Model
         })->when($filters['type'] ?? null, function ($query, $type) {
 
                 $query->where('type', $type);
-                });
+                })
+          ->when($filters['isSolitary'] ?? null, function ($query, $isSolitary) {
+            if ($isSolitary =='isSolitary') {
+                $query->where('isSolitary', true);
+            }
+            if ($isSolitary =='isNormal') {
+                $query->where('isSolitary', false);
+            }
+
+                    });
     }
 }

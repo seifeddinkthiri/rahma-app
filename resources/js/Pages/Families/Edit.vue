@@ -470,7 +470,7 @@
                   :id="'ventilation'"
                   :active_value="'نعم'"
                   :inactive_value="'لا'"
-                  :label="'التهوئة'"
+                  :label="'التكييف '"
                   :isChecked="facilities_form_update.ventilation"
                   @toggle="toggle_ventilation"
                 />

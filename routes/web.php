@@ -325,10 +325,15 @@ Route::get('interventions/create', [InterventionController::class, 'create'])
 ->name('interventions.create')
     ->middleware(['auth', 'can:accepted']);
 
+Route::get('interventions/createSolitary', [InterventionController::class, 'createSolitary'])
+    ->name('interventions.createSolitary')
+        ->middleware(['auth', 'can:accepted']);
+
 
 Route::post('interventions', [InterventionController::class, 'store'])
 ->name('interventions.store')
     ->middleware(['auth', 'can:accepted']);
+
 
 
 Route::get('interventions/{intervention}/edit', [InterventionController::class, 'edit'])
@@ -338,6 +343,11 @@ Route::get('interventions/{intervention}/edit', [InterventionController::class, 
 Route::get('interventions/{intervention}/show', [InterventionController::class, 'show'])
 ->name('interventions.show')
     ->middleware(['auth', 'can:accepted']);
+
+
+
+
+
 
 Route::post('interventions/{intervention}', [InterventionController::class, 'update'])
 ->name('interventions.update')
@@ -352,6 +362,19 @@ Route::delete('interventions/{intervention}', [InterventionController::class, 'd
 Route::put('interventions/{intervention}/restore', [InterventionController::class, 'restore'])
 ->name('interventions.restore')
     ->middleware(['auth', 'can:accepted']);
+
+
+
+
+
+    Route::get('solitaryInterventions/{intervention}/edit', [InterventionController::class, 'solitaryEdit'])
+    ->name('interventions.edit')
+        ->middleware(['auth', 'can:accepted']);
+
+    Route::post('solitaryInterventions', [InterventionController::class, 'solitaryStore'])
+    ->name('interventions.solitaryStore')
+        ->middleware(['auth', 'can:accepted']);
+
 
 
 
