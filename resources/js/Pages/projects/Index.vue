@@ -20,7 +20,11 @@
           <option value="completed">مكتمل</option>
           <option value="ongoing">قيد التنفيذ</option>
         </select>
-
+        <label class="block mb-2 mt-2 text-gray-700"> مشروع عرضي </label>
+        <select v-model="form.isSolitary" class="form-select mt-1 w-full">
+          <option value="isSolitary">نعم</option>
+          <option value="isNormal">لا</option>
+        </select>
         <label class="block text-gray-700">تم الحذف</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option value="with">مع المحذوف</option>
@@ -175,6 +179,7 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed,
         status: this.filters.status,
+        isSolitary: this.filters.isSolitary,
       },
     };
   },

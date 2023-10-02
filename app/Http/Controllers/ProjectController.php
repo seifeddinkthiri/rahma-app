@@ -14,10 +14,10 @@ class projectController extends Controller
     public function index()
     {
         return Inertia::render('projects/Index', [
-            'filters' => Request::all('search', 'trashed','status'),
+            'filters' => Request::all('search', 'trashed','status','isSolitary'),
             'projects' => Auth::user()->account->projects()
             ->orderBy('id')
-            ->filter(Request::only('search', 'trashed', 'status'))
+            ->filter(Request::only('search', 'trashed', 'status','isSolitary'))
             ->paginate(10)
             ->withQueryString()
             ->through(fn ($project) => [

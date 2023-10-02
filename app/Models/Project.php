@@ -60,7 +60,16 @@ class Project extends Model
                 $query->where('status', true); // قيد التنفيذ
             } else if ($status == 'ongoing') {
                 $query->where('status', false); // مكتمل
-            }         });
+            }         })
+             ->when($filters['isSolitary'] ?? null, function ($query, $isSolitary) {
+                if ($isSolitary =='isSolitary') {
+                    $query->where('isSolitary', true);
+                }
+                if ($isSolitary =='isNormal') {
+                    $query->where('isSolitary', false);
+                }
+
+                        });
     }
 
 }
