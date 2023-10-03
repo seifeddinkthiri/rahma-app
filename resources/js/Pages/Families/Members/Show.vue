@@ -91,8 +91,14 @@
             </tr>
 
             <tr>
-              <td class="h-16 px-4 py-2 border">المستوى الدراسي </td>
-              <td class="h-16 px-4 py-2 border">{{ member.education_level }}</td>
+              <td class="h-16 px-4 py-2 border">المستوى الدراسي</td>
+              <td class="h-16 px-4 py-2 border">
+                <p v-if="member.education_level == 'illiterate'">لا شيء</p>
+                <p v-if="member.education_level == 'primary'">إبتدائي</p>
+                <p v-if="member.education_level == 'preparatory'">إعدادي</p>
+                <p v-if="member.education_level == 'secondary'">ثاناوي</p>
+                <p v-if="member.education_level == 'university'">جامعي</p>
+              </td>
             </tr>
             <tr>
               <td class="h-16 px-4 py-2 border">الوظيفة</td>

@@ -126,8 +126,9 @@
               label=" المستوى الدراسي "
             >
               <option hidden disabled selected :value="null">إختر المستوى الدراسي</option>
-              <option value="illiterate ">أمي</option>
-              <option value="primary">إعدادي</option>
+              <option value="illiterate ">لا شيء</option>
+              <option value="primary ">إبتدائي</option>
+              <option value="preparatory">إعدادي</option>
               <option value="secondary">ثاناوي</option>
               <option value="university ">جامعي</option>
             </select-input>
@@ -196,7 +197,6 @@
                 :active_value="'نعم'"
                 :inactive_value="'لا'"
                 @toggle="toggle_health_insurance"
-
               />
               <ToggleCheckbox
                 :id="'good'"
@@ -206,7 +206,6 @@
                 :active_value="'جيدة'"
                 :inactive_value="'عليلة '"
                 @toggle="toggle_health_Status"
-
               />
             </div>
             <div v-if="form.good == false" class="w-full">
@@ -246,10 +245,7 @@
           >
             <!-- Add a spacer element to create space between the buttons -->
             <div class="w-4"></div>
-            <loading-button
-              :loading="form.processing"
-            class="btn-indigo"              type="submit"
-            >
+            <loading-button :loading="form.processing" class="btn-indigo" type="submit">
               إضافة
             </loading-button>
           </div>
