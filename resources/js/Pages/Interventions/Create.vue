@@ -31,7 +31,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="العائلة"
               ref="familySelect"
-
             >
               <option hidden disabled :value="null">إختر العائلة</option>
 
@@ -48,7 +47,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المسن"
               ref="familySelect"
-
             >
               <option hidden disabled :value="null">إختر المسن</option>
 
@@ -63,7 +61,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="المطلقة"
               ref="familySelect"
-
             >
               <option hidden disabled :value="null">إختر المطلقة</option>
 
@@ -78,7 +75,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الأم العزباء"
               ref="familySelect"
-
             >
               <option hidden disabled :value="null">إختر الأم العزباء</option>
 
@@ -94,7 +90,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="الأرملة"
               ref="familySelect"
-
             >
               <option hidden disabled :value="null">إختر الأرملة</option>
 
@@ -109,7 +104,6 @@
               class="pb-8 pr-6 w-full lg:w-1/2"
               label="في إطار مشروع"
               ref="projectSelect"
-
             >
               <option hidden disabled :value="null">إختر المشروع</option>
 
@@ -124,7 +118,6 @@
               label="نوع التدخل"
               :error="form.errors.type"
               ref="typeSelect"
-
             >
               <option :value="null" selected disabled hidden>إختر نوع التدخل</option>
               <option value="shipments">عيني</option>
@@ -206,12 +199,7 @@
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
           >
-            <button
-            class="btn-indigo"
-              type="submit"
-            >
-              إضافة
-            </button>
+            <button class="btn-indigo" type="submit">إضافة</button>
           </div>
         </div>
       </form>
@@ -262,6 +250,7 @@ export default {
         title: null,
         family: null,
         project: null,
+        isSolitary: false,
       }),
     };
   },
@@ -280,7 +269,6 @@ export default {
           this.$refs.projectSelect.clearSelection();
           this.$refs.typeSelect.clearSelection();
           this.$refs.familySelect.clearSelection();
-
         },
       });
     },

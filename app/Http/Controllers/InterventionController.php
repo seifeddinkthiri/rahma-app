@@ -83,6 +83,7 @@ class InterventionController extends Controller
             'family_id' => Request::get('family'),
             'project_id' => Request::get('project'),
             'intervenor' => Request::get('intervenor'),
+            'isSolitary' => Request::get('isSolitary'),
             'intervenor_phone' => Request::get('intervenor_phone'),
             'notes' => Request::get('notes'),
 
@@ -160,7 +161,7 @@ class InterventionController extends Controller
 
     public function edit(Intervention $intervention)
     {
-        $projects = Project::select('id', 'name')->get();
+        $projects = Project::select('id', 'name')->where('isSolitary',false)->get();
         $families = Family::select('id', 'name', 'caregiver_phone')->where('is_family',true)->get();
         $elderlies = Family::where('social_status','elderly')->get();
         $divorceds = Family::where('social_status','divorced')->get();

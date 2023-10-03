@@ -203,7 +203,6 @@
       ref="note_modal"
       v-if="show_note_modal"
     >
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="save_note">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -253,7 +252,6 @@
       ref="note_modal_update"
       v-if="show_note_modal_update"
     >
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="update_note">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -363,7 +361,6 @@
       ref="home_modal"
       v-if="show_home_modal"
     >
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="save_home">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -437,7 +434,6 @@
         ref="facility_modal_update"
         v-if="show_facility_modal_update"
       >
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
         <div class="fixed inset-0 flex items-center justify-center">
           <form @submit.prevent="update_facility">
             <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -493,118 +489,142 @@
 
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
+    <div
+      class="bg-white rounded-md shadow overflow-hidden mt-6"
+      v-if="show_intervention_modal"
+    >
+      <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+        <div>
+          <div
+            class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
+          >
+            <div
+              class="relative bg-white p-6 sm:p-8 rounded-md shadow max-h-full overflow-y-auto w-full sm:w-2/3 md:w-1/2 lg:w-1/3"
+            >
+              <button
+                class="absolute top-0 right-0 p-4"
+                @click="show_intervention_modal = false"
+              >
+                &times;
+              </button>
+              <form @submit.prevent="store_intervention">
+                <div>
+                  <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+                    <select-input
+                      v-model="intervention_form.type"
+                      class="pb-8 pr-6 lg:w-1/2"
+                      label="نوع التدخل"
+                      :error="intervention_form.errors.type"
+                      ref="typeSelect"
+                    >
+                      <option :value="null" selected disabled hidden>
+                        إختر نوع التدخل
+                      </option>
+                      <option value="shipments">عيني</option>
+                      <option value="cash">نقدي</option>
+                      <option value="other">آخر</option>
+                    </select-input>
 
+                    <text-input
+                      v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                      v-model="intervention_form.value"
+                      :error="intervention_form.errors.value"
+                      label="قيمة التدخل"
+                      :id="
+                        intervention_form.type === 'shipments'
+                          ? 'shipments'
+                          : intervention_form.type === 'cash'
+                          ? 'cash'
+                          : 'other'
+                      "
+                      :placeholder="
+                        intervention_form.type === null
+                          ? 'القيمة'
+                          : intervention_form.type === 'shipments'
+                          ? 'الكمية'
+                          : intervention_form.type === 'cash'
+                          ? 'المبلغ'
+                          : 'القيمة الأخرى'
+                      "
+                    />
+                    <text-input
+                      class="pb-8 pr-6 lg:w-1/2"
+                      type="date"
+                      id="date"
+                      v-model="intervention_form.date"
+                      :error="intervention_form.errors.date"
+                      label="تاريخ التدخل"
+                      placeholder=" تاريخ التدخل هنا"
+                    />
+                    <select-input
+                      v-model="intervention_form.project"
+                      :error="intervention_form.errors.project"
+                      class="pb-8 pr-6 w-full lg:w-1/2"
+                      ref="projectSelect"
+                    >
+                      <option hidden selected disabled :value="null">إختر المشروع</option>
+
+                      <option v-for="project in projects" :value="project.id">
+                        {{ project.name }}
+                      </option>
+                      <option :value="null" v-if="projects.length == 0">
+                        قائمة فارغة
+                      </option>
+                    </select-input>
+                    <text-input
+                      class="pb-8 pr-6 lg:w-1/2"
+                      id="intervenor"
+                      v-model="intervention_form.intervenor"
+                      :error="intervention_form.errors.intervenor"
+                      placeholder="إسم المسؤل هنا"
+                      label="إسم المسؤل"
+                    />
+                    <text-input
+                      class="pb-8 pr-6 lg:w-1/2"
+                      id="intervenor"
+                      v-model="intervention_form.intervenor_phone"
+                      :error="intervention_form.errors.intervenor_phone"
+                      placeholder="هاتف المسؤل هنا"
+                      label="هاتف المسؤل"
+                    />
+                    <TextAreaInput
+                      class="pb-8 pr-6 lg:w-1/2"
+                      id="notes"
+                      v-model="intervention_form.notes"
+                      :error="intervention_form.errors.notes"
+                      placeholder="اكتب ملاحظاتك هنا"
+                      label="ملاحظات"
+                    />
+
+                    <file-input
+                      v-model="intervention_form.file"
+                      :error="intervention_form.errors.file"
+                      class="pb-8 pr-6 lg:w-1/2"
+                      type="file"
+                      label="أضف ملف"
+                    />
+                    <text-input
+                      v-model="intervention_form.title"
+                      :error="intervention_form.errors.title"
+                      class="pb-8 pr-6 lg:w-1/2"
+                      label="عنوان الملف"
+                      placeholder="عنوان الملف هنا"
+                    />
+                  </div>
+
+                  <button class="btn-indigo" type="submit">إضافة</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="mt-6 bg-white rounded shadow overflow-x-auto">
       <div class="flex items-center pr-4 mt-4">
         <button @click="show_intervention_modal = true" class="btn-indigo">
           إنشاء تدخل
         </button>
-      </div>
-      <div ref="intervention_modal" v-if="show_intervention_modal">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-        <div class="fixed inset-0 flex items-center justify-center">
-          <form @submit.prevent="store_intervention">
-            <div class="w-96 h-auto bg-white rounded shadow-xl">
-              <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                <select-input
-                  v-model="intervention_form.type"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  :error="intervention_form.errors.type"
-                >
-                  <option hidden disabled :value="null">نوع التدخل</option>
-                  <option value="shipments">عيني</option>
-                  <option value="cash">نقدي</option>
-                  <option value="other">آخر</option>
-                </select-input>
-                <select-input
-                  v-model="intervention_form.project"
-                  :error="intervention_form.errors.project"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  ref="projectSelect"
-                >
-                  <option hidden selected disabled :value="null">إختر المشروع</option>
-
-                  <option v-for="project in projects" :value="project.id">
-                    {{ project.name }}
-                  </option>
-                  <option :value="null" v-if="projects.length == 0">قائمة فارغة</option>
-                </select-input>
-                <text-input
-                  v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-                  v-model="intervention_form.value"
-                  :error="intervention_form.errors.value"
-                  :id="
-                    intervention_form.type === 'shipments'
-                      ? 'shipments'
-                      : intervention_form.type === 'cash'
-                      ? 'cash'
-                      : 'other'
-                  "
-                  :placeholder="
-                    intervention_form.type === null
-                      ? 'القيمة'
-                      : intervention_form.type === 'shipments'
-                      ? 'الكمية'
-                      : intervention_form.type === 'cash'
-                      ? 'المبلغ'
-                      : 'القيمة الأخرى'
-                  "
-                />
-
-                <text-input
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  id="intervenor"
-                  v-model="intervention_form.intervenor"
-                  :error="intervention_form.errors.intervenor"
-                  placeholder="إسم المسؤل هنا"
-                />
-                <text-input
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  id="intervenor"
-                  v-model="intervention_form.intervenor_phone"
-                  :error="intervention_form.errors.intervenor_phone"
-                  placeholder="هاتف المسؤل هنا"
-                />
-                <file-input
-                  v-model="intervention_form.file"
-                  :error="intervention_form.errors.file"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  type="file"
-                  label="أضف ملف"
-                />
-                <text-input
-                  v-model="intervention_form.title"
-                  :error="intervention_form.errors.title"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  label="عنوان الملف"
-                  placeholder="عنوان الملف هنا"
-                />
-
-                <text-input
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  type="date"
-                  id="date"
-                  v-model="intervention_form.date"
-                  :error="intervention_form.errors.date"
-                  label="تاريخ التدخل"
-                  placeholder=" تاريخ التدخل هنا"
-                />
-              </div>
-              <div
-                class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-              >
-                <button class="btn-indigo" type="submit">إضافة</button>
-                <button
-                  @click="show_intervention_modal = false"
-                  class="inline-flex items-center h-10 justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-                  type="button"
-                >
-                  عودة
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
     <div ref="members" class="bg-white rounded shadow overflow-hidden">
@@ -780,7 +800,6 @@
       ref="file_modal"
       v-if="show_file_modal"
     >
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="save_file">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -938,6 +957,7 @@ export default {
         file: null,
         title: null,
         notes: null,
+        isSolitary: false,
         family: this.family.id,
       }),
       form: this.$inertia.form({

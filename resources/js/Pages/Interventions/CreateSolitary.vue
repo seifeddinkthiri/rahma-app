@@ -192,6 +192,7 @@ export default {
         file: null,
         title: null,
         project: null,
+        isSolitary: true,
       }),
     };
   },

@@ -67,6 +67,16 @@ class projectController extends Controller
 
     public function edit(project $project)
     {
+
+
+        $families = Family::select('id', 'name', 'caregiver_phone')->where('is_family',true)->get();
+        $elderlies = Family::where('social_status','elderly')->get();
+        $divorceds = Family::where('social_status','divorced')->get();
+        $singleMothers = Family::where('social_status','single_mother')->get();
+        $widows = Family::where('social_status','widow')->get();
+
+
+
         return Inertia::render('projects/Edit', [
             'project' => [
                 'id' => $project->id,
@@ -74,10 +84,17 @@ class projectController extends Controller
                 'description' => $project->description,
                 'date' => $project->date,
                 'deadline' => $project->deadline,
+                'isSolitary' => $project->isSolitary,
                 'status' => $project->status,
-                'interventions' => $project->interventions()->get(),
+                'interventions' => $project->interventions()->with('family')->get(),
                 'deleted_at' => $project->deleted_at,
             ],
+            'families' => $families,
+            'elderlies' => $elderlies,
+            'divorceds' => $divorceds,
+            'singleMothers' => $singleMothers,
+            'widows' => $widows,
+
         ]);
     }
     public function show(Project $project)

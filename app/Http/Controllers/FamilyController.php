@@ -83,7 +83,7 @@ class FamilyController extends Controller
 
     public function edit(Family $family)
     {
-        $projects = Project::select('id', 'name')->get();
+        $projects = Project::select('id', 'name')->where('isSolitary',false)->get();
 
         $members = $family->members()
             ->orderBy('id')
