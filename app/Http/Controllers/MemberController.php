@@ -21,7 +21,10 @@ class MemberController extends Controller
 
     public function create_new_one(Family $Family)
     {
-        return Inertia::render('Families/Members/Create_new_one', compact('Family'));
+        $hasWife = $Family->members()->where('kinship', 'wife')->exists();
+        $hasHusband = $Family->members()->where('kinship', 'husband')->exists();
+
+        return Inertia::render('Families/Members/Create_new_one', compact('Family','hasWife','hasHusband'));
     }
 
     public function store()

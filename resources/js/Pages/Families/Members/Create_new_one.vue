@@ -154,6 +154,8 @@
               <option value="elderly">مسن</option>
               <option value="other_member">فرد آخر</option>
               <option value="single_mother">أم عزباء</option>
+              <option v-if="!hasHusband" value="husband">زوج</option>
+              <option v-if="!hasWife" value="wife">زوجة</option>
             </select-input>
             <ToggleCheckbox
               :id="'grant'"
@@ -278,6 +280,8 @@ export default {
   remember: "form",
   props: {
     Family: Object,
+    hasHusband: Boolean,
+    hasWife: Boolean,
   },
   data() {
     return {
