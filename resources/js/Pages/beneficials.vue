@@ -202,6 +202,8 @@
                 <p class="h-4" v-if="family.social_status == 'divorced'">مطلقة</p>
                 <p class="h-4" v-if="family.social_status == 'single_mother'">أم عزباء</p>
                 <p class="h-4" v-if="family.social_status == 'elderly'">مسن</p>
+                <p class="h-4" v-if="family.social_status == 'family'">عائلة معوزة</p>
+
                 <p class="h-4" v-if="family.social_status == null"></p>
               </Link>
             </td>
