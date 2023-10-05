@@ -6,48 +6,48 @@
       <div class="relative">
         <button
           @click="goBack"
-          class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+          class="absolute left-0 pl-2 px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none sm:text-xs md:text-sm"
         >
           عودة
         </button>
       </div>
-      <h2 class="mt-12 text-2xl font-bold">المشروع / {{ project.name }}</h2>
+      <h2 class="mt-12 sm:text-xl md:text-2xl font-bold">المشروع / {{ project.name }}</h2>
 
-      <div class="mt-8 p-4 bg-white rounded-md shadow">
+      <div class="mt-8 p-4 bg-white rounded-md shadow overflow-x-auto">
         <table class="w-full">
           <tbody>
             <tr>
-              <td class="px-4 py-2 h-16 border">تاريخ المشروع</td>
-              <td class="px-4 py-2 h-16 border">{{ project.date }}</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">تاريخ المشروع</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">{{ project.date }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 h-16 border">تاريخ إنتهاء المشروع</td>
-              <td class="px-4 py-2 h-16 border">{{ project.deadline }}</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">تاريخ إنتهاء المشروع</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">{{ project.deadline }}</td>
             </tr>
             <tr>
-              <td class="px-4 py-2 h-16 border">مشروع عرضي</td>
-              <td class="px-4 py-2 h-16 border">
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">مشروع عرضي</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">
                 {{ project.isSolitary ? "نعم " : " لا " }}
               </td>
             </tr>
             <tr>
-              <td class="px-4 py-2 h-16 border">الحالة</td>
-              <td class="px-4 py-2 h-16 border">
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">الحالة</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">
                 {{ project.status ? "مكتمل" : "قيد التنفيذ" }}
               </td>
             </tr>
             <tr>
-              <td class="px-4 py-2 h-16 border">تفاصيل المشروع</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">تفاصيل المشروع</td>
               <td
-                class="px-4 py-2 h-16 border"
+                class="sm:px-2 md:px-4 py-2 h-16 border"
                 style="white-space: pre-line; word-wrap: break-word"
               >
                 {{ project.description }}
               </td>
             </tr>
             <tr>
-              <td class="px-4 py-2 h-16 border">التدخلات</td>
-              <td class="px-4 py-2 h-16 border">
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">التدخلات</td>
+              <td class="sm:px-2 md:px-4 py-2 h-16 border">
                 <!-- interventions -->
                 {{ project.interventions.length }}
               </td>
@@ -56,9 +56,9 @@
         </table>
       </div>
 
-      <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
+      <h2 class="mt-12 sm:text-xl md:text-2xl font-bold">التدخلات</h2>
 
-      <div class="mt-8 p-4 bg-white rounded-md shadow">
+      <div class="mt-8 p-4 bg-white rounded-md shadow overflow-x-auto">
         <table class="w-full whitespace-nowrap">
           <thead>
             <tr class="text-right font-bold">
