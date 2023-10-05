@@ -181,6 +181,7 @@ class MemberController extends Controller
                 'social_status' => $Member->social_status,
                 'kinship' => $Member->kinship,
                 'education_level' => $Member->education_level,
+                'caregiver' => $Member->caregiver,
                 'job' => $Member->job,
                 'job_place' => $Member->job_place,
                 'family_id' => $Member->family_id,

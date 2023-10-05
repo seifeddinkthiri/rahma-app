@@ -1,4 +1,5 @@
 <template>
+  member.caregiverr : {{ member.caregiver }}
   <div class="relative">
     <!-- Member Card -->
     <div class="p-6 bg-white rounded-md shadow">
