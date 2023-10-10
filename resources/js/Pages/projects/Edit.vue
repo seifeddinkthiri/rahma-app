@@ -399,7 +399,7 @@
 
                     <select-input
                       v-model="intervention_form.type"
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       label="نوع التدخل"
                       :error="intervention_form.errors.type"
                       ref="typeSelect"
@@ -435,7 +435,7 @@
                       "
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       type="date"
                       id="date"
                       v-model="intervention_form.date"
@@ -536,7 +536,7 @@
                       <option :value="null" v-if="widows.length == 0" disabled>قائمة فارغة</option>
                     </select-input>
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="intervenor"
                       v-model="intervention_form.intervenor"
                       :error="intervention_form.errors.intervenor"
@@ -544,7 +544,7 @@
                       label="إسم المسؤل"
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="intervenor"
                       v-model="intervention_form.intervenor_phone"
                       :error="intervention_form.errors.intervenor_phone"
@@ -552,7 +552,7 @@
                       label="هاتف المسؤل"
                     />
                     <TextAreaInput
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="notes"
                       v-model="intervention_form.notes"
                       :error="intervention_form.errors.notes"
@@ -563,14 +563,14 @@
                     <file-input
                       v-model="intervention_form.file"
                       :error="intervention_form.errors.file"
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       type="file"
                       label="أضف ملف"
                     />
                     <text-input
                       v-model="intervention_form.title"
                       :error="intervention_form.errors.title"
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       label="عنوان الملف"
                       placeholder="عنوان الملف هنا"
                     />
@@ -610,7 +610,7 @@
                   <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <select-input
                       v-model="intervention_form.type"
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       label="نوع التدخل"
                       :error="intervention_form.errors.type"
                       ref="typeSelect"
@@ -646,7 +646,7 @@
                       "
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       type="date"
                       id="date"
                       v-model="intervention_form.date"
@@ -749,7 +749,7 @@
                     </select-input>
 
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="intervenor"
                       v-model="intervention_form.intervenor"
                       :error="intervention_form.errors.intervenor"
@@ -757,7 +757,7 @@
                       label="إسم المسؤل"
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="intervenor"
                       v-model="intervention_form.intervenor_phone"
                       :error="intervention_form.errors.intervenor_phone"
@@ -765,7 +765,7 @@
                       label="هاتف المسؤل"
                     />
                     <TextAreaInput
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="notes"
                       v-model="intervention_form.notes"
                       :error="intervention_form.errors.notes"
@@ -776,14 +776,14 @@
                     <file-input
                       v-model="intervention_form.file"
                       :error="intervention_form.errors.file"
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       type="file"
                       label="أضف ملف"
                     />
                     <text-input
                       v-model="intervention_form.title"
                       :error="intervention_form.errors.title"
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       label="عنوان الملف"
                       placeholder="عنوان الملف هنا"
                     />
