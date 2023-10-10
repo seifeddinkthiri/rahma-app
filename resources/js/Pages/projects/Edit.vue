@@ -365,7 +365,7 @@
                 <div>
                   <div class="flex flex-wrap -mb-8 -mr-6 p-8">
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="beneficial_name"
                       v-model="intervention_form.beneficial_name"
                       :error="intervention_form.errors.beneficial_name"
@@ -373,7 +373,7 @@
                       label="إسم المنتفع "
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="beneficial_phone"
                       v-model="intervention_form.beneficial_phone"
                       :error="intervention_form.errors.beneficial_phone"
@@ -381,7 +381,7 @@
                       label="هاتف المنتفع "
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="beneficial_cin"
                       v-model="intervention_form.beneficial_cin"
                       :error="intervention_form.errors.beneficial_cin"
@@ -389,7 +389,7 @@
                       label="بطاقة تعريف المنتفع"
                     />
                     <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
+                      class="pb-8 pr-6 lg:w-1/2 min-w-full sm:min-w-0"
                       id="beneficial_address"
                       v-model="intervention_form.beneficial_address"
                       :error="intervention_form.errors.beneficial_address"
@@ -476,7 +476,7 @@
                     <select-input
                       v-if="intervention_form.beneficial == 'elderly'"
                       v-model="intervention_form.family"
-                      class="pb-8 pr-6 w-full lg:w-1/2"
+                      class="pb-8 pr-6 w-full lg:w-1/2  min-w-full sm:min-w-0"
                       label="المسن"
                     >
                       <option hidden disabled :value="null">إختر المسن</option>
@@ -506,7 +506,7 @@
                     <select-input
                       v-if="intervention_form.beneficial == 'single_mother'"
                       v-model="intervention_form.family"
-                      class="pb-8 pr-6 w-full lg:w-1/2"
+                      class="pb-8 pr-6 w-full lg:w-1/2  min-w-full sm:min-w-0"
                       label="الأم العزباء"
                     >
                       <option hidden disabled :value="null">إختر الأم العزباء</option>
@@ -525,7 +525,7 @@
                     <select-input
                       v-if="intervention_form.beneficial == 'widow'"
                       v-model="intervention_form.family"
-                      class="pb-8 pr-6 w-full lg:w-1/2"
+                      class="pb-8 pr-6 w-full lg:w-1/2  min-w-full sm:min-w-0"
                       label="الأرملة"
                     >
                       <option hidden disabled :value="null">إختر الأرملة</option>
