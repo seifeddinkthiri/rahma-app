@@ -318,8 +318,8 @@
   </div>
   <br />
   <div class="mt-8 p-4 bg-white rounded-md shadow overflow-x-auto">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div v-for="home in family.home" :key="home.id" class="bg-white rounded-md shadow-md p-6">
+  <div>
+    <div v-for="home in family.home" :key="home.id">
       <div class="mb-4">
   <strong>الوضعية القانونية   : </strong>
   <span v-if="home.status == 'Ownership'">ملك</span>
@@ -329,11 +329,13 @@
 </div>
 
       <div class="mb-4">
-        <strong>الوصف:</strong>
-        <p class="truncate">{{ home.desciption }}</p>
       </div>
       <div  v-if="home.status == 'lease'">
         <strong>سعر الكراء:  </strong>       <span>{{ home.allocation_price }}</span>
+
+      </div>
+      <div>
+        <p >{{ home.desciption }}</p>
 
       </div>
     </div>

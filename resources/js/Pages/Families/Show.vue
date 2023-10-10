@@ -190,7 +190,7 @@
 <!-- home -->
 <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
 <br />
-<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+<div >
   <div v-for="home in family.home" :key="home.id">
     <div class="p-4 bg-white rounded-md shadow">
       <h3 class="mb-2 text-xl">
