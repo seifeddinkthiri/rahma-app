@@ -11,7 +11,7 @@
     </h1>
 
     <!--  -->
-    <div class="bg-white rounded-md shadow overflow-hidden">
+    <div class="bg-white rounded-md shadow overflow-hidden md:rounded-lg">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input
@@ -199,10 +199,13 @@
       </div>
     </div>
     <div
-      class="mt-6 bg-white rounded shadow overflow-x-auto"
-      ref="note_modal"
-      v-if="show_note_modal"
+    class="mt-6 rounded shadow overflow-x-auto"
+  :class="{ 'bg-white': show_note_modal, 'bg-transparent': !show_note_modal }"
+  ref="note_modal"
+  v-if="show_note_modal"
     >
+    <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+</div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="save_note">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -210,27 +213,30 @@
               <label for="title" class="block mb-2 text-gray-700 text-sm font-bold">
                 العنوان
               </label>
-              <input
-                id="title"
+             
+              <text-input
+              id="title"
                 v-model="notes_form.title"
                 :error="notes_form.errors.title"
                 placeholder="اكتب عنوان الملاحظة "
                 class="w-full"
-              />
+          />
               <label
                 for="message"
                 class="block mb-2 mt-6 text-gray-700 text-sm font-bold"
               >
                 التفاصيل
               </label>
-              <textarea
+              <TextareaInput
                 v-model="notes_form.value"
+                :error="notes_form.errors.value"
+
                 id="message"
                 name="message"
                 rows="5"
                 placeholder="اكتب تفاصيل الملاحظة "
                 class="w-full"
-              ></textarea>
+              ></TextareaInput>
             </div>
             <div class="flex justify-end px-4 py-3 bg-gray-50">
               <button
@@ -297,70 +303,54 @@
     </div>
 
     <h2 class="mt-12 text-2xl font-bold">المسكن</h2>
-    <br />
-    <div ref="members" class="bg-white rounded shadow overflow-hidden">
-      <br />
-      <div class="flex items-center pr-4">
-        <button v-if="family.home.length == 0" class="btn-indigo" @click="openHomeModal">
-          <span>إنشاء</span>
-          <span class="hidden md:inline">&nbsp;المسكن</span>
-        </button>
-        <button v-else class="btn-indigo" @click="edit_home">
-          <span>تعديل</span>
-          <span class="hidden md:inline">&nbsp;المسكن</span>
-        </button>
+<br />
+<div ref="home card" class="bg-white rounded shadow overflow-hidden">
+  <br />
+  <div class="flex flex-col md:flex-row items-center pr-4">
+    <button v-if="family.home.length == 0" class="btn-indigo md:mr-2" @click="openHomeModal">
+      <span>إنشاء</span>
+      <span class="hidden md:inline">&nbsp;المسكن</span>
+    </button>
+    <button v-else class="btn-indigo md:mr-2" @click="edit_home">
+      <span>تعديل</span>
+      <span class="hidden md:inline">&nbsp;المسكن</span>
+    </button>
+  </div>
+  <br />
+  <div class="mt-8 p-4 bg-white rounded-md shadow overflow-x-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div v-for="home in family.home" :key="home.id" class="bg-white rounded-md shadow-md p-6">
+      <div class="mb-4">
+  <strong>الوضعية القانونية   : </strong>
+  <span v-if="home.status == 'Ownership'">ملك</span>
+  <span v-if="home.status == 'without compensation'">بدون مقابل</span>
+  <span v-if="home.status == 'inherited'">ورثة</span>
+  <span v-if="home.status == 'lease'">إيجار</span>
+</div>
+
+      <div class="mb-4">
+        <strong>الوصف:</strong>
+        <p class="truncate">{{ home.desciption }}</p>
       </div>
-      <br />
-      <table class="w-full whitespace-nowrap">
-        <thead>
-          <tr class="h-12 text-right font-bold">
-            <th class="pr-4">الوضعية القانونية</th>
-            <th>الوصف</th>
-            <th>سعر الكراء</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="home in family.home"
-            :key="home.id"
-            class="hover:bg-gray-100 focus-within:bg-gray-100"
-          >
-            <td class="border-t">
-              <button class="flex items-center px-6 py-4 focus:text-indigo-500">
-                <p v-if="home.status == 'Ownership'">ملك</p>
-                <p v-if="home.status == 'without compensation'">بدون مقابل</p>
-                <p v-if="home.status == 'inherited'">ورثة</p>
-                <p v-if="home.status == 'lease'">إيجار</p>
-              </button>
-            </td>
-            <td class="border-t">
-              <div class="overflow-x-auto w-80 ...">
-                <p class="truncate">
-                  {{ home.desciption }}
-                </p>
-              </div>
-            </td>
-            <td class="border-t">
-              <button class="flex items-center px-6 py-4 focus:text-indigo-500">
-                <p v-if="home.status == 'lease'">{{ home.allocation_price }}</p>
-              </button>
-            </td>
-            <td class="w-px border-t">
-              <button type="button" class="flex items-center px-4" tabindex="-1"></button>
-            </td>
-          </tr>
-          <tr v-if="family.home.length === 0">
-            <td class="px-6 py-4 border-t" colspan="2">لا يوجد معطيات المسكن</td>
-          </tr>
-        </tbody>
-      </table>
+      <div  v-if="home.status == 'lease'">
+        <strong>سعر الكراء:  </strong>       <span>{{ home.allocation_price }}</span>
+
+      </div>
     </div>
+  </div>
+
+  <div v-if="family.home.length === 0" class="px-6 py-4 border-t">لا يوجد معطيات المسكن</div>
+</div>
+
+</div>
+
 
     <div
       class="mt-6 bg-white rounded shadow overflow-x-auto"
       ref="home_modal"
       v-if="show_home_modal"
-    >
+    >    <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+</div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="save_home">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -489,146 +479,138 @@
 
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
-    <div
-      class="bg-white rounded-md shadow overflow-hidden mt-6"
-      v-if="show_intervention_modal"
-    >
-      <div class="mt-6 bg-white rounded shadow overflow-x-auto">
-        <div>
-          <div
-            class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
-          >
-            <div
-              class="relative bg-white p-6 sm:p-8 rounded-md shadow max-h-full overflow-y-auto w-full sm:w-2/3 md:w-1/2 lg:w-1/3"
-            >
-              <button
-                class="absolute top-0 right-0 p-4"
-                @click="show_intervention_modal = false"
+    <div class="bg-white rounded-md shadow overflow-hidden mt-6" v-if="show_intervention_modal">
+  <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+    <div>
+      <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+        <div class="relative bg-white p-6 sm:p-8 rounded-md shadow max-h-full overflow-y-auto w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+          <button class="absolute top-0 right-0 p-4" @click="show_intervention_modal = false">
+            &times;
+          </button>
+          <form @submit.prevent="store_intervention">
+            <div>
+              <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+                <select-input
+                  v-model="intervention_form.type"
+                  class="pb-8 pr-6 lg:w-1/2 w-full md:w-1/2"
+                  label="نوع التدخل"
+                  :error="intervention_form.errors.type"
+                  ref="typeSelect"
+                >
+                <option :value="null" selected disabled hidden>
+                  إختر نوع التدخل
+                </option>
+                <option value="shipments">عيني</option>
+                <option value="cash">نقدي</option>
+                <option value="other">آخر</option>                </select-input>
+
+                <text-input
+                  v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                  v-model="intervention_form.value"
+                  :error="intervention_form.errors.value"
+                  label="قيمة التدخل"
+                  :id="
+                  intervention_form.type === 'shipments'
+                    ? 'shipments'
+                    : intervention_form.type === 'cash'
+                    ? 'cash'
+                    : 'other'
+                "
+                :placeholder="
+                  intervention_form.type === null
+                    ? 'القيمة'
+                    : intervention_form.type === 'shipments'
+                    ? 'الكمية'
+                    : intervention_form.type === 'cash'
+                    ? 'المبلغ'
+                    : 'القيمة الأخرى'
+                "
+                />
+                <!-- Other input fields... -->
+                <text-input
+                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                type="date"
+                id="date"
+                v-model="intervention_form.date"
+                :error="intervention_form.errors.date"
+                label="تاريخ التدخل"
+                placeholder=" تاريخ التدخل هنا"
+              />
+              <select-input
+                v-model="intervention_form.project"
+                :error="intervention_form.errors.project"
+                class="pb-8 pr-6 lg:w-1/2 w-full md:w-1/2"
+                ref="projectSelect"
               >
-                &times;
-              </button>
-              <form @submit.prevent="store_intervention">
-                <div>
-                  <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-                    <select-input
-                      v-model="intervention_form.type"
-                      class="pb-8 pr-6 lg:w-1/2"
-                      label="نوع التدخل"
-                      :error="intervention_form.errors.type"
-                      ref="typeSelect"
-                    >
-                      <option :value="null" selected disabled hidden>
-                        إختر نوع التدخل
-                      </option>
-                      <option value="shipments">عيني</option>
-                      <option value="cash">نقدي</option>
-                      <option value="other">آخر</option>
-                    </select-input>
+                <option hidden selected disabled :value="null">إختر المشروع</option>
 
-                    <text-input
-                      v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
-                      v-model="intervention_form.value"
-                      :error="intervention_form.errors.value"
-                      label="قيمة التدخل"
-                      :id="
-                        intervention_form.type === 'shipments'
-                          ? 'shipments'
-                          : intervention_form.type === 'cash'
-                          ? 'cash'
-                          : 'other'
-                      "
-                      :placeholder="
-                        intervention_form.type === null
-                          ? 'القيمة'
-                          : intervention_form.type === 'shipments'
-                          ? 'الكمية'
-                          : intervention_form.type === 'cash'
-                          ? 'المبلغ'
-                          : 'القيمة الأخرى'
-                      "
-                    />
-                    <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
-                      type="date"
-                      id="date"
-                      v-model="intervention_form.date"
-                      :error="intervention_form.errors.date"
-                      label="تاريخ التدخل"
-                      placeholder=" تاريخ التدخل هنا"
-                    />
-                    <select-input
-                      v-model="intervention_form.project"
-                      :error="intervention_form.errors.project"
-                      class="pb-8 pr-6 w-full lg:w-1/2"
-                      ref="projectSelect"
-                    >
-                      <option hidden selected disabled :value="null">إختر المشروع</option>
+                <option v-for="project in projects" :value="project.id">
+                  {{ project.name }}
+                </option>
+                <option :value="null" disabled v-if="projects.length == 0">
+                  قائمة فارغة
+                </option>
+              </select-input>
+              <text-input
+                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                id="intervenor"
+                v-model="intervention_form.intervenor"
+                :error="intervention_form.errors.intervenor"
+                placeholder="إسم المسؤل هنا"
+                label="إسم المسؤل"
+              />
+              <text-input
+                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                id="intervenor"
+                v-model="intervention_form.intervenor_phone"
+                :error="intervention_form.errors.intervenor_phone"
+                placeholder="هاتف المسؤل هنا"
+                label="هاتف المسؤل"
+              />
+              <file-input
+                v-model="intervention_form.file"
+                :error="intervention_form.errors.file"
+                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                type="file"
+                label="أضف ملف"
+              />
+              <text-input
+                v-model="intervention_form.title"
+                :error="intervention_form.errors.title"
+                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                label="عنوان الملف"
+                placeholder="عنوان الملف هنا"
+              />
+              <TextAreaInput
+                 v-bind:class="['pb-8', 'pr-6', 'w-full', 'lg:w-1/2']"
+                id="notes"
+                v-model="intervention_form.notes"
+                :error="intervention_form.errors.notes"
+                placeholder="اكتب ملاحظاتك هنا"
+                label="ملاحظات"
+              />
 
-                      <option v-for="project in projects" :value="project.id">
-                        {{ project.name }}
-                      </option>
-                      <option :value="null" v-if="projects.length == 0">
-                        قائمة فارغة
-                      </option>
-                    </select-input>
-                    <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
-                      id="intervenor"
-                      v-model="intervention_form.intervenor"
-                      :error="intervention_form.errors.intervenor"
-                      placeholder="إسم المسؤل هنا"
-                      label="إسم المسؤل"
-                    />
-                    <text-input
-                      class="pb-8 pr-6 lg:w-1/2"
-                      id="intervenor"
-                      v-model="intervention_form.intervenor_phone"
-                      :error="intervention_form.errors.intervenor_phone"
-                      placeholder="هاتف المسؤل هنا"
-                      label="هاتف المسؤل"
-                    />
-                    <TextAreaInput
-                      class="pb-8 pr-6 lg:w-1/2"
-                      id="notes"
-                      v-model="intervention_form.notes"
-                      :error="intervention_form.errors.notes"
-                      placeholder="اكتب ملاحظاتك هنا"
-                      label="ملاحظات"
-                    />
-
-                    <file-input
-                      v-model="intervention_form.file"
-                      :error="intervention_form.errors.file"
-                      class="pb-8 pr-6 lg:w-1/2"
-                      type="file"
-                      label="أضف ملف"
-                    />
-                    <text-input
-                      v-model="intervention_form.title"
-                      :error="intervention_form.errors.title"
-                      class="pb-8 pr-6 lg:w-1/2"
-                      label="عنوان الملف"
-                      placeholder="عنوان الملف هنا"
-                    />
-                  </div>
-
-                  <button class="btn-indigo" type="submit">إضافة</button>
-                </div>
-              </form>
+           
+              </div>
             </div>
-          </div>
+
+            <button class="btn-indigo w-full lg:w-auto" type="submit">إضافة</button>
+
+          </form>
         </div>
       </div>
     </div>
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+  </div>
+</div>
+
+   
+    <div class="mt-8 p-4 bg-white rounded-md shadow overflow-x-auto">
       <div class="flex items-center pr-4 mt-4">
         <button @click="show_intervention_modal = true" class="btn-indigo">
           إنشاء تدخل
         </button>
       </div>
-    </div>
-    <div ref="members" class="bg-white rounded shadow overflow-hidden">
-      <table class="table-auto w-full text-right">
+        <table class="w-full">
         <thead class="text-right">
           <tr class="h-12 text-right font-bold">
             <th class="pr-4">النوع</th>
@@ -800,6 +782,8 @@
       ref="file_modal"
       v-if="show_file_modal"
     >
+    <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+</div>
       <div class="fixed inset-0 flex items-center justify-center">
         <form @submit.prevent="save_file">
           <div class="w-96 h-auto bg-white rounded shadow-xl">
@@ -837,7 +821,7 @@
       </div>
     </div>
     <br />
-    <div ref="files" class="bg-white rounded shadow overflow-hidden">
+    <div ref="files" class="bg-white rounded shadow overflow-x-auto">
       <br />
       <div class="flex items-center pr-4">
         <button class="btn-indigo" @click="show_file_modal = true">
@@ -1071,18 +1055,28 @@ export default {
     },
 
     save_file() {
-      this.files_form.post(`/files/${this.family.id}`);
-      this.files_form.title = null;
+      this.files_form.post(`/files/${this.family.id}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.files_form.title = null;
       this.files_form.file = null;
       this.show_file_modal = false;
+        },
+      });
+      
     },
 
     save_note() {
-      this.show_note_modal = false;
 
-      this.notes_form.post(`/notes/${this.family.id}`);
-      this.notes_form.title = null;
+      this.notes_form.post(`/notes/${this.family.id}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.show_note_modal = false;
+          this.notes_form.title = null;
       this.notes_form.value = null;
+        },
+      });
+     
     },
     update_note() {
       this.show_note_modal_update = false;

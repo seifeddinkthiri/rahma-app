@@ -237,6 +237,10 @@
               <option value="تطاوين">تطاوين</option>
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
+              <option value="قبلي">قبلي</option>
+              <option value="بنزرت">بنزرت</option>
+              <option value="القيروان">القيروان</option>
+              <option value="قفصة">قفصة</option>
             </select-input>
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -456,6 +460,10 @@
               <option value="تطاوين">تطاوين</option>
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
+              <option value="قبلي">قبلي</option>
+              <option value="بنزرت">بنزرت</option>
+              <option value="القيروان">القيروان</option>
+              <option value="قفصة">قفصة</option>
             </select-input>
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -694,6 +702,10 @@
               <option value="تطاوين">تطاوين</option>
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
+              <option value="قبلي">قبلي</option>
+              <option value="بنزرت">بنزرت</option>
+              <option value="القيروان">القيروان</option>
+              <option value="قفصة">قفصة</option>
             </select-input>
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"

@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto py-3 space-y-5" ref="breadcrumb">
+  <div class="container mx-auto py-3 space-y-5 flex flex-wrap" ref="breadcrumb">
     <!-- Breadcrumb -->
-    <div class="px-4 py-2 bg-white rounded-lg shadow">
+    <div class="px-4 py-2 bg-white rounded-lg shadow overflow-x-auto">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-4">
           <li></li>

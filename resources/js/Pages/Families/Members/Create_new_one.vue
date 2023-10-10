@@ -74,6 +74,10 @@
               <option value="تطاوين">تطاوين</option>
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
+              <option value="قبلي">قبلي</option>
+              <option value="بنزرت">بنزرت</option>
+              <option value="القيروان">القيروان</option>
+              <option value="قفصة">قفصة</option>
             </select-input>
             <text-input
               class="pb-8 pr-6 w-full lg:w-1/2"
@@ -189,58 +193,59 @@
                 />
               </div>
             </div>
-            <p class="text-18 pb-8 pr-6 w-full text-black font-bold">البيانات الصحة</p>
-            <div class="flex flex-row flex-nowrap w-full">
-              <ToggleCheckbox
-                :id="'health_insurance'"
-                :class="'lg:w-1/2'"
-                :isChecked="form.health_insurance"
-                :label="'التغطية الصحية'"
-                :active_value="'نعم'"
-                :inactive_value="'لا'"
-                @toggle="toggle_health_insurance"
-              />
-              <ToggleCheckbox
-                :id="'good'"
-                :class="'lg:w-1/2'"
-                :isChecked="form.good"
-                :label="'الحالة الصحية'"
-                :active_value="'جيدة'"
-                :inactive_value="'عليلة '"
-                @toggle="toggle_health_Status"
-              />
-            </div>
-            <div v-if="form.good == false" class="w-full">
-              <div class="flex flex-row flex-nowrap w-full">
-                <text-input
-                  class="pb-8 pr-6 w-full"
-                  id="disease"
-                  :error="form.errors.disease"
-                  v-model="form.disease"
-                  label="مرض مزمن"
-                  placeholder="  المرض المزمن هنا"
-                  :disabled="isFormDisabled"
-                />
-                <text-input
-                  class="pb-8 pr-6 w-full"
-                  id="disability"
-                  v-model="form.disability"
-                  :error="form.errors.disability"
-                  label=" إعاقة"
-                  placeholder="الإعاقة هنا"
-                  :disabled="isFormDisabled"
-                />
+            <p class="text-xl pb-8 pr-6 w-full font-bold">البيانات الصحية</p>
+            <div class="flex flex-wrap -mb-8 -mr-6">
+  <ToggleCheckbox
+    :id="'health_insurance'"
+    :class="'w-full lg:w-1/2'"
+    :isChecked="form.health_insurance"
+    :label="'التغطية الصحية'"
+    :active_value="'نعم'"
+    :inactive_value="'لا'"
+    @toggle="toggle_health_insurance"
+  />
+  <ToggleCheckbox
+    :id="'good'"
+    :class="'w-full lg:w-1/2'"
+    :isChecked="form.good"
+    :label="'الحالة الصحية'"
+    :active_value="'جيدة'"
+    :inactive_value="'عليلة '"
+    @toggle="toggle_health_Status"
+  />
+</div>
 
-                <text-input
-                  v-model="form.disability_card_number"
-                  :error="form.errors.disability_card_number"
-                  class="pb-8 pr-6 w-full lg:w-1/2"
-                  label="رقم بطاقة الإعاقة"
-                  placeholder="الرقم هنا"
-                  :disabled="isFormDisabled"
-                />
-              </div>
-            </div>
+<!-- Section 2 -->
+<div v-if="form.good == false" class="w-full mt-6">
+  <div class="flex flex-wrap -mb-8 -mr-6">
+    <text-input
+      class="pb-8 pr-6 w-full lg:w-1/2"
+      id="disease"
+      :error="form.errors.disease"
+      v-model="form.disease"
+      label="مرض مزمن"
+      placeholder="  المرض المزمن هنا"
+      :disabled="isFormDisabled"
+    />
+    <text-input
+      class="pb-8 pr-6 w-full lg:w-1/2"
+      id="disability"
+      v-model="form.disability"
+      :error="form.errors.disability"
+      label=" إعاقة"
+      placeholder="الإعاقة هنا"
+      :disabled="isFormDisabled"
+    />
+    <text-input
+      v-model="form.disability_card_number"
+      :error="form.errors.disability_card_number"
+      class="pb-8 pr-6 w-full lg:w-1/2"
+      label="رقم بطاقة الإعاقة"
+      placeholder="الرقم هنا"
+      :disabled="isFormDisabled"
+    />
+  </div>
+</div>
           </div>
           <div
             class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"

@@ -163,6 +163,7 @@ class FamilyController extends Controller
 
 
 
+            $projects = Project::select('id', 'name')->where('isSolitary',false)->get();
 
 
         return Inertia::render('Families/Show', [
@@ -183,6 +184,7 @@ class FamilyController extends Controller
                 'interventions' => $family->interventions()->get(),
                 'home' => $family->home()->get(),
             ],
+            'projects' =>$projects,
         ]);
     }
     public function update(Family $family)

@@ -2,7 +2,7 @@
   <div>
     <Head title="Create User" />
     <h1 class="mb-8 text-xl font-bold">
-      <Link class="text-blue-400 hover:text-blue-600" href="/users">المستخدمون</Link>
+      <Link class="text-blue-400 hover:text-blue-600" href="/users">المستخدم</Link>
       <span class="text-blue-400 font-medium"> : </span> إنشاء
     </h1>
     <div class="bg-white rounded-md shadow overflow-hidden">

@@ -1,20 +1,12 @@
 <template>
-  <div class="p-6 bg-white rounded-md shadow">
+  <div class="p-6 bg-white rounded-md shadow overflow-x-auto">
     <Head :title="`${form.first_name} ${form.last_name}`" />
-    <div class="relative">
-      <div>
-        <img
-          v-if="user.photo"
-          class="w-18 h-18 rounded absolute top-0 left-0 border border-indigo-600 block"
-          :src="user.photo"
-        />
-      </div>
-    </div>
+   
     <br />
     <div class="flex justify-start mb-8 max-w-xl">
       <h1 class="text-xl font-bold">
         <Link class="text-indigo-400 hover:text-indigo-600" href="/users"
-          >المستخدمون</Link
+          >المستخدم</Link
         >
         <span class="text-indigo-400 font-medium"> : </span>
         {{ form.first_name }} {{ form.last_name }}

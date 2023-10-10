@@ -78,6 +78,10 @@
               <option value="تطاوين">تطاوين</option>
               <option value="توزر">توزر</option>
               <option value="زغوان">زغوان</option>
+              <option value="قبلي">قبلي</option>
+              <option value="بنزرت">بنزرت</option>
+              <option value="القيروان">القيروان</option>
+              <option value="قفصة">قفصة</option>
             </select-input>
           </div>
           <div
@@ -211,70 +215,69 @@
       </form>
     </div>
     <h2 class="mt-12 text-2xl font-bold">الحالة الصحية</h2>
-    <div class="bg-white rounded-md shadow overflow-hidden">
-      <form @submit.prevent="update_health_status">
-        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <div class="flex flex-row flex-nowrap w-full">
-            <ToggleCheckbox
-              :id="'health_insurance'"
-              :class="'lg:w-1/2'"
-              :isChecked="health_status_form.health_insurance"
-              :label="'التغطية الصحية'"
-              :active_value="'نعم'"
-              :inactive_value="'لا'"
-              @toggle="toggle_health_insurance"
-            />
-            <ToggleCheckbox
-              :id="'good'"
-              :class="'lg:w-1/2'"
-              :isChecked="health_status_form.good"
-              :label="'الحالة الصحية'"
-              :active_value="'جيدة'"
-              :inactive_value="'عليلة '"
-              @toggle="toggle_health_Status"
-            />
-          </div>
-          <div v-if="health_status_form.good == false" class="w-full">
-            <div class="flex flex-row flex-nowrap w-full">
-              <text-input
-                class="pb-8 pr-6 w-full"
-                id="disease"
-                :error="health_status_form.errors.disease"
-                v-model="health_status_form.disease"
-                label="مرض مزمن"
-                placeholder="  المرض المزمن هنا"
-              />
-              <text-input
-                class="pb-8 pr-6 w-full"
-                id="disability"
-                v-model="health_status_form.disability"
-                :error="health_status_form.errors.disability"
-                label=" إعاقة"
-                placeholder="الإعاقة هنا"
-              />
+<div class="bg-white rounded-md shadow overflow-hidden">
+  <form @submit.prevent="update_health_status">
+    <div class="flex flex-wrap -mb-8 -mr-6 p-8">
+      <div class="flex flex-row flex-wrap w-full">
+        <ToggleCheckbox
+          :id="'health_insurance'"
+          :class="'w-full lg:w-1/2'"
+          :isChecked="health_status_form.health_insurance"
+          :label="'التغطية الصحية'"
+          :active_value="'نعم'"
+          :inactive_value="'لا'"
+          @toggle="toggle_health_insurance"
+        />
+        <ToggleCheckbox
+          :id="'good'"
+          :class="'w-full lg:w-1/2'"
+          :isChecked="health_status_form.good"
+          :label="'الحالة الصحية'"
+          :active_value="'جيدة'"
+          :inactive_value="'عليلة '"
+          @toggle="toggle_health_Status"
+        />
+      </div>
+      <div v-if="health_status_form.good == false" class="w-full">
+        <div class="flex flex-wrap -mb-8 -mr-6">
+          <text-input
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            id="disease"
+            :error="health_status_form.errors.disease"
+            v-model="health_status_form.disease"
+            label="مرض مزمن"
+            placeholder="  المرض المزمن هنا"
+          />
+          <text-input
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            id="disability"
+            v-model="health_status_form.disability"
+            :error="health_status_form.errors.disability"
+            label=" إعاقة"
+            placeholder="الإعاقة هنا"
+          />
 
-              <text-input
-                v-model="health_status_form.disability_card_number"
-                :error="health_status_form.errors.disability_card_number"
-                class="pb-8 pr-6 w-full lg:w-1/2"
-                label="رقم بطاقة الإعاقة"
-                placeholder="الرقم هنا"
-              />
-            </div>
-          </div>
+          <text-input
+            v-model="health_status_form.disability_card_number"
+            :error="health_status_form.errors.disability_card_number"
+            class="pb-8 pr-6 w-full lg:w-1/2"
+            label="رقم بطاقة الإعاقة"
+            placeholder="الرقم هنا"
+          />
         </div>
-        <div
-          class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100"
-        >
-          <loading-button
-            :loading="form.processing"
-            class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
-            type="submit"
-            >تسجيل التعديلات
-          </loading-button>
-        </div>
-      </form>
+      </div>
     </div>
+    <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
+      <loading-button
+        :loading="form.processing"
+        class="inline-flex items-center justify-center px-4 py-2 text-gray-700 text-sm font-medium bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 rounded focus:outline-none"
+        type="submit"
+      >تسجيل التعديلات
+      </loading-button>
+    </div>
+  </form>
+</div>
+
   </div>
 </template>
 

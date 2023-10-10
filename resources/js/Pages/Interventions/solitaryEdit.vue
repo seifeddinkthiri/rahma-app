@@ -57,7 +57,7 @@
               <option v-for="project in projects" :value="project.id">
                 {{ project.name }}
               </option>
-              <option :value="null" v-if="projects.length == 0">قائمة فارغة</option>
+              <option :value="null" v-if="projects.length == 0" disabled>قائمة فارغة</option>
             </select-input>
 
             <select-input

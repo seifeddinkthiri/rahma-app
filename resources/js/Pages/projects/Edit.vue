@@ -84,15 +84,14 @@
     <h2 class="mt-12 text-2xl font-bold">التدخلات</h2>
     <br />
 
-    <div class="mt-6 bg-white rounded shadow overflow-x-auto">
+  
+    <div class="mt-8 p-4 bg-white rounded-md shadow overflow-x-auto">
       <div class="flex items-center pr-4 mt-4">
         <button @click="show_intervention_modal = true" class="btn-indigo">
           إنشاء تدخل
         </button>
       </div>
-    </div>
-    <div class="bg-white rounded shadow overflow-hidden">
-      <table class="table-auto w-full text-right">
+        <table class="w-full whitespace-nowrap">
         <thead class="text-right">
           <tr class="h-12 text-right font-bold">
             <th class="pb-4 pt-6 px-6">النوع</th>
@@ -470,7 +469,7 @@
                       <option v-for="family in filteredFamilies" :value="family.id">
                         {{ family.caregiver_phone }} - {{ family.name }}
                       </option>
-                      <option :value="null" v-if="filteredFamilies.length == 0">
+                      <option :value="null" disabled v-if="filteredFamilies.length == 0">
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -485,7 +484,7 @@
                       <option v-for="elderly in elderlies" :value="elderly.id">
                         {{ elderly.caregiver_phone }} - {{ elderly.name }}
                       </option>
-                      <option :value="null" v-if="elderlies.length == 0">
+                      <option disabled :value="null" v-if="elderlies.length == 0">
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -500,7 +499,7 @@
                       <option v-for="divorced in divorceds" :value="divorced.id">
                         {{ divorced.caregiver_phone }} - {{ divorced.name }}
                       </option>
-                      <option :value="null" v-if="divorceds.length == 0">
+                      <option disabled :value="null" v-if="divorceds.length == 0">
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -518,7 +517,7 @@
                       >
                         {{ singleMother.caregiver_phone }} - {{ singleMother.name }}
                       </option>
-                      <option :value="null" v-if="singleMothers.length == 0">
+                      <option disabled :value="null" v-if="singleMothers.length == 0">
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -534,7 +533,7 @@
                       <option v-for="widow in widows" :value="widow.id">
                         {{ widow.caregiver_phone }} - {{ widow.name }}
                       </option>
-                      <option :value="null" v-if="widows.length == 0">قائمة فارغة</option>
+                      <option :value="null" v-if="widows.length == 0" disabled>قائمة فارغة</option>
                     </select-input>
                     <text-input
                       class="pb-8 pr-6 lg:w-1/2"
@@ -682,7 +681,7 @@
                       <option v-for="family in filteredFamilies" :value="family.id">
                         {{ family.caregiver_phone }} - {{ family.name }}
                       </option>
-                      <option :value="null" v-if="filteredFamilies.length == 0">
+                      <option :value="null" v-if="filteredFamilies.length == 0" disabled>
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -697,7 +696,7 @@
                       <option v-for="elderly in elderlies" :value="elderly.id">
                         {{ elderly.caregiver_phone }} - {{ elderly.name }}
                       </option>
-                      <option :value="null" v-if="elderlies.length == 0">
+                      <option :value="null" v-if="elderlies.length == 0" disabled>
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -712,7 +711,7 @@
                       <option v-for="divorced in divorceds" :value="divorced.id">
                         {{ divorced.caregiver_phone }} - {{ divorced.name }}
                       </option>
-                      <option :value="null" v-if="divorceds.length == 0">
+                      <option :value="null" v-if="divorceds.length == 0" disabled>
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -730,7 +729,7 @@
                       >
                         {{ singleMother.caregiver_phone }} - {{ singleMother.name }}
                       </option>
-                      <option :value="null" v-if="singleMothers.length == 0">
+                      <option :value="null" v-if="singleMothers.length == 0" disabled>
                         قائمة فارغة
                       </option>
                     </select-input>
@@ -746,7 +745,7 @@
                       <option v-for="widow in widows" :value="widow.id">
                         {{ widow.caregiver_phone }} - {{ widow.name }}
                       </option>
-                      <option :value="null" v-if="widows.length == 0">قائمة فارغة</option>
+                      <option :value="null" v-if="widows.length == 0" disabled>قائمة فارغة</option>
                     </select-input>
 
                     <text-input

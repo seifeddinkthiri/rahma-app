@@ -39,7 +39,7 @@
               <option v-for="family in filteredFamilies" :value="family.id">
                 {{ family.caregiver_phone }} - {{ family.name }}
               </option>
-              <option :value="null" v-if="filteredFamilies.length == 0">
+              <option :value="null" v-if="filteredFamilies.length == 0" disabled>
                 قائمة فارغة
               </option>
             </select-input>
@@ -54,7 +54,7 @@
               <option v-for="elderly in elderlies" :value="elderly.id">
                 {{ elderly.caregiver_phone }} - {{ elderly.name }}
               </option>
-              <option :value="null" v-if="elderlies.length == 0">قائمة فارغة</option>
+              <option :value="null" v-if="elderlies.length == 0" disabled>قائمة فارغة</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'divorced'"
@@ -67,7 +67,7 @@
               <option v-for="divorced in divorceds" :value="divorced.id">
                 {{ divorced.caregiver_phone }} - {{ divorced.name }}
               </option>
-              <option :value="null" v-if="divorceds.length == 0">قائمة فارغة</option>
+              <option disabled :value="null" v-if="divorceds.length == 0">قائمة فارغة</option>
             </select-input>
             <select-input
               v-if="form.beneficial == 'single_mother'"
@@ -80,7 +80,7 @@
               <option v-for="singleMother in singleMothers" :value="singleMother.id">
                 {{ singleMother.caregiver_phone }} - {{ singleMother.name }}
               </option>
-              <option :value="null" v-if="singleMothers.length == 0">قائمة فارغة</option>
+              <option :value="null" v-if="singleMothers.length == 0" disabled>قائمة فارغة</option>
             </select-input>
 
             <select-input
@@ -94,7 +94,7 @@
               <option v-for="widow in widows" :value="widow.id">
                 {{ widow.caregiver_phone }} - {{ widow.name }}
               </option>
-              <option :value="null" v-if="widows.length == 0">قائمة فارغة</option>
+              <option :value="null" v-if="widows.length == 0" disabled>قائمة فارغة</option>
             </select-input>
             <select-input
               v-model="form.project"
@@ -106,7 +106,7 @@
               <option v-for="project in projects" :value="project.id">
                 {{ project.name }}
               </option>
-              <option :value="null" v-if="projects.length == 0">قائمة فارغة</option>
+              <option :value="null" v-if="projects.length == 0" disabled>قائمة فارغة</option>
             </select-input>
 
             <select-input
