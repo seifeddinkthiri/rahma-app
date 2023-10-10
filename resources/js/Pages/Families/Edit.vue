@@ -424,6 +424,8 @@
         ref="facility_modal_update"
         v-if="show_facility_modal_update"
       >
+      <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+</div>
         <div class="fixed inset-0 flex items-center justify-center">
           <form @submit.prevent="update_facility">
             <div class="w-96 h-auto bg-white rounded shadow-xl">
