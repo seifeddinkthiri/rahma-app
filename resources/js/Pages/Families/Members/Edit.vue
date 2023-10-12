@@ -218,7 +218,7 @@
 <div class="bg-white rounded-md shadow overflow-hidden">
   <form @submit.prevent="update_health_status">
     <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-      <div class="flex flex-row flex-wrap w-full">
+      <div class="flex flex-col lg:flex-row flex-wrap w-full">
         <ToggleCheckbox
           :id="'health_insurance'"
           :class="'w-full lg:w-1/2'"
@@ -239,7 +239,7 @@
         />
       </div>
       <div v-if="health_status_form.good == false" class="w-full">
-        <div class="flex flex-wrap -mb-8 -mr-6">
+        <div class="flex flex-col lg:flex-row flex-wrap -mb-8 -mr-6">
           <text-input
             class="pb-8 pr-6 w-full lg:w-1/2"
             id="disease"
@@ -277,6 +277,7 @@
     </div>
   </form>
 </div>
+
 
   </div>
 </template>
