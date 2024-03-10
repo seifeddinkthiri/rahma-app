@@ -136,7 +136,7 @@
               <option value="secondary">ثاناوي</option>
               <option value="university ">جامعي</option>
             </select-input>
-
+<!--photo test-->
             <file-input
               v-model="form.photo"
               :error="form.errors.photo"
